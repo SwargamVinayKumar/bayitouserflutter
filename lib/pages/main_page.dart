@@ -1,9 +1,8 @@
-import 'package:bayitouser/pages/booking_page.dart';
 import 'package:bayitouser/pages/favorite_page.dart';
 import 'package:bayitouser/pages/profile_page.dart';
+import 'package:bayitouser/pages/reservation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../utils/custom_color.dart';
 import 'home_page.dart';
 
@@ -27,7 +26,7 @@ class _MainPageState extends State<MainPage> {
     _selectedPageIndex = 0;
     _pages = [
       const HomePage(),
-      const BookingPage(),
+      const ReservationPage(showBackArrow: false),
       const FavoritePage(),
       const ProfilePage(),
     ];
@@ -124,7 +123,7 @@ class _MainPageState extends State<MainPage> {
               icon: _selectedIndex == 1
                   ? Icon(Icons.check_circle,size: 30,)
                   : Icon(Icons.check_circle_outline,size: 30,),
-              label: 'Bookings',
+              label: 'Reservations',
             ),
             BottomNavigationBarItem(
               icon: _selectedIndex == 2

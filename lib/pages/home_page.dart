@@ -1,5 +1,7 @@
 import 'package:bayitouser/components/custom_search_bar.dart';
 import 'package:bayitouser/components/home_menu_card.dart';
+import 'package:bayitouser/pages/cafe_page.dart';
+import 'package:bayitouser/pages/reservation_page.dart';
 import 'package:flutter/material.dart';
 import '../utils/custom_color.dart';
 
@@ -13,7 +15,7 @@ class HomePage extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: CustomColors.primaryGradientColor,
+          gradient: CustomColors.mainGradientColor,
         ),
         child:  SafeArea(
           child: SingleChildScrollView(
@@ -37,48 +39,20 @@ class HomePage extends StatelessWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.white.withOpacity(0.3),
-                                blurRadius: 20,
-                                spreadRadius: 5,
+                                blurRadius: 10,
+                                spreadRadius: 2,
                               ),
                             ],
                           ),
                           child: CircleAvatar(
-                            radius: 40,
+                            radius: 80,
                             backgroundImage: const AssetImage(
                               "assets/images/bayitoLogo.jpeg",
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 3,
-                                ),
-                              ),
                             ),
                           ),
                         ),
                       );
                     },
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Center(
-                  child: ShaderMask(
-                    shaderCallback: (bounds) => const LinearGradient(
-                      colors: [Colors.white, Colors.white70],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ).createShader(bounds),
-                    child: const Text(
-                      "Bayito",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        letterSpacing: 1.5,
-                      ),
-                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -103,7 +77,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const CustomSearchBar(),
+                const CustomSearchBar(isReadOnly: true),
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment:
@@ -129,23 +103,31 @@ class HomePage extends StatelessWidget {
                   shrinkWrap: true,
                   physics:
                   const NeverScrollableScrollPhysics(),
-                  children: const [
+                  children:  [
                     HomeMenuCard(
                       title: "Nearby",
                       subtitle: "Discover places",
                       icon: Icons.location_on_rounded,
                       gradient: [
-                        Color(0xffFF9966),
-                        Color(0xffFF5E62),
+                        Color(0xffa30c0f),
+                        Color(0xffdc5512),
                       ],
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CafePage(),
+                          ),
+                        );
+                      },
                     ),
                     HomeMenuCard(
                       title: "Book Table",
                       subtitle: "Reserve instantly",
                       icon: Icons.table_restaurant,
                       gradient: [
-                        Color(0xff36D1DC),
-                        Color(0xff5B86E5),
+                        Color(0xff55069a),
+                        Color(0xffd625a6),
                       ],
                     ),
 
@@ -154,8 +136,8 @@ class HomePage extends StatelessWidget {
                       subtitle: "Connect nearby",
                       icon: Icons.handshake,
                       gradient: [
-                        Color(0xff834d9b),
-                        Color(0xffd04ed6),
+                        Color(0xff3E2723),
+                        Color(0xff5D4037),
                       ],
                     ),
 
@@ -164,9 +146,17 @@ class HomePage extends StatelessWidget {
                       subtitle: "Booking history",
                       icon: Icons.event,
                       gradient: [
-                        Color(0xfff953c6),
-                        Color(0xffb91d73),
+                        Color(0xff14532D),
+                        Color(0xff0B6B3A),
                       ],
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReservationPage(showBackArrow: true),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

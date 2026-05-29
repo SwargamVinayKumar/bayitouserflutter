@@ -18,7 +18,7 @@ class SignInPage extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
          decoration: BoxDecoration(
-            gradient: CustomColors.primaryGradientColor,
+            gradient: CustomColors.mainGradientColor,
           ),
         child: SafeArea(
           child: Padding(
@@ -54,8 +54,9 @@ class SignInPage extends StatelessWidget {
                     text: TextSpan(
                       text: "Don't have an account? ",
                       style: TextStyle(
-                        color: CustomColors.darkBlack,
+                        color: CustomColors.white,
                         fontSize: 16,
+                        fontWeight: FontWeight.w400
                       ),
                       children: [
                         WidgetSpan(

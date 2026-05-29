@@ -15,7 +15,7 @@ class SignUpPage extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: CustomColors.primaryGradientColor,
+          gradient: CustomColors.mainGradientColor,
         ),
         child: SafeArea(
           child: Padding(
@@ -59,8 +59,9 @@ class SignUpPage extends StatelessWidget {
                     text: TextSpan(
                       text: "Already have an account? ",
                       style: TextStyle(
-                        color: CustomColors.darkBlack,
-                        fontSize: 16,
+                        color: CustomColors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400
                       ),
                       children: [
                         WidgetSpan(
