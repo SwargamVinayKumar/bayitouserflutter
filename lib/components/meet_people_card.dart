@@ -3,23 +3,19 @@ import 'package:flutter/material.dart';
 
 import '../utils/custom_color.dart';
 
-class ReservationCafeCard extends StatelessWidget {
+class MeetPeopleCard extends StatelessWidget {
   final String image;
-  final String cafeName;
-  final String location;
-  final String date;
-  final String time;
-  final String table;
+  final String name;
+  final String category;
+  final String profession;
   final VoidCallback onTap;
 
-  const ReservationCafeCard({
+  const MeetPeopleCard({
     super.key,
     required this.image,
-    required this.cafeName,
-    required this.location,
-    required this.date,
-    required this.time,
-    required this.table,
+    required this.name,
+    required this.category,
+    required this.profession,
     required this.onTap,
   });
 
@@ -27,36 +23,33 @@ class ReservationCafeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            CustomColors.white.withOpacity(0.08),
-            CustomColors.white.withOpacity(0.03),
+            const Color(0xFF6D5B63).withOpacity(0.95),
+            const Color(0xFF8E6A74).withOpacity(0.90),
           ],
-        ),
-        border: Border.all(
-          color: CustomColors.white.withOpacity(0.08),
         ),
         boxShadow: [
           BoxShadow(
-            color: CustomColors.darkBlack.withOpacity(0.3),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
+            color: CustomColors.darkBlack.withOpacity(0.18),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
       child: IntrinsicHeight(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(18),
               child: SizedBox(
-                width: 90,
+                width: 95,
+                height: double.infinity,
                 child: Image.asset(
                   image,
                   fit: BoxFit.cover,
@@ -67,9 +60,10 @@ class ReservationCafeCard extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    cafeName,
+                    name,
                     style: const TextStyle(
                       color: CustomColors.white,
                       fontSize: 18,
@@ -78,50 +72,53 @@ class ReservationCafeCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    location,
+                    category,
                     style: TextStyle(
-                      color: CustomColors.white.withOpacity(0.6),
+                      color: CustomColors.white.withOpacity(0.85),
                       fontSize: 13,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 4),
+                  Text(
+                    profession,
+                    style: TextStyle(
+                      color: CustomColors.white.withOpacity(0.85),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: Colors.greenAccent,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
                       Text(
-                        date,
-                        style: const TextStyle(
-                          color: CustomColors.white,
+                        "Online",
+                        style: TextStyle(
+                          color: Colors.greenAccent.shade100,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(width: 14),
-                      Text(
-                        time,
-                        style: TextStyle(
-                          color: CustomColors.white.withOpacity(0.7),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        table,
-                        style: TextStyle(
-                          color: CustomColors.white.withOpacity(0.7),
-                        ),
-                      ),
-                      CustomGradientButton(title: "View", onTap: onTap,height: 35,width: 100,),
                     ],
                   ),
                 ],
               ),
             ),
+            const SizedBox(width: 10),
+            CustomGradientButton(title: "Connect", onTap: onTap,width: 80,height: 45,),
           ],
         ),
       ),
     );
   }
 }
+

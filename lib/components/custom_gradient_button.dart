@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/custom_color.dart';
+
 class CustomGradientButton extends StatelessWidget {
 
   final String title;
@@ -20,10 +22,7 @@ class CustomGradientButton extends StatelessWidget {
     this.borderRadius = 14,
     this.fontSize = 14,
     this.fontWeight = FontWeight.w700,
-    this.gradientColors = const [
-      Color(0xffFF7B54),
-      Color(0xffFF4D6D),
-    ],
+    this.gradientColors = CustomColors.secondaryGradient,
   });
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,7 @@ class CustomGradientButton extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                color: Colors.white,
+                color: CustomColors.white,
                 fontWeight: fontWeight,
                 fontSize: fontSize,
               ),

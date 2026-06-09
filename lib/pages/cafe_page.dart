@@ -1,7 +1,10 @@
 import 'package:bayitouser/components/custom_search_bar.dart';
+import 'package:bayitouser/pages/cafe_detail_page.dart';
 import 'package:flutter/material.dart';
 import '../components/cafe_card.dart';
+import '../components/custom_action_button.dart';
 import '../utils/custom_color.dart';
+import 'book_table_page.dart';
 
 
 class CafePage extends StatefulWidget {
@@ -81,30 +84,17 @@ class _CafePageState extends State<CafePage> {
         ),
         child: SafeArea(
           child: Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Container(
-                      height: 42,
-                      width: 42,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
+                    CustomActionButton(
+                      icon: Icons.arrow_back_ios_new_rounded,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     const SizedBox(width: 14),
                     const Expanded(
@@ -131,21 +121,32 @@ class _CafePageState extends State<CafePage> {
                     filteredCafeList.length,
                     itemBuilder: (context, index) {
                       final cafe = filteredCafeList[index];
-                      return CafeCard(
-                        image: cafe["image"],
-                        cafeName:
-                        cafe["cafeName"],
-                        category:
-                        cafe["category"],
-                        location:
-                        cafe["location"],
-                        rating:
-                        cafe["rating"],
-                        distance:
-                        cafe["distance"],
-                        openTime:
-                        cafe["openTime"],
-                        onTap: () {},
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CafeDetailsPage(image:  cafe["image"]),
+                            ),
+                          );
+                        },
+                        child: CafeCard(
+                          image: cafe["image"],
+                          cafeName: cafe["cafeName"],
+                          category: cafe["category"],
+                          location: cafe["location"],
+                          rating: cafe["rating"],
+                          distance: cafe["distance"],
+                          openTime: cafe["openTime"],
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookTablePage(image: cafe["image"],name: cafe["cafeName"],location: cafe["location"],rating: cafe["rating"],),
+                              ),
+                            );
+                          },
+                        ),
                       );
                     },
                   ),

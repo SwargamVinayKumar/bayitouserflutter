@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../utils/custom_color.dart';
+
 class CustomSearchBar extends StatefulWidget {
 
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final bool isReadOnly;
+  final String? hinTxt;
 
   const CustomSearchBar({
     super.key,
     this.controller,
     this.onChanged,
+    this.hinTxt,
     this.isReadOnly = false,
 
   });
@@ -36,10 +40,10 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           horizontal: 16,
         ),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.08),
+          color: CustomColors.white.withOpacity(0.08),
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
-            color: Colors.white.withOpacity(0.4),
+            color: CustomColors.white.withOpacity(0.4),
           ),
         ),
         child: Row(
@@ -55,20 +59,15 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 onChanged: widget.onChanged,
                 readOnly: widget.isReadOnly,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: CustomColors.white,
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-
-                  hintText:
-                  "Search cafés...",
-
+                  hintText: widget.hinTxt ?? "Search cafés...",
                   hintStyle: TextStyle(
-                    color: Colors.white
+                    color: CustomColors.white
                         .withOpacity(0.6),
                   ),
-
-                  /// CLEAR BUTTON
                   suffixIcon:
                   widget.controller?.text
                       .isNotEmpty ?? false
@@ -79,12 +78,10 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                     },
                     child: const Icon(
                       Icons.close,
-                      color:
-                      Colors.white70,
+                      color: Colors.white70,
                       size: 20,
                     ),
-                  )
-                      : null,
+                  ) : null,
                 ),
               ),
             ),

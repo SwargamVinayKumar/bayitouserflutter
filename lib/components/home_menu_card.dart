@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/custom_color.dart';
+
 class HomeMenuCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -41,13 +43,13 @@ class HomeMenuCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.18),
+                  color: CustomColors.white.withOpacity(0.18),
                   borderRadius:
                   BorderRadius.circular(18),
                 ),
                 child: Icon(
                   icon,
-                  color: Colors.white,
+                  color: CustomColors.white,
                   size: 30,
                 ),
               ),
@@ -57,7 +59,7 @@ class HomeMenuCard extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: CustomColors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -66,7 +68,7 @@ class HomeMenuCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
+                      color: CustomColors.white.withOpacity(0.9),
                     ),
                   ),
                 ],

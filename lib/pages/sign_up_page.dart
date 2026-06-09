@@ -1,7 +1,7 @@
 import 'package:bayitouser/pages/main_page.dart';
 import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:flutter/material.dart';
-import '../components/custom_button.dart';
+import '../components/custom_gradient_button.dart';
 import '../components/custom_textfield.dart';
 import '../utils/custom_color.dart';
 
@@ -19,7 +19,7 @@ class SignUpPage extends StatelessWidget {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -45,15 +45,18 @@ class SignUpPage extends StatelessWidget {
                   SizedBox(height: 8),
                   CustomTextFieldComponent(hintText: "Confirm Password",isPassword: true,),
                   SizedBox(height: 24),
-                  CustomButton(text: "SignUp", onPressed: (){
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainPage(),
-                      ),
-                          (route) => false,
-                    );
-                  },buttonColor: CustomColors.secondary),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: CustomGradientButton(title: "SignUp", onTap: (){
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainPage(),
+                        ),
+                            (route) => false,
+                      );
+                    }),
+                  ),
                   SizedBox(height: 30),
                   RichText(
                     text: TextSpan(
@@ -78,7 +81,14 @@ class SignUpPage extends StatelessWidget {
                             child: Text(
                               "SignIn",
                               style: TextStyle(
-                                color: CustomColors.white,
+                                foreground: Paint()
+                                  ..shader = LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: CustomColors.secondaryGradient,
+                                  ).createShader(
+                                    const Rect.fromLTWH(50, 50, 140, 40),
+                                  ),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),

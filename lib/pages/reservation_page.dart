@@ -1,7 +1,9 @@
+import 'package:bayitouser/components/custom_tab_component.dart';
 import 'package:flutter/material.dart';
-
+import '../components/custom_action_button.dart';
 import '../components/reservation_cafe_card.dart';
 import '../utils/custom_color.dart';
+import 'cafe_detail_page.dart';
 
 class ReservationPage extends StatefulWidget {
   const ReservationPage({super.key,required this.showBackArrow});
@@ -9,14 +11,25 @@ class ReservationPage extends StatefulWidget {
   final bool showBackArrow;
 
   @override
-  State<ReservationPage> createState() =>
-      _ReservationPageState();
+  State<ReservationPage> createState() => _ReservationPageState();
 }
 
-class _ReservationPageState
-    extends State<ReservationPage> {
+class _ReservationPageState extends State<ReservationPage> {
 
-  String selectedStatus = "Upcoming";
+  final ValueNotifier<int> selectedIndex = ValueNotifier(0);
+
+  final List<String> tabs = [
+    "Upcoming",
+    "Completed",
+    "Cancelled",
+  ];
+
+  @override
+  void dispose() {
+    selectedIndex.dispose();
+    super.dispose();
+  }
+
   final List<Map<String, dynamic>> reservationList = [
     {
       "status": "Upcoming",
@@ -52,13 +65,6 @@ class _ReservationPageState
 
   @override
   Widget build(BuildContext context) {
-
-    final filteredList =
-    reservationList.where((reservation) {
-      return reservation["status"] ==
-          selectedStatus;
-    }).toList();
-
     return Scaffold(
       body:Container(
         width: double.infinity,
@@ -76,24 +82,12 @@ class _ReservationPageState
                 Row(
                   children: [
                     widget.showBackArrow ?
-                    Container(
-                      height: 42,
-                      width: 42,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ) : SizedBox(),
+                    CustomActionButton(
+                      icon: Icons.arrow_back_ios_new_rounded,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ): SizedBox(),
                     const SizedBox(width: 14),
                     const Expanded(
                       child: Text(
@@ -108,80 +102,65 @@ class _ReservationPageState
                   ],
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  children: [
-                    buildTab("Upcoming"),
-                    const SizedBox(width: 10),
-                    buildTab("Completed"),
-                    const SizedBox(width: 10),
-                    buildTab("Cancelled"),
-                  ],
+                ValueListenableBuilder<int>(
+                  valueListenable: selectedIndex,
+                  builder: (context, value, child) {
+                    return CustomTabs(
+                      tabs: tabs,
+                      selectedIndex: value,
+                      onChanged: (index) {
+                        selectedIndex.value = index;
+                      },
+                    );
+                  },
                 ),
                 const SizedBox(height: 20),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: filteredList.length,
-                    itemBuilder: (context, index) {
-                      final reservation = filteredList[index];
-                      return ReservationCafeCard(
-                        image: reservation["image"],
-                        cafeName:
-                        reservation["cafeName"],
-                        location:
-                        reservation["location"],
-                        date: reservation["date"],
-                        time: reservation["time"],
-                        table: reservation["table"],
-                        onTap: () {},
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: selectedIndex,
+                    builder: (context, value, child) {
+                      final filteredList =
+                      reservationList.where((reservation) {
+                        return reservation["status"] == tabs[value];
+                      }).toList();
+                      if (filteredList.isEmpty) {
+                        return const Center(
+                          child: Text("No Reservations Found",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      }
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: filteredList.length,
+                        itemBuilder: (context, index) {
+                          final reservation = filteredList[index];
+                          return ReservationCafeCard(
+                            image: reservation["image"],
+                            cafeName: reservation["cafeName"],
+                            location: reservation["location"],
+                            date: reservation["date"],
+                            time: reservation["time"],
+                            table: reservation["table"],
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CafeDetailsPage(image:  reservation["image"],showButton: false),
+                                ),
+                              );
+                            },
+                          );
+                        },
                       );
                     },
                   ),
                 ),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildTab(String status) {
-    final bool isSelected = selectedStatus == status;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedStatus = status;
-          });
-        },
-        child: Container(
-          height: 42,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius:
-            BorderRadius.circular(14),
-            gradient: isSelected
-                ? const LinearGradient(
-              colors: [
-
-                Color(0xffFF7B54),
-                Color(0xffFF4D6D),
-              ],
-            )
-                : null,
-
-            color: isSelected
-                ? null
-                : Colors.white.withOpacity(0.06),
-          ),
-
-          child: Text(
-            status,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: isSelected
-                  ? FontWeight.w700
-                  : FontWeight.w500,
             ),
           ),
         ),

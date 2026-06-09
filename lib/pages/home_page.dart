@@ -1,8 +1,10 @@
 import 'package:bayitouser/components/custom_search_bar.dart';
 import 'package:bayitouser/components/home_menu_card.dart';
 import 'package:bayitouser/pages/cafe_page.dart';
+import 'package:bayitouser/pages/meet_people_page.dart';
 import 'package:bayitouser/pages/reservation_page.dart';
 import 'package:flutter/material.dart';
+import '../components/section_title_item.dart';
 import '../utils/custom_color.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,7 +40,7 @@ class HomePage extends StatelessWidget {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.white.withOpacity(0.3),
+                                color: CustomColors.white.withOpacity(0.3),
                                 blurRadius: 10,
                                 spreadRadius: 2,
                               ),
@@ -70,7 +72,7 @@ class HomePage extends StatelessWidget {
                       "Book your Table • Meet your People",
                       style: TextStyle(
                         fontSize: 13,
-                        color: Colors.white.withOpacity(0.95),
+                        color: CustomColors.white.withOpacity(0.95),
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -83,7 +85,7 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,
                   children: [
-                    sectionTitle("Quick Access"),
+                    SectionTitleItem(title: "Quick Access",fontSize: 24,),
                     Text(
                       "See All",
                       style: TextStyle(
@@ -129,6 +131,14 @@ class HomePage extends StatelessWidget {
                         Color(0xff55069a),
                         Color(0xffd625a6),
                       ],
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CafePage(),
+                          ),
+                        );
+                      },
                     ),
 
                     HomeMenuCard(
@@ -139,6 +149,14 @@ class HomePage extends StatelessWidget {
                         Color(0xff3E2723),
                         Color(0xff5D4037),
                       ],
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MeetPeoplePage(),
+                          ),
+                        );
+                      },
                     ),
 
                     HomeMenuCard(
@@ -146,8 +164,8 @@ class HomePage extends StatelessWidget {
                       subtitle: "Booking history",
                       icon: Icons.event,
                       gradient: [
-                        Color(0xff14532D),
-                        Color(0xff0B6B3A),
+                        Color(0xff048035),
+                        Color(0xff5ded62),
                       ],
                       onTap: (){
                         Navigator.push(
@@ -164,17 +182,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-          ),
-       );
-    }
-  Widget sectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
       ),
-    );
-  }
+     );
+    }
 }

@@ -1,5 +1,5 @@
-import 'package:bayitouser/components/custom_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
+import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class CafeCard extends StatelessWidget {
@@ -35,16 +35,16 @@ class CafeCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.white.withOpacity(0.08),
-            Colors.white.withOpacity(0.03),
+            CustomColors.white.withOpacity(0.08),
+            CustomColors.white.withOpacity(0.03),
           ],
         ),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: CustomColors.white.withOpacity(0.08),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: CustomColors.darkBlack.withOpacity(0.3),
             blurRadius: 25,
             offset: const Offset(0, 12),
           ),
@@ -76,7 +76,7 @@ class CafeCard extends StatelessWidget {
                         child: Text(
                           cafeName,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: CustomColors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -94,7 +94,7 @@ class CafeCard extends StatelessWidget {
                           Text(
                             rating.toString(),
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: CustomColors.white,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -107,7 +107,7 @@ class CafeCard extends StatelessWidget {
                   Text(
                     "$category  •  $location",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.7),
+                      color: CustomColors.white.withOpacity(0.7),
                       fontSize: 13,
                     ),
                   ),
@@ -117,14 +117,14 @@ class CafeCard extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on_rounded,
-                        color: Colors.white.withOpacity(0.7),
+                        color: CustomColors.white.withOpacity(0.7),
                         size: 16,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         "$distance km away",
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
+                          color: CustomColors.white.withOpacity(0.7),
                           fontSize: 13,
                         ),
                       ),
@@ -155,7 +155,6 @@ class CafeCard extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 14),
                   CustomGradientButton(title: "Book Table", onTap: onTap),
                 ],

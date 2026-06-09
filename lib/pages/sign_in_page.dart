@@ -1,9 +1,8 @@
-import 'package:bayitouser/components/custom_button.dart';
+import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/components/custom_textfield.dart';
 import 'package:bayitouser/pages/sign_up_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
-
 import 'main_page.dart';
 
 
@@ -22,7 +21,7 @@ class SignInPage extends StatelessWidget {
           ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -40,15 +39,18 @@ class SignInPage extends StatelessWidget {
                   SizedBox(height: 8),
                   CustomTextFieldComponent(hintText: "Password",isPassword: true,),
                   SizedBox(height: 24),
-                  CustomButton(text: "Login", onPressed: (){
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainPage(),
-                      ),
-                          (route) => false,
-                    );
-                  },buttonColor: CustomColors.secondary),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: CustomGradientButton(title: "Login", onTap: (){
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainPage(),
+                        ),
+                            (route) => false,
+                      );
+                    }),
+                  ),
                   SizedBox(height: 30),
                   RichText(
                     text: TextSpan(
@@ -72,7 +74,14 @@ class SignInPage extends StatelessWidget {
                             child: Text(
                               "Sign Up",
                               style: TextStyle(
-                                color: CustomColors.white,
+                                foreground: Paint()
+                                  ..shader = LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: CustomColors.secondaryGradient,
+                                  ).createShader(
+                                    const Rect.fromLTWH(60, 60, 140, 40),
+                                  ),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
