@@ -1,5 +1,6 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/custom_color.dart';
 
@@ -70,18 +71,19 @@ class ReservationCafeCard extends StatelessWidget {
                 children: [
                   Text(
                     cafeName,
-                    style: const TextStyle(
-                      color: CustomColors.white,
-                      fontSize: 18,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 16,
                       fontWeight: FontWeight.w700,
+                      color: CustomColors.white,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     location,
-                    style: TextStyle(
-                      color: CustomColors.white.withOpacity(0.6),
-                      fontSize: 13,
+                    style: GoogleFonts.sora(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color:  CustomColors.white.withOpacity(0.6),
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -89,16 +91,19 @@ class ReservationCafeCard extends StatelessWidget {
                     children: [
                       Text(
                         date,
-                        style: const TextStyle(
-                          color: CustomColors.white,
+                        style:  GoogleFonts.sora(
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
+                          color:  CustomColors.white,
                         ),
                       ),
                       const SizedBox(width: 14),
                       Text(
                         time,
-                        style: TextStyle(
-                          color: CustomColors.white.withOpacity(0.7),
+                        style: GoogleFonts.sora(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color:  CustomColors.white.withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -109,11 +114,13 @@ class ReservationCafeCard extends StatelessWidget {
                     children: [
                       Text(
                         table,
-                        style: TextStyle(
-                          color: CustomColors.white.withOpacity(0.7),
+                        style: GoogleFonts.sora(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color:  CustomColors.white.withOpacity(0.7),
                         ),
                       ),
-                      CustomGradientButton(title: "View", onTap: onTap,height: 35,width: 100,),
+                      CustomGradientButton(title: "View", onTap: onTap,height: 35,width: 100,fontSize: 14,),
                     ],
                   ),
                 ],

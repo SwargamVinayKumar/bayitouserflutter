@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/custom_color.dart';
 
 class SectionTitleItem extends StatelessWidget {
@@ -10,10 +11,10 @@ class SectionTitleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(title,
-      style:  TextStyle(
-        color: CustomColors.white,
-        fontWeight: FontWeight.w600,
+      style: GoogleFonts.plusJakartaSans(
         fontSize: fontSize,
+        fontWeight: FontWeight.w600,
+        color: CustomColors.white,
       ),
     );
   }

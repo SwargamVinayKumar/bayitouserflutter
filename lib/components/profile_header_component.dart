@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/profile_stat_component.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfileHeaderComponent extends StatelessWidget {
   const ProfileHeaderComponent({super.key});
@@ -84,20 +85,20 @@ class ProfileHeaderComponent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          const Text(
+           Text(
             "Venkatesh",
-            style: TextStyle(
-              color: CustomColors.white,
-              fontSize: 24,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 22,
               fontWeight: FontWeight.w700,
+              color: CustomColors.white,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             "@venky_25",
-            style: TextStyle(
+            style: GoogleFonts.sora(
+              fontSize: 16,
               color: CustomColors.white.withOpacity(0.85),
-              fontSize: 14,
             ),
           ),
           const SizedBox(height: 24),

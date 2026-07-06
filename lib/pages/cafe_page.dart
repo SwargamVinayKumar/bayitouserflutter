@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/custom_search_bar.dart';
 import 'package:bayitouser/pages/cafe_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../components/cafe_card.dart';
 import '../components/custom_action_button.dart';
 import '../utils/custom_color.dart';
@@ -97,13 +98,13 @@ class _CafePageState extends State<CafePage> {
                       },
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                     Expanded(
                       child: Text(
                         "Nearby Places",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 22,
                           fontWeight: FontWeight.w700,
+                          color: CustomColors.white
                         ),
                       ),
                     ),

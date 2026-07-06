@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../components/custom_action_button.dart';
 import '../components/custom_search_bar.dart';
 import '../components/custom_tab_component.dart';
@@ -125,13 +126,13 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
                       },
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                     Expanded(
                       child: Text(
                         "Meet People",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 22,
                           fontWeight: FontWeight.w700,
+                          color: CustomColors.white,
                         ),
                       ),
                     ),

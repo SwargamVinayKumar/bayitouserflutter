@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/custom_color.dart';
 
@@ -42,8 +43,8 @@ class ProfileItemComponent extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(
-                fontSize: 15,
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PeopleCountComponent extends StatelessWidget {
 
@@ -50,10 +51,10 @@ class PeopleCountComponent extends StatelessWidget {
             children: [
               Text(
                 "$peopleCount",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                  color: CustomColors.white,
                 ),
               ),
             ],

@@ -1,14 +1,36 @@
-import 'package:bayitouser/components/custom_search_bar.dart';
+import 'package:bayitouser/components/featured_place_card.dart';
 import 'package:bayitouser/components/home_menu_card.dart';
 import 'package:bayitouser/pages/cafe_page.dart';
 import 'package:bayitouser/pages/meet_people_page.dart';
 import 'package:bayitouser/pages/reservation_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../components/section_title_item.dart';
 import '../utils/custom_color.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final List<Map<String, String>> featuredPlaces = [
+    {
+      "image": "assets/images/cafe.jpg",
+      "title": "Roast & Co.",
+      "location": "Hyderabad",
+      "rating": "4.8",
+    },
+    {
+      "image": "assets/images/cafe.jpg",
+      "title": "Coffee House",
+      "location": "Bangalore",
+      "rating": "4.7",
+    },
+    {
+      "image": "assets/images/cafe.jpg",
+      "title": "Blue Cafe",
+      "location": "Chennai",
+      "rating": "4.9",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +69,7 @@ class HomePage extends StatelessWidget {
                             ],
                           ),
                           child: CircleAvatar(
-                            radius: 80,
+                            radius: 60,
                             backgroundImage: const AssetImage(
                               "assets/images/bayitoLogo.jpeg",
                             ),
@@ -61,45 +83,49 @@ class HomePage extends StatelessWidget {
                 Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 4,
+                      horizontal: 12,
+                      vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: CustomColors.secondary..withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       "Book your Table • Meet your People",
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: CustomColors.white.withOpacity(0.95),
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14,
                         letterSpacing: 0.5,
+                        fontWeight: FontWeight.w600,
+                        color: CustomColors.white.withOpacity(0.95),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                const CustomSearchBar(isReadOnly: true),
-                const SizedBox(height: 30),
+                // const CustomSearchBar(isReadOnly: true),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,
                   children: [
-                    SectionTitleItem(title: "Quick Access",fontSize: 24,),
+                    SectionTitleItem(title: "Quick Access",fontSize: 16,),
                     Text(
                       "See All",
-                      style: TextStyle(
-                        color:
-                        Colors.orangeAccent.shade200,
+                      style: GoogleFonts.sora(
+                        color: Colors.white70,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
                     )
                   ],
                 ),
+                Divider(
+                  height: 1,
+                  thickness: 0.4,
+                ),
                 const SizedBox(height: 18),
                 GridView.count(
                   crossAxisCount: 2,
-                  childAspectRatio: 1.0,
+                  childAspectRatio: 1.4,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                   shrinkWrap: true,
@@ -158,14 +184,13 @@ class HomePage extends StatelessWidget {
                         );
                       },
                     ),
-
                     HomeMenuCard(
                       title: "Reservations",
                       subtitle: "Booking history",
                       icon: Icons.event,
                       gradient: [
                         Color(0xff048035),
-                        Color(0xff5ded62),
+                        Color(0xff3d8f40),
                       ],
                       onTap: (){
                         Navigator.push(
@@ -177,6 +202,46 @@ class HomePage extends StatelessWidget {
                       },
                     ),
                   ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SectionTitleItem(title: "Trending Places",fontSize: 16,),
+                    Text(
+                      "See All",
+                      style: GoogleFonts.sora(
+                        color: Colors.white70,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                  ],
+                ),
+                Divider(
+                  height: 1,
+                  thickness: 0.4,
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.2,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: featuredPlaces.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      final place = featuredPlaces[index];
+                      return SizedBox(
+                        width: MediaQuery.sizeOf(context).width * 0.34,
+                        child: FeaturedPlaceCard(
+                          image: place["image"]!,
+                          title: place["title"]!,
+                          location: place["location"]!,
+                          rating: place["rating"]!,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:bayitouser/pages/main_page.dart';
 import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../components/custom_gradient_button.dart';
 import '../components/custom_textfield.dart';
 import '../utils/custom_color.dart';
@@ -47,7 +48,9 @@ class SignUpPage extends StatelessWidget {
                   SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: CustomGradientButton(title: "SignUp", onTap: (){
+                    child: CustomGradientButton(title: "SignUp",
+                        fontSize: 18,
+                        onTap: (){
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -61,10 +64,10 @@ class SignUpPage extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       text: "Already have an account? ",
-                      style: TextStyle(
-                        color: CustomColors.white,
+                      style: GoogleFonts.sora(
                         fontSize: 14,
-                        fontWeight: FontWeight.w400
+                        fontWeight: FontWeight.w400,
+                        color: CustomColors.white,
                       ),
                       children: [
                         WidgetSpan(
@@ -80,17 +83,17 @@ class SignUpPage extends StatelessWidget {
                             },
                             child: Text(
                               "SignIn",
-                              style: TextStyle(
+                              style: GoogleFonts.plusJakartaSans(
                                 foreground: Paint()
                                   ..shader = LinearGradient(
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                     colors: CustomColors.secondaryGradient,
                                   ).createShader(
-                                    const Rect.fromLTWH(50, 50, 140, 40),
+                                    const Rect.fromLTWH(60, 60, 140, 40),
                                   ),
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),

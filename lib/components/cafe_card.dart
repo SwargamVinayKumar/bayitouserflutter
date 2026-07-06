@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CafeCard extends StatelessWidget {
   final String image;
@@ -75,10 +76,10 @@ class CafeCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           cafeName,
-                          style: const TextStyle(
-                            color: CustomColors.white,
-                            fontSize: 20,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 16,
                             fontWeight: FontWeight.w700,
+                            color: CustomColors.white,
                           ),
                         ),
                       ),
@@ -93,9 +94,9 @@ class CafeCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             rating.toString(),
-                            style: const TextStyle(
-                              color: CustomColors.white,
+                            style: GoogleFonts.sora(
                               fontWeight: FontWeight.w600,
+                              color: CustomColors.white,
                             ),
                           ),
                         ],
@@ -106,12 +107,11 @@ class CafeCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     "$category  •  $location",
-                    style: TextStyle(
+                    style: GoogleFonts.sora(
+                      fontSize: 14,
                       color: CustomColors.white.withOpacity(0.7),
-                      fontSize: 13,
                     ),
                   ),
-
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -123,9 +123,9 @@ class CafeCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         "$distance km away",
-                        style: TextStyle(
+                        style:GoogleFonts.sora(
+                          fontSize: 14,
                           color: CustomColors.white.withOpacity(0.7),
-                          fontSize: 13,
                         ),
                       ),
                     ],
@@ -146,10 +146,10 @@ class CafeCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           "Open • Closes $openTime",
-                          style: const TextStyle(
+                          style: GoogleFonts.sora(
+                            fontSize: 14,
                             color: Colors.greenAccent,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w500
                           ),
                         ),
                       ),

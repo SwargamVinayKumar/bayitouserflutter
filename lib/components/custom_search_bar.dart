@@ -40,17 +40,17 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           horizontal: 16,
         ),
         decoration: BoxDecoration(
-          color: CustomColors.white.withOpacity(0.08),
+          color: CustomColors.white.withOpacity(0.8),
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
-            color: CustomColors.white.withOpacity(0.4),
+            color: CustomColors.secondary.withOpacity(1.0),
           ),
         ),
         child: Row(
           children: [
             const Icon(
               Icons.search,
-              color: Colors.white70,
+              color: CustomColors.secondary,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -65,7 +65,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                   border: InputBorder.none,
                   hintText: widget.hinTxt ?? "Search cafés...",
                   hintStyle: TextStyle(
-                    color: CustomColors.white
+                    color: CustomColors.secondary
                         .withOpacity(0.6),
                   ),
                   suffixIcon:

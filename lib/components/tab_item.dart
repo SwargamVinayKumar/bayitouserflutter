@@ -1,5 +1,6 @@
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TabItem extends StatelessWidget {
 
@@ -36,12 +37,12 @@ class TabItem extends StatelessWidget {
               : CustomColors.white.withOpacity(0.06),
         ),
         child: Text(title,
-          style: TextStyle(
-            color: CustomColors.white,
+          style: GoogleFonts.plusJakartaSans(
             fontSize: 14,
-            fontWeight: isSelected
+            fontWeight:  isSelected
                 ? FontWeight.w700
                 : FontWeight.w500,
+            color:  CustomColors.white,
           ),
         ),
       ),

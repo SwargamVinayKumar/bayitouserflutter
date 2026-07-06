@@ -3,6 +3,7 @@ import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/pages/book_table_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CafeDetailsPage extends StatelessWidget {
   final String image;
@@ -80,19 +81,19 @@ class CafeDetailsPage extends StatelessWidget {
                   children: [
                     Text(
                       cafeName ?? "No Name",
-                      style: const TextStyle(
-                        fontSize: 32,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 28,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xff2D2D2D),
+                        color:  Color(0xff2D2D2D),
                       ),
                     ),
                     const SizedBox(height: 6),
                     Text(
                       location ?? "No Location",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey.shade700,
+                      style:GoogleFonts.sora(
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
+                        color: Colors.grey.shade700,
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -106,17 +107,18 @@ class CafeDetailsPage extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           rating.toString(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                          style:GoogleFonts.sora(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           "($reviews reviews)",
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
+                          style: GoogleFonts.sora(
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade600
                           ),
                         ),
                       ],
@@ -126,17 +128,17 @@ class CafeDetailsPage extends StatelessWidget {
                       children: [
                         Text(
                           "Open Now",
-                          style: TextStyle(
-                            color: Colors.green.shade700,
+                          style: GoogleFonts.sora(
                             fontWeight: FontWeight.w700,
+                            color: Colors.green.shade700
                           ),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           "• Closes 11:00 PM",
-                          style: TextStyle(
-                            color: Colors.green.shade700,
-                            fontWeight: FontWeight.w600,
+                          style: GoogleFonts.sora(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.green.shade700
                           ),
                         ),
                       ],
@@ -164,26 +166,26 @@ class CafeDetailsPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 28),
-                    const Text(
+                     Text(
                       "About",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
+                      style: GoogleFonts.plusJakartaSans(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       description ?? "gyuabdhyuagdyubnasudcgyuascbhjsdabyugyushabdyisayudgyusdagyugsduy",
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                        height: 1.5,
-                        fontSize: 15,
+                      style: GoogleFonts.sora(
+                          fontSize: 14,
+                          height: 1.5,
+                          color: Colors.grey.shade700
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       "Highlights",
-                      style: TextStyle(
+                      style: GoogleFonts.plusJakartaSans(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),

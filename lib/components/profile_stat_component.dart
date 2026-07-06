@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/custom_color.dart';
 
 class ProfileStatComponent extends StatelessWidget {
@@ -18,18 +19,18 @@ class ProfileStatComponent extends StatelessWidget {
       children: [
         Text(
           count,
-          style: const TextStyle(
-            color: CustomColors.white,
-            fontSize: 20,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 18,
             fontWeight: FontWeight.w700,
+            color: CustomColors.white.withOpacity(0.85),
           ),
         ),
         const SizedBox(height: 4),
         Text(
           title,
-          style: TextStyle(
+          style: GoogleFonts.sora(
+            fontSize: 14,
             color: CustomColors.white.withOpacity(0.85),
-            fontSize: 13,
           ),
         ),
       ],

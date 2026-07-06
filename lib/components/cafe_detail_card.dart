@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CafeDetailCard extends StatelessWidget {
 
@@ -37,8 +38,8 @@ class CafeDetailCard extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
+          style: GoogleFonts.sora(
+              fontWeight: FontWeight.w600,
           ),
         ),
       ) : Column(
@@ -64,9 +65,9 @@ class CafeDetailCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             title,
-            style: TextStyle(
-              color: Colors.grey.shade700,
-              fontWeight: FontWeight.w500,
+            style:GoogleFonts.sora(
+                fontWeight: FontWeight.w500,
+                color: Colors.grey.shade700
             ),
           ),
         ],

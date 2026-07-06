@@ -14,6 +14,12 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   intl: 0.20.2
+  get: 4.7.3
+  meta: 1.17.0
+  freezed_annotation: 3.1.0
+  json_annotation: 4.11.0
+  focus_detector: ^2.0.1
+  google_fonts: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +27,9 @@ dev_dependencies:
 
   flutter_lints: ^6.0.0
   flutter_launcher_icons: "^0.14.4"
+  build_runner: 2.13.1
+  freezed: 3.2.5
+  json_serializable: 6.13.1
 
 flutter_launcher_icons:
   android: "ic_launcher"

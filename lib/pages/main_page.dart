@@ -25,7 +25,7 @@ class _MainPageState extends State<MainPage> {
 
     _selectedPageIndex = 0;
     _pages = [
-      const HomePage(),
+      HomePage(),
       const ReservationPage(showBackArrow: false),
       const FavoritePage(),
       const ProfilePage(),
@@ -91,25 +91,26 @@ class _MainPageState extends State<MainPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: CustomColors.white,
+        backgroundColor: Colors.transparent,
         body: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: _pages,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white10,
-          selectedItemColor: CustomColors.secondary,
+          backgroundColor: Colors.transparent,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: CustomColors.white,
           unselectedIconTheme: const IconThemeData(
-            color: CustomColors.secondary,
+            color: CustomColors.midGray,
           ),
-          unselectedItemColor: CustomColors.secondary,
+          unselectedItemColor: CustomColors.midGray,
           selectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 10,
-              color: CustomColors.secondary),
+              color: CustomColors.white),
           unselectedLabelStyle: const TextStyle(
-              color: CustomColors.secondary,
+              color: CustomColors.midGray,
               fontSize: 10,
               fontWeight: FontWeight.w500),
           items: [

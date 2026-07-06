@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/custom_color.dart';
 
 class CustomGradientButton extends StatelessWidget {
@@ -51,11 +51,11 @@ class CustomGradientButton extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               title,
-              style: TextStyle(
-                color: CustomColors.white,
-                fontWeight: fontWeight,
+              style: GoogleFonts.plusJakartaSans(
                 fontSize: fontSize,
-              ),
+                fontWeight: fontWeight,
+                color: CustomColors.white,
+              )
             ),
           ),
         ),

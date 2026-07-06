@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/custom_color.dart';
 
@@ -25,12 +26,12 @@ class HomeMenuCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: gradient),
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
               color: gradient.last.withOpacity(0.35),
-              blurRadius: 14,
-              offset: const Offset(0, 8),
+              blurRadius: 4,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
@@ -41,7 +42,7 @@ class HomeMenuCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   color: CustomColors.white.withOpacity(0.18),
                   borderRadius:
@@ -50,7 +51,7 @@ class HomeMenuCard extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: CustomColors.white,
-                  size: 30,
+                  size: 18,
                 ),
               ),
               Column(
@@ -58,17 +59,18 @@ class HomeMenuCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: CustomColors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: TextStyle(
+                    style: GoogleFonts.sora(
                       color: CustomColors.white.withOpacity(0.9),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],

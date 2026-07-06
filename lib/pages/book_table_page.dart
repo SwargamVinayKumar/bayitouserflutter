@@ -2,6 +2,7 @@ import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/components/table_seat_item.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../components/people_count_component.dart';
 import '../components/section_title_item.dart';
@@ -33,13 +34,20 @@ class _BookTablePageState extends State<BookTablePage> {
     "12:00 PM",
   ];
 
-  List<TableModel> tables = List.generate(6, (index) => TableModel(
+  final List<String> seatNames = [
+    "Corner",
+    "Professional",
+    "Family",
+    "Study",
+    "Business",
+    "Window",
+  ];
+
+  late List<TableModel> tables = List.generate(
+    seatNames.length,
+        (index) => TableModel(
       id: index + 1,
-      seatName: index % 3 == 0
-          ? "Corner"
-          : index % 3 == 1
-          ? "Middle"
-          : "Window",
+      seatName: seatNames[index],
       type: SeatType.available,
     ),
   );
@@ -66,13 +74,13 @@ class _BookTablePageState extends State<BookTablePage> {
                         Navigator.pop(context);
                       }),
                       const SizedBox(width: 14),
-                      const Expanded(
+                       Expanded(
                         child: Text(
                           "Book Table",
-                          style: TextStyle(
-                            color: CustomColors.white,
-                            fontSize: 24,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 22,
                             fontWeight: FontWeight.w700,
+                            color: CustomColors.white,
                           ),
                         ),
                       ),
@@ -105,18 +113,18 @@ class _BookTablePageState extends State<BookTablePage> {
                             children: [
                               Text(
                                 widget.name ?? "No Name",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
+                                style: GoogleFonts.sora(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: CustomColors.white,
                                 ),
                               ),
                               SizedBox(height: 4),
                               Text(
                                 widget.location ?? "No Location",
-                                style: TextStyle(
+                                style: GoogleFonts.sora(
+                                  fontSize: 16,
                                   color: Colors.white70,
-                                  fontSize: 15,
                                 ),
                               ),
                               SizedBox(height: 8),
@@ -130,10 +138,11 @@ class _BookTablePageState extends State<BookTablePage> {
                                   SizedBox(width: 4),
                                   Text(
                                     (widget.rating ?? 0.0).toString(),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
+                                    style: GoogleFonts.sora(
+                                      fontSize: 14,
+                                      color: CustomColors.white,
                                     ),
+
                                   ),
                                 ],
                               )
@@ -174,9 +183,9 @@ class _BookTablePageState extends State<BookTablePage> {
                             DateFormat(
                               "EEE, d MMM yyyy",
                             ).format(selectedDate),
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: GoogleFonts.sora(
                               fontSize: 18,
+                              color: CustomColors.white,
                             ),
                           ),
                           const Icon(
@@ -367,8 +376,8 @@ class _BookTablePageState extends State<BookTablePage> {
         const SizedBox(width: 6),
         Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
+          style: GoogleFonts.sora(
+            color: CustomColors.white,
           ),
         ),
       ],
@@ -415,9 +424,9 @@ class TimeSlotWidget extends StatelessWidget {
       child: Center(
         child: Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: GoogleFonts.sora(
             fontWeight: FontWeight.w600,
+            color: CustomColors.white,
           ),
         ),
       ),

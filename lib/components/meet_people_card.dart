@@ -1,5 +1,6 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/custom_color.dart';
 
@@ -64,28 +65,28 @@ class MeetPeopleCard extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: const TextStyle(
-                      color: CustomColors.white,
+                    style:GoogleFonts.plusJakartaSans(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
+                      color: CustomColors.white,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     category,
-                    style: TextStyle(
-                      color: CustomColors.white.withOpacity(0.85),
-                      fontSize: 13,
+                    style: GoogleFonts.sora(
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
+                      color: CustomColors.white.withOpacity(0.85),
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     profession,
-                    style: TextStyle(
-                      color: CustomColors.white.withOpacity(0.85),
-                      fontSize: 13,
+                    style: GoogleFonts.sora(
+                      fontSize: 10,
                       fontWeight: FontWeight.w500,
+                      color: CustomColors.white.withOpacity(0.85),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -102,10 +103,10 @@ class MeetPeopleCard extends StatelessWidget {
                       const SizedBox(width: 5),
                       Text(
                         "Online",
-                        style: TextStyle(
-                          color: Colors.greenAccent.shade100,
+                        style: GoogleFonts.sora(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
+                          color: Colors.greenAccent.shade100,
                         ),
                       ),
                     ],
