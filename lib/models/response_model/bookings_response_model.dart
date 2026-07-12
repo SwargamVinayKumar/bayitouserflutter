@@ -1,0 +1,233 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'auth_response_model.dart';
+
+
+part 'bookings_response_model.freezed.dart';
+part 'bookings_response_model.g.dart';
+
+
+@Freezed()
+class HomeUnitAvailabilityResponseModel with _$HomeUnitAvailabilityResponseModel {
+  const factory HomeUnitAvailabilityResponseModel({
+    int? status,
+    String? message,
+    HomeUnitBookingDataModel? data
+  }) = _HomeUnitAvailabilityResponseModel;
+
+  factory HomeUnitAvailabilityResponseModel.fromJson(Map<String, dynamic> json) => _$HomeUnitAvailabilityResponseModelFromJson(json);
+}
+
+@Freezed()
+class ConfirmBookingResponseModel with _$ConfirmBookingResponseModel{
+  const factory ConfirmBookingResponseModel({
+    int? status,
+    String? message,
+    HomeUnitBookingDataModel? data
+  }) = _ConfirmBookingResponseModel;
+
+  factory ConfirmBookingResponseModel.fromJson(Map<String, dynamic> json) => _$ConfirmBookingResponseModelFromJson(json);
+}
+
+
+@Freezed()
+class HomeUnitAvailabilityDatesResponseModel with _$HomeUnitAvailabilityDatesResponseModel {
+  const factory HomeUnitAvailabilityDatesResponseModel({
+    int? status,
+    String? message,
+    List<AvailabilityDataModel>? data
+  }) = _HomeUnitAvailabilityDatesResponseModel;
+
+  factory HomeUnitAvailabilityDatesResponseModel.fromJson(Map<String, dynamic> json) => _$HomeUnitAvailabilityDatesResponseModelFromJson(json);
+}
+
+
+@Freezed()
+class AvailabilityDataModel with _$AvailabilityDataModel {
+  const factory AvailabilityDataModel({
+    String? date,
+    String? status,
+  }) = _AvailabilityDataModel;
+
+  factory AvailabilityDataModel.fromJson(Map<String, dynamic> json) => _$AvailabilityDataModelFromJson(json);
+}
+
+
+@Freezed()
+class GuestDetailsModel with _$GuestDetailsModel{
+  const factory GuestDetailsModel({
+    String? name,
+    int? mobile,
+    String? aadharImage,
+    String? aadharNumber,
+    String? gender,
+    String? dob
+  }) = _GuestDetailsModel;
+
+  factory GuestDetailsModel.fromJson(Map<String, dynamic> json) => _$GuestDetailsModelFromJson(json);
+}
+
+
+@Freezed()
+class HomeUnitBookingDataModel with _$HomeUnitBookingDataModel {
+  const factory HomeUnitBookingDataModel({
+    dynamic walletBalance,
+    int? amount,
+    int? discount,
+    int? walletDeduction,
+    int? subTotal,
+    List<AmountDetailsModel>? paymentDetailLogs,
+    List<BookingModel>? onGoingBookings,
+    BookingModel? bookingResponse,
+    TransactionDataModel? transactionResponse,
+    SubscriptionModel? subscription,
+    RazorpaySubscriptionModel? razorpaySubscription
+  }) = _HomeUnitBookingDataModel;
+
+  factory HomeUnitBookingDataModel.fromJson(Map<String, dynamic> json) => _$HomeUnitBookingDataModelFromJson(json);
+}
+
+
+@Freezed()
+class RazorpaySubscriptionModel with _$RazorpaySubscriptionModel {
+  const factory RazorpaySubscriptionModel({
+    String? id,
+    String? status,
+    int? currentStart,
+    int? currentEnd,
+    int? paidCount,
+    int? totalCount
+  }) = _RazorpaySubscriptionModel;
+
+  factory RazorpaySubscriptionModel.fromJson(Map<String, dynamic> json) => _$RazorpaySubscriptionModelFromJson(json);
+}
+
+
+@Freezed()
+class FetchTransactionsResponseModel with _$FetchTransactionsResponseModel {
+  const factory FetchTransactionsResponseModel({
+    int? status,
+    String? message,
+    List<TransactionDataModel>? data
+  }) = _FetchTransactionsResponseModel;
+
+  factory FetchTransactionsResponseModel.fromJson(Map<String, dynamic> json) => _$FetchTransactionsResponseModelFromJson(json);
+}
+
+@Freezed()
+class TransactionDataModel with _$TransactionDataModel {
+  const factory TransactionDataModel({
+    @JsonKey(name:'_id') String? id,
+    String? userTitle,
+    String? hostTitle,
+    String? transactionType,
+    String? paymentStatus,
+    dynamic userId,
+    dynamic hostId,
+    dynamic bookingId,
+    dynamic withdrawTransactionId,
+    String? withdrawStatus,
+    String? failedReason,
+    String? orderId,
+    String? paymentId,
+    dynamic amount,
+    List<AmountDetailsModel>? logs,
+    DateTime? createdAt,
+    PaymentDetailModel? paymentDetails
+  }) = _TransactionDataModel;
+
+  factory TransactionDataModel.fromJson(Map<String, dynamic> json) => _$TransactionDataModelFromJson(json);
+}
+
+@Freezed()
+class PaymentDetailModel with _$PaymentDetailModel {
+  const factory PaymentDetailModel({
+    dynamic amount,
+    dynamic discount,
+    bool? discountByAdmin,
+    dynamic unitGstPercentage,
+    dynamic unitGst,
+    dynamic platformCharges,
+    dynamic platformGstPercentage,
+    dynamic platformChargesBase,
+    dynamic platformChargesGst,
+    dynamic walletDeduction,
+    dynamic subTotal,
+    dynamic refundedAmount,
+    dynamic chargePercentage,
+    dynamic chargeAmount,
+    dynamic chargeGst,
+    dynamic outwardBaseAmount,
+    dynamic outwardGst,
+    dynamic outwardAmount,
+    dynamic profitExcludingItc,
+    dynamic profitIncludingItc,
+  }) = _PaymentDetailModel;
+
+  factory PaymentDetailModel.fromJson(Map<String, dynamic> json) => _$PaymentDetailModelFromJson(json);
+}
+
+@Freezed()
+class AmountDetailsModel with _$AmountDetailsModel {
+  const factory AmountDetailsModel({
+    String? message,
+    String? amount,
+  }) = _AmountDetailsModel;
+
+  factory AmountDetailsModel.fromJson(Map<String, dynamic> json) => _$AmountDetailsModelFromJson(json);
+}
+
+@Freezed()
+class FetchBookingsResponseModel with _$FetchBookingsResponseModel{
+  const factory FetchBookingsResponseModel({
+    int? status,
+    String? message,
+    List<BookingModel>? data
+  }) = _FetchBookingsResponseModel;
+
+  factory FetchBookingsResponseModel.fromJson(Map<String, dynamic> json) => _$FetchBookingsResponseModelFromJson(json);
+}
+
+@Freezed()
+class FetchBookingDetailsResponseModel with _$FetchBookingDetailsResponseModel{
+  const factory FetchBookingDetailsResponseModel({
+    int? status,
+    String? message,
+    BookingModel? data
+  }) = _FetchBookingDetailsResponseModel;
+
+  factory FetchBookingDetailsResponseModel.fromJson(Map<String, dynamic> json) => _$FetchBookingDetailsResponseModelFromJson(json);
+}
+
+@Freezed()
+class BookingModel with _$BookingModel {
+  const factory BookingModel({
+    @JsonKey(name:'_id') String? id,
+    String? bookedBy,
+    dynamic userId,
+    dynamic hostId,
+    dynamic homeId,
+    dynamic unitId,
+    dynamic transactionId,
+    String? orderId,
+    String? paymentId,
+    String? paymentStatus,
+    DateTime? checkInDate,
+    DateTime? checkOutDate,
+    int? guestCount,
+    int? amount,
+    int? discount,
+    int? walletDeduction,
+    int? subTotal,
+    List<GuestDetailsModel>? guestDetailsList,
+    List<AmountDetailsModel>? logs,
+    String? bookingStatus,
+    DateTime? createdAt
+  }) = _BookingModel;
+
+  factory BookingModel.fromJson(Map<String, dynamic> json) => _$BookingModelFromJson(json);
+}
+
+
+
+
