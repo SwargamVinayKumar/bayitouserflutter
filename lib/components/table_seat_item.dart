@@ -1,10 +1,10 @@
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
-import '../models/responseModels/table_model.dart';
+
+import '../models/response_model/table_response_model.dart';
 
 
 class TableSeatItem extends StatelessWidget {
-
   final TableModel table;
 
   const TableSeatItem({super.key, required this.table,});
@@ -12,21 +12,22 @@ class TableSeatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Color color;
+    Color color = CustomColors.white;
     switch(table.type){
-      case SeatType.available:
+      case "available":
         color = CustomColors.white;
         break;
-      case SeatType.selected:
+      case "selected":
         color = CustomColors.secondary;
         break;
-      case SeatType.booked:
+      case 'booked':
         color = CustomColors.midGray;
         break;
     }
+
     return Container(
       decoration: BoxDecoration(
-        color: color.withOpacity(0.9),
+        color: color,
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
@@ -48,7 +49,7 @@ class TableSeatItem extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            table.seatName,
+            table?.seatName ?? "",
             style: const TextStyle(
               color: CustomColors.darkBlack,
               fontSize: 13,

@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../components/people_count_component.dart';
 import '../components/section_title_item.dart';
-import '../models/responseModels/table_model.dart';
+import '../models/response_model/table_response_model.dart';
 import '../utils/custom_color.dart';
 
 
@@ -48,7 +48,7 @@ class _BookTablePageState extends State<BookTablePage> {
         (index) => TableModel(
       id: index + 1,
       seatName: seatNames[index],
-      type: SeatType.available,
+      type: "available",
     ),
   );
 
@@ -288,16 +288,7 @@ class _BookTablePageState extends State<BookTablePage> {
                         TableModel table = tables[index];
                         return GestureDetector(
                           onTap: (){
-                            if(table.type == SeatType.available || table.type == SeatType.selected){
-                              setState(() {
-                                for(var t in tables){
-                                  if(t.type == SeatType.selected){
-                                    t.type = SeatType.available;
-                                  }
-                                }
-                                table.type = SeatType.selected;
-                              });
-                            }
+
                           },
                           child: TableSeatItem(
                             table: table,
@@ -308,7 +299,7 @@ class _BookTablePageState extends State<BookTablePage> {
                   ),
                   const SizedBox(height: 30),
                   CustomGradientButton(title: "Confirm Reservation", onTap: () {
-                    bool hasSelection = tables.any((table) => table.type == SeatType.selected,);
+                    bool hasSelection = tables.any((table) => table.type == "selected",);
                     if(!hasSelection){
                       ScaffoldMessenger.of(context)
                           .showSnackBar(
@@ -321,11 +312,7 @@ class _BookTablePageState extends State<BookTablePage> {
                       return;
                     }
                     setState(() {
-                      for(var t in tables){
-                        if(t.type == SeatType.selected){
-                          t.type = SeatType.booked;
-                        }
-                      }
+
                     });
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Reservation Confirmed",),
                       ),
