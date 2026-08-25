@@ -23,7 +23,7 @@ class PeopleCountComponent extends StatelessWidget {
         vertical: 8,
       ),
       decoration: BoxDecoration(
-        color: CustomColors.white.withOpacity(0.08),
+        color: CustomColors.secondary.withOpacity(0.8),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: Colors.white24,
@@ -37,8 +37,7 @@ class PeopleCountComponent extends StatelessWidget {
             child: Container(
               height: 30,
               width: 30,
-              decoration: BoxDecoration(
-                color: CustomColors.white.withOpacity(0.08),
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -64,8 +63,7 @@ class PeopleCountComponent extends StatelessWidget {
             child: Container(
               height: 30,
               width: 30,
-              decoration: BoxDecoration(
-                color: CustomColors.white.withOpacity(0.08),
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
               child: const Icon(

@@ -2,8 +2,11 @@ import 'package:bayitouser/components/cafe_detail_card.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/pages/book_table_page.dart';
+import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+
 
 class CafeDetailsPage extends StatelessWidget {
   final String image;
@@ -52,7 +55,7 @@ class CafeDetailsPage extends StatelessWidget {
                   CustomActionButton(
                     icon: Icons.arrow_back_ios_new_rounded,
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                   ),
                   CustomActionButton(
@@ -84,7 +87,7 @@ class CafeDetailsPage extends StatelessWidget {
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 28,
                         fontWeight: FontWeight.w800,
-                        color:  Color(0xff2D2D2D),
+                        color: CustomColors.secondary,
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -130,7 +133,7 @@ class CafeDetailsPage extends StatelessWidget {
                           "Open Now",
                           style: GoogleFonts.sora(
                             fontWeight: FontWeight.w700,
-                            color: Colors.green.shade700
+                            color: CustomColors.secondary.withOpacity(0.7)
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -138,15 +141,15 @@ class CafeDetailsPage extends StatelessWidget {
                           "• Closes 11:00 PM",
                           style: GoogleFonts.sora(
                               fontWeight: FontWeight.w600,
-                              color: Colors.green.shade700
+                              color: CustomColors.secondary.withOpacity(0.7)
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 28),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         CafeDetailCard(
                           icon: Icons.call_outlined,
                           title: "Call",
@@ -170,6 +173,7 @@ class CafeDetailsPage extends StatelessWidget {
                       "About",
                       style: GoogleFonts.plusJakartaSans(
                           fontSize: 18,
+                          color: CustomColors.darkBlack,
                           fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -179,7 +183,7 @@ class CafeDetailsPage extends StatelessWidget {
                       style: GoogleFonts.sora(
                           fontSize: 14,
                           height: 1.5,
-                          color: Colors.grey.shade700
+                          color: CustomColors.secondary.withOpacity(0.8),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -187,19 +191,20 @@ class CafeDetailsPage extends StatelessWidget {
                       "Highlights",
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 18,
+                        color: CustomColors.darkBlack,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 14),
-                    Wrap(
+                    const Wrap(
                       spacing: 10,
                       runSpacing: 10,
-                      children: const [
+                      children: [
                         CafeDetailCard(title: "Free WiFi",isChip: true),
                         CafeDetailCard(title: "Live Music",isChip: true),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     showButton == true ?  CustomGradientButton(
                       title: "Book Table",
                       onTap: () {
@@ -210,7 +215,7 @@ class CafeDetailsPage extends StatelessWidget {
                           ),
                         );
                       },
-                    ) : SizedBox(),
+                    ) : const SizedBox(),
                   ],
                 ),
               ),

@@ -1,12 +1,8 @@
-import 'package:bayitouser/pages/book_table_page.dart';
 import 'package:bayitouser/pages/sign_in_page.dart';
-import 'package:bayitouser/utils/auth_utils.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../models/request_model/auth_request_model.dart';
 import '../view_models/auth_view_model.dart';
 import '../view_models/home_view_model.dart';
 
@@ -24,27 +20,26 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return StatefulWrapper(
       onInit: () async {
-
-        await authViewModel.fetchCurrentLocation();
-        final version = await AuthUtils.getAppVersion();
-        await authViewModel.validateVersion(ValidateVersionRequestModel(version: version,location: authViewModel.locationDetails.value), homeViewModel);
-        // Future.delayed(const Duration(seconds: 2), () { Get.offAll(() =>  const MainPage()); });
+        // await authViewModel.fetchCurrentLocation();
+        // final version = await AuthUtils.getAppVersion();
+        // await authViewModel.validateVersion(ValidateVersionRequestModel(version: version,location: authViewModel.locationDetails.value), homeViewModel);
+        Future.delayed(const Duration(seconds: 2), () { Get.offAll(() =>  const SignInPage()); });
       },
       child: Scaffold(
+        backgroundColor: CustomColors.secondary,
         body: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/splash.png',
+                'assets/images/bayitoLogo.png',
                 fit: BoxFit.cover,
                 width: double.infinity,
               ),
-              SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: CustomColors.white,strokeWidth: 0.5,))
+              const SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: CustomColors.white,strokeWidth: 0.5,))
             ],
           ),
         ),

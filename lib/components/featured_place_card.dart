@@ -21,10 +21,10 @@ class FeaturedPlaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: CustomColors.secondary.withOpacity(0.08),
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
-          color: Colors.white12,
+          color: CustomColors.secondary.withOpacity(0.1),
         ),
       ),
       child: ClipRRect(
@@ -85,7 +85,7 @@ class FeaturedPlaceCard extends StatelessWidget {
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: CustomColors.white,
+                      color: CustomColors.secondary,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -100,7 +100,7 @@ class FeaturedPlaceCard extends StatelessWidget {
                       Text(
                         location,
                         style: GoogleFonts.sora(
-                          color: CustomColors.white.withOpacity(0.7),
+                          color: CustomColors.secondary.withOpacity(0.7),
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),

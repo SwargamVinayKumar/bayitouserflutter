@@ -17,10 +17,10 @@ class ProfileHeaderComponent extends StatelessWidget {
         right: 20,
       ),
       decoration: const BoxDecoration(
+        color: CustomColors.secondary,
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(40),
         ),
-        gradient: CustomColors.mainGradientColor,
       ),
       child: Column(
         children: [
@@ -60,7 +60,6 @@ class ProfileHeaderComponent extends StatelessWidget {
                   ),
                 ),
               ),
-
               Positioned(
                 right: 0,
                 bottom: 0,

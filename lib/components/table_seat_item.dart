@@ -15,7 +15,7 @@ class TableSeatItem extends StatelessWidget {
     Color color = CustomColors.white;
     switch(table.type){
       case "available":
-        color = CustomColors.white;
+        color = CustomColors.red;
         break;
       case "selected":
         color = CustomColors.secondary;

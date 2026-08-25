@@ -33,7 +33,7 @@ class HelperBottomSheet extends StatelessWidget {
               SizedBox(height: 20),
               SizedBox(height: 150,width: 150,child: Image.asset(assetImage ?? "assets/images/no_data_founded.png")),
               const SizedBox(height: 10),
-              Text(title ?? "",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w800,fontSize: 18,color: CustomColors.textColor),),
+              Text(title ?? "",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w800,fontSize: 18,color: CustomColors.primary),),
               const SizedBox(height: 10),
               Text(message ?? "",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: CustomColors.darkGray),),
               const SizedBox(height: 20),
@@ -55,7 +55,7 @@ class HelperBottomSheet extends StatelessWidget {
                             child: Text(
                               btn1Txt ?? "",
                               style: TextStyle(
-                                color: CustomColors.textColor,
+                                color: CustomColors.primary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                               ),

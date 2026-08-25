@@ -31,7 +31,7 @@ class UserBlocked extends StatelessWidget {
                   onTap: launchEmail,
                   child:  Text("Please Contact admin for support \n hopnhost@gmail.com",textAlign: TextAlign.center,style: TextStyle(
                       fontSize: 16,
-                      color: CustomColors.textColor,
+                      color: CustomColors.primary,
                       fontWeight: FontWeight.w800,
                       fontStyle: FontStyle.normal
                   )),

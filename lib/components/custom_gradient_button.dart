@@ -11,7 +11,7 @@ class CustomGradientButton extends StatelessWidget {
   final double borderRadius;
   final double fontSize;
   final FontWeight fontWeight;
-  final List<Color> gradientColors;
+  final Color? btnColor;
 
   const CustomGradientButton({
     super.key,
@@ -22,7 +22,7 @@ class CustomGradientButton extends StatelessWidget {
     this.borderRadius = 14,
     this.fontSize = 14,
     this.fontWeight = FontWeight.w700,
-    this.gradientColors = CustomColors.secondaryGradient,
+    this.btnColor = CustomColors.secondary,
   });
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,7 @@ class CustomGradientButton extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
-            gradient: LinearGradient(
-              colors: gradientColors,
-            ),
+            color: btnColor,
           ),
           child: Container(
             alignment: Alignment.center,

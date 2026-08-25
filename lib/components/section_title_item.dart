@@ -14,7 +14,7 @@ class SectionTitleItem extends StatelessWidget {
       style: GoogleFonts.plusJakartaSans(
         fontSize: fontSize,
         fontWeight: FontWeight.w600,
-        color: CustomColors.white,
+        color: CustomColors.secondary,
       ),
     );
   }

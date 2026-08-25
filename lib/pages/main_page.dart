@@ -44,15 +44,15 @@ class _MainPageState extends State<MainPage> {
       bool confirmExit = await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Confirm Exit'),
-          content: const Text('Are you sure you want to exit the app?'),
+          title: const Text('Confirm Exit',style: TextStyle(color: CustomColors.secondary),),
+          content: const Text('Are you sure you want to exit the app?',style: TextStyle(color: CustomColors.secondary)),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.pop(context,false);
                 // Get.back(result: false);
               },
-              child: const Text('No'),
+              child: const Text('No',style: TextStyle(color: CustomColors.secondary)),
             ),
             TextButton(
               onPressed: () {
@@ -60,7 +60,7 @@ class _MainPageState extends State<MainPage> {
 
                 // Get.back(result: true);
               },
-              child: const Text('Yes'),
+              child: const Text('Yes',style: TextStyle(color: CustomColors.secondary)),
             ),
           ],
         ),
@@ -116,26 +116,26 @@ class _MainPageState extends State<MainPage> {
           items: [
             BottomNavigationBarItem(
               icon: _selectedIndex == 0
-                  ? Icon(Icons.home_filled,size: 30,)
-                  : Icon(Icons.home_outlined,size: 30,),
+                  ? const Icon(Icons.home_filled,size: 30,)
+                  : const Icon(Icons.home_outlined,size: 30,),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: _selectedIndex == 1
-                  ? Icon(Icons.check_circle,size: 30,)
-                  : Icon(Icons.check_circle_outline,size: 30,),
+                  ? const Icon(Icons.check_circle,size: 30,)
+                  : const Icon(Icons.check_circle_outline,size: 30,),
               label: 'Reservations',
             ),
             BottomNavigationBarItem(
               icon: _selectedIndex == 2
-                  ? Icon(Icons.favorite,size: 30)
-                  : Icon(Icons.favorite_border,size: 30),
+                  ? const Icon(Icons.favorite,size: 30)
+                  : const Icon(Icons.favorite_border,size: 30),
               label: 'Favorites',
             ),
             BottomNavigationBarItem(
               icon: _selectedIndex == 3
-                  ? Icon(Icons.person,size: 30,)
-                  : Icon(Icons.person_outline,size: 30),
+                  ? const Icon(Icons.person,size: 30,)
+                  : const Icon(Icons.person_outline,size: 30),
               label: 'Profile',
             ),
           ],

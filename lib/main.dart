@@ -1,3 +1,4 @@
+import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:bayitouser/pages/splash_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/utils/firebase_notification.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 
 import 'firebase_options.dart';
 
@@ -47,13 +49,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Bayito',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SplashPage(),
+      home: const SplashPage(),
     );
   }
 }

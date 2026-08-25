@@ -12,7 +12,7 @@ class FavoritePage extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: CustomColors.mainGradientColor,
+          color: CustomColors.primary,
         ),
         child: SafeArea(
           child: Padding(

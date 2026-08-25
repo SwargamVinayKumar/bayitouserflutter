@@ -59,7 +59,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 onChanged: widget.onChanged,
                 readOnly: widget.isReadOnly,
                 style: const TextStyle(
-                  color: CustomColors.white,
+                  color: CustomColors.secondary,
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,

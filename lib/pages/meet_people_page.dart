@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/custom_action_button.dart';
 import '../components/custom_search_bar.dart';
@@ -103,87 +104,81 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: CustomColors.mainGradientColor,
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    CustomActionButton(
-                      icon: Icons.arrow_back_ios_new_rounded,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const SizedBox(width: 14),
-                     Expanded(
-                      child: Text(
-                        "Meet People",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color: CustomColors.white,
-                        ),
+      backgroundColor: CustomColors.primary,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  CustomActionButton(
+                    icon: Icons.arrow_back_ios_new_rounded,
+                    onTap: () {
+                      Get.back();
+                    },
+                  ),
+                  const SizedBox(width: 14),
+                   Expanded(
+                    child: Text(
+                      "Meet People",
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: CustomColors.secondary,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                CustomSearchBar(
-                  controller: searchController,
-                  onChanged: searchPeople,
-                  hinTxt: "Search people or profession",
-                ),
-                const SizedBox(height: 20),
-                ValueListenableBuilder<int>(
-                  valueListenable: selectedIndex,
-                  builder: (context, value, child) {
-                    return CustomTabs(
-                      tabs: tabs,
-                      selectedIndex: value,
-                      onChanged: filterByTab,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              CustomSearchBar(
+                controller: searchController,
+                onChanged: searchPeople,
+                hinTxt: "Search people or profession",
+              ),
+              const SizedBox(height: 20),
+              ValueListenableBuilder<int>(
+                valueListenable: selectedIndex,
+                builder: (context, value, child) {
+                  return CustomTabs(
+                    tabs: tabs,
+                    selectedIndex: value,
+                    onChanged: filterByTab,
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: filteredPeopleList.isEmpty
+                    ? const Center(
+                  child: Text(
+                    "No People Found",
+                    style: TextStyle(
+                      color: CustomColors.secondary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ) : ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: filteredPeopleList.length,
+                  itemBuilder: (context, index) {
+                    final people = filteredPeopleList[index];
+                    return MeetPeopleCard(
+                      image: people["image"],
+                      name: people["name"],
+                      category:  people["category"],
+                      profession: people["profession"],
+                      onTap: () {},
                     );
                   },
                 ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: filteredPeopleList.isEmpty
-                      ? const Center(
-                    child: Text(
-                      "No People Found",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ) : ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: filteredPeopleList.length,
-                    itemBuilder: (context, index) {
-                      final people = filteredPeopleList[index];
-                      return MeetPeopleCard(
-                        image: people["image"],
-                        name: people["name"],
-                        category:  people["category"],
-                        profession: people["profession"],
-                        onTap: () {},
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -11,10 +11,10 @@ class AppStyles {
         borderRadius: BorderRadius.circular(10),
           gradient: LinearGradient(
         colors: [
-          CustomColors.primary,
-          CustomColors.primary1,
-          CustomColors.primary2,
-          CustomColors.primary3,
+          CustomColors.secondary,
+          CustomColors.secondary,
+          CustomColors.secondary,
+          CustomColors.secondary,
         ],
         transform: GradientRotation(0.1), // rotates the gradient (in radians)
       )
@@ -24,27 +24,27 @@ class AppStyles {
   static final lightGradient = BoxDecoration(
       gradient: LinearGradient(
         colors: [
-          CustomColors.primary.withOpacity(0.2),
-          CustomColors.primary1.withOpacity(0.2),
-          CustomColors.primary2.withOpacity(0.2),
-          CustomColors.primary3.withOpacity(0.2),
+          CustomColors.secondary.withOpacity(0.2),
+          CustomColors.secondary.withOpacity(0.2),
+          CustomColors.secondary.withOpacity(0.2),
+          CustomColors.secondary.withOpacity(0.2),
         ],
         transform: GradientRotation(0.1), // rotates the gradient (in radians)
       )
   );
 
       static  final  selectedCategoryBg = BoxDecoration(
-          color:  CustomColors.primary.withOpacity(0.2)
+          color:  CustomColors.secondary.withOpacity(0.2)
           ,borderRadius: BorderRadius.circular(15),
           border: Border.all(
               width: 0.5,
-              color: CustomColors.primary
+              color: CustomColors.secondary
           )
       );
 
 
   static  final  primaryBackground = BoxDecoration(
-      color: CustomColors.primary
+      color: CustomColors.secondary
       ,borderRadius: BorderRadius.circular(15)
   );
 
@@ -176,7 +176,7 @@ class AppStyles {
       color: Colors.white
       ,borderRadius: BorderRadius.circular(15),
       border: Border.all(
-        color: CustomColors.textColor.withOpacity(0.5), // Set the border color (you can adjust the shade of green)
+        color: CustomColors.primary.withOpacity(0.5), // Set the border color (you can adjust the shade of green)
         width: 0.5, // Set the border width
       )
   );
@@ -201,10 +201,10 @@ class AppStyles {
     static  final  primaryContainerStyle = BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            CustomColors.primary,
-            CustomColors.primary1,
-            CustomColors.primary2,
-            CustomColors.primary3,
+            CustomColors.secondary,
+            CustomColors.secondary,
+            CustomColors.secondary,
+            CustomColors.secondary,
           ],
           transform: GradientRotation(0.1), // rotates the gradient (in radians)
         )
@@ -216,9 +216,9 @@ class AppStyles {
       gradient: LinearGradient(
         colors: [
           CustomColors.primary.withOpacity(0.5),
-          CustomColors.primary1.withOpacity(0.5),
-          CustomColors.primary2.withOpacity(0.5),
-          CustomColors.primary3.withOpacity(0.5),
+          CustomColors.secondary.withOpacity(0.5),
+          CustomColors.secondary.withOpacity(0.5),
+          CustomColors.secondary.withOpacity(0.5),
         ],
         transform: GradientRotation(0.1), // rotates the gradient (in radians)
       )
@@ -227,10 +227,10 @@ class AppStyles {
 
     static  final  horizontalGradient = LinearGradient(
       colors: [
-        CustomColors.primary,
-        CustomColors.primary1,
-        CustomColors.primary2,
-        CustomColors.primary3,
+        CustomColors.secondary,
+        CustomColors.secondary,
+        CustomColors.secondary,
+        CustomColors.secondary,
       ],
       transform: GradientRotation(0.1), // rotates the gradient (in radians)
     );

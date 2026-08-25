@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../utils/app_styles.dart';
-
 import '../../utils/custom_color.dart';
 
 
@@ -28,7 +25,7 @@ class PrimaryButton extends StatelessWidget {
               height: 24,
               child: CircularProgressIndicator(
                 strokeWidth: 3.0,
-                valueColor: AlwaysStoppedAnimation<Color>(CustomColors.white),
+                valueColor: const AlwaysStoppedAnimation<Color>(CustomColors.white),
                 backgroundColor: CustomColors.white.withOpacity(0.2),
               ),
             )),

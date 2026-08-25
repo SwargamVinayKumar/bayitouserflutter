@@ -55,7 +55,7 @@ class _UpdateVersionScreenState extends State<UpdateVersionScreen> {
                         const SizedBox(height: 30),
                          Text("Current Version $appVersion",textAlign: TextAlign.center,style: TextStyle(
                             fontSize: 16,
-                            color: CustomColors.textColor,
+                            color: CustomColors.primary,
                             fontWeight: FontWeight.w800,
                             fontStyle: FontStyle.normal
                         ),),

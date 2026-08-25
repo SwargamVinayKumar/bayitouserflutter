@@ -1,3 +1,4 @@
+import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,11 +28,11 @@ class CafeDetailCard extends StatelessWidget {
           vertical: 10,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: CustomColors.white,
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: CustomColors.secondary.withOpacity(0.06),
               blurRadius: 10,
             ),
           ],
@@ -48,18 +49,18 @@ class CafeDetailCard extends StatelessWidget {
             height: 52,
             width: 52,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: CustomColors.white,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: CustomColors.secondary.withOpacity(0.06),
                   blurRadius: 10,
                 ),
               ],
             ),
             child: Icon(
               icon,
-              color: const Color(0xff5B5B5B),
+              color: CustomColors.secondary.withOpacity(0.8),
             ),
           ),
           const SizedBox(height: 8),
@@ -67,7 +68,7 @@ class CafeDetailCard extends StatelessWidget {
             title,
             style:GoogleFonts.sora(
                 fontWeight: FontWeight.w500,
-                color: Colors.grey.shade700
+                color: CustomColors.secondary.withOpacity(0.6),
             ),
           ),
         ],

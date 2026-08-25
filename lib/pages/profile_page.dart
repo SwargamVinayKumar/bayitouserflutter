@@ -1,5 +1,6 @@
 import 'package:bayitouser/components/profile_header_component.dart';
 import 'package:bayitouser/components/profile_item_component.dart';
+import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,7 +10,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF7F3F0),
+      backgroundColor: CustomColors.primary,
       body: Column(
         children: [
           const ProfileHeaderComponent(),

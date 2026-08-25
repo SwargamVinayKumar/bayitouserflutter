@@ -5,6 +5,8 @@ import '../components/custom_action_button.dart';
 import '../components/reservation_cafe_card.dart';
 import '../utils/custom_color.dart';
 import 'cafe_detail_page.dart';
+import 'package:get/get.dart';
+
 
 class ReservationPage extends StatefulWidget {
   const ReservationPage({super.key,required this.showBackArrow});
@@ -67,80 +69,79 @@ class _ReservationPageState extends State<ReservationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: CustomColors.mainGradientColor,
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    widget.showBackArrow ?
-                    CustomActionButton(
-                      icon: Icons.arrow_back_ios_new_rounded,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ): SizedBox(),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Text(
-                        "Reservations",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color:  CustomColors.white,
-                        ),
+      backgroundColor: CustomColors.primary,
+      body:SafeArea(
+        child: Padding(
+          padding:
+          const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  widget.showBackArrow ?
+                  CustomActionButton(
+                    icon: Icons.arrow_back_ios_new_rounded,
+                    onTap: () {
+                      Get.back();
+                    },
+                  ): const SizedBox(),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      "Reservations",
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color:  CustomColors.secondary,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                ValueListenableBuilder<int>(
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ValueListenableBuilder<int>(
+                valueListenable: selectedIndex,
+                builder: (context, value, child) {
+                  return CustomTabs(
+                    tabs: tabs,
+                    selectedIndex: value,
+                    onChanged: (index) {
+                      selectedIndex.value = index;
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: ValueListenableBuilder<int>(
                   valueListenable: selectedIndex,
                   builder: (context, value, child) {
-                    return CustomTabs(
-                      tabs: tabs,
-                      selectedIndex: value,
-                      onChanged: (index) {
-                        selectedIndex.value = index;
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: ValueListenableBuilder<int>(
-                    valueListenable: selectedIndex,
-                    builder: (context, value, child) {
-                      final filteredList =
-                      reservationList.where((reservation) {
-                        return reservation["status"] == tabs[value];
-                      }).toList();
-                      if (filteredList.isEmpty) {
-                        return const Center(
-                          child: Text("No Reservations Found",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                    final filteredList =
+                    reservationList.where((reservation) {
+                      return reservation["status"] == tabs[value];
+                    }).toList();
+                    if (filteredList.isEmpty) {
+                      return const Center(
+                        child: Text("No Reservations Found",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
-                        );
-                      }
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: filteredList.length,
-                        itemBuilder: (context, index) {
-                          final reservation = filteredList[index];
-                          return ReservationCafeCard(
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: filteredList.length,
+                      itemBuilder: (context, index) {
+                        final reservation = filteredList[index];
+                        return InkWell(
+                          onTap: (){
+                            Get.to(() => CafeDetailsPage(image:  reservation["image"],showButton: false));
+                          },
+                          child: ReservationCafeCard(
                             image: reservation["image"],
                             cafeName: reservation["cafeName"],
                             location: reservation["location"],
@@ -148,21 +149,16 @@ class _ReservationPageState extends State<ReservationPage> {
                             time: reservation["time"],
                             table: reservation["table"],
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CafeDetailsPage(image:  reservation["image"],showButton: false),
-                                ),
-                              );
+                              Get.to(() => CafeDetailsPage(image:  reservation["image"],showButton: false));
                             },
-                          );
-                        },
-                      );
-                    },
-                  ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -32,16 +32,9 @@ class CafeCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            CustomColors.white.withOpacity(0.08),
-            CustomColors.white.withOpacity(0.03),
-          ],
-        ),
+        color:  CustomColors.secondary.withOpacity(0.03),
         border: Border.all(
-          color: CustomColors.white.withOpacity(0.08),
+          color: CustomColors.secondary.withOpacity(0.08),
         ),
         boxShadow: [
           BoxShadow(
@@ -79,11 +72,10 @@ class CafeCard extends StatelessWidget {
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: CustomColors.white,
+                            color: CustomColors.primary,
                           ),
                         ),
                       ),
-
                       Row(
                         children: [
                           const Icon(
@@ -96,7 +88,7 @@ class CafeCard extends StatelessWidget {
                             rating.toString(),
                             style: GoogleFonts.sora(
                               fontWeight: FontWeight.w600,
-                              color: CustomColors.white,
+                              color: CustomColors.primary,
                             ),
                           ),
                         ],
@@ -109,7 +101,7 @@ class CafeCard extends StatelessWidget {
                     "$category  •  $location",
                     style: GoogleFonts.sora(
                       fontSize: 14,
-                      color: CustomColors.white.withOpacity(0.7),
+                      color: CustomColors.primary.withOpacity(0.7),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -117,7 +109,7 @@ class CafeCard extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on_rounded,
-                        color: CustomColors.white.withOpacity(0.7),
+                        color: CustomColors.primary.withOpacity(0.7),
                         size: 16,
                       ),
                       const SizedBox(width: 4),
@@ -125,7 +117,7 @@ class CafeCard extends StatelessWidget {
                         "$distance km away",
                         style:GoogleFonts.sora(
                           fontSize: 14,
-                          color: CustomColors.white.withOpacity(0.7),
+                          color: CustomColors.primary.withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -138,7 +130,7 @@ class CafeCard extends StatelessWidget {
                         height: 8,
                         width: 8,
                         decoration: const BoxDecoration(
-                          color: Colors.green,
+                          color: CustomColors.secondary,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -148,7 +140,7 @@ class CafeCard extends StatelessWidget {
                           "Open • Closes $openTime",
                           style: GoogleFonts.sora(
                             fontSize: 14,
-                            color: Colors.greenAccent,
+                            color: CustomColors.secondary,
                             fontWeight: FontWeight.w500
                           ),
                         ),

@@ -6,6 +6,8 @@ import '../components/cafe_card.dart';
 import '../components/custom_action_button.dart';
 import '../utils/custom_color.dart';
 import 'book_table_page.dart';
+import 'package:get/get.dart';
+
 
 
 class CafePage extends StatefulWidget {
@@ -77,83 +79,67 @@ class _CafePageState extends State<CafePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: CustomColors.mainGradientColor,
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    CustomActionButton(
-                      icon: Icons.arrow_back_ios_new_rounded,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const SizedBox(width: 14),
-                     Expanded(
-                      child: Text(
-                        "Nearby Places",
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color: CustomColors.white
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                CustomSearchBar(
-                  controller: searchController,
-                  onChanged: searchCafe,
-                ),
-                const SizedBox(height: 18),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount:
-                    filteredCafeList.length,
-                    itemBuilder: (context, index) {
-                      final cafe = filteredCafeList[index];
-                      return GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CafeDetailsPage(image:  cafe["image"]),
-                            ),
-                          );
-                        },
-                        child: CafeCard(
-                          image: cafe["image"],
-                          cafeName: cafe["cafeName"],
-                          category: cafe["category"],
-                          location: cafe["location"],
-                          rating: cafe["rating"],
-                          distance: cafe["distance"],
-                          openTime: cafe["openTime"],
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookTablePage(image: cafe["image"],name: cafe["cafeName"],location: cafe["location"],rating: cafe["rating"],),
-                              ),
-                            );
-                          },
-                        ),
-                      );
+      backgroundColor: CustomColors.primary,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  CustomActionButton(
+                    icon: Icons.arrow_back_ios_new_rounded,
+                    onTap: () {
+                      Get.back();
                     },
                   ),
+                  const SizedBox(width: 14),
+                   Expanded(
+                    child: Text(
+                      "Nearby Places",
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: CustomColors.secondary
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              CustomSearchBar(
+                controller: searchController,
+                onChanged: searchCafe,
+              ),
+              const SizedBox(height: 18),
+              Expanded(
+                child: ListView.builder(
+                  itemCount:
+                  filteredCafeList.length,
+                  itemBuilder: (context, index) {
+                    final cafe = filteredCafeList[index];
+                    return GestureDetector(
+                      onTap: (){
+                        Get.to(() =>  CafeDetailsPage(image:  cafe["image"]));
+                      },
+                      child: CafeCard(
+                        image: cafe["image"],
+                        cafeName: cafe["cafeName"],
+                        category: cafe["category"],
+                        location: cafe["location"],
+                        rating: cafe["rating"],
+                        distance: cafe["distance"],
+                        openTime: cafe["openTime"],
+                        onTap: () {
+                          Get.to(() =>  BookTablePage(image: cafe["image"],name: cafe["cafeName"],location: cafe["location"],rating: cafe["rating"]));
+                        },
+                      ),
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

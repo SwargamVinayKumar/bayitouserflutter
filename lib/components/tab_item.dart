@@ -28,12 +28,8 @@ class TabItem extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
-          gradient: isSelected ? const LinearGradient(
-            colors: CustomColors.secondaryGradient,
-          )
-              : null,
           color: isSelected
-              ? null
+              ? CustomColors.secondary
               : CustomColors.white.withOpacity(0.06),
         ),
         child: Text(title,
@@ -42,7 +38,7 @@ class TabItem extends StatelessWidget {
             fontWeight:  isSelected
                 ? FontWeight.w700
                 : FontWeight.w500,
-            color:  CustomColors.white,
+            color:  isSelected ? CustomColors.white : CustomColors.secondary,
           ),
         ),
       ),

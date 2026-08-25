@@ -174,7 +174,7 @@ class AuthViewModel extends GetxController {
                 child: Container(
                   width: 30,
                   height: 30,
-                  decoration: AppStyles.primaryCircleBg,
+                  // decoration: AppStyles.primaryCircleBg,
                   child: const Icon(Icons.close, color: Colors.white, size: 18),
                 ),
               ),

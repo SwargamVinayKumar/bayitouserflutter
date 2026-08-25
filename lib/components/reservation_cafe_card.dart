@@ -31,16 +31,9 @@ class ReservationCafeCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            CustomColors.white.withOpacity(0.08),
-            CustomColors.white.withOpacity(0.03),
-          ],
-        ),
+        color:  CustomColors.secondary.withOpacity(0.03),
         border: Border.all(
-          color: CustomColors.white.withOpacity(0.08),
+          color: CustomColors.secondary.withOpacity(0.08),
         ),
         boxShadow: [
           BoxShadow(
