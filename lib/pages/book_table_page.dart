@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../components/people_count_component.dart';
 import '../components/section_title_item.dart';
-import '../models/response_model/table_response_model.dart';
+import '../models/responseModels/table_response_model.dart';
 import '../utils/custom_color.dart';
 import 'package:get/get.dart';
 
@@ -45,14 +45,7 @@ class _BookTablePageState extends State<BookTablePage> {
     "Window",
   ];
 
-  late List<TableModel> tables = List.generate(
-    seatNames.length,
-        (index) => TableModel(
-      id: index + 1,
-      seatName: seatNames[index],
-      type: "available",
-    ),
-  );
+  late List<TableModel> tables = [];
 
   @override
   Widget build(BuildContext context) {
@@ -295,24 +288,8 @@ class _BookTablePageState extends State<BookTablePage> {
                 ),
                 const SizedBox(height: 30),
                 CustomGradientButton(title: "Confirm Reservation", onTap: () {
-                  bool hasSelection = tables.any((table) => table.type == "selected",);
-                  if(!hasSelection){
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          "Please Select Table",
-                        ),
-                      ),
-                    );
-                    return;
-                  }
-                  setState(() {
 
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Reservation Confirmed",),
-                    ),
-                  );
+
                 },),
                 const SizedBox(height: 20),
               ],

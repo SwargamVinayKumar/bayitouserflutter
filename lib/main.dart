@@ -11,37 +11,33 @@ import 'package:get/get.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-  // try {
-  //   dynamic result = await KommunicateFlutterPlugin.buildConversation(
-  //     {
-  //       'appId': ConfigKeys.appId,
-  //     },
-  //   );
-  //   print("Conversation builder success : " + result.toString());
-  // } catch (e) {
-  //   print("Conversation builder error : " + e.toString());
-  // }
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+ 
+  // Parallelize initializations to speed up startup
+  await Future.wait([
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    ),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]),
+  ]);
 
-
-  await FireBaseNotification().initNotifications();
-
-  // String signature = await SmsAutoFill().getAppSignature;
-  // print("📩 App Signature: $signature");
+  // Initialize notifications
+  final notificationService = FireBaseNotification();
+  await notificationService.initAwesomeNotification();
+  notificationService.initPushNotification();
+  notificationService.setListeners();
+  
+  // Request permissions in the background (non-blocking)
+  notificationService.requestPermissions();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: CustomColors.primary,
   ));
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then((_) {
-    runApp(const MyApp());
-  });
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -53,7 +49,9 @@ class MyApp extends StatelessWidget {
       title: 'Bayito',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: 'Inter',
+        colorScheme: ColorScheme.fromSeed(seedColor: CustomColors.primary),
+        useMaterial3: true,
       ),
       home: const SplashPage(),
     );

@@ -6,7 +6,7 @@ class FireBaseNotification {
 
   /// Initialize Awesome Notifications
   Future<void> initAwesomeNotification() async {
-    AwesomeNotifications().initialize(
+    await AwesomeNotifications().initialize(
         null, // app icon
         [
           NotificationChannel(
@@ -16,14 +16,16 @@ class FireBaseNotification {
               importance: NotificationImportance.Max),
         ],
         debug: true);
+  }
 
+  /// Request notification permissions
+  Future<void> requestPermissions() async {
     // Request notification permissions
     await _firebaseMessaging.requestPermission();
-    await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
+    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!isAllowed) {
+      await AwesomeNotifications().requestPermissionToSendNotifications();
+    }
   }
 
   /// Handle notification click (when user taps the notification)

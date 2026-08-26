@@ -1,7 +1,7 @@
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
-import '../models/response_model/table_response_model.dart';
+import '../models/responseModels/table_response_model.dart';
 
 
 class TableSeatItem extends StatelessWidget {
@@ -13,7 +13,7 @@ class TableSeatItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Color color = CustomColors.white;
-    switch(table.type){
+    switch(table.seatType){
       case "available":
         color = CustomColors.red;
         break;
@@ -49,7 +49,7 @@ class TableSeatItem extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            table?.seatName ?? "",
+            table?.seatType ?? "",
             style: const TextStyle(
               color: CustomColors.darkBlack,
               fontSize: 13,

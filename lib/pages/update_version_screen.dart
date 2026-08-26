@@ -55,14 +55,14 @@ class _UpdateVersionScreenState extends State<UpdateVersionScreen> {
                         const SizedBox(height: 30),
                          Text("Current Version $appVersion",textAlign: TextAlign.center,style: TextStyle(
                             fontSize: 16,
-                            color: CustomColors.primary,
+                            color: CustomColors.textColor,
                             fontWeight: FontWeight.w800,
                             fontStyle: FontStyle.normal
                         ),),
                         const SizedBox(height: 20),
                         Text(message,textAlign: TextAlign.center,style: TextStyle(
                             fontSize: 16,
-                            color: CustomColors.primary,
+                            color: CustomColors.textColor,
                             fontWeight: FontWeight.w800,
                             fontStyle: FontStyle.normal
                         ),),
@@ -91,7 +91,7 @@ class _UpdateVersionScreenState extends State<UpdateVersionScreen> {
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FontStyle.normal,
-                                    color: Colors.white
+                                    color: CustomColors.textColor
                                 ),
                               ),
                             ),
@@ -104,9 +104,9 @@ class _UpdateVersionScreenState extends State<UpdateVersionScreen> {
               ),
               GestureDetector(
                 onTap: launchEmail,
-                child: Text("Contact admin for support \n k hostnhost@gmail.com",textAlign: TextAlign.center,style: TextStyle(
+                child: Text("Contact admin for support \n bayitousersupport@gmail.com",textAlign: TextAlign.center,style: TextStyle(
                     fontSize: 16,
-                    color: CustomColors.primary,
+                    color: CustomColors.textColor,
                     fontWeight: FontWeight.w800,
                     fontStyle: FontStyle.normal
                 ),),
@@ -119,8 +119,8 @@ class _UpdateVersionScreenState extends State<UpdateVersionScreen> {
     );
   }
 
-  final String playStoreUrl = "https://play.google.com/store/apps/details?id=com.hopnhost.user";
-  final String appStoreUrl = "https://apps.apple.com/us/search?term=KinzUrl";
+  final String playStoreUrl = "https://play.google.com/store/apps/details?id=com.bayito.user.bayitouser";
+  final String appStoreUrl = "https://apps.apple.com/us/search?term=bayitouser";
 
   Future<void> _launchURL() async {
     final Uri url = Uri.parse(
@@ -145,7 +145,7 @@ class _UpdateVersionScreenState extends State<UpdateVersionScreen> {
 
   }
 
-  final String email = 'pghome@gmail.com';
+  final String email = 'bayito@gmail.com';
   final String subject = 'VersionUpdate';
   final String body = 'Body';
 

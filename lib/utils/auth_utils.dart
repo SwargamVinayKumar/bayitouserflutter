@@ -9,6 +9,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../pages/regsiter_user_page.dart';
+import '../pages/sign_in_page.dart';
+import '../pages/user_blocked.dart';
 
 
 class AuthUtils {
@@ -100,16 +102,18 @@ class AuthUtils {
   static void navigateFromPageName(String? page) {
     switch (page) {
 
-      case "registerUser":
+
+      case "signIn":
+        Get.offAll(() => const SignInPage());
+        break;
+      case "registerPage":
         Get.offAll(() => const RegisterUserPage());
         break;
-
-      case "mainPage":
-        Get.offAll(() => const MainPage());
+      case "blocked":
+        Get.offAll(() => const UserBlocked());
         break;
-
       default:
-        Get.offAll(() => const SplashPage());
+        Get.offAll(() => const MainPage());
         break;
     }
   }
@@ -234,6 +238,7 @@ class AuthUtils {
 
     return {
       "imei": imei,
+      "source":Platform.isAndroid ? "android" : "ios",
       "deviceVersion": deviceVersion,
       "deviceId": deviceId,
     };

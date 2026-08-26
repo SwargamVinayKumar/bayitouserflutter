@@ -5,6 +5,7 @@ import 'package:bayitouser/pages/splash_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart' as dio;
 
 import 'package:image/image.dart' as img;
 
@@ -19,9 +20,12 @@ import '../api/end_points.dart';
 
 import '../components/custom_network_image.dart';
 import '../components/error_text_component.dart';
-import '../models/request_model/auth_request_model.dart';
-import '../models/response_model/auth_response_model.dart';
-import '../models/response_model/home_response_model.dart';
+import '../models/requestModels/auth_request_model.dart';
+import '../models/requestModels/sign_in_request_model.dart';
+import '../models/requestModels/sign_up_request_model.dart';
+import '../models/responseModels/auth_response_model.dart';
+import '../models/responseModels/file_upload_response_model.dart';
+import '../models/responseModels/open_hour_model.dart';
 import '../pages/main_page.dart';
 import '../pages/regsiter_user_page.dart';
 import '../pages/update_version_screen.dart';
@@ -34,366 +38,158 @@ import '../utils/preference_manager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
-import 'home_view_model.dart';
+import '../utils/snack_bar_extension.dart';
+
 
 class AuthViewModel extends GetxController {
   final apiProvider = Get.put(ApiProvider());
-
-  final validaVersionObserver = ApiResult<ValidateVersionResponseModel>.init().obs;
-  final sendOtpResponseObserver = ApiResult<PrimaryResponseModel>.init().obs;
-  final emailVerificationObserver = ApiResult<PrimaryResponseModel>.init().obs;
-  final swapUserResponseObserver = ApiResult<VerifyOtpResponseModel>.init().obs;
-  final contactDetailsResponseObserver = ApiResult<ContactDetailsResponseModel>.init().obs;
-  final verifyOtpResponseObserver = ApiResult<VerifyOtpResponseModel>.init().obs;
-  final registerUserResponseObserver = ApiResult<PrimaryResponseModel>.init().obs;
-  final fetchUserDetailsObserver = ApiResult<FetchUserDetailsResponseModel>.init().obs;
-  final fetchSubscriptionDetailsObserver = ApiResult<FetchSubscriptionsResponseModel>.init().obs;
-
-  RxList<String> unitTypeDropList = <String>[].obs;
-  RxList<String> filterLocations = <String>[].obs;
-
   final preferenceManager = Get.put(PreferenceManager());
-  RxString profilePic = "".obs;
-  RxString selectedTab = "Homes".obs;
 
-  final uploadFileObserver = ApiResult<UploadFileResponseModel>.init().obs;
+  final validaVersionObserver =  ApiResult<ValidateVersionResponseModel>.init().obs;
+  final openingHoursObserver = ApiResult<OpeningHoursResponseModel>.init().obs;
+  final fetchDesignationsObserver = ApiResult<DesignationResponseModel>.init().obs;
+  final registerUserObserver = ApiResult<SignInResponseModel>.init().obs;
 
-  Rx<File> uploadingFile = File('').obs;
-  RxString aadharImage = "".obs;
-  RxString uploadedImage = "".obs;
 
-  Rx<ReferralModel> referralData = const ReferralModel(referralAmount: 30, referralCount: 3).obs;
+  // Observers
+  final fetchProfileDetailObserver = ApiResult<ProfileResponseModel>.init().obs;
+  final signInObserver = ApiResult<SignInResponseModel>.init().obs;
+  final signUpObserver = ApiResult<SignInResponseModel>.init().obs;
+  final verifyOtpObserver = ApiResult<SignInResponseModel>.init().obs;
 
-  RxString userId = "".obs;
+  final registerOutLetObserver = ApiResult<SignInResponseModel>.init().obs;
 
-  Rx<Position?> locationPosition = Rx<Position?>(null);
-  Rx<LocationModel?> locationDetails = Rx<LocationModel?>(null);
+  final uploadFileObserver = ApiResult<FileUploadResponseModel>.init().obs;
 
-  RxBool userAuthenticated = false.obs;
+  // Sign In Controllers
+  final emailMobileController = TextEditingController();
+  final signInPasswordController = TextEditingController();
 
-  //host
-  Rx<String> primaryHomeId = "".obs;
-  RxList<ImageDataModel> images = <ImageDataModel>[].obs;
+  // Sign Up Controllers
+  final fullNameController = TextEditingController();
+  final signUpEmailController = TextEditingController();
+  final mobileController = TextEditingController();
+  final signUpPasswordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final otpController = TextEditingController();
+  final dobController = TextEditingController();
+  final referralCodeController = TextEditingController();
+  final perHourController = TextEditingController();
 
-  String? getPrimaryId() {
-    return fetchUserDetailsObserver.value.maybeWhen(
-        success: (data) => (data as FetchUserDetailsResponseModel).data?.primaryHome?.id ?? "",
-        orElse: () => "");
+  final gender = "Male".obs;
+  final selectedDesignations = <String>[].obs;
+  final designationsList = <DesignationModel>[].obs;
+
+  final profilePic = Rxn<File>();
+  final profilePicUrl = "".obs;
+
+  // Business Controllers
+  final businessNameController = TextEditingController();
+  final businessLicenceController = TextEditingController();
+  final aboutBusinessController = TextEditingController();
+  final outletType = "Cafe".obs;
+  RxList<String> outletTypesDropList = <String>[].obs;
+
+  final businessLogo = Rxn<File>();
+  final businessLogoUrl = "".obs;
+  final businessImages = <File>[].obs;
+  final businessImagesUrls = <String>[].obs;
+
+  // Location Controllers
+  final address1Controller = TextEditingController();
+  final address2Controller = TextEditingController();
+  final cityController = TextEditingController();
+  final stateController = TextEditingController();
+  final landmarkController = TextEditingController();
+  final pincodeController = TextEditingController();
+  final latitudeController = TextEditingController();
+  final longitudeController = TextEditingController();
+  final gstNumberController = TextEditingController();
+  final fssaiNumberController = TextEditingController();
+
+  // Location Picker State
+  final locationDetails = Rxn<LocationRequestModel>();
+  final locationPosition = Rxn<Position>();
+
+  // Opening Hours
+  final RxList<DaySlotModel> openingHours =
+      <DaySlotModel>[].obs;
+
+
+
+  @override
+  void onInit() {
+    super.onInit();
+    _determinePosition();
   }
 
-  bool? dealingAsUserStatus() {
-    return fetchUserDetailsObserver.value.maybeWhen(
-        success: (data) =>
-            (data as FetchUserDetailsResponseModel)
-                    .data
-                    ?.userDetails
-                    ?.dealingType ==
-                "user" ??
-            true,
-        orElse: () => true);
-  }
-
-  RxList<DocumentDataModel> kysDocuments = [
-    DocumentDataModel(
-      documentType: "aadhar",
-      documentStatus: "pending",
-      uploadedUrl: "",
-      errorTxt: '',
-    ),
-    DocumentDataModel(
-      documentType: "pan",
-      documentStatus: "pending",
-      uploadedUrl: "",
-      errorTxt: '',
-    ),
-    DocumentDataModel(
-      documentType: "selfie",
-      documentStatus: "pending",
-      uploadedUrl: "",
-      errorTxt: '',
-    )
-  ].obs;
-
-  List<DocumentDataModel> initialKycDocuments = [
-    DocumentDataModel(
-      documentType: "aadhar",
-      documentStatus: "pending",
-      uploadedUrl: "",
-      errorTxt: '',
-    ),
-    DocumentDataModel(
-      documentType: "pan",
-      documentStatus: "pending",
-      uploadedUrl: "",
-      errorTxt: '',
-    ),
-    DocumentDataModel(
-      documentType: "selfie",
-      documentStatus: "pending",
-      uploadedUrl: "",
-      errorTxt: '',
-    )
-  ];
-
-  /// Show popup with zoomable image
-  void showImagePopup(BuildContext context, String imageUrl) {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.zero,
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () => Get.back(),
-              child: Container(
-                color: Colors.black.withOpacity(0.8),
-                width: double.infinity,
-                height: double.infinity,
-                child: InteractiveViewer(
-                  panEnabled: true,
-                  minScale: 0.8,
-                  maxScale: 4.0,
-                  child: Center(
-                    child: CustomNetworkImage(
-                      imageUrl: imageUrl,
-                      fit: BoxFit.contain,
-                      borderRadius: 0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 40,
-              right: 20,
-              child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  // decoration: AppStyles.primaryCircleBg,
-                  child: const Icon(Icons.close, color: Colors.white, size: 18),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<Position?> fetchCurrentLocation() async {
+  Future<void> _determinePosition() async {
     try {
-      if (locationPosition.value != null) {
-        return locationPosition.value;
-      }
-
-      await Geolocator.requestPermission();
-
-
-
-
-      LocationPermission permission = await Geolocator.checkPermission();
-
-      // bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      // print("helloLocation");
-      // print(serviceEnabled);
-      // if (!serviceEnabled) {
-      //   return _setDefaultLocation();
-      // }
-
-      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-          return _setDefaultLocation();
-
-      }
-
-      final position = await Geolocator.getCurrentPosition();
-
-      final geoAddress = await GeoUtil().getApiAddress(position.latitude, position.longitude);
-
+      Position position = await GeoUtil().getCurrentPosition();
       locationPosition.value = position;
-      locationDetails.value = geoAddress;
-
-      return position;
+      latitudeController.text = position.latitude.toString();
+      longitudeController.text = position.longitude.toString();
     } catch (e) {
-      print("Location Error: $e");
-      return _setDefaultLocation();
+      print(e);
     }
   }
 
-  Position defaultAmeerpetPosition() {
-    return Position(
-        latitude: 17.4375,
-        longitude: 78.4483,
-        timestamp: DateTime.now(),
-        accuracy: 0,
-        altitude: 0,
-        heading: 0,
-        speed: 0,
-        speedAccuracy: 0,
-        altitudeAccuracy: 0,
-        headingAccuracy: 0);
-  }
-
-  Future<Position> _setDefaultLocation() async {
-    final defaultPosition = defaultAmeerpetPosition();
-
-    final geoAddress = await GeoUtil()
-        .getApiAddress(defaultPosition.latitude, defaultPosition.longitude);
-
-    locationPosition.value = defaultPosition;
-    locationDetails.value = geoAddress;
-
-    return defaultPosition;
-  }
-
-  Future<String>? performUploadFile(File selectedFile, String type,
-      HomeViewModel homeViewModel) async {
+  Future<String?> uploadImage(File file, String type) async {
     try {
-      uploadFileObserver.value =  ApiResult.loading("Compressing");
-      File file = await compressImage(selectedFile, 50);
-      uploadFileObserver.value =  ApiResult.loading("");
-      var uri = Uri.parse((apiProvider.apiLiveBaseUrl) + EndPoints.uploadFile);
-      var request = http.MultipartRequest('POST', uri);
-      request.headers['apiKey'] = apiProvider.apiKey;
-      final preferenceManager = Get.put(PreferenceManager());
-      final token = await preferenceManager.getValue("token") ?? "";
-      request.headers['authorization'] = token;
-      request.fields['type'] = type;
-      var stream = http.ByteStream(file.openRead());
-      stream.cast();
-      var length = await file.length() ?? 0;
-      var multipart = http.MultipartFile(
-        'file',
-        stream,
-        length,
-        filename: file.path.split('/').last,
+      uploadFileObserver.value = ApiResult.loading("loading");
+
+      final formData = dio.FormData.fromMap({
+        'file': await dio.MultipartFile.fromFile(file.path),
+        'type': type,
+      });
+
+      final response = await dio.Dio().post(
+        '${apiProvider.apiLiveBaseUrl}${EndPoints.uploadFile}',
+        data: formData,
+        options: dio.Options(
+          headers: {
+            'apikey': apiProvider.apiKey,
+            'Authorization': 'Bearer ${apiProvider.token}',
+          },
+        ),
       );
-      request.files.add(multipart);
-      var response = await request.send();
-      String responseBody = await response.stream.bytesToString();
-      final json = jsonDecode(responseBody);
-      if (json != null) {
-        final jsonData = UploadFileResponseModel.fromJson(json);
-        if (jsonData.status == 1) {
-          uploadFileObserver.value = ApiResult.success(jsonData);
-          if (type == "homeImage") {
-            homeViewModel.homeImage.value = jsonData.data ?? "";
-          }
-          else if (type == "homeImages" || type == "pgImages") {
 
-            // 🔥 Make list mutable FIRST
-            images.value = List<ImageDataModel>.from(images);
-
-            final existIndex = images.indexWhere(
-                  (imageObj) =>
-              imageObj.imagesType ==
-                  homeViewModel.selectedHomeImageType.value,
-            );
-
-            if (existIndex == -1) {
-              images.add(
-                ImageDataModel(
-                  imagesType: homeViewModel.selectedHomeImageType.value,
-                  images: [jsonData.data ?? ""],
-                ),
-              );
-            } else {
-              // 🔥 Also make inner list mutable
-              final existingImages =
-              List<String>.from(images[existIndex].images ?? []);
-
-              existingImages.add(jsonData.data ?? "");
-
-              images[existIndex] =
-                  images[existIndex].copyWith(images: existingImages);
-            }
-          }
-          else if (type == "unitImage") {
-            homeViewModel.unitImage.value = jsonData.data ?? "";
-          } else if (type == "homeLicence") {
-            homeViewModel.homeLicence.value = jsonData.data ?? "";
-          }  else if (type == "guestDoc") {
-            aadharImage.value = jsonData.data ?? "";
-          } else if (type == "aadhar" || type == "pan" || type == "selfie") {
-            final existingKycList = kysDocuments.toList() ?? List.empty();
-            final index = existingKycList.indexWhere((element) => element.documentType == type);
-            if (index != -1) {
-              final updatedKycList = existingKycList[index].copyWith(uploadedUrl: jsonData.data ?? "", documentStatus: "pending");
-              existingKycList[index] = updatedKycList;
-              kysDocuments.value = existingKycList;
-              kysDocuments.refresh();
-            }
-          } else {
-            uploadedImage.value = jsonData.data ?? "";
-          }
-          print(jsonData.data ?? "");
-
-          if(type == "homeImages" || type == "pgImages")  return jsonData.data ?? "";
-          Get.close(1);
-          return jsonData.data ?? "";
+      if (response.statusCode == 200) {
+        final data = FileUploadResponseModel.fromJson(response.data);
+        if (data.status == 1) {
+          uploadFileObserver.value = ApiResult.success(data);
+          return data.data?.imageUrl;
         }
-        throw jsonData.message.toString();
       }
-      throw "Body Null";
+      throw "Upload failed";
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          backgroundColor: CustomColors.primary,
-          colorText: CustomColors.white,
-          snackPosition: SnackPosition.BOTTOM);
       uploadFileObserver.value = ApiResult.error(e.toString());
-      return e.toString();
+      Get.showCustomSnackBar(title: 'Error', message: "Image upload failed: $e");
+      return null;
     }
   }
 
-
-
-  Future<File> compressImage(File file, int quality) async {
+  Future<void> validateVersion(ValidateVersionRequestModel request) async {
     try {
-      final originalSize = file.lengthSync();
-      print('Original size: ${(originalSize / 1024).toStringAsFixed(2)} KB');
-      final image = img.decodeImage(await file.readAsBytes());
-      final tempDir = await getTemporaryDirectory();
-      final targetPath =
-          "${tempDir.path}/compressed_${file.path.split('/').last}";
-      final compressedImage = File(targetPath)
-        ..writeAsBytesSync(img.encodeJpg(image!, quality: quality));
-      final compressedSize = compressedImage.lengthSync();
-      print('Compressed size: ${(compressedSize / 1024).toStringAsFixed(2)} KB');
-      return compressedImage;
-    } catch (error) {
-      return file;
-    }
-  }
-
-
-  Future<void> validateVersion(ValidateVersionRequestModel request, HomeViewModel homeViewModel) async {
-    try {
-      validaVersionObserver.value =  ApiResult.loading("");
+      validaVersionObserver.value = ApiResult.loading("loading");
       final String? validatorResponse = AuthUtils.validateRequestFields(['version'], request.toJson());
       if (validatorResponse != null) throw validatorResponse;
       final response =
-          await apiProvider.post(EndPoints.validateVersion, request.toJson());
+      await apiProvider.post(EndPoints.validateVersion, request.toJson());
       final body = response.body;
       if (response.statusCode == 401) {
         await preferenceManager.clearAll();
-        Get.offAll(() => const SignInPage());
+        Get.offAll(() => SignInPage());
         throw "Please Login Again";
       }
       if (response.isOk && body != null) {
         final responseData = ValidateVersionResponseModel.fromJson(body);
         if (responseData.status == 1) {
-          unitTypeDropList.clear();
-          unitTypeDropList.assignAll(responseData.data?.unitType ?? []);
-          filterLocations.clear();
-          filterLocations.assignAll(responseData.data?.filterLocations ?? []);
+          outletTypesDropList.clear();
+          outletType.value = responseData.data?.outletTypes?.firstOrNull ?? "";
+          outletTypesDropList.assignAll(responseData.data?.outletTypes ?? []);
 
           validaVersionObserver.value = ApiResult.success(responseData);
-
-          userAuthenticated.value = (responseData.data?.userData != null);
 
           if (responseData.data?.validVersion == false) {
             Get.offAll(() => const UpdateVersionScreen());
@@ -414,157 +210,229 @@ class AuthViewModel extends GetxController {
       }
       throw "Response Body Null";
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          backgroundColor: CustomColors.primary,
-          colorText: CustomColors.white,
-          snackPosition: SnackPosition.BOTTOM);
+      Get.showCustomSnackBar(title: 'Error', message: "$e");
       validaVersionObserver.value = ApiResult.error(e.toString());
     }
   }
 
 
-  Future<void> signIn(VerifyOtpRequestModel request) async {
+  Future<void> signIn() async {
     try {
-      verifyOtpResponseObserver.value =  ApiResult.loading("");
-      final String? validatorResponse = AuthUtils.validateRequestFields(
-          ['mobile', 'otp', 'source', 'version', 'deviceId'], request.toJson());
-      if (validatorResponse != null) throw validatorResponse;
-      final response =
-          await apiProvider.post(EndPoints.signIn, request.toJson());
+      signInObserver.value = ApiResult.loading("loading");
+      final version = await AuthUtils.getAppVersion();
+      final deviceDetails = await AuthUtils.getDeviceDetails();
+      final request = SignInRequestModel(
+          key: emailMobileController.text,
+          password: signInPasswordController.text, version:version,
+          deviceDetails:deviceDetails
+      );
+      final response = await apiProvider.post(EndPoints.signIn, request.toJson());
       final body = response.body;
       if (response.isOk && body != null) {
-        final responseData = VerifyOtpResponseModel.fromJson(body);
-        if (responseData.status == 1) {
-          userAuthenticated.value = true;
-          final page = responseData.data?.page;
-          preferenceManager.setValue("page", page);
-          preferenceManager.setValue(
-              "registerValue", request.mobile.toString());
-          preferenceManager.setValue("token", responseData.data?.token);
-          verifyOtpResponseObserver.value = ApiResult.success(responseData);
+        final data = SignInResponseModel.fromJson(body);
+        if (data.status == 1) {
+          signInObserver.value = ApiResult.success(data);
+          final page = data.data?.page;
+          preferenceManager.setValue("page", page ?? "");
+          preferenceManager.setValue("registerValue", request.key.toString());
+          preferenceManager.setValue("token", data.data?.token ?? "");
+          signInObserver.value = ApiResult.success(data);
           AuthUtils.navigateFromPageName(page);
-          return;
+        } else {
+          signInObserver.value = ApiResult.error(data.message ?? "");
+          Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
         }
-        throw "${responseData.message}";
+      } else {
+        signInObserver.value = ApiResult.error("Something went wrong");
       }
-      throw "Response Body Null";
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          backgroundColor: CustomColors.primary,
-          colorText: CustomColors.white,
-          snackPosition: SnackPosition.BOTTOM);
-      verifyOtpResponseObserver.value = ApiResult.error(e.toString());
+      signInObserver.value = ApiResult.error(e.toString());
+    }
+  }
+
+  Future<void> signUp() async {
+    try {
+      // Final Validation
+      if (fullNameController.text.isEmpty ||
+          signUpEmailController.text.isEmpty ||
+          mobileController.text.isEmpty ||
+          signUpPasswordController.text.isEmpty) {
+        Get.showCustomSnackBar(title: 'Error', message: "Please complete all registration steps");
+        return;
+      }
+
+      signUpObserver.value = ApiResult.loading("loading");
+
+      // 1. Upload Profile Pic if exists
+      if (profilePic.value != null && profilePicUrl.isEmpty) {
+        profilePicUrl.value = await uploadImage(profilePic.value!, "profile") ?? "";
+      }
+
+
+      final request = SignUpRequestModel(
+          mobile: int.tryParse(mobileController.text),
+          name: fullNameController.text,
+          email: signUpEmailController.text,
+          password: signUpPasswordController.text,
+          confirmPassword: confirmPasswordController.text,
+          profilePic: profilePicUrl.value
+      );
+
+      final response = await apiProvider.post(EndPoints.signUp, request.toJson());
+      final body = response.body;
+      if (response.isOk && body != null) {
+        final data = SignInResponseModel.fromJson(body);
+        if (data.status == 1) {
+          signUpObserver.value = ApiResult.success(data);
+          Get.showCustomSnackBar(title: 'Success', message: data.message ?? 'Otp Send successful');
+        } else {
+          signUpObserver.value = ApiResult.error(data.message ?? "");
+          Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
+        }
+      } else {
+        signUpObserver.value = ApiResult.error("Something went wrong");
+      }
+    } catch (e) {
+      signUpObserver.value = ApiResult.error(e.toString());
+    }
+  }
+
+  Future<void> verifyOtp() async {
+    try {
+      // Final Validation
+      if (fullNameController.text.isEmpty ||
+          signUpEmailController.text.isEmpty ||
+          mobileController.text.isEmpty ||
+          signUpPasswordController.text.isEmpty || otpController.text.isEmpty) {
+        Get.showCustomSnackBar(title: 'Error', message: "Please complete all registration steps");
+        return;
+      }
+
+      verifyOtpObserver.value = ApiResult.loading("loading");
+
+
+
+      final request = SignUpRequestModel(
+        mobile: int.tryParse(mobileController.text),
+        name: fullNameController.text,
+        email: signUpEmailController.text,
+        password: signUpPasswordController.text,
+        confirmPassword: confirmPasswordController.text,
+        profilePic: profilePicUrl.value,
+        otp: int.tryParse(otpController.text),
+      );
+
+      final response = await apiProvider.post(EndPoints.verifyOtp, request.toJson());
+      final body = response.body;
+      if (response.isOk && body != null) {
+        final data = SignInResponseModel.fromJson(body);
+        if (data.status == 1) {
+          verifyOtpObserver.value = ApiResult.success(data);
+          final page = data.data?.page;
+          preferenceManager.setValue("page", page ?? "");
+          preferenceManager.setValue("token", data.data?.token ?? "");
+          Get.showCustomSnackBar(title: 'Success', message: data.message ?? 'Otp Send successful');
+          AuthUtils.navigateFromPageName(data.data?.page);
+        } else {
+          verifyOtpObserver.value = ApiResult.error(data.message ?? "");
+          Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
+        }
+      } else {
+        verifyOtpObserver.value = ApiResult.error("Something went wrong");
+      }
+    } catch (e) {
+      verifyOtpObserver.value = ApiResult.error(e.toString());
     }
   }
 
 
-
-  Future<void> fetchContactDetails() async {
+  
+  Future<void> fetchProfileDetails() async {
     try {
-      contactDetailsResponseObserver.value = ApiResult.loading("");
-      final response = await apiProvider.post(EndPoints.fetchContactDetails, {});
+      fetchProfileDetailObserver.value = ApiResult.loading("loading");
+      final response = await apiProvider.post(EndPoints.getProfile, {});
       final body = response.body;
       if (response.isOk && body != null) {
-        final responseData = ContactDetailsResponseModel.fromJson(body);
-        if (responseData.status == 1) {
-          contactDetailsResponseObserver.value = ApiResult.success(responseData);
-          return;
+        final data = ProfileResponseModel.fromJson(body);
+        if (data.status == 1) {
+          fetchProfileDetailObserver.value = ApiResult.success(data);
+        } else {
+          Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
+          fetchProfileDetailObserver.value = ApiResult.error(data.message ?? "");
         }
-        throw "${responseData.message}";
+      } else {
+        fetchProfileDetailObserver.value = ApiResult.error("Something went wrong");
       }
-      throw "Response Body Null";
     } catch (e) {
-      Get.snackbar("Error", "something went wrong $e",
-          backgroundColor: CustomColors.primary,
-          colorText: CustomColors.white,
-          snackPosition: SnackPosition.BOTTOM);
-      contactDetailsResponseObserver.value = ApiResult.error(e.toString());
+      fetchProfileDetailObserver.value = ApiResult.error(e.toString());
     }
   }
 
-
-
-  Future<void> fetchUserDetails(bool refresh) async {
+  Future<void> fetchDesignations() async {
     try {
-      final success = fetchUserDetailsObserver.value.maybeWhen(success: (data) => true, orElse: () => false);
-      if (userAuthenticated.value == false) return;
-      if (success && refresh == false) return;fetchUserDetailsObserver.value = ApiResult.loading("");
-
-      final response = await apiProvider.post(EndPoints.fetchUserDetails, {});
+      fetchDesignationsObserver.value = ApiResult.loading("loading");
+      final response = await apiProvider.post(EndPoints.fetchDesignations, {});
       final body = response.body;
       if (response.isOk && body != null) {
-        var responseData = FetchUserDetailsResponseModel.fromJson(body);
-        if (responseData.status == 1) {
-          fetchUserDetailsObserver.value = ApiResult.success(responseData);
-          userId.value = responseData.data?.userDetails?.id ?? "";
-          profilePic.value = responseData.data?.userDetails?.image ?? "";
-
-          referralData.value = responseData.data?.userDetails?.referral ?? ReferralModel(referralCount: 3, referralAmount: 30);
-
-          if (responseData.data?.userDetails?.kycDocuments?.length == 3) {
-            kysDocuments.value = responseData.data?.userDetails?.kycDocuments ??
-                initialKycDocuments;
-          }
-
-          // if(responseData.data?.address != null){
-          //   locationDetails.value = responseData.data?.address;
-          // }else{
-          //   await fetchCurrentLocation();
-          // }
-
-          if ((responseData.data?.userDetails?.email ?? "").isEmpty == true ||
-              responseData.data?.userDetails?.mobile.toString().isEmpty ==
-                  true ||
-              responseData.data?.userDetails?.mobile.toString().length != 10 ||
-              (responseData.data?.userDetails?.name ?? "").isEmpty) {
-            Get.offAll(() => const RegisterUserPage());
-          } else if ((responseData.data?.userDetails?.blocked ?? false) ==
-              true) {
-            Get.offAll(() => const UserBlocked());
-          }
-
-          await FirebaseMessaging.instance.subscribeToTopic(responseData.data?.userDetails?.id ?? "");
-          await FirebaseMessaging.instance.subscribeToTopic("all");
-          await FirebaseMessaging.instance.unsubscribeFromTopic(
-              responseData.data?.userDetails?.dealingType == "user" ? "host" : "user"
-          );
-          await FirebaseMessaging.instance.subscribeToTopic(responseData.data?.userDetails?.dealingType ?? "user");
-          return;
+        final data = DesignationResponseModel.fromJson(body);
+        if (data.status == 1) {
+          designationsList.assignAll(data.data ?? []);
+          fetchDesignationsObserver.value = ApiResult.success(data);
+        } else {
+          fetchDesignationsObserver.value = ApiResult.error(data.message ?? "");
         }
-        throw "${responseData.message}";
+      } else {
+        fetchDesignationsObserver.value = ApiResult.error("Something went wrong");
       }
-      throw "Response Body Null";
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          backgroundColor: CustomColors.primary,
-          colorText: CustomColors.white,
-          snackPosition: SnackPosition.BOTTOM);
-      fetchUserDetailsObserver.value = ApiResult.error(e.toString());
+      fetchDesignationsObserver.value = ApiResult.error(e.toString());
     }
   }
 
-  Future<void> registerUser(RegisterUserRequestModel request) async {
+  Future<void> registerUser() async {
     try {
-      registerUserResponseObserver.value =  ApiResult.loading("");
-      final response =
-          await apiProvider.post(EndPoints.registerUser, request.toJson());
+      registerUserObserver.value = ApiResult.loading("loading");
+
+      final request = RegisterUserRequestModel(
+        name: fullNameController.text,
+        dob: dobController.text,
+        gender: gender.value,
+        referralCode: referralCodeController.text,
+        designations: selectedDesignations.toList(),
+        charges: RegisterChargesRequestModel(
+          perHour: int.tryParse(perHourController.text) ?? 0,
+        ),
+        location: RegisterLocationRequestModel(
+          address1: address1Controller.text,
+          address2: address2Controller.text,
+          landMark: landmarkController.text,
+          city: cityController.text,
+          state: stateController.text,
+          pinCode: int.tryParse(pincodeController.text) ?? 0,
+          latitude: double.tryParse(latitudeController.text) ?? 0.0,
+          longitude: double.tryParse(longitudeController.text) ?? 0.0,
+        ),
+      );
+
+      final response = await apiProvider.post(EndPoints.registerUser, request.toJson());
       final body = response.body;
       if (response.isOk && body != null) {
-        final responseData = PrimaryResponseModel.fromJson(body);
-        if (responseData.status == 1) {
-          registerUserResponseObserver.value = ApiResult.success(responseData);
-          Get.offAll(() => const MainPage());
-          return;
+        final data = SignInResponseModel.fromJson(body);
+        if (data.status == 1) {
+          registerUserObserver.value = ApiResult.success(data);
+          final page = data.data?.page;
+          preferenceManager.setValue("page", page ?? "");
+          AuthUtils.navigateFromPageName(page);
+        } else {
+          registerUserObserver.value = ApiResult.error(data.message ?? "");
+          Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
         }
-        throw "${responseData.message}";
+      } else {
+        registerUserObserver.value = ApiResult.error("Something went wrong");
       }
-      throw "Response Body Null";
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          backgroundColor: CustomColors.primary,
-          colorText: CustomColors.white,
-          snackPosition: SnackPosition.BOTTOM);
-      registerUserResponseObserver.value = ApiResult.error(e.toString());
+      registerUserObserver.value = ApiResult.error(e.toString());
+      Get.showCustomSnackBar(title: 'Error', message: e.toString());
     }
   }
 

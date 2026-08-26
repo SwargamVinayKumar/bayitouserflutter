@@ -3,8 +3,9 @@ import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../models/requestModels/auth_request_model.dart';
+import '../utils/auth_utils.dart';
 import '../view_models/auth_view_model.dart';
-import '../view_models/home_view_model.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -15,17 +16,15 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final authViewModel = Get.put(AuthViewModel());
-  final homeViewModel = Get.put(HomeViewModel());
 
 
   @override
   Widget build(BuildContext context) {
     return StatefulWrapper(
       onInit: () async {
-        // await authViewModel.fetchCurrentLocation();
-        // final version = await AuthUtils.getAppVersion();
-        // await authViewModel.validateVersion(ValidateVersionRequestModel(version: version,location: authViewModel.locationDetails.value), homeViewModel);
-        Future.delayed(const Duration(seconds: 2), () { Get.offAll(() =>  const SignInPage()); });
+        final version = await AuthUtils.getAppVersion();
+        await authViewModel.validateVersion(ValidateVersionRequestModel(version: version));
+  //      Future.delayed(const Duration(seconds: 2), () { Get.offAll(() =>  const SignInPage()); });
       },
       child: Scaffold(
         backgroundColor: CustomColors.secondary,
@@ -34,12 +33,16 @@ class _SplashPageState extends State<SplashPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Spacer(),
               Image.asset(
                 'assets/images/bayitoLogo.png',
                 fit: BoxFit.cover,
-                width: double.infinity,
+                height: 100,
+                width: 100,
               ),
-              const SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: CustomColors.white,strokeWidth: 0.5,))
+              const Spacer(),
+              const SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: CustomColors.white,strokeWidth: 0.5,)),
+              const SizedBox(width: 20,height: 20)
             ],
           ),
         ),
