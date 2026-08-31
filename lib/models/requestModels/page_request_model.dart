@@ -9,6 +9,7 @@ abstract class PaginationRequestModel with _$PaginationRequestModel{
     String? bookingType,
     int? page,
     String? query,
+    String? type,
   }) = _PaginationRequestModel;
 
   factory PaginationRequestModel.fromJson(Map<String, dynamic> json) => _$PaginationRequestModelFromJson(json);

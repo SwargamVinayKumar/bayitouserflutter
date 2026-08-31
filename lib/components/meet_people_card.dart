@@ -2,21 +2,18 @@ import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../models/responseModels/user_response_model.dart';
 import '../utils/custom_color.dart';
+import 'custom_network_image.dart';
 
 class MeetPeopleCard extends StatelessWidget {
-  final String image;
-  final String name;
-  final String category;
-  final String profession;
+  final UserModel? user;
   final VoidCallback onTap;
+
 
   const MeetPeopleCard({
     super.key,
-    required this.image,
-    required this.name,
-    required this.category,
-    required this.profession,
+    this.user,
     required this.onTap,
   });
 
@@ -27,7 +24,7 @@ class MeetPeopleCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
-        color:  CustomColors.secondary.withOpacity(0.03),
+        color: CustomColors.secondary.withOpacity(0.03),
         border: Border.all(
           color: CustomColors.secondary.withOpacity(0.08),
         ),
@@ -44,13 +41,12 @@ class MeetPeopleCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(18),
-              child: SizedBox(
+              child: CustomNetworkImage(
+                imageUrl: user?.profilePic ?? "",
                 width: 95,
-                height: double.infinity,
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                ),
+                height: 120,
+                fit: BoxFit.cover,
+                borderRadius: 18,
               ),
             ),
             const SizedBox(width: 14),
@@ -60,8 +56,8 @@ class MeetPeopleCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    name,
-                    style:GoogleFonts.plusJakartaSans(
+                    user?.designations?.first.name ?? "Unknown",
+                    style: GoogleFonts.plusJakartaSans(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                       color: CustomColors.white,
@@ -69,7 +65,7 @@ class MeetPeopleCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    category,
+                    user?.location?.address2 ?? "",
                     style: GoogleFonts.sora(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -78,7 +74,7 @@ class MeetPeopleCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    profession,
+                    user?.designations?.first.description ?? "",
                     style: GoogleFonts.sora(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
@@ -111,11 +107,15 @@ class MeetPeopleCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            CustomGradientButton(title: "Connect", onTap: onTap,width: 80,height: 45,),
+            CustomGradientButton(
+              title: "Connect",
+              onTap: onTap,
+              width: 80,
+              height: 45,
+            ),
           ],
         ),
       ),
     );
   }
 }
-

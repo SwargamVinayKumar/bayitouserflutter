@@ -62,8 +62,8 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 40),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
                             child: Text(
                               "OTP Verification",
                               style: TextStyle(
@@ -77,7 +77,7 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                             child: Text(
                               "Verification Code Sent To ${authViewModel.mobileController.text}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: CustomColors.textColor,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
@@ -91,12 +91,12 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                               codeLength: 6,
                               autoFocus: true,
                               decoration: UnderlineDecoration(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                   fontSize: 18,
                                   color: CustomColors.textColor,
                                   fontWeight: FontWeight.w600,
                                 ),
-                                colorBuilder: FixedColorBuilder(CustomColors.primary),
+                                colorBuilder: const FixedColorBuilder(CustomColors.primary),
                               ),
                             ),
                           ),
