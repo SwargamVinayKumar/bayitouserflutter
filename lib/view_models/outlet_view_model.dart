@@ -117,5 +117,4 @@ class OutletViewModel extends GetxController {
     }
   }
 
-
 }
