@@ -35,10 +35,8 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               const Spacer(),
               Image.asset(
-                'assets/images/bayitoLogo.png',
+                'assets/images/bayitoLogo.jpeg',
                 fit: BoxFit.cover,
-                height: 100,
-                width: 100,
               ),
               const Spacer(),
               const SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: CustomColors.white,strokeWidth: 0.5,)),

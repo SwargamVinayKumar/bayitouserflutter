@@ -179,7 +179,7 @@ class AuthViewModel extends GetxController {
       final body = response.body;
       if (response.statusCode == 401) {
         await preferenceManager.clearAll();
-        Get.offAll(() => SignInPage());
+        Get.offAll(() => const SignInPage());
         throw "Please Login Again";
       }
       if (response.isOk && body != null) {

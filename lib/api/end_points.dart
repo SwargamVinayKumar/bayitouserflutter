@@ -15,4 +15,20 @@ class EndPoints {
   static const getTables = "getTables";
   static const getTableById = "getTableById";
 
+
+  static const fetchOutlets = "fetchOutlets";
+  static const fetchSearchOutlets = "fetchOutlets";
+  static const fetchTrendingOutlets = "fetchOutlets";
+  static const fetchFavOutlets = "fetchFavOutlets";
+  static const fetchNearByOutlets = "fetchNearByOutlets";
+  static const fetchOutletDetails = "fetchOutletDetails";
+
+  static const fetchUsers = "fetchUsers";
+  static const fetchUserDetails = "fetchUserDetails";
+
+
+
+
+
+
 }

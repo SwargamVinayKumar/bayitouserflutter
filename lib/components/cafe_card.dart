@@ -2,27 +2,17 @@ import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../models/responseModels/outlet_response_model.dart';
+import 'custom_network_image.dart';
 
 class CafeCard extends StatelessWidget {
-  final String image;
-  final String cafeName;
-  final String category;
-  final String location;
-  final double rating;
-  final double distance;
-  final String openTime;
-  final VoidCallback onTap;
+  final OutletModel? outlet;
+  final VoidCallback? onTap;
 
   const CafeCard({
     super.key,
-    required this.image,
-    required this.cafeName,
-    required this.category,
-    required this.location,
-    required this.rating,
-    required this.distance,
-    required this.openTime,
-    required this.onTap,
+    this.outlet,
+    this.onTap,
   });
 
   @override
@@ -52,10 +42,18 @@ class CafeCard extends StatelessWidget {
               child: SizedBox(
                 width: 95,
                 height: double.infinity,
-                child: Image.asset(
-                  image,
+                child: CustomNetworkImage(
+                  imageUrl: outlet?.businessLogo ?? "",
                   fit: BoxFit.cover,
                 ),
+
+
+                // Image.network(
+                //   outlet?.businessLogo ?? "",
+                //   fit: BoxFit.cover,
+                //   errorBuilder: (_, __, ___) =>
+                //   const Icon(Icons.image, size: 40),
+                // ),
               ),
             ),
             const SizedBox(width: 14),
@@ -64,11 +62,10 @@ class CafeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: Text(
-                          cafeName,
+                          outlet?.businessName ?? "",
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -85,7 +82,7 @@ class CafeCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            rating.toString(),
+                            "4.5",
                             style: GoogleFonts.sora(
                               fontWeight: FontWeight.w600,
                               color: CustomColors.primary,
@@ -95,60 +92,29 @@ class CafeCard extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 4),
                   Text(
-                    "$category  •  $location",
+                    "Cafe • ${outlet?.location?.address1 ?? ""}, ${outlet?.location?.address2 ?? ""}",
                     style: GoogleFonts.sora(
                       fontSize: 14,
                       color: CustomColors.primary.withOpacity(0.7),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        color: CustomColors.primary.withOpacity(0.7),
-                        size: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        "$distance km away",
-                        style:GoogleFonts.sora(
-                          fontSize: 14,
-                          color: CustomColors.primary.withOpacity(0.7),
-                        ),
-                      ),
-                    ],
-                  ),
-
                   const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Container(
-                        height: 8,
-                        width: 8,
-                        decoration: const BoxDecoration(
-                          color: CustomColors.secondary,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          "Open • Closes $openTime",
-                          style: GoogleFonts.sora(
-                            fontSize: 14,
-                            color: CustomColors.secondary,
-                            fontWeight: FontWeight.w500
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    outlet?.aboutBusiness ?? "",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.sora(
+                      fontSize: 13,
+                      color: CustomColors.primary.withOpacity(0.7),
+                    ),
                   ),
                   const SizedBox(height: 14),
-                  CustomGradientButton(title: "Book Table", onTap: onTap),
+                  CustomGradientButton(
+                    title: "Book Table",
+                    onTap: onTap ?? () {},
+                  ),
                 ],
               ),
             ),

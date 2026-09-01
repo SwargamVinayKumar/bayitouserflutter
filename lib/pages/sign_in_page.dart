@@ -26,16 +26,10 @@ class SignInPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 80,
-                  backgroundColor: CustomColors.secondary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Image.asset(
-                      "assets/images/bayitoLogo.png",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                  backgroundImage: AssetImage("assets/images/bayitoLogo.jpeg"),
+                  backgroundColor: Colors.transparent,
                 ),
                 const SizedBox(height: 30),
                 const CustomTextFieldComponent(hintText: "Email/MobileNumber"),

@@ -139,7 +139,7 @@ class _ReservationPageState extends State<ReservationPage> {
                         final reservation = filteredList[index];
                         return InkWell(
                           onTap: (){
-                            Get.to(() => CafeDetailsPage(image:  reservation["image"],showButton: false));
+                            // Get.to(() => CafeDetailsPage(image:  reservation["image"],showButton: false));
                           },
                           child: ReservationCafeCard(
                             image: reservation["image"],
@@ -149,7 +149,7 @@ class _ReservationPageState extends State<ReservationPage> {
                             time: reservation["time"],
                             table: reservation["table"],
                             onTap: () {
-                              Get.to(() => CafeDetailsPage(image:  reservation["image"],showButton: false));
+                              // Get.to(() => CafeDetailsPage(image:  reservation["image"],showButton: false));
                             },
                           ),
                         );

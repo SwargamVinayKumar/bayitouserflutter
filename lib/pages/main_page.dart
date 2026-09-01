@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
     _pages = [
       HomePage(),
       const ReservationPage(showBackArrow: false),
-      const FavoritePage(),
+      FavoritePage(),
       const ProfilePage(),
     ];
     _pageController = PageController(initialPage: _selectedPageIndex);
