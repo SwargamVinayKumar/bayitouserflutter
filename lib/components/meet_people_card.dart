@@ -9,12 +9,16 @@ import 'custom_network_image.dart';
 class MeetPeopleCard extends StatelessWidget {
   final UserModel? user;
   final VoidCallback onTap;
+  final Color ctnColor;
+  final Color titleColor;
 
 
   const MeetPeopleCard({
     super.key,
     this.user,
     required this.onTap,
+    this.ctnColor = CustomColors.primary,
+    this.titleColor = CustomColors.secondary,
   });
 
   @override
@@ -23,16 +27,13 @@ class MeetPeopleCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        color: CustomColors.secondary.withOpacity(0.03),
-        border: Border.all(
-          color: CustomColors.secondary.withOpacity(0.08),
-        ),
+        color: ctnColor,
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: CustomColors.darkBlack.withOpacity(0.3),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
+            color: titleColor.withOpacity(0.4),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -60,7 +61,7 @@ class MeetPeopleCard extends StatelessWidget {
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: CustomColors.white,
+                      color: titleColor,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -69,7 +70,7 @@ class MeetPeopleCard extends StatelessWidget {
                     style: GoogleFonts.sora(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: CustomColors.primary.withOpacity(0.7),
+                      color: titleColor.withOpacity(0.6),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -78,7 +79,7 @@ class MeetPeopleCard extends StatelessWidget {
                     style: GoogleFonts.sora(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
-                      color: CustomColors.primary.withOpacity(0.9),
+                      color: titleColor.withOpacity(0.9),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -87,8 +88,8 @@ class MeetPeopleCard extends StatelessWidget {
                       Container(
                         width: 8,
                         height: 8,
-                        decoration: BoxDecoration(
-                          color: CustomColors.secondary.withOpacity(0.6),
+                        decoration: const BoxDecoration(
+                          color: CustomColors.secondary,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -98,7 +99,7 @@ class MeetPeopleCard extends StatelessWidget {
                         style: GoogleFonts.sora(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: CustomColors.secondary.withOpacity(0.6),
+                          color: CustomColors.secondary,
                         ),
                       ),
                     ],

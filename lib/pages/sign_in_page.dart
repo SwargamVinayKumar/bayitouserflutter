@@ -4,7 +4,7 @@ import 'package:bayitouser/pages/sign_up_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'main_page.dart';
+import '../view_models/auth_view_model.dart';
 import 'package:get/get.dart';
 
 
@@ -15,6 +15,9 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final authViewModel = Get.put(AuthViewModel());
+
     return Scaffold(
       backgroundColor:CustomColors.primary,
       body: SafeArea(
@@ -32,18 +35,31 @@ class SignInPage extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                 ),
                 const SizedBox(height: 30),
-                const CustomTextFieldComponent(hintText: "Email/MobileNumber"),
-                const SizedBox(height: 8),
-                const CustomTextFieldComponent(hintText: "Password",isPassword: true,),
-                const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: CustomGradientButton(title: "Login",
-                      fontSize: 18,
-                      onTap: (){
-                      Get.offAll(() =>  const MainPage());
-                  }),
+                CustomTextFieldComponent(
+                  hintText: "Email/MobileNumber",
+                  textController: authViewModel.emailMobileController,
                 ),
+                const SizedBox(height: 8),
+                CustomTextFieldComponent(
+                  hintText: "Password",
+                  isPassword: true,
+                  textController: authViewModel.signInPasswordController,
+                ),
+                const SizedBox(height: 24),
+                Obx(() {
+                  final state = authViewModel.signInObserver.value;
+                  return state.maybeWhen(
+                    loading: (_) => const CircularProgressIndicator(),
+                    orElse: () => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: CustomGradientButton(
+                        title: "Login",
+                        fontSize: 18,
+                        onTap: () => authViewModel.signIn(),
+                      ),
+                    ),
+                  );
+                }),
                 const SizedBox(height: 30),
                 RichText(
                   text: TextSpan(

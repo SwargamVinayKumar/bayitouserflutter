@@ -1,42 +1,32 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:bayitouser/pages/splash_page.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart' as dio;
 
-import 'package:image/image.dart' as img;
 
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_provider.dart';
 import '../api/api_result.dart';
 import '../api/end_points.dart';
 
-import '../components/custom_network_image.dart';
-import '../components/error_text_component.dart';
+
 import '../models/requestModels/auth_request_model.dart';
 import '../models/requestModels/sign_in_request_model.dart';
 import '../models/requestModels/sign_up_request_model.dart';
 import '../models/responseModels/auth_response_model.dart';
 import '../models/responseModels/file_upload_response_model.dart';
 import '../models/responseModels/open_hour_model.dart';
-import '../pages/main_page.dart';
-import '../pages/regsiter_user_page.dart';
 import '../pages/update_version_screen.dart';
 import '../pages/user_blocked.dart';
-import '../utils/app_styles.dart';
 import '../utils/auth_utils.dart';
-import '../utils/custom_color.dart';
 import '../utils/geo_util.dart';
 import '../utils/preference_manager.dart';
-import 'package:http/http.dart' as http;
-import 'dart:typed_data';
+
 
 import '../utils/snack_bar_extension.dart';
 

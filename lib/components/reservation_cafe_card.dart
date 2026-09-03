@@ -12,6 +12,8 @@ class ReservationCafeCard extends StatelessWidget {
   final String time;
   final String table;
   final VoidCallback onTap;
+  final Color ctnColor;
+  final Color titleColor;
 
   const ReservationCafeCard({
     super.key,
@@ -22,6 +24,8 @@ class ReservationCafeCard extends StatelessWidget {
     required this.time,
     required this.table,
     required this.onTap,
+    this.ctnColor = CustomColors.primary,
+    this.titleColor = CustomColors.secondary,
   });
 
   @override
@@ -30,16 +34,13 @@ class ReservationCafeCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        color:  CustomColors.secondary.withOpacity(0.03),
-        border: Border.all(
-          color: CustomColors.secondary.withOpacity(0.08),
-        ),
+        color: ctnColor,
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: CustomColors.darkBlack.withOpacity(0.3),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
+            color: titleColor.withOpacity(0.4),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -67,7 +68,7 @@ class ReservationCafeCard extends StatelessWidget {
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: CustomColors.white,
+                      color: titleColor,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -76,7 +77,7 @@ class ReservationCafeCard extends StatelessWidget {
                     style: GoogleFonts.sora(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color:  CustomColors.white.withOpacity(0.6),
+                      color: titleColor.withOpacity(0.6),
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -87,7 +88,7 @@ class ReservationCafeCard extends StatelessWidget {
                         style:  GoogleFonts.sora(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color:  CustomColors.white,
+                          color: titleColor,
                         ),
                       ),
                       const SizedBox(width: 14),
@@ -96,7 +97,7 @@ class ReservationCafeCard extends StatelessWidget {
                         style: GoogleFonts.sora(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color:  CustomColors.white.withOpacity(0.7),
+                          color: titleColor.withOpacity(0.6),
                         ),
                       ),
                     ],
@@ -110,7 +111,7 @@ class ReservationCafeCard extends StatelessWidget {
                         style: GoogleFonts.sora(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color:  CustomColors.white.withOpacity(0.7),
+                          color: titleColor.withOpacity(0.6),
                         ),
                       ),
                       CustomGradientButton(title: "View", onTap: onTap,height: 35,width: 100,fontSize: 14,),

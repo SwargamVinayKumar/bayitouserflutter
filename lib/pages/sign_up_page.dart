@@ -78,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                             child: Text(
                               "Verification Code Sent To ${authViewModel.mobileController.text}",
                               style: const TextStyle(
-                                color: CustomColors.textColor,
+                                color: CustomColors.secondary,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                               ),
@@ -93,10 +93,10 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                               decoration: UnderlineDecoration(
                                 textStyle: const TextStyle(
                                   fontSize: 18,
-                                  color: CustomColors.textColor,
+                                  color: CustomColors.secondary,
                                   fontWeight: FontWeight.w600,
                                 ),
-                                colorBuilder: const FixedColorBuilder(CustomColors.primary),
+                                colorBuilder: const FixedColorBuilder(CustomColors.secondary),
                               ),
                             ),
                           ),

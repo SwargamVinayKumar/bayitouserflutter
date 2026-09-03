@@ -98,10 +98,6 @@ class HomePage extends StatelessWidget {
                       title: "Nearby",
                       subtitle: "Discover places",
                       icon: Icons.location_on_rounded,
-                      gradient: const [
-                        Color(0xffa30c0f),
-                        Color(0xffdc5512),
-                      ],
                       onTap: () {
                         Get.to(
                               () => const CafePage(
@@ -114,10 +110,6 @@ class HomePage extends StatelessWidget {
                       title: "Book Table",
                       subtitle: "Reserve instantly",
                       icon: Icons.table_restaurant,
-                      gradient: const [
-                        Color(0xff55069a),
-                        Color(0xffd625a6),
-                      ],
                       onTap: () {
                         Get.to(
                               () => const CafePage(
@@ -130,10 +122,6 @@ class HomePage extends StatelessWidget {
                       title: "Meet People",
                       subtitle: "Connect nearby",
                       icon: Icons.handshake,
-                      gradient: const [
-                        Color(0xff3E2723),
-                        Color(0xff5D4037),
-                      ],
                       onTap: () {
                         Get.to(() => const MeetPeoplePage(),
                         );
@@ -143,10 +131,6 @@ class HomePage extends StatelessWidget {
                       title: "Reservations",
                       subtitle: "Booking history",
                       icon: Icons.event,
-                      gradient: const [
-                        Color(0xff048035),
-                        Color(0xff3d8f40),
-                      ],
                       onTap: () {
                         Get.to(() => const ReservationPage(showBackArrow: true,
                           ),

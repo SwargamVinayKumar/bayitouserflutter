@@ -48,20 +48,6 @@ class FeaturedPlaceCard extends StatelessWidget {
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),
-
-
-                    // Image.network(
-                    //   businessLogo,
-                    //   fit: BoxFit.cover,
-                    //   width: double.infinity,
-                    //   errorBuilder: (
-                    //       context,
-                    //       error,
-                    //       stackTrace,
-                    //       ) {
-                    //     return const SizedBox();
-                    //   },
-                    // ),
                   ),
                 ],
               ),

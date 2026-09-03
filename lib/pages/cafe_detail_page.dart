@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../components/custom_network_image.dart';
 import '../models/responseModels/outlet_response_model.dart';
 import '../view_models/outlet_view_model.dart';
 import 'package:get/get.dart';
@@ -47,13 +48,9 @@ class CafeDetailsPage extends StatelessWidget {
                   SizedBox(
                     height: 330,
                     width: double.infinity,
-                    child: Image.network(
-                      outlet?.businessLogo ?? "",
+                    child: CustomNetworkImage(
+                      imageUrl: outlet?.businessLogo ?? "",
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        color: Colors.grey.shade300,
-                        child: const Icon(Icons.image, size: 50),
-                      ),
                     ),
                   ),
                   SafeArea(

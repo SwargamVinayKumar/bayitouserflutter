@@ -19,7 +19,7 @@ class EmptyDataView extends StatelessWidget {
         children: [
           SizedBox(height: 150,width: 150,child: Image.asset(images[random.nextInt(images.length)])),
           const SizedBox(height: 30),
-          Text(text,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: CustomColors.primary),)
+          Text(text,textAlign: TextAlign.center,style: const TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: CustomColors.primary),)
         ],
       ),
     );

@@ -200,32 +200,6 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
                     );
                   }),
                 )
-                // Expanded(
-                //   child: filteredPeopleList.isEmpty
-                //       ? const Center(
-                //     child: Text(
-                //       "No People Found",
-                //       style: TextStyle(
-                //         color: CustomColors.secondary,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w500,
-                //       ),
-                //     ),
-                //   ) : ListView.builder(
-                //     physics: const BouncingScrollPhysics(),
-                //     itemCount: filteredPeopleList.length,
-                //     itemBuilder: (context, index) {
-                //       final people = filteredPeopleList[index];
-                //       return MeetPeopleCard(
-                //         image: people["image"],
-                //         name: people["name"],
-                //         category:  people["category"],
-                //         profession: people["profession"],
-                //         onTap: () {},
-                //       );
-                //     },
-                //   ),
-                // ),
               ],
             ),
           ),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../utils/custom_color.dart';
 
 class HomeMenuCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
-  final List<Color> gradient;
+  final Color ctnColor;
+  final Color titleColor;
+
   final VoidCallback? onTap;
 
   const HomeMenuCard({
@@ -15,7 +16,8 @@ class HomeMenuCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.icon,
-    required this.gradient,
+    this.ctnColor = CustomColors.primary,
+    this.titleColor = CustomColors.secondary,
     this.onTap
   });
 
@@ -25,24 +27,24 @@ class HomeMenuCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: gradient),
+          color: ctnColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: gradient.last.withOpacity(0.35),
+              color: titleColor.withOpacity(0.4),
               blurRadius: 4,
-              offset: const Offset(0, 6),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.all(22),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: CustomColors.white.withOpacity(0.18),
                   borderRadius:
@@ -50,7 +52,7 @@ class HomeMenuCard extends StatelessWidget {
                 ),
                 child: Icon(
                   icon,
-                  color: CustomColors.white,
+                  color: titleColor,
                   size: 18,
                 ),
               ),
@@ -62,13 +64,13 @@ class HomeMenuCard extends StatelessWidget {
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: CustomColors.white,
+                      color: titleColor,
                     ),
                   ),
                   Text(
                     subtitle,
                     style: GoogleFonts.sora(
-                      color: CustomColors.white.withOpacity(0.9),
+                      color: titleColor.withOpacity(0.9),
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),

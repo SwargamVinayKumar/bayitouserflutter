@@ -8,11 +8,15 @@ import 'custom_network_image.dart';
 class CafeCard extends StatelessWidget {
   final OutletModel? outlet;
   final VoidCallback? onTap;
+  final Color ctnColor;
+  final Color titleColor;
 
   const CafeCard({
     super.key,
     this.outlet,
     this.onTap,
+    this.ctnColor = CustomColors.primary,
+    this.titleColor = CustomColors.secondary,
   });
 
   @override
@@ -21,16 +25,13 @@ class CafeCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        color:  CustomColors.secondary.withOpacity(0.03),
-        border: Border.all(
-          color: CustomColors.secondary.withOpacity(0.08),
-        ),
+        color: ctnColor,
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: CustomColors.darkBlack.withOpacity(0.3),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
+            color: titleColor.withOpacity(0.4),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -46,14 +47,6 @@ class CafeCard extends StatelessWidget {
                   imageUrl: outlet?.businessLogo ?? "",
                   fit: BoxFit.cover,
                 ),
-
-
-                // Image.network(
-                //   outlet?.businessLogo ?? "",
-                //   fit: BoxFit.cover,
-                //   errorBuilder: (_, __, ___) =>
-                //   const Icon(Icons.image, size: 40),
-                // ),
               ),
             ),
             const SizedBox(width: 14),
@@ -69,7 +62,7 @@ class CafeCard extends StatelessWidget {
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: CustomColors.primary,
+                            color: titleColor,
                           ),
                         ),
                       ),
@@ -85,7 +78,7 @@ class CafeCard extends StatelessWidget {
                             "4.5",
                             style: GoogleFonts.sora(
                               fontWeight: FontWeight.w600,
-                              color: CustomColors.primary,
+                              color: titleColor,
                             ),
                           ),
                         ],
@@ -97,7 +90,7 @@ class CafeCard extends StatelessWidget {
                     "Cafe • ${outlet?.location?.address1 ?? ""}, ${outlet?.location?.address2 ?? ""}",
                     style: GoogleFonts.sora(
                       fontSize: 14,
-                      color: CustomColors.primary.withOpacity(0.7),
+                      color: titleColor.withOpacity(0.6),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -107,7 +100,7 @@ class CafeCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.sora(
                       fontSize: 13,
-                      color: CustomColors.primary.withOpacity(0.7),
+                      color: titleColor.withOpacity(0.6),
                     ),
                   ),
                   const SizedBox(height: 14),
