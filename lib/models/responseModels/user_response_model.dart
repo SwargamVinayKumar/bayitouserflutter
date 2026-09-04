@@ -22,6 +22,8 @@ abstract class UserModel with _$UserModel {
     String? profilePic,
     List<DesignationModel>? designations,
     UserLocationModel? location,
+    String? name,
+    String? email,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

@@ -213,6 +213,8 @@ mixin _$UserModel {
   List<DesignationModel>? get designations =>
       throw _privateConstructorUsedError;
   UserLocationModel? get location => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -229,7 +231,9 @@ abstract class $UserModelCopyWith<$Res> {
       {@JsonKey(name: "_id") String? id,
       String? profilePic,
       List<DesignationModel>? designations,
-      UserLocationModel? location});
+      UserLocationModel? location,
+      String? name,
+      String? email});
 
   $UserLocationModelCopyWith<$Res>? get location;
 }
@@ -251,6 +255,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? profilePic = freezed,
     Object? designations = freezed,
     Object? location = freezed,
+    Object? name = freezed,
+    Object? email = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -269,6 +275,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as UserLocationModel?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -297,7 +311,9 @@ abstract class _$$UserModelImplCopyWith<$Res>
       {@JsonKey(name: "_id") String? id,
       String? profilePic,
       List<DesignationModel>? designations,
-      UserLocationModel? location});
+      UserLocationModel? location,
+      String? name,
+      String? email});
 
   @override
   $UserLocationModelCopyWith<$Res>? get location;
@@ -318,6 +334,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? profilePic = freezed,
     Object? designations = freezed,
     Object? location = freezed,
+    Object? name = freezed,
+    Object? email = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -336,6 +354,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as UserLocationModel?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -347,7 +373,9 @@ class _$UserModelImpl implements _UserModel {
       {@JsonKey(name: "_id") this.id,
       this.profilePic,
       final List<DesignationModel>? designations,
-      this.location})
+      this.location,
+      this.name,
+      this.email})
       : _designations = designations;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -370,10 +398,14 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   final UserLocationModel? location;
+  @override
+  final String? name;
+  @override
+  final String? email;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, profilePic: $profilePic, designations: $designations, location: $location)';
+    return 'UserModel(id: $id, profilePic: $profilePic, designations: $designations, location: $location, name: $name, email: $email)';
   }
 
   @override
@@ -387,13 +419,21 @@ class _$UserModelImpl implements _UserModel {
             const DeepCollectionEquality()
                 .equals(other._designations, _designations) &&
             (identical(other.location, location) ||
-                other.location == location));
+                other.location == location) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, profilePic,
-      const DeepCollectionEquality().hash(_designations), location);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      profilePic,
+      const DeepCollectionEquality().hash(_designations),
+      location,
+      name,
+      email);
 
   @JsonKey(ignore: true)
   @override
@@ -414,7 +454,9 @@ abstract class _UserModel implements UserModel {
       {@JsonKey(name: "_id") final String? id,
       final String? profilePic,
       final List<DesignationModel>? designations,
-      final UserLocationModel? location}) = _$UserModelImpl;
+      final UserLocationModel? location,
+      final String? name,
+      final String? email}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -428,6 +470,10 @@ abstract class _UserModel implements UserModel {
   List<DesignationModel>? get designations;
   @override
   UserLocationModel? get location;
+  @override
+  String? get name;
+  @override
+  String? get email;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

@@ -1,4 +1,5 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
+import 'package:bayitouser/components/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -52,8 +53,8 @@ class ReservationCafeCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
               child: SizedBox(
                 width: 90,
-                child: Image.asset(
-                  image,
+                child: CustomNetworkImage(
+                  imageUrl: image,
                   fit: BoxFit.cover,
                 ),
               ),

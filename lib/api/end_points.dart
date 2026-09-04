@@ -18,6 +18,7 @@ class EndPoints {
   static const checkAvailability = "checkAvailability";
   static const confirmBooking = "confirmBooking";
   static const fetchUserBookings = "fetchUserBookings";
+  static const fetchUserBookingDetails = "fetchUserBookingDetails";
   static const cancelBooking = "cancelBooking";
 
 

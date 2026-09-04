@@ -35,6 +35,8 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : UserLocationModel.fromJson(
               json['location'] as Map<String, dynamic>),
+      name: json['name'] as String?,
+      email: json['email'] as String?,
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -43,6 +45,8 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'profilePic': instance.profilePic,
       'designations': instance.designations,
       'location': instance.location,
+      'name': instance.name,
+      'email': instance.email,
     };
 
 _$DesignationModelImpl _$$DesignationModelImplFromJson(

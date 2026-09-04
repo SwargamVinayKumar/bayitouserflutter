@@ -759,12 +759,14 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                     children: [
                       Icon(Icons.info_outline_rounded, color: Colors.grey.shade600),
                       const SizedBox(width: 12),
-                      Text(
-                        "Select table and seat to check availability",
-                        style: GoogleFonts.sora(
-                          color: Colors.grey.shade600,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                      Expanded(
+                        child: Text(
+                          "Select table and seat to check availability",
+                          style: GoogleFonts.sora(
+                            color: Colors.grey.shade600,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
