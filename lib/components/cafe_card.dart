@@ -1,8 +1,10 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/responseModels/outlet_response_model.dart';
+import '../pages/book_table_page.dart';
 import 'custom_network_image.dart';
 
 class CafeCard extends StatelessWidget {
@@ -106,7 +108,9 @@ class CafeCard extends StatelessWidget {
                   const SizedBox(height: 14),
                   CustomGradientButton(
                     title: "Book Table",
-                    onTap: onTap ?? () {},
+                    onTap: onTap ?? () {
+                      Get.to(() => const BookTablePage());
+                    },
                   ),
                 ],
               ),

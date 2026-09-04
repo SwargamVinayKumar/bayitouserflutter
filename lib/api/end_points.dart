@@ -15,6 +15,11 @@ class EndPoints {
   static const getTables = "getTables";
   static const getTableById = "getTableById";
 
+  static const checkAvailability = "checkAvailability";
+  static const confirmBooking = "confirmBooking";
+  static const fetchUserBookings = "fetchUserBookings";
+  static const cancelBooking = "cancelBooking";
+
 
   static const fetchOutlets = "fetchOutlets";
   static const fetchSearchOutlets = "fetchOutlets";

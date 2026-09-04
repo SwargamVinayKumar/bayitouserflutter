@@ -12,6 +12,8 @@ import '../models/responseModels/outlet_response_model.dart';
 import '../view_models/outlet_view_model.dart';
 import 'package:get/get.dart';
 
+import 'book_table_page.dart';
+
 class CafeDetailsPage extends StatelessWidget {
   final String outletId;
   final bool showButton;
@@ -41,7 +43,7 @@ class CafeDetailsPage extends StatelessWidget {
               child: Text(error),
             ),
             success: (response) {
-              final outlet = response.data;
+              final outlet = (response as OutletDetailsResponseModel).data;
               final todaySlot = getTodaySlot(outlet?.daySlots);
               return Stack(
                 children: [
@@ -237,7 +239,7 @@ class CafeDetailsPage extends StatelessWidget {
                               CustomGradientButton(
                                 title: "Book Table",
                                 onTap: () {
-                                  // Get.to(() => BookTablePage(outlet: outlet));
+                                  Get.to(() => BookTablePage(outletModel: outlet));
                                 },
                               ),
                           ],

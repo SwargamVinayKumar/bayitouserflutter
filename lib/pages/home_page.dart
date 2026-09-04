@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/components/featured_place_card.dart';
 import 'package:bayitouser/components/home_menu_card.dart';
+import 'package:bayitouser/components/responsive_sliver_grid.dart';
 import 'package:bayitouser/pages/cafe_page.dart';
 import 'package:bayitouser/pages/meet_people_page.dart';
 import 'package:bayitouser/pages/reservation_page.dart';
@@ -85,60 +86,7 @@ class HomePage extends StatelessWidget {
                   thickness: 0.4,
                 ),
                 const SizedBox(height: 18),
-                GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.4,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  shrinkWrap: true,
-                  physics:
-                  const NeverScrollableScrollPhysics(),
-                  children: [
-                    HomeMenuCard(
-                      title: "Nearby",
-                      subtitle: "Discover places",
-                      icon: Icons.location_on_rounded,
-                      onTap: () {
-                        Get.to(
-                              () => const CafePage(
-                            type: "nearby",
-                          ),
-                        );
-                      },
-                    ),
-                    HomeMenuCard(
-                      title: "Book Table",
-                      subtitle: "Reserve instantly",
-                      icon: Icons.table_restaurant,
-                      onTap: () {
-                        Get.to(
-                              () => const CafePage(
-                            type: "all",
-                          ),
-                        );
-                      },
-                    ),
-                    HomeMenuCard(
-                      title: "Meet People",
-                      subtitle: "Connect nearby",
-                      icon: Icons.handshake,
-                      onTap: () {
-                        Get.to(() => const MeetPeoplePage(),
-                        );
-                      },
-                    ),
-                    HomeMenuCard(
-                      title: "Reservations",
-                      subtitle: "Booking history",
-                      icon: Icons.event,
-                      onTap: () {
-                        Get.to(() => const ReservationPage(showBackArrow: true,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                ResponsiveSliverGrid(),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment:
@@ -168,7 +116,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const Divider(
                   height: 1,
                   thickness: 0.4,
