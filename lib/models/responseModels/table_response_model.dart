@@ -38,8 +38,12 @@ abstract class TableModel with _$TableModel {
     bool? available,
     int? seatCapacity,
     List<SeatModel>? seats,
+    int? ratingCount,
     String? createdAt,
     String? updatedAt,
+    int? tableCount,
+    double? rating,
+    List<CategoryRating>? categoryRating
   }) = _TableModel;
 
   factory TableModel.fromJson(Map<String, dynamic> json) =>
@@ -87,4 +91,63 @@ abstract class Pagination with _$Pagination {
 
   factory Pagination.fromJson(Map<String, dynamic> json) =>
       _$PaginationFromJson(json);
+}
+
+@Freezed()
+class FetchAmenitiesResponseModel with _$FetchAmenitiesResponseModel{
+  const factory FetchAmenitiesResponseModel({
+    int? status,
+    String? message,
+    List<AmenitiesModel>? data
+  }) = _FetchAmenitiesResponseModel;
+
+  factory FetchAmenitiesResponseModel.fromJson(Map<String, dynamic> json) => _$FetchAmenitiesResponseModelFromJson(json);
+}
+
+@Freezed()
+class FetchRatingAndReviewsResponseModel with _$FetchRatingAndReviewsResponseModel{
+  const factory FetchRatingAndReviewsResponseModel({
+    int? status,
+    String? message,
+    List<RatingAndReviewModel>? data
+  }) = _FetchRatingAndReviewsResponseModel;
+
+  factory FetchRatingAndReviewsResponseModel.fromJson(Map<String, dynamic> json) => _$FetchRatingAndReviewsResponseModelFromJson(json);
+}
+
+@Freezed()
+class RatingAndReviewModel with _$RatingAndReviewModel{
+  const factory RatingAndReviewModel({
+    dynamic userId,
+    dynamic outletId,
+    dynamic tableId,
+    dynamic rating,
+    String? review
+  }) = _RatingAndReviewModel;
+
+  factory RatingAndReviewModel.fromJson(Map<String, dynamic> json) => _$RatingAndReviewModelFromJson(json);
+}
+
+
+@Freezed()
+class CategoryRating with _$CategoryRating{
+  const factory CategoryRating({
+    dynamic rating,
+    String? ratedFor
+  }) = _CategoryRating;
+
+  factory CategoryRating.fromJson(Map<String, dynamic> json) => _$CategoryRatingFromJson(json);
+}
+
+
+
+@Freezed()
+class AmenitiesModel with _$AmenitiesModel{
+  const factory AmenitiesModel({
+    @JsonKey(name: '_id') String? id,
+    String? image,
+    String? name
+  }) = _AmenitiesModel;
+
+  factory AmenitiesModel.fromJson(Map<String, dynamic> json) => _$AmenitiesModelFromJson(json);
 }

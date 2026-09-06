@@ -236,7 +236,9 @@ class AppStyles {
     );
 
 
-    static final strokeBorder = BoxDecoration(color: CustomColors.white,borderRadius: BorderRadius.circular(200),border: Border.all(width: 0.8,color: Color(0xFFE2E2E2)));
+    static final strokeWhiteBorder = BoxDecoration(color: CustomColors.white,borderRadius: BorderRadius.circular(200),border: Border.all(width: 0.8,color: Color(0xFFE2E2E2)));
+
+  static final strokePrimaryBorder = BoxDecoration(color: CustomColors.primary,borderRadius: BorderRadius.circular(200),border: Border.all(width: 0.8,color: Color(0xFFE2E2E2)));
 
 
   static  final  secondaryContainerStyle = BoxDecoration(

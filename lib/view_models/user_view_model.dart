@@ -5,6 +5,7 @@ import '../api/api_provider.dart';
 import '../api/api_result.dart';
 import '../api/end_points.dart';
 import '../models/requestModels/page_request_model.dart';
+import '../models/responseModels/booking_response_model.dart';
 import '../models/responseModels/page_model.dart';
 import '../utils/auth_utils.dart';
 import '../utils/custom_color.dart';
@@ -17,7 +18,7 @@ class UserViewModel extends GetxController {
   final preferenceManager = Get.put(PreferenceManager());
 
   final fetchUsersObserver = PaginationModel(
-    data: ApiResult<UsersListResponseModel>.init().obs,
+    data: ApiResult<BookingListResponse>.init().obs,
     isLoading: false,
     isPaginationCompleted: false,
     page: 1,
@@ -36,7 +37,7 @@ class UserViewModel extends GetxController {
 
       if (refresh) {
         observer.value = PaginationModel(
-          data: ApiResult<UsersListResponseModel>.init().obs,
+          data: ApiResult<BookingListResponse>.init().obs,
           isLoading: false,
           isPaginationCompleted: false,
           page: 1,
@@ -83,11 +84,11 @@ class UserViewModel extends GetxController {
       final body = response.body;
       print("User body:$body");
       if (response.isOk && body != null) {
-        final responseData = UsersListResponseModel.fromJson(body);
+        final responseData = BookingListResponse.fromJson(body);
         if (responseData.status == 1) {
           observer.value.data.value = ApiResult.success(responseData);
           observer.value.page++;
-          if ((responseData.data?.length ?? 0) <
+          if ((responseData.data?.bookings?.length ?? 0) <
               maxListApiReturns) {
             observer.value.isPaginationCompleted = true;
           }

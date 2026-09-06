@@ -36,7 +36,12 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
           : UserLocationModel.fromJson(
               json['location'] as Map<String, dynamic>),
       name: json['name'] as String?,
+      dob: json['dob'] as String?,
+      gender: json['gender'] as String?,
       email: json['email'] as String?,
+      charges: json['charges'] == null
+          ? null
+          : ChargesModel.fromJson(json['charges'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -46,7 +51,10 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'designations': instance.designations,
       'location': instance.location,
       'name': instance.name,
+      'dob': instance.dob,
+      'gender': instance.gender,
       'email': instance.email,
+      'charges': instance.charges,
     };
 
 _$DesignationModelImpl _$$DesignationModelImplFromJson(

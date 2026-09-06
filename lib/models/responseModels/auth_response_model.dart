@@ -141,4 +141,14 @@ abstract class ChargesModel with _$ChargesModel{
   factory ChargesModel.fromJson(Map<String, dynamic> json) => _$ChargesModelFromJson(json);
 }
 
+@Freezed()
+class PrimaryResponseModel with _$PrimaryResponseModel{
+  const factory PrimaryResponseModel({
+    int? status,
+    String? message
+  }) = _PrimaryResponseModel;
+
+  factory PrimaryResponseModel.fromJson(Map<String, dynamic> json) => _$PrimaryResponseModelFromJson(json);
+}
+
 

@@ -2497,3 +2497,159 @@ abstract class _ChargesModel implements ChargesModel {
   _$$ChargesModelImplCopyWith<_$ChargesModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+PrimaryResponseModel _$PrimaryResponseModelFromJson(Map<String, dynamic> json) {
+  return _PrimaryResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PrimaryResponseModel {
+  int? get status => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PrimaryResponseModelCopyWith<PrimaryResponseModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PrimaryResponseModelCopyWith<$Res> {
+  factory $PrimaryResponseModelCopyWith(PrimaryResponseModel value,
+          $Res Function(PrimaryResponseModel) then) =
+      _$PrimaryResponseModelCopyWithImpl<$Res, PrimaryResponseModel>;
+  @useResult
+  $Res call({int? status, String? message});
+}
+
+/// @nodoc
+class _$PrimaryResponseModelCopyWithImpl<$Res,
+        $Val extends PrimaryResponseModel>
+    implements $PrimaryResponseModelCopyWith<$Res> {
+  _$PrimaryResponseModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PrimaryResponseModelImplCopyWith<$Res>
+    implements $PrimaryResponseModelCopyWith<$Res> {
+  factory _$$PrimaryResponseModelImplCopyWith(_$PrimaryResponseModelImpl value,
+          $Res Function(_$PrimaryResponseModelImpl) then) =
+      __$$PrimaryResponseModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? status, String? message});
+}
+
+/// @nodoc
+class __$$PrimaryResponseModelImplCopyWithImpl<$Res>
+    extends _$PrimaryResponseModelCopyWithImpl<$Res, _$PrimaryResponseModelImpl>
+    implements _$$PrimaryResponseModelImplCopyWith<$Res> {
+  __$$PrimaryResponseModelImplCopyWithImpl(_$PrimaryResponseModelImpl _value,
+      $Res Function(_$PrimaryResponseModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_$PrimaryResponseModelImpl(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PrimaryResponseModelImpl implements _PrimaryResponseModel {
+  const _$PrimaryResponseModelImpl({this.status, this.message});
+
+  factory _$PrimaryResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PrimaryResponseModelImplFromJson(json);
+
+  @override
+  final int? status;
+  @override
+  final String? message;
+
+  @override
+  String toString() {
+    return 'PrimaryResponseModel(status: $status, message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PrimaryResponseModelImpl &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, status, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PrimaryResponseModelImplCopyWith<_$PrimaryResponseModelImpl>
+      get copyWith =>
+          __$$PrimaryResponseModelImplCopyWithImpl<_$PrimaryResponseModelImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PrimaryResponseModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PrimaryResponseModel implements PrimaryResponseModel {
+  const factory _PrimaryResponseModel(
+      {final int? status, final String? message}) = _$PrimaryResponseModelImpl;
+
+  factory _PrimaryResponseModel.fromJson(Map<String, dynamic> json) =
+      _$PrimaryResponseModelImpl.fromJson;
+
+  @override
+  int? get status;
+  @override
+  String? get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$PrimaryResponseModelImplCopyWith<_$PrimaryResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

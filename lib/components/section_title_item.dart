@@ -11,7 +11,7 @@ class SectionTitleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(title,
-      style: GoogleFonts.plusJakartaSans(
+      style: TextStyle(
         fontSize: fontSize,
         fontWeight: FontWeight.w600,
         color: CustomColors.secondary,

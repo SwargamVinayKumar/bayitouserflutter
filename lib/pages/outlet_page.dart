@@ -1,9 +1,9 @@
 import 'package:bayitouser/components/custom_search_bar.dart';
-import 'package:bayitouser/pages/cafe_detail_page.dart';
+import 'package:bayitouser/pages/outlet_detail_page.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../components/cafe_card.dart';
+import '../components/outlet_card.dart';
 import '../components/custom_action_button.dart';
 import '../models/requestModels/page_request_model.dart';
 import '../models/responseModels/outlet_response_model.dart';
@@ -12,17 +12,17 @@ import '../view_models/outlet_view_model.dart';
 import 'package:get/get.dart';
 
 
-class CafePage extends StatefulWidget {
+class OutletPage extends StatefulWidget {
 
   final String type;
 
-  const CafePage({super.key,required this.type});
+  const OutletPage({super.key,required this.type});
 
   @override
-  State<CafePage> createState() => _CafePageState();
+  State<OutletPage> createState() => _OutletPageState();
 }
 
-class _CafePageState extends State<CafePage> {
+class _OutletPageState extends State<OutletPage> {
 
   final OutletViewModel outletViewModel = Get.put(OutletViewModel());
 
@@ -44,7 +44,7 @@ class _CafePageState extends State<CafePage> {
     );
   }
 
-  void searchCafe(String value) {
+  void searchOutlet(String value) {
     final searchText = value.trim();
 
     if (searchText.isEmpty) {
@@ -105,7 +105,7 @@ class _CafePageState extends State<CafePage> {
                     Expanded(
                       child: Text(
                         pageTitle,
-                        style: GoogleFonts.plusJakartaSans(
+                        style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
                           color: CustomColors.secondary,
@@ -119,7 +119,7 @@ class _CafePageState extends State<CafePage> {
                   controller: searchController,
                   onChanged: (value) {
                     setState(() {});
-                    searchCafe(value);
+                    searchOutlet(value);
                   },
                 ),
                 const SizedBox(height: 18),
@@ -288,17 +288,17 @@ class _CafePageState extends State<CafePage> {
         return const SizedBox(height: 12);
       },
       itemBuilder: (context, index) {
-        final cafe = outlets[index];
+        final Outlet = outlets[index];
 
         return GestureDetector(
           onTap: () {
-            Get.to(() => CafeDetailsPage(
-              outletId: cafe.id ?? "",
+            Get.to(() => OutletDetailsPage(
+              outletId: Outlet.id ?? "",
               ),
             );
           },
-          child: CafeCard(
-            outlet: cafe,
+          child: OutletCard(
+            outlet: Outlet,
             onTap: () {},
           ),
         );

@@ -1,4 +1,6 @@
 import 'package:bayitouser/components/empty_data_view.dart';
+import 'package:bayitouser/models/responseModels/user_response_model.dart';
+import 'package:bayitouser/pages/booking_details_page.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import '../components/custom_search_bar.dart';
 import '../components/custom_tab_component.dart';
 import '../components/meet_people_card.dart';
 import '../models/requestModels/page_request_model.dart';
+import '../models/responseModels/booking_response_model.dart';
 import '../utils/custom_color.dart';
 import '../view_models/user_view_model.dart';
 
@@ -34,28 +37,28 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
   final List<Map<String, dynamic>> peopleList = [
 
     {
-      "image": "assets/images/cafe.jpg",
+      "image": "assets/images/Outlet.jpg",
       "name": "Vinay",
       "category": "Professional",
       "profession": "UI/UX Designer",
     },
 
     {
-      "image": "assets/images/cafe2.jpeg",
+      "image": "assets/images/Outlet2.jpeg",
       "name": "Jawahar",
       "category": "Business",
       "profession": "Startup Founder",
     },
 
     {
-      "image": "assets/images/cafe.jpg",
+      "image": "assets/images/Outlet.jpg",
       "name": "Teja",
       "category": "Family",
       "profession": "Family Counselor",
     },
 
     {
-      "image": "assets/images/cafe2.jpeg",
+      "image": "assets/images/Outlet2.jpeg",
       "name": "Madhan",
       "category": "Study",
       "profession": "B.Tech(CSE)",
@@ -137,7 +140,7 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
                      Expanded(
                       child: Text(
                         "Meet People",
-                        style: GoogleFonts.plusJakartaSans(
+                        style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
                           color: CustomColors.secondary,
@@ -181,18 +184,21 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
                       ),
                       init: () => const SizedBox(),
                       success: (response) {
-                        final users = response.data ?? [];
-                        if (users.isEmpty) {
+                        final users = (response as BookingListResponse).data?.bookings;
+                        if (users?.isEmpty == true) {
                           return const EmptyDataView(text: "No People Found");
                         }
                         return ListView.builder(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: users.length,
+                          itemCount: users?.length,
                           itemBuilder: (context, index) {
-                            final user = users[index];
+                            final user = users?[index];
                             return MeetPeopleCard(
-                              user: user,
-                              onTap: () {},
+                              booking: user,
+                              onTap: () {
+                                Get.to(() => BookingDetailsPage(bookingId: user?.id ?? ""));
+                              },
+
                             );
                           },
                         );

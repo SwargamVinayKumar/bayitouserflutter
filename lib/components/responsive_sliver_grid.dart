@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pages/cafe_page.dart';
+import '../pages/outlet_page.dart';
 import '../pages/meet_people_page.dart';
 import '../pages/reservation_page.dart';
 import 'home_menu_card.dart';
@@ -74,13 +74,13 @@ class ResponsiveSliverGrid extends StatelessWidget {
         'title': 'Nearby',
         'subtitle': 'Discover places',
         'icon': Icons.location_on_rounded,
-        'page': const CafePage(type: 'nearby'),
+        'page': const OutletPage(type: 'nearby'),
       },
       {
         'title': 'Book Table',
         'subtitle': 'Reserve instantly',
         'icon': Icons.table_restaurant,
-        'page': const CafePage(type: 'all'),
+        'page': const OutletPage(type: 'all'),
       },
       {
         'title': 'Meet People',

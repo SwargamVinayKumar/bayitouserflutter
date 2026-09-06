@@ -25,6 +25,8 @@ mixin _$PaginationRequestModel {
   int? get page => throw _privateConstructorUsedError;
   String? get query => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
+  String? get outletId => throw _privateConstructorUsedError;
+  String? get tableId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +40,13 @@ abstract class $PaginationRequestModelCopyWith<$Res> {
           $Res Function(PaginationRequestModel) then) =
       _$PaginationRequestModelCopyWithImpl<$Res, PaginationRequestModel>;
   @useResult
-  $Res call({String? bookingType, int? page, String? query, String? type});
+  $Res call(
+      {String? bookingType,
+      int? page,
+      String? query,
+      String? type,
+      String? outletId,
+      String? tableId});
 }
 
 /// @nodoc
@@ -59,6 +67,8 @@ class _$PaginationRequestModelCopyWithImpl<$Res,
     Object? page = freezed,
     Object? query = freezed,
     Object? type = freezed,
+    Object? outletId = freezed,
+    Object? tableId = freezed,
   }) {
     return _then(_value.copyWith(
       bookingType: freezed == bookingType
@@ -77,6 +87,14 @@ class _$PaginationRequestModelCopyWithImpl<$Res,
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
+      outletId: freezed == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -90,7 +108,13 @@ abstract class _$$PaginationRequestModelImplCopyWith<$Res>
       __$$PaginationRequestModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? bookingType, int? page, String? query, String? type});
+  $Res call(
+      {String? bookingType,
+      int? page,
+      String? query,
+      String? type,
+      String? outletId,
+      String? tableId});
 }
 
 /// @nodoc
@@ -110,6 +134,8 @@ class __$$PaginationRequestModelImplCopyWithImpl<$Res>
     Object? page = freezed,
     Object? query = freezed,
     Object? type = freezed,
+    Object? outletId = freezed,
+    Object? tableId = freezed,
   }) {
     return _then(_$PaginationRequestModelImpl(
       bookingType: freezed == bookingType
@@ -128,6 +154,14 @@ class __$$PaginationRequestModelImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
+      outletId: freezed == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -136,7 +170,12 @@ class __$$PaginationRequestModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PaginationRequestModelImpl implements _PaginationRequestModel {
   const _$PaginationRequestModelImpl(
-      {this.bookingType, this.page, this.query, this.type});
+      {this.bookingType,
+      this.page,
+      this.query,
+      this.type,
+      this.outletId,
+      this.tableId});
 
   factory _$PaginationRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PaginationRequestModelImplFromJson(json);
@@ -149,10 +188,14 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
   final String? query;
   @override
   final String? type;
+  @override
+  final String? outletId;
+  @override
+  final String? tableId;
 
   @override
   String toString() {
-    return 'PaginationRequestModel(bookingType: $bookingType, page: $page, query: $query, type: $type)';
+    return 'PaginationRequestModel(bookingType: $bookingType, page: $page, query: $query, type: $type, outletId: $outletId, tableId: $tableId)';
   }
 
   @override
@@ -164,12 +207,16 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
                 other.bookingType == bookingType) &&
             (identical(other.page, page) || other.page == page) &&
             (identical(other.query, query) || other.query == query) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.outletId, outletId) ||
+                other.outletId == outletId) &&
+            (identical(other.tableId, tableId) || other.tableId == tableId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, bookingType, page, query, type);
+  int get hashCode => Object.hash(
+      runtimeType, bookingType, page, query, type, outletId, tableId);
 
   @JsonKey(ignore: true)
   @override
@@ -191,7 +238,9 @@ abstract class _PaginationRequestModel implements PaginationRequestModel {
       {final String? bookingType,
       final int? page,
       final String? query,
-      final String? type}) = _$PaginationRequestModelImpl;
+      final String? type,
+      final String? outletId,
+      final String? tableId}) = _$PaginationRequestModelImpl;
 
   factory _PaginationRequestModel.fromJson(Map<String, dynamic> json) =
       _$PaginationRequestModelImpl.fromJson;
@@ -204,6 +253,10 @@ abstract class _PaginationRequestModel implements PaginationRequestModel {
   String? get query;
   @override
   String? get type;
+  @override
+  String? get outletId;
+  @override
+  String? get tableId;
   @override
   @JsonKey(ignore: true)
   _$$PaginationRequestModelImplCopyWith<_$PaginationRequestModelImpl>

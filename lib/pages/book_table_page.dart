@@ -41,9 +41,6 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
-    if (widget.outletModel?.id != null) {
-      bookingViewModel.getTables(widget.outletModel!.id!);
-    }
 
     // Add listeners for auto-check availability
     _setupListeners();
@@ -186,7 +183,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
       ),
       title: Text(
         "Book Table",
-        style: GoogleFonts.plusJakartaSans(
+        style: TextStyle(
           fontSize: 22,
           fontWeight: FontWeight.w700,
           color: CustomColors.secondary,
@@ -234,7 +231,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
         const SizedBox(width: 10),
         Text(
           title,
-          style: GoogleFonts.plusJakartaSans(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
             color: CustomColors.secondary,
@@ -289,7 +286,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               children: [
                 Text(
                   widget.outletModel?.name ?? "Outlet Name",
-                  style: GoogleFonts.plusJakartaSans(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
@@ -312,7 +309,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                         widget.outletModel?.location?.address1 ?? "Location not available",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.sora(
+                        style: TextStyle(
                           fontSize: 13,
                           color: Colors.white.withOpacity(0.9),
                         ),
@@ -338,7 +335,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                       const SizedBox(width: 4),
                       Text(
                         "4.8",
-                        style: GoogleFonts.sora(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -347,7 +344,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                       const SizedBox(width: 4),
                       Text(
                         "(124 reviews)",
-                        style: GoogleFonts.sora(
+                        style: TextStyle(
                           color: Colors.white.withOpacity(0.7),
                           fontSize: 11,
                         ),
@@ -401,7 +398,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                 const SizedBox(width: 14),
                 Obx(() => Text(
                   DateFormat("EEE, d MMM yyyy").format(bookingViewModel.selectedDate.value),
-                  style: GoogleFonts.sora(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: CustomColors.secondary,
@@ -474,7 +471,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                 child: Center(
                   child: Text(
                     bookingViewModel.timeSlots[index],
-                    style: GoogleFonts.sora(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
                       color: isSelected ? Colors.white : CustomColors.secondary,
@@ -533,7 +530,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                   ),
                   child: Text(
                     "$hours hr",
-                    style: GoogleFonts.sora(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                       color: isSelected ? Colors.white : CustomColors.secondary,
@@ -560,7 +557,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               const SizedBox(height: 8),
               Text(
                 "Loading tables...",
-                style: GoogleFonts.sora(
+                style: TextStyle(
                   color: CustomColors.secondary,
                   fontSize: 14,
                 ),
@@ -615,7 +612,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                 const SizedBox(height: 8),
                 Text(
                   "Error: $err",
-                  style: GoogleFonts.sora(
+                  style: TextStyle(
                     color: Colors.red.shade700,
                     fontSize: 14,
                   ),
@@ -682,7 +679,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                   const SizedBox(height: 8),
                   Text(
                     "Checking availability...",
-                    style: GoogleFonts.sora(
+                    style: TextStyle(
                       color: CustomColors.secondary,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -722,7 +719,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                           Expanded(
                             child: Text(
                               data.data?.message ?? "Selected combination is not available",
-                              style: GoogleFonts.sora(
+                              style: TextStyle(
                                 color: Colors.orange.shade700,
                                 fontSize: 14,
                               ),
@@ -762,7 +759,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                       Expanded(
                         child: Text(
                           "Select table and seat to check availability",
-                          style: GoogleFonts.sora(
+                          style: TextStyle(
                             color: Colors.grey.shade600,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -824,7 +821,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               const SizedBox(width: 10),
               Text(
                 "Booking Summary",
-                style: GoogleFonts.plusJakartaSans(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: CustomColors.secondary,
@@ -870,7 +867,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
             const SizedBox(width: 8),
             Text(
               label,
-              style: GoogleFonts.sora(
+              style: TextStyle(
                 fontSize: isTotal ? 16 : 14,
                 fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
                 color: isTotal ? CustomColors.secondary : Colors.grey.shade700,
@@ -880,7 +877,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
         ),
         Text(
           value,
-          style: GoogleFonts.sora(
+          style: TextStyle(
             fontSize: isTotal ? 20 : 15,
             fontWeight: isTotal ? FontWeight.w800 : FontWeight.w600,
             color: isTotal ? CustomColors.secondary : Colors.grey.shade800,

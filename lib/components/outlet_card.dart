@@ -7,13 +7,13 @@ import '../models/responseModels/outlet_response_model.dart';
 import '../pages/book_table_page.dart';
 import 'custom_network_image.dart';
 
-class CafeCard extends StatelessWidget {
+class OutletCard extends StatelessWidget {
   final OutletModel? outlet;
   final VoidCallback? onTap;
   final Color ctnColor;
   final Color titleColor;
 
-  const CafeCard({
+  const OutletCard({
     super.key,
     this.outlet,
     this.onTap,
@@ -61,7 +61,7 @@ class CafeCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           outlet?.businessName ?? "",
-                          style: GoogleFonts.plusJakartaSans(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             color: titleColor,
@@ -78,7 +78,7 @@ class CafeCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             "4.5",
-                            style: GoogleFonts.sora(
+                            style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: titleColor,
                             ),
@@ -89,8 +89,8 @@ class CafeCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "Cafe • ${outlet?.location?.address1 ?? ""}, ${outlet?.location?.address2 ?? ""}",
-                    style: GoogleFonts.sora(
+                    "Outlet • ${outlet?.location?.address1 ?? ""}, ${outlet?.location?.address2 ?? ""}",
+                    style: TextStyle(
                       fontSize: 14,
                       color: titleColor.withOpacity(0.6),
                     ),
@@ -100,7 +100,7 @@ class CafeCard extends StatelessWidget {
                     outlet?.aboutBusiness ?? "",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.sora(
+                    style: TextStyle(
                       fontSize: 13,
                       color: titleColor.withOpacity(0.6),
                     ),

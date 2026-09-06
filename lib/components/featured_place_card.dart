@@ -63,7 +63,7 @@ class FeaturedPlaceCard extends StatelessWidget {
                       businessName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.plusJakartaSans(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: CustomColors.secondary,
@@ -85,7 +85,7 @@ class FeaturedPlaceCard extends StatelessWidget {
                             location,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.sora(
+                            style: TextStyle(
                               color: CustomColors.secondary
                                   .withOpacity(0.7),
                               fontSize: 12,

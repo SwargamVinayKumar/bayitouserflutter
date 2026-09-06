@@ -1,3 +1,4 @@
+import 'package:bayitouser/models/responseModels/user_response_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'auth_response_model.dart';
 import 'outlet_response_model.dart';
@@ -104,6 +105,7 @@ abstract class BookingModel with _$BookingModel {
   const factory BookingModel({
     @JsonKey(name: '_id') String? id,
     String? status,
+    UserModel? userId,
     OutletModel? outletId,
     TableModel? tableId,
     String? seatId,

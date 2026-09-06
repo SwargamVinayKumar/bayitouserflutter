@@ -214,7 +214,10 @@ mixin _$UserModel {
       throw _privateConstructorUsedError;
   UserLocationModel? get location => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String? get dob => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  ChargesModel? get charges => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -233,9 +236,13 @@ abstract class $UserModelCopyWith<$Res> {
       List<DesignationModel>? designations,
       UserLocationModel? location,
       String? name,
-      String? email});
+      String? dob,
+      String? gender,
+      String? email,
+      ChargesModel? charges});
 
   $UserLocationModelCopyWith<$Res>? get location;
+  $ChargesModelCopyWith<$Res>? get charges;
 }
 
 /// @nodoc
@@ -256,7 +263,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? designations = freezed,
     Object? location = freezed,
     Object? name = freezed,
+    Object? dob = freezed,
+    Object? gender = freezed,
     Object? email = freezed,
+    Object? charges = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -279,10 +289,22 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      charges: freezed == charges
+          ? _value.charges
+          : charges // ignore: cast_nullable_to_non_nullable
+              as ChargesModel?,
     ) as $Val);
   }
 
@@ -295,6 +317,18 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
 
     return $UserLocationModelCopyWith<$Res>(_value.location!, (value) {
       return _then(_value.copyWith(location: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChargesModelCopyWith<$Res>? get charges {
+    if (_value.charges == null) {
+      return null;
+    }
+
+    return $ChargesModelCopyWith<$Res>(_value.charges!, (value) {
+      return _then(_value.copyWith(charges: value) as $Val);
     });
   }
 }
@@ -313,10 +347,15 @@ abstract class _$$UserModelImplCopyWith<$Res>
       List<DesignationModel>? designations,
       UserLocationModel? location,
       String? name,
-      String? email});
+      String? dob,
+      String? gender,
+      String? email,
+      ChargesModel? charges});
 
   @override
   $UserLocationModelCopyWith<$Res>? get location;
+  @override
+  $ChargesModelCopyWith<$Res>? get charges;
 }
 
 /// @nodoc
@@ -335,7 +374,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? designations = freezed,
     Object? location = freezed,
     Object? name = freezed,
+    Object? dob = freezed,
+    Object? gender = freezed,
     Object? email = freezed,
+    Object? charges = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -358,10 +400,22 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      charges: freezed == charges
+          ? _value.charges
+          : charges // ignore: cast_nullable_to_non_nullable
+              as ChargesModel?,
     ));
   }
 }
@@ -375,7 +429,10 @@ class _$UserModelImpl implements _UserModel {
       final List<DesignationModel>? designations,
       this.location,
       this.name,
-      this.email})
+      this.dob,
+      this.gender,
+      this.email,
+      this.charges})
       : _designations = designations;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -401,11 +458,17 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? name;
   @override
+  final String? dob;
+  @override
+  final String? gender;
+  @override
   final String? email;
+  @override
+  final ChargesModel? charges;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, profilePic: $profilePic, designations: $designations, location: $location, name: $name, email: $email)';
+    return 'UserModel(id: $id, profilePic: $profilePic, designations: $designations, location: $location, name: $name, dob: $dob, gender: $gender, email: $email, charges: $charges)';
   }
 
   @override
@@ -421,7 +484,10 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.charges, charges) || other.charges == charges));
   }
 
   @JsonKey(ignore: true)
@@ -433,7 +499,10 @@ class _$UserModelImpl implements _UserModel {
       const DeepCollectionEquality().hash(_designations),
       location,
       name,
-      email);
+      dob,
+      gender,
+      email,
+      charges);
 
   @JsonKey(ignore: true)
   @override
@@ -456,7 +525,10 @@ abstract class _UserModel implements UserModel {
       final List<DesignationModel>? designations,
       final UserLocationModel? location,
       final String? name,
-      final String? email}) = _$UserModelImpl;
+      final String? dob,
+      final String? gender,
+      final String? email,
+      final ChargesModel? charges}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -473,7 +545,13 @@ abstract class _UserModel implements UserModel {
   @override
   String? get name;
   @override
+  String? get dob;
+  @override
+  String? get gender;
+  @override
   String? get email;
+  @override
+  ChargesModel? get charges;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

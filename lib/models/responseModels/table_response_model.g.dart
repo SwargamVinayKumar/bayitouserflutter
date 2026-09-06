@@ -54,8 +54,14 @@ _$TableModelImpl _$$TableModelImplFromJson(Map<String, dynamic> json) =>
       seats: (json['seats'] as List<dynamic>?)
           ?.map((e) => SeatModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      ratingCount: json['ratingCount'] as int?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
+      tableCount: json['tableCount'] as int?,
+      rating: (json['rating'] as num?)?.toDouble(),
+      categoryRating: (json['categoryRating'] as List<dynamic>?)
+          ?.map((e) => CategoryRating.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
@@ -69,8 +75,12 @@ Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
       'available': instance.available,
       'seatCapacity': instance.seatCapacity,
       'seats': instance.seats,
+      'ratingCount': instance.ratingCount,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
+      'tableCount': instance.tableCount,
+      'rating': instance.rating,
+      'categoryRating': instance.categoryRating,
     };
 
 _$SeatModelImpl _$$SeatModelImplFromJson(Map<String, dynamic> json) =>
@@ -130,4 +140,90 @@ Map<String, dynamic> _$$PaginationImplToJson(_$PaginationImpl instance) =>
       'limit': instance.limit,
       'total': instance.total,
       'pages': instance.pages,
+    };
+
+_$FetchAmenitiesResponseModelImpl _$$FetchAmenitiesResponseModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$FetchAmenitiesResponseModelImpl(
+      status: json['status'] as int?,
+      message: json['message'] as String?,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => AmenitiesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$FetchAmenitiesResponseModelImplToJson(
+        _$FetchAmenitiesResponseModelImpl instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+_$FetchRatingAndReviewsResponseModelImpl
+    _$$FetchRatingAndReviewsResponseModelImplFromJson(
+            Map<String, dynamic> json) =>
+        _$FetchRatingAndReviewsResponseModelImpl(
+          status: json['status'] as int?,
+          message: json['message'] as String?,
+          data: (json['data'] as List<dynamic>?)
+              ?.map((e) =>
+                  RatingAndReviewModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
+
+Map<String, dynamic> _$$FetchRatingAndReviewsResponseModelImplToJson(
+        _$FetchRatingAndReviewsResponseModelImpl instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+_$RatingAndReviewModelImpl _$$RatingAndReviewModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RatingAndReviewModelImpl(
+      userId: json['userId'],
+      outletId: json['outletId'],
+      tableId: json['tableId'],
+      rating: json['rating'],
+      review: json['review'] as String?,
+    );
+
+Map<String, dynamic> _$$RatingAndReviewModelImplToJson(
+        _$RatingAndReviewModelImpl instance) =>
+    <String, dynamic>{
+      'userId': instance.userId,
+      'outletId': instance.outletId,
+      'tableId': instance.tableId,
+      'rating': instance.rating,
+      'review': instance.review,
+    };
+
+_$CategoryRatingImpl _$$CategoryRatingImplFromJson(Map<String, dynamic> json) =>
+    _$CategoryRatingImpl(
+      rating: json['rating'],
+      ratedFor: json['ratedFor'] as String?,
+    );
+
+Map<String, dynamic> _$$CategoryRatingImplToJson(
+        _$CategoryRatingImpl instance) =>
+    <String, dynamic>{
+      'rating': instance.rating,
+      'ratedFor': instance.ratedFor,
+    };
+
+_$AmenitiesModelImpl _$$AmenitiesModelImplFromJson(Map<String, dynamic> json) =>
+    _$AmenitiesModelImpl(
+      id: json['_id'] as String?,
+      image: json['image'] as String?,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$$AmenitiesModelImplToJson(
+        _$AmenitiesModelImpl instance) =>
+    <String, dynamic>{
+      '_id': instance.id,
+      'image': instance.image,
+      'name': instance.name,
     };

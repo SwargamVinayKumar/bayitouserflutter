@@ -400,8 +400,13 @@ mixin _$TableModel {
   bool? get available => throw _privateConstructorUsedError;
   int? get seatCapacity => throw _privateConstructorUsedError;
   List<SeatModel>? get seats => throw _privateConstructorUsedError;
+  int? get ratingCount => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
+  int? get tableCount => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
+  List<CategoryRating>? get categoryRating =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -425,8 +430,12 @@ abstract class $TableModelCopyWith<$Res> {
       bool? available,
       int? seatCapacity,
       List<SeatModel>? seats,
+      int? ratingCount,
       String? createdAt,
-      String? updatedAt});
+      String? updatedAt,
+      int? tableCount,
+      double? rating,
+      List<CategoryRating>? categoryRating});
 }
 
 /// @nodoc
@@ -451,8 +460,12 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
     Object? available = freezed,
     Object? seatCapacity = freezed,
     Object? seats = freezed,
+    Object? ratingCount = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? tableCount = freezed,
+    Object? rating = freezed,
+    Object? categoryRating = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -491,6 +504,10 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
           ? _value.seats
           : seats // ignore: cast_nullable_to_non_nullable
               as List<SeatModel>?,
+      ratingCount: freezed == ratingCount
+          ? _value.ratingCount
+          : ratingCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -499,6 +516,18 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      tableCount: freezed == tableCount
+          ? _value.tableCount
+          : tableCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      categoryRating: freezed == categoryRating
+          ? _value.categoryRating
+          : categoryRating // ignore: cast_nullable_to_non_nullable
+              as List<CategoryRating>?,
     ) as $Val);
   }
 }
@@ -521,8 +550,12 @@ abstract class _$$TableModelImplCopyWith<$Res>
       bool? available,
       int? seatCapacity,
       List<SeatModel>? seats,
+      int? ratingCount,
       String? createdAt,
-      String? updatedAt});
+      String? updatedAt,
+      int? tableCount,
+      double? rating,
+      List<CategoryRating>? categoryRating});
 }
 
 /// @nodoc
@@ -545,8 +578,12 @@ class __$$TableModelImplCopyWithImpl<$Res>
     Object? available = freezed,
     Object? seatCapacity = freezed,
     Object? seats = freezed,
+    Object? ratingCount = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? tableCount = freezed,
+    Object? rating = freezed,
+    Object? categoryRating = freezed,
   }) {
     return _then(_$TableModelImpl(
       id: null == id
@@ -585,6 +622,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
           ? _value._seats
           : seats // ignore: cast_nullable_to_non_nullable
               as List<SeatModel>?,
+      ratingCount: freezed == ratingCount
+          ? _value.ratingCount
+          : ratingCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -593,6 +634,18 @@ class __$$TableModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      tableCount: freezed == tableCount
+          ? _value.tableCount
+          : tableCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      categoryRating: freezed == categoryRating
+          ? _value._categoryRating
+          : categoryRating // ignore: cast_nullable_to_non_nullable
+              as List<CategoryRating>?,
     ));
   }
 }
@@ -610,10 +663,15 @@ class _$TableModelImpl implements _TableModel {
       this.available,
       this.seatCapacity,
       final List<SeatModel>? seats,
+      this.ratingCount,
       this.createdAt,
-      this.updatedAt})
+      this.updatedAt,
+      this.tableCount,
+      this.rating,
+      final List<CategoryRating>? categoryRating})
       : _images = images,
-        _seats = seats;
+        _seats = seats,
+        _categoryRating = categoryRating;
 
   factory _$TableModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableModelImplFromJson(json);
@@ -654,13 +712,28 @@ class _$TableModelImpl implements _TableModel {
   }
 
   @override
+  final int? ratingCount;
+  @override
   final String? createdAt;
   @override
   final String? updatedAt;
+  @override
+  final int? tableCount;
+  @override
+  final double? rating;
+  final List<CategoryRating>? _categoryRating;
+  @override
+  List<CategoryRating>? get categoryRating {
+    final value = _categoryRating;
+    if (value == null) return null;
+    if (_categoryRating is EqualUnmodifiableListView) return _categoryRating;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'TableModel(id: $id, outletId: $outletId, tableNumber: $tableNumber, description: $description, seatType: $seatType, images: $images, available: $available, seatCapacity: $seatCapacity, seats: $seats, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TableModel(id: $id, outletId: $outletId, tableNumber: $tableNumber, description: $description, seatType: $seatType, images: $images, available: $available, seatCapacity: $seatCapacity, seats: $seats, ratingCount: $ratingCount, createdAt: $createdAt, updatedAt: $updatedAt, tableCount: $tableCount, rating: $rating, categoryRating: $categoryRating)';
   }
 
   @override
@@ -683,10 +756,17 @@ class _$TableModelImpl implements _TableModel {
             (identical(other.seatCapacity, seatCapacity) ||
                 other.seatCapacity == seatCapacity) &&
             const DeepCollectionEquality().equals(other._seats, _seats) &&
+            (identical(other.ratingCount, ratingCount) ||
+                other.ratingCount == ratingCount) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.tableCount, tableCount) ||
+                other.tableCount == tableCount) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            const DeepCollectionEquality()
+                .equals(other._categoryRating, _categoryRating));
   }
 
   @JsonKey(ignore: true)
@@ -702,8 +782,12 @@ class _$TableModelImpl implements _TableModel {
       available,
       seatCapacity,
       const DeepCollectionEquality().hash(_seats),
+      ratingCount,
       createdAt,
-      updatedAt);
+      updatedAt,
+      tableCount,
+      rating,
+      const DeepCollectionEquality().hash(_categoryRating));
 
   @JsonKey(ignore: true)
   @override
@@ -730,8 +814,12 @@ abstract class _TableModel implements TableModel {
       final bool? available,
       final int? seatCapacity,
       final List<SeatModel>? seats,
+      final int? ratingCount,
       final String? createdAt,
-      final String? updatedAt}) = _$TableModelImpl;
+      final String? updatedAt,
+      final int? tableCount,
+      final double? rating,
+      final List<CategoryRating>? categoryRating}) = _$TableModelImpl;
 
   factory _TableModel.fromJson(Map<String, dynamic> json) =
       _$TableModelImpl.fromJson;
@@ -756,9 +844,17 @@ abstract class _TableModel implements TableModel {
   @override
   List<SeatModel>? get seats;
   @override
+  int? get ratingCount;
+  @override
   String? get createdAt;
   @override
   String? get updatedAt;
+  @override
+  int? get tableCount;
+  @override
+  double? get rating;
+  @override
+  List<CategoryRating>? get categoryRating;
   @override
   @JsonKey(ignore: true)
   _$$TableModelImplCopyWith<_$TableModelImpl> get copyWith =>
@@ -1474,5 +1570,951 @@ abstract class _Pagination implements Pagination {
   @override
   @JsonKey(ignore: true)
   _$$PaginationImplCopyWith<_$PaginationImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+FetchAmenitiesResponseModel _$FetchAmenitiesResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _FetchAmenitiesResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$FetchAmenitiesResponseModel {
+  int? get status => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+  List<AmenitiesModel>? get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $FetchAmenitiesResponseModelCopyWith<FetchAmenitiesResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FetchAmenitiesResponseModelCopyWith<$Res> {
+  factory $FetchAmenitiesResponseModelCopyWith(
+          FetchAmenitiesResponseModel value,
+          $Res Function(FetchAmenitiesResponseModel) then) =
+      _$FetchAmenitiesResponseModelCopyWithImpl<$Res,
+          FetchAmenitiesResponseModel>;
+  @useResult
+  $Res call({int? status, String? message, List<AmenitiesModel>? data});
+}
+
+/// @nodoc
+class _$FetchAmenitiesResponseModelCopyWithImpl<$Res,
+        $Val extends FetchAmenitiesResponseModel>
+    implements $FetchAmenitiesResponseModelCopyWith<$Res> {
+  _$FetchAmenitiesResponseModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? message = freezed,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<AmenitiesModel>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$FetchAmenitiesResponseModelImplCopyWith<$Res>
+    implements $FetchAmenitiesResponseModelCopyWith<$Res> {
+  factory _$$FetchAmenitiesResponseModelImplCopyWith(
+          _$FetchAmenitiesResponseModelImpl value,
+          $Res Function(_$FetchAmenitiesResponseModelImpl) then) =
+      __$$FetchAmenitiesResponseModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? status, String? message, List<AmenitiesModel>? data});
+}
+
+/// @nodoc
+class __$$FetchAmenitiesResponseModelImplCopyWithImpl<$Res>
+    extends _$FetchAmenitiesResponseModelCopyWithImpl<$Res,
+        _$FetchAmenitiesResponseModelImpl>
+    implements _$$FetchAmenitiesResponseModelImplCopyWith<$Res> {
+  __$$FetchAmenitiesResponseModelImplCopyWithImpl(
+      _$FetchAmenitiesResponseModelImpl _value,
+      $Res Function(_$FetchAmenitiesResponseModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? message = freezed,
+    Object? data = freezed,
+  }) {
+    return _then(_$FetchAmenitiesResponseModelImpl(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      data: freezed == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<AmenitiesModel>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FetchAmenitiesResponseModelImpl
+    implements _FetchAmenitiesResponseModel {
+  const _$FetchAmenitiesResponseModelImpl(
+      {this.status, this.message, final List<AmenitiesModel>? data})
+      : _data = data;
+
+  factory _$FetchAmenitiesResponseModelImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$FetchAmenitiesResponseModelImplFromJson(json);
+
+  @override
+  final int? status;
+  @override
+  final String? message;
+  final List<AmenitiesModel>? _data;
+  @override
+  List<AmenitiesModel>? get data {
+    final value = _data;
+    if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'FetchAmenitiesResponseModel(status: $status, message: $message, data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchAmenitiesResponseModelImpl &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.message, message) || other.message == message) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, status, message, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchAmenitiesResponseModelImplCopyWith<_$FetchAmenitiesResponseModelImpl>
+      get copyWith => __$$FetchAmenitiesResponseModelImplCopyWithImpl<
+          _$FetchAmenitiesResponseModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FetchAmenitiesResponseModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _FetchAmenitiesResponseModel
+    implements FetchAmenitiesResponseModel {
+  const factory _FetchAmenitiesResponseModel(
+      {final int? status,
+      final String? message,
+      final List<AmenitiesModel>? data}) = _$FetchAmenitiesResponseModelImpl;
+
+  factory _FetchAmenitiesResponseModel.fromJson(Map<String, dynamic> json) =
+      _$FetchAmenitiesResponseModelImpl.fromJson;
+
+  @override
+  int? get status;
+  @override
+  String? get message;
+  @override
+  List<AmenitiesModel>? get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$FetchAmenitiesResponseModelImplCopyWith<_$FetchAmenitiesResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+FetchRatingAndReviewsResponseModel _$FetchRatingAndReviewsResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _FetchRatingAndReviewsResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$FetchRatingAndReviewsResponseModel {
+  int? get status => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+  List<RatingAndReviewModel>? get data => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $FetchRatingAndReviewsResponseModelCopyWith<
+          FetchRatingAndReviewsResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FetchRatingAndReviewsResponseModelCopyWith<$Res> {
+  factory $FetchRatingAndReviewsResponseModelCopyWith(
+          FetchRatingAndReviewsResponseModel value,
+          $Res Function(FetchRatingAndReviewsResponseModel) then) =
+      _$FetchRatingAndReviewsResponseModelCopyWithImpl<$Res,
+          FetchRatingAndReviewsResponseModel>;
+  @useResult
+  $Res call({int? status, String? message, List<RatingAndReviewModel>? data});
+}
+
+/// @nodoc
+class _$FetchRatingAndReviewsResponseModelCopyWithImpl<$Res,
+        $Val extends FetchRatingAndReviewsResponseModel>
+    implements $FetchRatingAndReviewsResponseModelCopyWith<$Res> {
+  _$FetchRatingAndReviewsResponseModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? message = freezed,
+    Object? data = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<RatingAndReviewModel>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$FetchRatingAndReviewsResponseModelImplCopyWith<$Res>
+    implements $FetchRatingAndReviewsResponseModelCopyWith<$Res> {
+  factory _$$FetchRatingAndReviewsResponseModelImplCopyWith(
+          _$FetchRatingAndReviewsResponseModelImpl value,
+          $Res Function(_$FetchRatingAndReviewsResponseModelImpl) then) =
+      __$$FetchRatingAndReviewsResponseModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? status, String? message, List<RatingAndReviewModel>? data});
+}
+
+/// @nodoc
+class __$$FetchRatingAndReviewsResponseModelImplCopyWithImpl<$Res>
+    extends _$FetchRatingAndReviewsResponseModelCopyWithImpl<$Res,
+        _$FetchRatingAndReviewsResponseModelImpl>
+    implements _$$FetchRatingAndReviewsResponseModelImplCopyWith<$Res> {
+  __$$FetchRatingAndReviewsResponseModelImplCopyWithImpl(
+      _$FetchRatingAndReviewsResponseModelImpl _value,
+      $Res Function(_$FetchRatingAndReviewsResponseModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? message = freezed,
+    Object? data = freezed,
+  }) {
+    return _then(_$FetchRatingAndReviewsResponseModelImpl(
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      data: freezed == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<RatingAndReviewModel>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FetchRatingAndReviewsResponseModelImpl
+    implements _FetchRatingAndReviewsResponseModel {
+  const _$FetchRatingAndReviewsResponseModelImpl(
+      {this.status, this.message, final List<RatingAndReviewModel>? data})
+      : _data = data;
+
+  factory _$FetchRatingAndReviewsResponseModelImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$FetchRatingAndReviewsResponseModelImplFromJson(json);
+
+  @override
+  final int? status;
+  @override
+  final String? message;
+  final List<RatingAndReviewModel>? _data;
+  @override
+  List<RatingAndReviewModel>? get data {
+    final value = _data;
+    if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'FetchRatingAndReviewsResponseModel(status: $status, message: $message, data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FetchRatingAndReviewsResponseModelImpl &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.message, message) || other.message == message) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, status, message, const DeepCollectionEquality().hash(_data));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FetchRatingAndReviewsResponseModelImplCopyWith<
+          _$FetchRatingAndReviewsResponseModelImpl>
+      get copyWith => __$$FetchRatingAndReviewsResponseModelImplCopyWithImpl<
+          _$FetchRatingAndReviewsResponseModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FetchRatingAndReviewsResponseModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _FetchRatingAndReviewsResponseModel
+    implements FetchRatingAndReviewsResponseModel {
+  const factory _FetchRatingAndReviewsResponseModel(
+          {final int? status,
+          final String? message,
+          final List<RatingAndReviewModel>? data}) =
+      _$FetchRatingAndReviewsResponseModelImpl;
+
+  factory _FetchRatingAndReviewsResponseModel.fromJson(
+          Map<String, dynamic> json) =
+      _$FetchRatingAndReviewsResponseModelImpl.fromJson;
+
+  @override
+  int? get status;
+  @override
+  String? get message;
+  @override
+  List<RatingAndReviewModel>? get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$FetchRatingAndReviewsResponseModelImplCopyWith<
+          _$FetchRatingAndReviewsResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+RatingAndReviewModel _$RatingAndReviewModelFromJson(Map<String, dynamic> json) {
+  return _RatingAndReviewModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RatingAndReviewModel {
+  dynamic get userId => throw _privateConstructorUsedError;
+  dynamic get outletId => throw _privateConstructorUsedError;
+  dynamic get tableId => throw _privateConstructorUsedError;
+  dynamic get rating => throw _privateConstructorUsedError;
+  String? get review => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RatingAndReviewModelCopyWith<RatingAndReviewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RatingAndReviewModelCopyWith<$Res> {
+  factory $RatingAndReviewModelCopyWith(RatingAndReviewModel value,
+          $Res Function(RatingAndReviewModel) then) =
+      _$RatingAndReviewModelCopyWithImpl<$Res, RatingAndReviewModel>;
+  @useResult
+  $Res call(
+      {dynamic userId,
+      dynamic outletId,
+      dynamic tableId,
+      dynamic rating,
+      String? review});
+}
+
+/// @nodoc
+class _$RatingAndReviewModelCopyWithImpl<$Res,
+        $Val extends RatingAndReviewModel>
+    implements $RatingAndReviewModelCopyWith<$Res> {
+  _$RatingAndReviewModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? outletId = freezed,
+    Object? tableId = freezed,
+    Object? rating = freezed,
+    Object? review = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      outletId: freezed == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      review: freezed == review
+          ? _value.review
+          : review // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RatingAndReviewModelImplCopyWith<$Res>
+    implements $RatingAndReviewModelCopyWith<$Res> {
+  factory _$$RatingAndReviewModelImplCopyWith(_$RatingAndReviewModelImpl value,
+          $Res Function(_$RatingAndReviewModelImpl) then) =
+      __$$RatingAndReviewModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {dynamic userId,
+      dynamic outletId,
+      dynamic tableId,
+      dynamic rating,
+      String? review});
+}
+
+/// @nodoc
+class __$$RatingAndReviewModelImplCopyWithImpl<$Res>
+    extends _$RatingAndReviewModelCopyWithImpl<$Res, _$RatingAndReviewModelImpl>
+    implements _$$RatingAndReviewModelImplCopyWith<$Res> {
+  __$$RatingAndReviewModelImplCopyWithImpl(_$RatingAndReviewModelImpl _value,
+      $Res Function(_$RatingAndReviewModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? outletId = freezed,
+    Object? tableId = freezed,
+    Object? rating = freezed,
+    Object? review = freezed,
+  }) {
+    return _then(_$RatingAndReviewModelImpl(
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      outletId: freezed == outletId
+          ? _value.outletId
+          : outletId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      tableId: freezed == tableId
+          ? _value.tableId
+          : tableId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      review: freezed == review
+          ? _value.review
+          : review // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RatingAndReviewModelImpl implements _RatingAndReviewModel {
+  const _$RatingAndReviewModelImpl(
+      {this.userId, this.outletId, this.tableId, this.rating, this.review});
+
+  factory _$RatingAndReviewModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RatingAndReviewModelImplFromJson(json);
+
+  @override
+  final dynamic userId;
+  @override
+  final dynamic outletId;
+  @override
+  final dynamic tableId;
+  @override
+  final dynamic rating;
+  @override
+  final String? review;
+
+  @override
+  String toString() {
+    return 'RatingAndReviewModel(userId: $userId, outletId: $outletId, tableId: $tableId, rating: $rating, review: $review)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RatingAndReviewModelImpl &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.outletId, outletId) &&
+            const DeepCollectionEquality().equals(other.tableId, tableId) &&
+            const DeepCollectionEquality().equals(other.rating, rating) &&
+            (identical(other.review, review) || other.review == review));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(outletId),
+      const DeepCollectionEquality().hash(tableId),
+      const DeepCollectionEquality().hash(rating),
+      review);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RatingAndReviewModelImplCopyWith<_$RatingAndReviewModelImpl>
+      get copyWith =>
+          __$$RatingAndReviewModelImplCopyWithImpl<_$RatingAndReviewModelImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RatingAndReviewModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RatingAndReviewModel implements RatingAndReviewModel {
+  const factory _RatingAndReviewModel(
+      {final dynamic userId,
+      final dynamic outletId,
+      final dynamic tableId,
+      final dynamic rating,
+      final String? review}) = _$RatingAndReviewModelImpl;
+
+  factory _RatingAndReviewModel.fromJson(Map<String, dynamic> json) =
+      _$RatingAndReviewModelImpl.fromJson;
+
+  @override
+  dynamic get userId;
+  @override
+  dynamic get outletId;
+  @override
+  dynamic get tableId;
+  @override
+  dynamic get rating;
+  @override
+  String? get review;
+  @override
+  @JsonKey(ignore: true)
+  _$$RatingAndReviewModelImplCopyWith<_$RatingAndReviewModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+CategoryRating _$CategoryRatingFromJson(Map<String, dynamic> json) {
+  return _CategoryRating.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CategoryRating {
+  dynamic get rating => throw _privateConstructorUsedError;
+  String? get ratedFor => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CategoryRatingCopyWith<CategoryRating> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CategoryRatingCopyWith<$Res> {
+  factory $CategoryRatingCopyWith(
+          CategoryRating value, $Res Function(CategoryRating) then) =
+      _$CategoryRatingCopyWithImpl<$Res, CategoryRating>;
+  @useResult
+  $Res call({dynamic rating, String? ratedFor});
+}
+
+/// @nodoc
+class _$CategoryRatingCopyWithImpl<$Res, $Val extends CategoryRating>
+    implements $CategoryRatingCopyWith<$Res> {
+  _$CategoryRatingCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rating = freezed,
+    Object? ratedFor = freezed,
+  }) {
+    return _then(_value.copyWith(
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      ratedFor: freezed == ratedFor
+          ? _value.ratedFor
+          : ratedFor // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CategoryRatingImplCopyWith<$Res>
+    implements $CategoryRatingCopyWith<$Res> {
+  factory _$$CategoryRatingImplCopyWith(_$CategoryRatingImpl value,
+          $Res Function(_$CategoryRatingImpl) then) =
+      __$$CategoryRatingImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({dynamic rating, String? ratedFor});
+}
+
+/// @nodoc
+class __$$CategoryRatingImplCopyWithImpl<$Res>
+    extends _$CategoryRatingCopyWithImpl<$Res, _$CategoryRatingImpl>
+    implements _$$CategoryRatingImplCopyWith<$Res> {
+  __$$CategoryRatingImplCopyWithImpl(
+      _$CategoryRatingImpl _value, $Res Function(_$CategoryRatingImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rating = freezed,
+    Object? ratedFor = freezed,
+  }) {
+    return _then(_$CategoryRatingImpl(
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      ratedFor: freezed == ratedFor
+          ? _value.ratedFor
+          : ratedFor // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CategoryRatingImpl implements _CategoryRating {
+  const _$CategoryRatingImpl({this.rating, this.ratedFor});
+
+  factory _$CategoryRatingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CategoryRatingImplFromJson(json);
+
+  @override
+  final dynamic rating;
+  @override
+  final String? ratedFor;
+
+  @override
+  String toString() {
+    return 'CategoryRating(rating: $rating, ratedFor: $ratedFor)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CategoryRatingImpl &&
+            const DeepCollectionEquality().equals(other.rating, rating) &&
+            (identical(other.ratedFor, ratedFor) ||
+                other.ratedFor == ratedFor));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(rating), ratedFor);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CategoryRatingImplCopyWith<_$CategoryRatingImpl> get copyWith =>
+      __$$CategoryRatingImplCopyWithImpl<_$CategoryRatingImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CategoryRatingImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CategoryRating implements CategoryRating {
+  const factory _CategoryRating(
+      {final dynamic rating, final String? ratedFor}) = _$CategoryRatingImpl;
+
+  factory _CategoryRating.fromJson(Map<String, dynamic> json) =
+      _$CategoryRatingImpl.fromJson;
+
+  @override
+  dynamic get rating;
+  @override
+  String? get ratedFor;
+  @override
+  @JsonKey(ignore: true)
+  _$$CategoryRatingImplCopyWith<_$CategoryRatingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AmenitiesModel _$AmenitiesModelFromJson(Map<String, dynamic> json) {
+  return _AmenitiesModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AmenitiesModel {
+  @JsonKey(name: '_id')
+  String? get id => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AmenitiesModelCopyWith<AmenitiesModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AmenitiesModelCopyWith<$Res> {
+  factory $AmenitiesModelCopyWith(
+          AmenitiesModel value, $Res Function(AmenitiesModel) then) =
+      _$AmenitiesModelCopyWithImpl<$Res, AmenitiesModel>;
+  @useResult
+  $Res call({@JsonKey(name: '_id') String? id, String? image, String? name});
+}
+
+/// @nodoc
+class _$AmenitiesModelCopyWithImpl<$Res, $Val extends AmenitiesModel>
+    implements $AmenitiesModelCopyWith<$Res> {
+  _$AmenitiesModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? image = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AmenitiesModelImplCopyWith<$Res>
+    implements $AmenitiesModelCopyWith<$Res> {
+  factory _$$AmenitiesModelImplCopyWith(_$AmenitiesModelImpl value,
+          $Res Function(_$AmenitiesModelImpl) then) =
+      __$$AmenitiesModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: '_id') String? id, String? image, String? name});
+}
+
+/// @nodoc
+class __$$AmenitiesModelImplCopyWithImpl<$Res>
+    extends _$AmenitiesModelCopyWithImpl<$Res, _$AmenitiesModelImpl>
+    implements _$$AmenitiesModelImplCopyWith<$Res> {
+  __$$AmenitiesModelImplCopyWithImpl(
+      _$AmenitiesModelImpl _value, $Res Function(_$AmenitiesModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? image = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_$AmenitiesModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AmenitiesModelImpl implements _AmenitiesModel {
+  const _$AmenitiesModelImpl(
+      {@JsonKey(name: '_id') this.id, this.image, this.name});
+
+  factory _$AmenitiesModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AmenitiesModelImplFromJson(json);
+
+  @override
+  @JsonKey(name: '_id')
+  final String? id;
+  @override
+  final String? image;
+  @override
+  final String? name;
+
+  @override
+  String toString() {
+    return 'AmenitiesModel(id: $id, image: $image, name: $name)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AmenitiesModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, image, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AmenitiesModelImplCopyWith<_$AmenitiesModelImpl> get copyWith =>
+      __$$AmenitiesModelImplCopyWithImpl<_$AmenitiesModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AmenitiesModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AmenitiesModel implements AmenitiesModel {
+  const factory _AmenitiesModel(
+      {@JsonKey(name: '_id') final String? id,
+      final String? image,
+      final String? name}) = _$AmenitiesModelImpl;
+
+  factory _AmenitiesModel.fromJson(Map<String, dynamic> json) =
+      _$AmenitiesModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: '_id')
+  String? get id;
+  @override
+  String? get image;
+  @override
+  String? get name;
+  @override
+  @JsonKey(ignore: true)
+  _$$AmenitiesModelImplCopyWith<_$AmenitiesModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

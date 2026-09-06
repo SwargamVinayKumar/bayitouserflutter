@@ -227,3 +227,17 @@ Map<String, dynamic> _$$ChargesModelImplToJson(_$ChargesModelImpl instance) =>
     <String, dynamic>{
       'perHour': instance.perHour,
     };
+
+_$PrimaryResponseModelImpl _$$PrimaryResponseModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PrimaryResponseModelImpl(
+      status: json['status'] as int?,
+      message: json['message'] as String?,
+    );
+
+Map<String, dynamic> _$$PrimaryResponseModelImplToJson(
+        _$PrimaryResponseModelImpl instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+    };

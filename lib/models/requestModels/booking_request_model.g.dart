@@ -41,3 +41,23 @@ Map<String, dynamic> _$$BookingRequestModelImplToJson(
       'orderId': instance.orderId,
       'paymentId': instance.paymentId,
     };
+
+_$RatingReviewRequestModelImpl _$$RatingReviewRequestModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RatingReviewRequestModelImpl(
+      outletId: json['outletId'] as String?,
+      tableId: json['tableId'] as String?,
+      ratedFor: json['ratedFor'] as String?,
+      review: json['review'] as String?,
+      rating: (json['rating'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$$RatingReviewRequestModelImplToJson(
+        _$RatingReviewRequestModelImpl instance) =>
+    <String, dynamic>{
+      'outletId': instance.outletId,
+      'tableId': instance.tableId,
+      'ratedFor': instance.ratedFor,
+      'review': instance.review,
+      'rating': instance.rating,
+    };

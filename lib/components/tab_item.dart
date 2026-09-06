@@ -33,7 +33,7 @@ class TabItem extends StatelessWidget {
               : CustomColors.white.withOpacity(0.06),
         ),
         child: Text(title,
-          style: GoogleFonts.plusJakartaSans(
+          style: TextStyle(
             fontSize: 14,
             fontWeight:  isSelected
                 ? FontWeight.w700

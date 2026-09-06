@@ -2,7 +2,7 @@ import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/components/featured_place_card.dart';
 import 'package:bayitouser/components/home_menu_card.dart';
 import 'package:bayitouser/components/responsive_sliver_grid.dart';
-import 'package:bayitouser/pages/cafe_page.dart';
+import 'package:bayitouser/pages/outlet_page.dart';
 import 'package:bayitouser/pages/meet_people_page.dart';
 import 'package:bayitouser/pages/reservation_page.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                     ),
                     Text(
                       "See All",
-                      style: GoogleFonts.sora(
+                      style: TextStyle(
                         color: CustomColors.secondary
                             .withOpacity(0.7),
                         fontSize: 14,
@@ -99,14 +99,14 @@ class HomePage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Get.to(
-                              () => const CafePage(
+                              () => const OutletPage(
                             type: "trending",
                           ),
                         );
                       },
                       child: Text(
                         "See All",
-                        style: GoogleFonts.sora(
+                        style: TextStyle(
                           color: CustomColors.secondary
                               .withOpacity(0.7),
                           fontSize: 14,

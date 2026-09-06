@@ -64,7 +64,7 @@ class SignInPage extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: "Don't have an account? ",
-                    style: GoogleFonts.sora(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: CustomColors.darkBlack,
@@ -77,7 +77,7 @@ class SignInPage extends StatelessWidget {
                           },
                           child: Text(
                             "Sign Up",
-                            style: GoogleFonts.plusJakartaSans(
+                            style: TextStyle(
                               color: CustomColors.secondary,
                               fontSize: 16,
                               fontWeight: FontWeight.w700,

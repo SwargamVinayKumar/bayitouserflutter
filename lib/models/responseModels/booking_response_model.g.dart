@@ -158,6 +158,9 @@ _$BookingModelImpl _$$BookingModelImplFromJson(Map<String, dynamic> json) =>
     _$BookingModelImpl(
       id: json['_id'] as String?,
       status: json['status'] as String?,
+      userId: json['userId'] == null
+          ? null
+          : UserModel.fromJson(json['userId'] as Map<String, dynamic>),
       outletId: json['outletId'] == null
           ? null
           : OutletModel.fromJson(json['outletId'] as Map<String, dynamic>),
@@ -193,6 +196,7 @@ Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'status': instance.status,
+      'userId': instance.userId,
       'outletId': instance.outletId,
       'tableId': instance.tableId,
       'seatId': instance.seatId,

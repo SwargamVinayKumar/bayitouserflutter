@@ -2,14 +2,14 @@ import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CafeDetailCard extends StatelessWidget {
+class OutletDetailCard extends StatelessWidget {
 
   final IconData? icon;
   final String title;
   final bool isChip;
   final VoidCallback? onTap;
 
-  const CafeDetailCard({
+  const OutletDetailCard({
     super.key,
     this.icon,
     required this.title,
@@ -39,7 +39,7 @@ class CafeDetailCard extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: GoogleFonts.sora(
+          style: TextStyle(
               fontWeight: FontWeight.w600,
           ),
         ),
@@ -66,7 +66,7 @@ class CafeDetailCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             title,
-            style:GoogleFonts.sora(
+            style:TextStyle(
                 fontWeight: FontWeight.w500,
                 color: CustomColors.secondary.withOpacity(0.6),
             ),

@@ -54,7 +54,7 @@ class ProfileHeaderComponent extends StatelessWidget {
                   ),
                   image: const DecorationImage(
                     image: AssetImage(
-                      "assets/images/cafe.jpg",
+                      "assets/images/Outlet.jpg",
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -86,7 +86,7 @@ class ProfileHeaderComponent extends StatelessWidget {
           const SizedBox(height: 14),
            Text(
             "Venkatesh",
-            style: GoogleFonts.plusJakartaSans(
+            style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w700,
               color: CustomColors.white,
@@ -95,7 +95,7 @@ class ProfileHeaderComponent extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             "@venky_25",
-            style: GoogleFonts.sora(
+            style: TextStyle(
               fontSize: 16,
               color: CustomColors.white.withOpacity(0.85),
             ),

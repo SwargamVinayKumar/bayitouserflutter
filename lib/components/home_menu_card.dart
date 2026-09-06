@@ -132,7 +132,7 @@ class HomeMenuCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.plusJakartaSans(
+                    style: TextStyle(
                       fontSize: titleFontSize,
                       fontWeight: FontWeight.w600,
                       color: titleColor,
@@ -144,7 +144,7 @@ class HomeMenuCard extends StatelessWidget {
                   SizedBox(height: isTablet ? 4 : 2),
                   Text(
                     subtitle,
-                    style: GoogleFonts.sora(
+                    style: TextStyle(
                       color: titleColor.withOpacity(0.9),
                       fontSize: subtitleFontSize,
                       fontWeight: FontWeight.w400,

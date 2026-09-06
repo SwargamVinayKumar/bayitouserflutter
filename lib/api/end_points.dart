@@ -32,9 +32,11 @@ class EndPoints {
   static const fetchUsers = "fetchUsers";
   static const fetchUserDetails = "fetchUserDetails";
 
+  static const fetchAmenities = "fetchAmenities";
 
 
-
-
+  static const addRatingAndReviews = "addRatingAndReviews";
+  static const fetchRatingAndReviews = "fetchRatingAndReviews";
+  static const fetchTableRatingAndReviews = "fetchTableRatingAndReviews";
 
 }

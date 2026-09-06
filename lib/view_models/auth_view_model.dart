@@ -77,7 +77,7 @@ class AuthViewModel extends GetxController {
   final businessNameController = TextEditingController();
   final businessLicenceController = TextEditingController();
   final aboutBusinessController = TextEditingController();
-  final outletType = "Cafe".obs;
+  final outletType = "Outlet".obs;
   RxList<String> outletTypesDropList = <String>[].obs;
 
   final businessLogo = Rxn<File>();

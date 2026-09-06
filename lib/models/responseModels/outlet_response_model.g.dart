@@ -60,6 +60,14 @@ _$OutletModelImpl _$$OutletModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DeviceDetails.fromJson(
               json['deviceDetails'] as Map<String, dynamic>),
+      ratingCount: json['ratingCount'] as int?,
+      rating: (json['rating'] as num?)?.toDouble(),
+      amenities: (json['amenities'] as List<dynamic>?)
+          ?.map((e) => AmenitiesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      categoryRating: (json['categoryRating'] as List<dynamic>?)
+          ?.map((e) => CategoryRating.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$OutletModelImplToJson(_$OutletModelImpl instance) =>
@@ -88,6 +96,10 @@ Map<String, dynamic> _$$OutletModelImplToJson(_$OutletModelImpl instance) =>
       'gstIn': instance.gstIn,
       'location': instance.location,
       'deviceDetails': instance.deviceDetails,
+      'ratingCount': instance.ratingCount,
+      'rating': instance.rating,
+      'amenities': instance.amenities,
+      'categoryRating': instance.categoryRating,
     };
 
 _$OutletDetailsResponseModelImpl _$$OutletDetailsResponseModelImplFromJson(

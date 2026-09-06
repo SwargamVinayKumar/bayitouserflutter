@@ -13,6 +13,8 @@ _$PaginationRequestModelImpl _$$PaginationRequestModelImplFromJson(
       page: json['page'] as int?,
       query: json['query'] as String?,
       type: json['type'] as String?,
+      outletId: json['outletId'] as String?,
+      tableId: json['tableId'] as String?,
     );
 
 Map<String, dynamic> _$$PaginationRequestModelImplToJson(
@@ -22,4 +24,6 @@ Map<String, dynamic> _$$PaginationRequestModelImplToJson(
       'page': instance.page,
       'query': instance.query,
       'type': instance.type,
+      'outletId': instance.outletId,
+      'tableId': instance.tableId,
     };

@@ -45,6 +45,10 @@ abstract class OutletModel with _$OutletModel {
     String? gstIn,
     LocationModel? location,
     DeviceDetails? deviceDetails,
+    int? ratingCount,
+    double? rating,
+    List<AmenitiesModel>? amenities,
+    List<CategoryRating>? categoryRating
   }) = _OutletModel;
 
   factory OutletModel.fromJson(Map<String, dynamic> json) =>
@@ -62,8 +66,6 @@ abstract class OutletDetailsResponseModel with _$OutletDetailsResponseModel {
   factory OutletDetailsResponseModel.fromJson(Map<String, dynamic> json) =>
       _$OutletDetailsResponseModelFromJson(json);
 }
-
-
 
 
 @freezed

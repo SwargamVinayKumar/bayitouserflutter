@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../api/api_result.dart';
 import '../components/custom_action_button.dart';
-import '../components/reservation_cafe_card.dart';
+import '../components/reservation_outlet_card.dart';
 import '../models/responseModels/booking_response_model.dart';
 import '../utils/custom_color.dart';
 import 'booking_details_page.dart';
@@ -78,7 +78,7 @@ class _ReservationPageState extends State<ReservationPage> {
                   Expanded(
                     child: Text(
                       "Reservations",
-                      style: GoogleFonts.plusJakartaSans(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
                         color: CustomColors.secondary,
@@ -160,9 +160,9 @@ class _ReservationPageState extends State<ReservationPage> {
           }
 
           final booking = bookings[index];
-          return ReservationCafeCard(
+          return ReservationOutletCard(
             image: booking.outletId?.businessLogo ?? "",
-            cafeName: booking.outletId?.businessName ?? "Cafe Name",
+            OutletName: booking.outletId?.businessName ?? "Outlet Name",
             location: booking.outletId?.location?.address1 ?? "Location",
             date: booking.checkIn != null ? _formatDate(booking.checkIn!) : "",
             time: booking.checkIn != null ? _formatTime(booking.checkIn!) : "",

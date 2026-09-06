@@ -49,7 +49,7 @@ class CustomGradientButton extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               title,
-              style: GoogleFonts.plusJakartaSans(
+              style: TextStyle(
                 fontSize: fontSize,
                 fontWeight: fontWeight,
                 color: CustomColors.white,

@@ -19,7 +19,7 @@ class ProfileStatComponent extends StatelessWidget {
       children: [
         Text(
           count,
-          style: GoogleFonts.plusJakartaSans(
+          style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: CustomColors.white.withOpacity(0.85),
@@ -28,7 +28,7 @@ class ProfileStatComponent extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           title,
-          style: GoogleFonts.sora(
+          style: TextStyle(
             fontSize: 14,
             color: CustomColors.white.withOpacity(0.85),
           ),

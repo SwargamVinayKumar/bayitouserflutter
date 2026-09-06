@@ -229,6 +229,11 @@ mixin _$OutletModel {
   String? get gstIn => throw _privateConstructorUsedError;
   LocationModel? get location => throw _privateConstructorUsedError;
   DeviceDetails? get deviceDetails => throw _privateConstructorUsedError;
+  int? get ratingCount => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
+  List<AmenitiesModel>? get amenities => throw _privateConstructorUsedError;
+  List<CategoryRating>? get categoryRating =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -266,7 +271,11 @@ abstract class $OutletModelCopyWith<$Res> {
       String? fssaiId,
       String? gstIn,
       LocationModel? location,
-      DeviceDetails? deviceDetails});
+      DeviceDetails? deviceDetails,
+      int? ratingCount,
+      double? rating,
+      List<AmenitiesModel>? amenities,
+      List<CategoryRating>? categoryRating});
 
   $LocationModelCopyWith<$Res>? get location;
   $DeviceDetailsCopyWith<$Res>? get deviceDetails;
@@ -309,6 +318,10 @@ class _$OutletModelCopyWithImpl<$Res, $Val extends OutletModel>
     Object? gstIn = freezed,
     Object? location = freezed,
     Object? deviceDetails = freezed,
+    Object? ratingCount = freezed,
+    Object? rating = freezed,
+    Object? amenities = freezed,
+    Object? categoryRating = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -407,6 +420,22 @@ class _$OutletModelCopyWithImpl<$Res, $Val extends OutletModel>
           ? _value.deviceDetails
           : deviceDetails // ignore: cast_nullable_to_non_nullable
               as DeviceDetails?,
+      ratingCount: freezed == ratingCount
+          ? _value.ratingCount
+          : ratingCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      amenities: freezed == amenities
+          ? _value.amenities
+          : amenities // ignore: cast_nullable_to_non_nullable
+              as List<AmenitiesModel>?,
+      categoryRating: freezed == categoryRating
+          ? _value.categoryRating
+          : categoryRating // ignore: cast_nullable_to_non_nullable
+              as List<CategoryRating>?,
     ) as $Val);
   }
 
@@ -467,7 +496,11 @@ abstract class _$$OutletModelImplCopyWith<$Res>
       String? fssaiId,
       String? gstIn,
       LocationModel? location,
-      DeviceDetails? deviceDetails});
+      DeviceDetails? deviceDetails,
+      int? ratingCount,
+      double? rating,
+      List<AmenitiesModel>? amenities,
+      List<CategoryRating>? categoryRating});
 
   @override
   $LocationModelCopyWith<$Res>? get location;
@@ -510,6 +543,10 @@ class __$$OutletModelImplCopyWithImpl<$Res>
     Object? gstIn = freezed,
     Object? location = freezed,
     Object? deviceDetails = freezed,
+    Object? ratingCount = freezed,
+    Object? rating = freezed,
+    Object? amenities = freezed,
+    Object? categoryRating = freezed,
   }) {
     return _then(_$OutletModelImpl(
       id: freezed == id
@@ -608,6 +645,22 @@ class __$$OutletModelImplCopyWithImpl<$Res>
           ? _value.deviceDetails
           : deviceDetails // ignore: cast_nullable_to_non_nullable
               as DeviceDetails?,
+      ratingCount: freezed == ratingCount
+          ? _value.ratingCount
+          : ratingCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      amenities: freezed == amenities
+          ? _value._amenities
+          : amenities // ignore: cast_nullable_to_non_nullable
+              as List<AmenitiesModel>?,
+      categoryRating: freezed == categoryRating
+          ? _value._categoryRating
+          : categoryRating // ignore: cast_nullable_to_non_nullable
+              as List<CategoryRating>?,
     ));
   }
 }
@@ -639,10 +692,16 @@ class _$OutletModelImpl implements _OutletModel {
       this.fssaiId,
       this.gstIn,
       this.location,
-      this.deviceDetails})
+      this.deviceDetails,
+      this.ratingCount,
+      this.rating,
+      final List<AmenitiesModel>? amenities,
+      final List<CategoryRating>? categoryRating})
       : _images = images,
         _tables = tables,
-        _daySlots = daySlots;
+        _daySlots = daySlots,
+        _amenities = amenities,
+        _categoryRating = categoryRating;
 
   factory _$OutletModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OutletModelImplFromJson(json);
@@ -720,10 +779,33 @@ class _$OutletModelImpl implements _OutletModel {
   final LocationModel? location;
   @override
   final DeviceDetails? deviceDetails;
+  @override
+  final int? ratingCount;
+  @override
+  final double? rating;
+  final List<AmenitiesModel>? _amenities;
+  @override
+  List<AmenitiesModel>? get amenities {
+    final value = _amenities;
+    if (value == null) return null;
+    if (_amenities is EqualUnmodifiableListView) return _amenities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<CategoryRating>? _categoryRating;
+  @override
+  List<CategoryRating>? get categoryRating {
+    final value = _categoryRating;
+    if (value == null) return null;
+    if (_categoryRating is EqualUnmodifiableListView) return _categoryRating;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'OutletModel(id: $id, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, profilePic: $profilePic, mobile: $mobile, otp: $otp, name: $name, email: $email, images: $images, tables: $tables, blocked: $blocked, version: $version, daySlots: $daySlots, createdAt: $createdAt, updatedAt: $updatedAt, aboutBusiness: $aboutBusiness, businessLicence: $businessLicence, businessLogo: $businessLogo, businessName: $businessName, fssaiId: $fssaiId, gstIn: $gstIn, location: $location, deviceDetails: $deviceDetails)';
+    return 'OutletModel(id: $id, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, profilePic: $profilePic, mobile: $mobile, otp: $otp, name: $name, email: $email, images: $images, tables: $tables, blocked: $blocked, version: $version, daySlots: $daySlots, createdAt: $createdAt, updatedAt: $updatedAt, aboutBusiness: $aboutBusiness, businessLicence: $businessLicence, businessLogo: $businessLogo, businessName: $businessName, fssaiId: $fssaiId, gstIn: $gstIn, location: $location, deviceDetails: $deviceDetails, ratingCount: $ratingCount, rating: $rating, amenities: $amenities, categoryRating: $categoryRating)';
   }
 
   @override
@@ -765,7 +847,14 @@ class _$OutletModelImpl implements _OutletModel {
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.deviceDetails, deviceDetails) ||
-                other.deviceDetails == deviceDetails));
+                other.deviceDetails == deviceDetails) &&
+            (identical(other.ratingCount, ratingCount) ||
+                other.ratingCount == ratingCount) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            const DeepCollectionEquality()
+                .equals(other._amenities, _amenities) &&
+            const DeepCollectionEquality()
+                .equals(other._categoryRating, _categoryRating));
   }
 
   @JsonKey(ignore: true)
@@ -795,7 +884,11 @@ class _$OutletModelImpl implements _OutletModel {
         fssaiId,
         gstIn,
         location,
-        deviceDetails
+        deviceDetails,
+        ratingCount,
+        rating,
+        const DeepCollectionEquality().hash(_amenities),
+        const DeepCollectionEquality().hash(_categoryRating)
       ]);
 
   @JsonKey(ignore: true)
@@ -837,7 +930,11 @@ abstract class _OutletModel implements OutletModel {
       final String? fssaiId,
       final String? gstIn,
       final LocationModel? location,
-      final DeviceDetails? deviceDetails}) = _$OutletModelImpl;
+      final DeviceDetails? deviceDetails,
+      final int? ratingCount,
+      final double? rating,
+      final List<AmenitiesModel>? amenities,
+      final List<CategoryRating>? categoryRating}) = _$OutletModelImpl;
 
   factory _OutletModel.fromJson(Map<String, dynamic> json) =
       _$OutletModelImpl.fromJson;
@@ -891,6 +988,14 @@ abstract class _OutletModel implements OutletModel {
   LocationModel? get location;
   @override
   DeviceDetails? get deviceDetails;
+  @override
+  int? get ratingCount;
+  @override
+  double? get rating;
+  @override
+  List<AmenitiesModel>? get amenities;
+  @override
+  List<CategoryRating>? get categoryRating;
   @override
   @JsonKey(ignore: true)
   _$$OutletModelImplCopyWith<_$OutletModelImpl> get copyWith =>

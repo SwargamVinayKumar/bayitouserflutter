@@ -1,8 +1,8 @@
-import 'package:bayitouser/pages/cafe_detail_page.dart';
+import 'package:bayitouser/pages/outlet_detail_page.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../components/cafe_card.dart';
+import '../components/outlet_card.dart';
 import '../components/custom_action_button.dart';
 import '../models/requestModels/page_request_model.dart';
 import '../models/responseModels/outlet_response_model.dart';
@@ -44,7 +44,7 @@ class FavoritePage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   "Favorites",
-                  style: GoogleFonts.plusJakartaSans(
+                  style: TextStyle(
                     color: CustomColors.secondary,
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
@@ -97,7 +97,7 @@ class FavoritePage extends StatelessWidget {
                                 Text(
                                   "No favorite outlets",
                                   style:
-                                  GoogleFonts.sora(
+                                  TextStyle(
                                     color: CustomColors.secondary,
                                     fontSize: 16,
                                     fontWeight:
@@ -109,7 +109,7 @@ class FavoritePage extends StatelessWidget {
                                   "Your favorite outlets will appear here",
                                   textAlign: TextAlign.center,
                                   style:
-                                  GoogleFonts.sora(
+                                  TextStyle(
                                     color: CustomColors.secondary
                                         .withOpacity(0.6),
                                     fontSize: 13,
@@ -131,12 +131,12 @@ class FavoritePage extends StatelessWidget {
 
                             return GestureDetector(
                               onTap: () {
-                                Get.to(() => CafeDetailsPage(
+                                Get.to(() => OutletDetailsPage(
                                         outletId: outlet.id ?? "",
                                   ),
                                 );
                               },
-                              child: CafeCard(
+                              child: OutletCard(
                                 outlet: outlet,
                                 onTap: () {},
                               ),

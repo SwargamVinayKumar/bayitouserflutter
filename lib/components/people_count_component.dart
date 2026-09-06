@@ -50,7 +50,7 @@ class PeopleCountComponent extends StatelessWidget {
             children: [
               Text(
                 "$peopleCount",
-                style: GoogleFonts.plusJakartaSans(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: CustomColors.white,

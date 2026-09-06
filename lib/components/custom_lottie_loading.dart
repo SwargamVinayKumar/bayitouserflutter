@@ -28,7 +28,7 @@ class CustomLottieLoading extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               "Loading...",
-              style: GoogleFonts.sora(
+              style: TextStyle(
                 color: CustomColors.secondary,
                 fontSize: 14,
               ),

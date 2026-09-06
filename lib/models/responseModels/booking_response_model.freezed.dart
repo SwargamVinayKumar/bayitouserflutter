@@ -1641,6 +1641,7 @@ mixin _$BookingModel {
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  UserModel? get userId => throw _privateConstructorUsedError;
   OutletModel? get outletId => throw _privateConstructorUsedError;
   TableModel? get tableId => throw _privateConstructorUsedError;
   String? get seatId => throw _privateConstructorUsedError;
@@ -1680,6 +1681,7 @@ abstract class $BookingModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: '_id') String? id,
       String? status,
+      UserModel? userId,
       OutletModel? outletId,
       TableModel? tableId,
       String? seatId,
@@ -1704,6 +1706,7 @@ abstract class $BookingModelCopyWith<$Res> {
       String? createdAt,
       String? updatedAt});
 
+  $UserModelCopyWith<$Res>? get userId;
   $OutletModelCopyWith<$Res>? get outletId;
   $TableModelCopyWith<$Res>? get tableId;
 }
@@ -1723,6 +1726,7 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
   $Res call({
     Object? id = freezed,
     Object? status = freezed,
+    Object? userId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
     Object? seatId = freezed,
@@ -1756,6 +1760,10 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
       outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
@@ -1853,6 +1861,18 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
 
   @override
   @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res>? get userId {
+    if (_value.userId == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_value.userId!, (value) {
+      return _then(_value.copyWith(userId: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
   $OutletModelCopyWith<$Res>? get outletId {
     if (_value.outletId == null) {
       return null;
@@ -1887,6 +1907,7 @@ abstract class _$$BookingModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: '_id') String? id,
       String? status,
+      UserModel? userId,
       OutletModel? outletId,
       TableModel? tableId,
       String? seatId,
@@ -1912,6 +1933,8 @@ abstract class _$$BookingModelImplCopyWith<$Res>
       String? updatedAt});
 
   @override
+  $UserModelCopyWith<$Res>? get userId;
+  @override
   $OutletModelCopyWith<$Res>? get outletId;
   @override
   $TableModelCopyWith<$Res>? get tableId;
@@ -1930,6 +1953,7 @@ class __$$BookingModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? status = freezed,
+    Object? userId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
     Object? seatId = freezed,
@@ -1963,6 +1987,10 @@ class __$$BookingModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
       outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
@@ -2065,6 +2093,7 @@ class _$BookingModelImpl implements _BookingModel {
   const _$BookingModelImpl(
       {@JsonKey(name: '_id') this.id,
       this.status,
+      this.userId,
       this.outletId,
       this.tableId,
       this.seatId,
@@ -2099,6 +2128,8 @@ class _$BookingModelImpl implements _BookingModel {
   final String? id;
   @override
   final String? status;
+  @override
+  final UserModel? userId;
   @override
   final OutletModel? outletId;
   @override
@@ -2164,7 +2195,7 @@ class _$BookingModelImpl implements _BookingModel {
 
   @override
   String toString() {
-    return 'BookingModel(id: $id, status: $status, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingType: $bookingType, bookingOTP: $bookingOTP, paymentType: $paymentType, orderId: $orderId, paymentId: $paymentId, checkIn: $checkIn, checkOut: $checkOut, amount: $amount, discount: $discount, charges: $charges, subTotal: $subTotal, refundedAmount: $refundedAmount, logs: $logs, couponId: $couponId, paymentLogs: $paymentLogs, guestDetailsList: $guestDetailsList, userVisited: $userVisited, cancellationDetails: $cancellationDetails, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'BookingModel(id: $id, status: $status, userId: $userId, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingType: $bookingType, bookingOTP: $bookingOTP, paymentType: $paymentType, orderId: $orderId, paymentId: $paymentId, checkIn: $checkIn, checkOut: $checkOut, amount: $amount, discount: $discount, charges: $charges, subTotal: $subTotal, refundedAmount: $refundedAmount, logs: $logs, couponId: $couponId, paymentLogs: $paymentLogs, guestDetailsList: $guestDetailsList, userVisited: $userVisited, cancellationDetails: $cancellationDetails, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -2174,6 +2205,7 @@ class _$BookingModelImpl implements _BookingModel {
             other is _$BookingModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.tableId, tableId) || other.tableId == tableId) &&
@@ -2221,6 +2253,7 @@ class _$BookingModelImpl implements _BookingModel {
         runtimeType,
         id,
         status,
+        userId,
         outletId,
         tableId,
         seatId,
@@ -2264,6 +2297,7 @@ abstract class _BookingModel implements BookingModel {
   const factory _BookingModel(
       {@JsonKey(name: '_id') final String? id,
       final String? status,
+      final UserModel? userId,
       final OutletModel? outletId,
       final TableModel? tableId,
       final String? seatId,
@@ -2296,6 +2330,8 @@ abstract class _BookingModel implements BookingModel {
   String? get id;
   @override
   String? get status;
+  @override
+  UserModel? get userId;
   @override
   OutletModel? get outletId;
   @override

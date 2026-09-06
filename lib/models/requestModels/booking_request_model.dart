@@ -23,3 +23,16 @@ abstract class BookingRequestModel with _$BookingRequestModel {
   factory BookingRequestModel.fromJson(Map<String, dynamic> json) =>
       _$BookingRequestModelFromJson(json);
 }
+
+@Freezed()
+class RatingReviewRequestModel with _$RatingReviewRequestModel{
+  const factory RatingReviewRequestModel({
+    required String? outletId,
+    required String? tableId,
+    required String? ratedFor,
+    required String? review,
+    required double? rating
+  }) = _RatingReviewRequestModel;
+
+  factory RatingReviewRequestModel.fromJson(Map<String, dynamic> json) => _$RatingReviewRequestModelFromJson(json);
+}

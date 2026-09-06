@@ -1,3 +1,4 @@
+import 'package:bayitouser/models/responseModels/auth_response_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_response_model.freezed.dart';
@@ -23,7 +24,10 @@ abstract class UserModel with _$UserModel {
     List<DesignationModel>? designations,
     UserLocationModel? location,
     String? name,
+    String? dob,
+    String? gender,
     String? email,
+    ChargesModel? charges
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

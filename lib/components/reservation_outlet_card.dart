@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/custom_color.dart';
 
-class ReservationCafeCard extends StatelessWidget {
+class ReservationOutletCard extends StatelessWidget {
   final String image;
-  final String cafeName;
+  final String OutletName;
   final String location;
   final String date;
   final String time;
@@ -16,10 +16,10 @@ class ReservationCafeCard extends StatelessWidget {
   final Color ctnColor;
   final Color titleColor;
 
-  const ReservationCafeCard({
+  const ReservationOutletCard({
     super.key,
     required this.image,
-    required this.cafeName,
+    required this.OutletName,
     required this.location,
     required this.date,
     required this.time,
@@ -65,8 +65,8 @@ class ReservationCafeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    cafeName,
-                    style: GoogleFonts.plusJakartaSans(
+                    OutletName,
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       color: titleColor,
@@ -75,7 +75,7 @@ class ReservationCafeCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     location,
-                    style: GoogleFonts.sora(
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: titleColor.withOpacity(0.6),
@@ -86,7 +86,7 @@ class ReservationCafeCard extends StatelessWidget {
                     children: [
                       Text(
                         date,
-                        style:  GoogleFonts.sora(
+                        style:  TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: titleColor,
@@ -95,7 +95,7 @@ class ReservationCafeCard extends StatelessWidget {
                       const SizedBox(width: 14),
                       Text(
                         time,
-                        style: GoogleFonts.sora(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: titleColor.withOpacity(0.6),
@@ -109,7 +109,7 @@ class ReservationCafeCard extends StatelessWidget {
                     children: [
                       Text(
                         table,
-                        style: GoogleFonts.sora(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: titleColor.withOpacity(0.6),

@@ -15,7 +15,7 @@ class BookingDetailsPage extends StatefulWidget {
 }
 
 class _BookingDetailsPageState extends State<BookingDetailsPage> {
-  final bookingViewModel = Get.find<BookingViewModel>();
+  final bookingViewModel = Get.put(BookingViewModel());
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
         ),
         title: Text(
           "Booking Details",
-          style: GoogleFonts.plusJakartaSans(
+          style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w700,
             color: CustomColors.secondary,
@@ -120,12 +120,12 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
               children: [
                 Text(
                   booking.outletId?.businessName ?? "",
-                  style: GoogleFonts.sora(fontSize: 18, fontWeight: FontWeight.w700, color: CustomColors.secondary),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: CustomColors.secondary),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   booking.outletId?.location?.address1 ?? "",
-                  style: GoogleFonts.sora(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7)),
+                  style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7)),
                 ),
               ],
             ),
@@ -136,7 +136,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
   }
 
   Widget _buildSectionTitle(String title) {
-    return Text(title, style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.w700, color: CustomColors.secondary));
+    return Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: CustomColors.secondary));
   }
 
   Widget _buildStatusChip(String status) {
@@ -153,7 +153,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
       ),
       child: Text(
         status.toUpperCase().replaceAll("_", " "),
-        style: GoogleFonts.sora(fontSize: 12, fontWeight: FontWeight.bold, color: color),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color),
       ),
     );
   }
@@ -177,9 +177,9 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
         children: [
           Icon(icon, size: 20, color: CustomColors.secondary.withOpacity(0.7)),
           const SizedBox(width: 12),
-          Text(label, style: GoogleFonts.sora(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7))),
+          Text(label, style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7))),
           const Spacer(),
-          Text(value, style: GoogleFonts.sora(fontSize: 14, fontWeight: FontWeight.w600, color: CustomColors.secondary)),
+          Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: CustomColors.secondary)),
         ],
       ),
     );

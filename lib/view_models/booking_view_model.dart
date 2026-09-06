@@ -228,9 +228,12 @@ class BookingViewModel extends GetxController {
         "page": page.value,
         "status": status
       });
+      print("hello");
 
       if (response.isOk && response.body != null) {
         final data = BookingListResponse.fromJson(response.body);
+        print(data);
+        print("hello 1");
         if (data.status == 1) {
           final newBookings = data.data?.bookings ?? [];
           list.addAll(newBookings);
@@ -248,6 +251,7 @@ class BookingViewModel extends GetxController {
         observer.value = ApiResult.error("Something went wrong");
       }
     } catch (e) {
+      Get.showCustomSnackBar(title: "Failed", message: e.toString() ?? "Booking failed");
       observer.value = ApiResult.error(e.toString());
     }
   }

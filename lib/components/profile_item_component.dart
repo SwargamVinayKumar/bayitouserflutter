@@ -43,7 +43,7 @@ class ProfileItemComponent extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: GoogleFonts.plusJakartaSans(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
