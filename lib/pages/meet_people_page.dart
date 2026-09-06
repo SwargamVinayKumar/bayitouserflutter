@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/models/responseModels/user_response_model.dart';
 import 'package:bayitouser/pages/booking_details_page.dart';
+import 'package:bayitouser/pages/professional_booking_details_page.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -196,7 +197,7 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
                             return MeetPeopleCard(
                               booking: user,
                               onTap: () {
-                                Get.to(() => BookingDetailsPage(bookingId: user?.id ?? ""));
+                                Get.to(() => ProfessionalBookingDetailsPage(bookingId: user?.id ?? ""));
                               },
 
                             );

@@ -1,0 +1,618 @@
+import 'package:bayitouser/components/custom_action_button.dart';
+import 'package:bayitouser/components/custom_network_image.dart';
+import 'package:bayitouser/pages/rating_reviews_page.dart';
+import 'package:bayitouser/utils/custom_color.dart';
+import 'package:bayitouser/view_models/booking_view_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../components/custom_gradient_button.dart';
+import '../components/custom_lottie_loading.dart';
+import '../components/table_seat_item.dart';
+import '../models/responseModels/booking_response_model.dart';
+import '../models/responseModels/outlet_response_model.dart';
+import '../utils/progress_dialog.dart';
+
+class ProfessionalBookingDetailsPage extends StatefulWidget {
+  final String bookingId;
+  const ProfessionalBookingDetailsPage({super.key, required this.bookingId});
+
+  @override
+  State<ProfessionalBookingDetailsPage> createState() => _ProfessionalBookingDetailsPageState();
+}
+
+class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDetailsPage> {
+  final bookingViewModel = Get.put(BookingViewModel());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bookingViewModel.fetchBookingDetails(widget.bookingId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: CustomColors.white,
+      appBar: AppBar(
+        backgroundColor: CustomColors.white,
+        elevation: 0,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomActionButton(
+            icon: Icons.arrow_back_ios_new_rounded,
+            onTap: () => Get.back(),
+          ),
+        ),
+        title: Text(
+          "Book Table",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: CustomColors.secondary,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Obx(() {
+          return bookingViewModel.fetchBookingDetailsObserver.value.when(
+            init: () => const SizedBox.shrink(),
+            loading: (msg) => const Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
+            success: (data) {
+              final booking = data.data;
+              bookingViewModel.selectedTable.value = booking.tableId;
+              if (booking == null) return const Center(child: Text("No details found"));
+              return Stack(
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionTitle("User Details"),
+                        const SizedBox(height: 8),
+                        _buildUserDetails(booking),
+                        const SizedBox(height: 24),
+                        _buildSectionTitle("Outlet Details"),
+                        const SizedBox(height: 8),
+                        _buildOutletHeader(booking),
+                        const SizedBox(height: 24),
+                        _buildSectionTitle("Booking Status"),
+                        const SizedBox(height: 8),
+                        _buildStatusChip(booking.status ?? ""),
+                        const SizedBox(height: 24),
+                        _buildSectionTitle("Reservation Details"),
+                        const SizedBox(height: 16),
+                        _buildInfoCard([
+                          _infoRow(Icons.calendar_today, "Date", _formatDate(booking.checkIn ?? "")),
+                          _infoRow(Icons.access_time, "Time", "${_formatTime(booking.checkIn ?? "")} - ${_formatTime(booking.checkOut ?? "")}"),
+                          _infoRow(Icons.table_restaurant, "Table", "${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
+                          _infoRow(Icons.event_seat, "Seat", "${booking.seatId ?? ''} (${booking.tableId?.seatType ?? ''})"),
+                          _infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
+                        ]),
+                        const SizedBox(height: 24),
+                        _buildSeatSection(booking.outletId),
+                        const SizedBox(height: 32),
+                        _buildBookingActions(booking.outletId),
+                        const SizedBox(height: 30),
+                      ],
+                    ),
+                  ),
+                  Obx(() => bookingViewModel.checkAvailabilityObserver.value.maybeWhen(loading: (cds)  =>
+                      CustomLottieLoading(),
+                      orElse: () => const SizedBox()))
+                ],
+              );
+            },
+            error: (err) => Center(child: Text(err)),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title, IconData icon) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                CustomColors.secondary.withOpacity(0.2),
+                CustomColors.secondary.withOpacity(0.05),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            color: CustomColors.secondary,
+            size: 18,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: CustomColors.secondary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBookingActions(OutletModel? outletModel) {
+    return Obx(() {
+      final availabilityState = bookingViewModel.checkAvailabilityObserver.value;
+
+      return Column(
+        children: [
+          availabilityState.maybeWhen(
+            loading: (msg) => Container(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                children: [
+                  ProgressDialog(),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Checking availability...",
+                    style: TextStyle(
+                      color: CustomColors.secondary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            success: (data) {
+              if (data.data?.available == true) {
+                return Column(
+                  children: [
+                    _buildPriceSummary(data.data!.bookingDetails!),
+                    const SizedBox(height: 24),
+                    CustomGradientButton(
+                      title: "Confirm Booking",
+                      onTap: () => bookingViewModel.confirmBooking(outletModel!.id!),
+                      height: 56,
+                      fontSize: 18,
+                    ),
+                  ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.shade50,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.orange.shade200),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.info_outline_rounded, color: Colors.orange.shade700),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              data.data?.message ?? "Selected combination is not available",
+                              style: TextStyle(
+                                color: Colors.orange.shade700,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    CustomGradientButton(
+                      title: "Check Availability",
+                      onTap: () => bookingViewModel.checkAvailability(outletModel!.id!),
+                      height: 56,
+                      fontSize: 18,
+                    ),
+                  ],
+                );
+              }
+            },
+            orElse: () {
+              final hasAllSelections = bookingViewModel.selectedTable.value != null &&
+                  bookingViewModel.selectedSeat.value != null;
+
+              if (!hasAllSelections) {
+                return Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade50,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.grey.shade200),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.info_outline_rounded, color: Colors.grey.shade600),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          "Select table and seat to check availability",
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return CustomGradientButton(
+                title: "Check Availability",
+                onTap: () => bookingViewModel.checkAvailability(outletModel!.id!),
+                height: 56,
+                fontSize: 18,
+              );
+            },
+          ),
+        ],
+      );
+    });
+  }
+
+  Widget _buildPriceSummary(AvailabilityBookingDetails details) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            CustomColors.secondary.withOpacity(0.05),
+            CustomColors.secondary.withOpacity(0.02),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: CustomColors.secondary.withOpacity(0.1),
+          width: 1.5,
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: CustomColors.secondary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.receipt_long_rounded,
+                  color: CustomColors.secondary,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                "Booking Summary",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: CustomColors.secondary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _buildPriceRow(
+            "Base Charge",
+            "₹${details.perHourCharge}/hr",
+            Icons.currency_rupee_rounded,
+          ),
+          const SizedBox(height: 10),
+          _buildPriceRow(
+            "Duration",
+            "${details.duration} Hours",
+            Icons.timer_rounded,
+          ),
+          const Divider(height: 24, color: CustomColors.secondary),
+          _buildPriceRow(
+            "Total Amount",
+            "₹${details.totalAmount}",
+            Icons.payments_rounded,
+            isTotal: true,
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  Widget _buildSeatSection(OutletModel? outlet) {
+    return Obx(() {
+      final table = bookingViewModel.selectedTable.value;
+      if (table == null || table.seats == null || table.seats!.isEmpty) {
+        return const SizedBox.shrink();
+      }
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionHeader("Reserved Table", Icons.event_seat_rounded),
+          const SizedBox(height: 16),
+          TableItemWidgetPrime(
+            table: table,
+            isSelected: false,
+            onTap: (){},
+            onViewRating: () {
+              Get.to(() => RatingReviewsPage(rating: table.rating, categoryRating: table.categoryRating,outletId: outlet?.id ?? "",));
+            },
+          ),
+          const SizedBox(height: 16),
+          _buildSectionHeader("Select Seat", Icons.event_seat_rounded),
+          const SizedBox(height: 16),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: table.seats!.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.85,
+            ),
+            itemBuilder: (context, index) {
+              final seat = table.seats![index];
+              return Obx(() => SeatItemWidget(
+                seat: seat,
+                isSelected: bookingViewModel.selectedSeat.value?.id == seat.id,
+                isBooked: seat.available == false,
+                onTap: () => bookingViewModel.selectSeat(seat),
+              ),
+              );
+            },
+          ),
+        ],
+      );
+    });
+  }
+
+
+  Widget _buildUserDetails(BookingModel? booking){
+    return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: CustomColors.secondary.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child:Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: CustomNetworkImage(
+            imageUrl: booking?.userId?.profilePic ?? "",
+            width: 95,
+            height: 120,
+            fit: BoxFit.cover,
+            borderRadius: 18,
+          ),
+        ),
+        const SizedBox(width: 14),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                booking?.userId?.name ?? "",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: CustomColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                (booking?.userId?.designations?.map((designation) => designation.name ?? "") ?? []).join(","),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: CustomColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                booking?.userId?.dob ?? "",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: CustomColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                booking?.userId?.gender ?? "",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: CustomColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "Charges : ${booking?.userId?.charges?.perHour ?? ""}/hr",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: CustomColors.textColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 10),
+      ],
+    ) );
+  }
+
+  Widget _buildPriceRow(String label, String value, IconData icon, {bool isTotal = false}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Icon(
+              icon,
+              color: isTotal ? CustomColors.secondary : Colors.grey.shade600,
+              size: isTotal ? 18 : 16,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: isTotal ? 16 : 14,
+                fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
+                color: isTotal ? CustomColors.secondary : Colors.grey.shade700,
+              ),
+            ),
+          ],
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: isTotal ? 20 : 15,
+            fontWeight: isTotal ? FontWeight.w800 : FontWeight.w600,
+            color: isTotal ? CustomColors.secondary : Colors.grey.shade800,
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _buildOutletHeader(dynamic booking) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: CustomColors.secondary.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: CustomNetworkImage(
+              imageUrl: booking.outletId?.businessLogo ?? "",
+              width: 80,
+              height: 80,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  booking.outletId?.businessName ?? "",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: CustomColors.secondary),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  booking.outletId?.location?.address1 ?? "",
+                  style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7)),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: CustomColors.secondary));
+  }
+
+  Widget _buildStatusChip(String status) {
+    Color color = Colors.orange;
+    if (status == "confirmed" || status == "completed") color = Colors.green;
+    if (status == "cancelled") color = Colors.red;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color),
+      ),
+      child: Text(
+        status.toUpperCase().replaceAll("_", " "),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(List<Widget> children) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))],
+      ),
+      child: Column(children: children),
+    );
+  }
+
+  Widget _infoRow(IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Icon(icon, size: 20, color: CustomColors.secondary.withOpacity(0.7)),
+          const SizedBox(width: 12),
+          Text(label, style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7))),
+          const Spacer(),
+          Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: CustomColors.secondary)),
+        ],
+      ),
+    );
+  }
+
+  String _formatDate(String isoDate) {
+    try {
+      DateTime dt = DateTime.parse(isoDate);
+      return "${dt.day} ${_getMonth(dt.month)} ${dt.year}";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  String _formatTime(String isoDate) {
+    try {
+      DateTime dt = DateTime.parse(isoDate);
+      String period = dt.hour >= 12 ? "PM" : "AM";
+      int hour = dt.hour > 12 ? dt.hour - 12 : (dt.hour == 0 ? 12 : dt.hour);
+      String minute = dt.minute.toString().padLeft(2, '0');
+      return "$hour:$minute $period";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  String _getMonth(int month) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return months[month - 1];
+  }
+}
