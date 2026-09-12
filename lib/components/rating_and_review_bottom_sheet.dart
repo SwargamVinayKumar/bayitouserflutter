@@ -27,7 +27,7 @@ class _RatingAndReviewBottomSheetState extends State<RatingAndReviewBottomSheet>
   final TextEditingController reviewController = TextEditingController();
   final outletViewModel = Get.put(OutletViewModel());
   RxDouble ratingValue = 1.0.obs;
-  RxString ratedFor = "Table".obs;
+  RxString ratedFor = "Value for Money".obs;
 
   List<String> ratingTypes = [
     "Value for Money",

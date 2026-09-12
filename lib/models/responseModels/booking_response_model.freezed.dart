@@ -465,10 +465,11 @@ AvailabilityBookingDetails _$AvailabilityBookingDetailsFromJson(
 mixin _$AvailabilityBookingDetails {
   String? get checkIn => throw _privateConstructorUsedError;
   String? get checkOut => throw _privateConstructorUsedError;
-  int? get duration => throw _privateConstructorUsedError;
-  int? get perHourCharge => throw _privateConstructorUsedError;
-  int? get subTotal => throw _privateConstructorUsedError;
-  int? get totalAmount => throw _privateConstructorUsedError;
+  dynamic get duration => throw _privateConstructorUsedError;
+  dynamic get perHourCharge => throw _privateConstructorUsedError;
+  dynamic get subTotal => throw _privateConstructorUsedError;
+  dynamic get totalAmount => throw _privateConstructorUsedError;
+  dynamic get professionalCharge => throw _privateConstructorUsedError;
   String? get maxAdvanceBooking => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -487,10 +488,11 @@ abstract class $AvailabilityBookingDetailsCopyWith<$Res> {
   $Res call(
       {String? checkIn,
       String? checkOut,
-      int? duration,
-      int? perHourCharge,
-      int? subTotal,
-      int? totalAmount,
+      dynamic duration,
+      dynamic perHourCharge,
+      dynamic subTotal,
+      dynamic totalAmount,
+      dynamic professionalCharge,
       String? maxAdvanceBooking});
 }
 
@@ -514,6 +516,7 @@ class _$AvailabilityBookingDetailsCopyWithImpl<$Res,
     Object? perHourCharge = freezed,
     Object? subTotal = freezed,
     Object? totalAmount = freezed,
+    Object? professionalCharge = freezed,
     Object? maxAdvanceBooking = freezed,
   }) {
     return _then(_value.copyWith(
@@ -528,19 +531,23 @@ class _$AvailabilityBookingDetailsCopyWithImpl<$Res,
       duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       perHourCharge: freezed == perHourCharge
           ? _value.perHourCharge
           : perHourCharge // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       subTotal: freezed == subTotal
           ? _value.subTotal
           : subTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       totalAmount: freezed == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
+      professionalCharge: freezed == professionalCharge
+          ? _value.professionalCharge
+          : professionalCharge // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       maxAdvanceBooking: freezed == maxAdvanceBooking
           ? _value.maxAdvanceBooking
           : maxAdvanceBooking // ignore: cast_nullable_to_non_nullable
@@ -561,10 +568,11 @@ abstract class _$$AvailabilityBookingDetailsImplCopyWith<$Res>
   $Res call(
       {String? checkIn,
       String? checkOut,
-      int? duration,
-      int? perHourCharge,
-      int? subTotal,
-      int? totalAmount,
+      dynamic duration,
+      dynamic perHourCharge,
+      dynamic subTotal,
+      dynamic totalAmount,
+      dynamic professionalCharge,
       String? maxAdvanceBooking});
 }
 
@@ -587,6 +595,7 @@ class __$$AvailabilityBookingDetailsImplCopyWithImpl<$Res>
     Object? perHourCharge = freezed,
     Object? subTotal = freezed,
     Object? totalAmount = freezed,
+    Object? professionalCharge = freezed,
     Object? maxAdvanceBooking = freezed,
   }) {
     return _then(_$AvailabilityBookingDetailsImpl(
@@ -601,19 +610,23 @@ class __$$AvailabilityBookingDetailsImplCopyWithImpl<$Res>
       duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       perHourCharge: freezed == perHourCharge
           ? _value.perHourCharge
           : perHourCharge // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       subTotal: freezed == subTotal
           ? _value.subTotal
           : subTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       totalAmount: freezed == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
+      professionalCharge: freezed == professionalCharge
+          ? _value.professionalCharge
+          : professionalCharge // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       maxAdvanceBooking: freezed == maxAdvanceBooking
           ? _value.maxAdvanceBooking
           : maxAdvanceBooking // ignore: cast_nullable_to_non_nullable
@@ -632,6 +645,7 @@ class _$AvailabilityBookingDetailsImpl implements _AvailabilityBookingDetails {
       this.perHourCharge,
       this.subTotal,
       this.totalAmount,
+      this.professionalCharge,
       this.maxAdvanceBooking});
 
   factory _$AvailabilityBookingDetailsImpl.fromJson(
@@ -643,19 +657,21 @@ class _$AvailabilityBookingDetailsImpl implements _AvailabilityBookingDetails {
   @override
   final String? checkOut;
   @override
-  final int? duration;
+  final dynamic duration;
   @override
-  final int? perHourCharge;
+  final dynamic perHourCharge;
   @override
-  final int? subTotal;
+  final dynamic subTotal;
   @override
-  final int? totalAmount;
+  final dynamic totalAmount;
+  @override
+  final dynamic professionalCharge;
   @override
   final String? maxAdvanceBooking;
 
   @override
   String toString() {
-    return 'AvailabilityBookingDetails(checkIn: $checkIn, checkOut: $checkOut, duration: $duration, perHourCharge: $perHourCharge, subTotal: $subTotal, totalAmount: $totalAmount, maxAdvanceBooking: $maxAdvanceBooking)';
+    return 'AvailabilityBookingDetails(checkIn: $checkIn, checkOut: $checkOut, duration: $duration, perHourCharge: $perHourCharge, subTotal: $subTotal, totalAmount: $totalAmount, professionalCharge: $professionalCharge, maxAdvanceBooking: $maxAdvanceBooking)';
   }
 
   @override
@@ -666,22 +682,30 @@ class _$AvailabilityBookingDetailsImpl implements _AvailabilityBookingDetails {
             (identical(other.checkIn, checkIn) || other.checkIn == checkIn) &&
             (identical(other.checkOut, checkOut) ||
                 other.checkOut == checkOut) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration) &&
-            (identical(other.perHourCharge, perHourCharge) ||
-                other.perHourCharge == perHourCharge) &&
-            (identical(other.subTotal, subTotal) ||
-                other.subTotal == subTotal) &&
-            (identical(other.totalAmount, totalAmount) ||
-                other.totalAmount == totalAmount) &&
+            const DeepCollectionEquality().equals(other.duration, duration) &&
+            const DeepCollectionEquality()
+                .equals(other.perHourCharge, perHourCharge) &&
+            const DeepCollectionEquality().equals(other.subTotal, subTotal) &&
+            const DeepCollectionEquality()
+                .equals(other.totalAmount, totalAmount) &&
+            const DeepCollectionEquality()
+                .equals(other.professionalCharge, professionalCharge) &&
             (identical(other.maxAdvanceBooking, maxAdvanceBooking) ||
                 other.maxAdvanceBooking == maxAdvanceBooking));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, checkIn, checkOut, duration,
-      perHourCharge, subTotal, totalAmount, maxAdvanceBooking);
+  int get hashCode => Object.hash(
+      runtimeType,
+      checkIn,
+      checkOut,
+      const DeepCollectionEquality().hash(duration),
+      const DeepCollectionEquality().hash(perHourCharge),
+      const DeepCollectionEquality().hash(subTotal),
+      const DeepCollectionEquality().hash(totalAmount),
+      const DeepCollectionEquality().hash(professionalCharge),
+      maxAdvanceBooking);
 
   @JsonKey(ignore: true)
   @override
@@ -703,10 +727,11 @@ abstract class _AvailabilityBookingDetails
   const factory _AvailabilityBookingDetails(
       {final String? checkIn,
       final String? checkOut,
-      final int? duration,
-      final int? perHourCharge,
-      final int? subTotal,
-      final int? totalAmount,
+      final dynamic duration,
+      final dynamic perHourCharge,
+      final dynamic subTotal,
+      final dynamic totalAmount,
+      final dynamic professionalCharge,
       final String? maxAdvanceBooking}) = _$AvailabilityBookingDetailsImpl;
 
   factory _AvailabilityBookingDetails.fromJson(Map<String, dynamic> json) =
@@ -717,13 +742,15 @@ abstract class _AvailabilityBookingDetails
   @override
   String? get checkOut;
   @override
-  int? get duration;
+  dynamic get duration;
   @override
-  int? get perHourCharge;
+  dynamic get perHourCharge;
   @override
-  int? get subTotal;
+  dynamic get subTotal;
   @override
-  int? get totalAmount;
+  dynamic get totalAmount;
+  @override
+  dynamic get professionalCharge;
   @override
   String? get maxAdvanceBooking;
   @override
@@ -1127,6 +1154,7 @@ ConfirmBookingData _$ConfirmBookingDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ConfirmBookingData {
+  @JsonKey(name: '_id')
   String? get bookingId => throw _privateConstructorUsedError;
   dynamic get userId => throw _privateConstructorUsedError;
   String? get outletId => throw _privateConstructorUsedError;
@@ -1159,7 +1187,7 @@ abstract class $ConfirmBookingDataCopyWith<$Res> {
       _$ConfirmBookingDataCopyWithImpl<$Res, ConfirmBookingData>;
   @useResult
   $Res call(
-      {String? bookingId,
+      {@JsonKey(name: '_id') String? bookingId,
       dynamic userId,
       String? outletId,
       String? tableId,
@@ -1297,7 +1325,7 @@ abstract class _$$ConfirmBookingDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? bookingId,
+      {@JsonKey(name: '_id') String? bookingId,
       dynamic userId,
       String? outletId,
       String? tableId,
@@ -1428,7 +1456,7 @@ class __$$ConfirmBookingDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
   const _$ConfirmBookingDataImpl(
-      {this.bookingId,
+      {@JsonKey(name: '_id') this.bookingId,
       this.userId,
       this.outletId,
       this.tableId,
@@ -1451,6 +1479,7 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
       _$$ConfirmBookingDataImplFromJson(json);
 
   @override
+  @JsonKey(name: '_id')
   final String? bookingId;
   @override
   final dynamic userId;
@@ -1568,7 +1597,7 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
 
 abstract class _ConfirmBookingData implements ConfirmBookingData {
   const factory _ConfirmBookingData(
-      {final String? bookingId,
+      {@JsonKey(name: '_id') final String? bookingId,
       final dynamic userId,
       final String? outletId,
       final String? tableId,
@@ -1591,6 +1620,7 @@ abstract class _ConfirmBookingData implements ConfirmBookingData {
       _$ConfirmBookingDataImpl.fromJson;
 
   @override
+  @JsonKey(name: '_id')
   String? get bookingId;
   @override
   dynamic get userId;
@@ -1663,8 +1693,8 @@ mixin _$BookingModel {
   dynamic get guestDetailsList => throw _privateConstructorUsedError;
   bool? get userVisited => throw _privateConstructorUsedError;
   dynamic get cancellationDetails => throw _privateConstructorUsedError;
-  String? get createdAt => throw _privateConstructorUsedError;
-  String? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1703,8 +1733,8 @@ abstract class $BookingModelCopyWith<$Res> {
       dynamic guestDetailsList,
       bool? userVisited,
       dynamic cancellationDetails,
-      String? createdAt,
-      String? updatedAt});
+      DateTime? createdAt,
+      DateTime? updatedAt});
 
   $UserModelCopyWith<$Res>? get userId;
   $OutletModelCopyWith<$Res>? get outletId;
@@ -1851,11 +1881,11 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
     ) as $Val);
   }
 
@@ -1929,8 +1959,8 @@ abstract class _$$BookingModelImplCopyWith<$Res>
       dynamic guestDetailsList,
       bool? userVisited,
       dynamic cancellationDetails,
-      String? createdAt,
-      String? updatedAt});
+      DateTime? createdAt,
+      DateTime? updatedAt});
 
   @override
   $UserModelCopyWith<$Res>? get userId;
@@ -2078,11 +2108,11 @@ class __$$BookingModelImplCopyWithImpl<$Res>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
     ));
   }
 }
@@ -2189,9 +2219,9 @@ class _$BookingModelImpl implements _BookingModel {
   @override
   final dynamic cancellationDetails;
   @override
-  final String? createdAt;
+  final DateTime? createdAt;
   @override
-  final String? updatedAt;
+  final DateTime? updatedAt;
 
   @override
   String toString() {
@@ -2319,8 +2349,8 @@ abstract class _BookingModel implements BookingModel {
       final dynamic guestDetailsList,
       final bool? userVisited,
       final dynamic cancellationDetails,
-      final String? createdAt,
-      final String? updatedAt}) = _$BookingModelImpl;
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$BookingModelImpl;
 
   factory _BookingModel.fromJson(Map<String, dynamic> json) =
       _$BookingModelImpl.fromJson;
@@ -2375,9 +2405,9 @@ abstract class _BookingModel implements BookingModel {
   @override
   dynamic get cancellationDetails;
   @override
-  String? get createdAt;
+  DateTime? get createdAt;
   @override
-  String? get updatedAt;
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$BookingModelImplCopyWith<_$BookingModelImpl> get copyWith =>

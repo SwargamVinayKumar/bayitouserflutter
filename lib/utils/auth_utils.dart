@@ -23,7 +23,8 @@ class AuthUtils {
 
   static String formatPrice(double price) => '\$${price.toStringAsFixed(2)}';
 
-  static String formatDate(DateTime date) {
+  static String formatDate(DateTime? date) {
+    if(date == null) return "";
     final indiaTime = _toIndianTime(date);
     return DateFormat.yMd().format(indiaTime);
   }

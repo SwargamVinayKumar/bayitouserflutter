@@ -5,7 +5,9 @@ import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../components/custom_action_button.dart';
 import '../components/empty_data_view.dart';
+import '../components/rating_and_review_bottom_sheet.dart';
 import '../components/rating_and_review_component.dart';
 import '../components/rating_component.dart';
 import '../components/secondary_heading_component.dart';
@@ -46,7 +48,18 @@ class _RatingReviewsPageState extends State<RatingReviewsPage> {
               children: [
                 SecondaryHeadingComponent(buttonTxt: "Rating And Reviews", buttonClick: (){
                   Get.back();
-                }),
+                },extraBtnText: "Give Rating",extraBtnClick: (){
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                    ),
+                    builder: (context) {
+                      return RatingAndReviewBottomSheet(tableId: widget.tableId ?? '', outletId:  widget.outletId ?? '',);
+                    },
+                  );
+                },),
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () => _refreshData(),

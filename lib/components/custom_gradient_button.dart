@@ -12,6 +12,7 @@ class CustomGradientButton extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final Color? btnColor;
+  final bool? loading;
 
   const CustomGradientButton({
     super.key,
@@ -23,6 +24,7 @@ class CustomGradientButton extends StatelessWidget {
     this.fontSize = 14,
     this.fontWeight = FontWeight.w700,
     this.btnColor = CustomColors.secondary,
+    this.loading = false
   });
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class CustomGradientButton extends StatelessWidget {
           ),
           child: Container(
             alignment: Alignment.center,
-            child: Text(
+            child: loading == true ? const CircularProgressIndicator(color: CustomColors.white) :Text(
               title,
               style: TextStyle(
                 fontSize: fontSize,

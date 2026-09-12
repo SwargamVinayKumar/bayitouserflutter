@@ -42,8 +42,10 @@ abstract class TableModel with _$TableModel {
     String? createdAt,
     String? updatedAt,
     int? tableCount,
+    int? totalVotes,
     double? rating,
-    List<CategoryRating>? categoryRating
+    List<CategoryRating>? categoryRating,
+    RatingAndReviewModel? topRated
   }) = _TableModel;
 
   factory TableModel.fromJson(Map<String, dynamic> json) =>

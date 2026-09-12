@@ -29,7 +29,7 @@ class _RatingComponentState extends State<RatingComponent> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/images/design_left.png",width: 50,height: 100,color: CustomColors.primary),
+              Image.asset("assets/images/design_left.png",width: 50,height: 100,color: CustomColors.secondary),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Column(
@@ -40,7 +40,7 @@ class _RatingComponentState extends State<RatingComponent> {
                   ],
                 ),
               ),
-              Image.asset("assets/images/design_right.png",width: 50,height: 100,color: CustomColors.primary),
+              Image.asset("assets/images/design_right.png",width: 50,height: 100,color: CustomColors.secondary),
             ],
           ),
           const SizedBox(height: 5),

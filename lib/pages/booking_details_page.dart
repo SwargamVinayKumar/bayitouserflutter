@@ -1,10 +1,15 @@
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_network_image.dart';
+import 'package:bayitouser/pages/rating_reviews_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../components/rating_and_review_bottom_sheet.dart';
+import '../components/table_seat_item.dart';
+import '../models/responseModels/booking_response_model.dart';
 
 class BookingDetailsPage extends StatefulWidget {
   final String bookingId;
@@ -47,6 +52,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
             color: CustomColors.secondary,
           ),
         ),
+
       ),
       body: SafeArea(
         child: Obx(() {
@@ -54,7 +60,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
             init: () => const SizedBox.shrink(),
             loading: (msg) => const Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
             success: (data) {
-              final booking = data.data;
+              final booking = (data as BookingDetailsResponse).data;
               if (booking == null) return const Center(child: Text("No details found"));
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(20),
@@ -75,6 +81,26 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                       _infoRow(Icons.table_restaurant, "Table", "Table ${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
                       _infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
                     ]),
+                    const SizedBox(height: 16),
+                    _buildSectionHeader("Reserved Table", Icons.event_seat_rounded),
+                    const SizedBox(height: 16),
+                    TableItemWidgetPrime(
+                      table: booking.tableId,
+                      ratingAndReviewModel: booking.tableId?.topRated,
+                      isSelected: true,
+                      onTap: (){},
+                      onViewRating: () {
+                        Get.to(() => RatingReviewsPage(rating: booking.tableId?.rating, categoryRating: booking.tableId?.categoryRating,tableId: booking.tableId?.id ?? "",));
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    _buildSectionHeader("Reserved Seat", Icons.event_seat_rounded),
+                    const SizedBox(height: 16),
+                    SeatItemWidget(
+                      seat: booking.tableId?.seats?.firstWhere((seatData) => seatData.id == (booking.seatId ?? "")),
+                      isBooked: false,
+                      isSelected: true, onTap: () {  },
+                    ),
                     const SizedBox(height: 24),
                     _buildSectionTitle("Payment Information"),
                     const SizedBox(height: 16),
@@ -134,6 +160,40 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
       ),
     );
   }
+
+  Widget _buildSectionHeader(String title, IconData icon) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                CustomColors.secondary.withOpacity(0.2),
+                CustomColors.secondary.withOpacity(0.05),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            color: CustomColors.secondary,
+            size: 18,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: CustomColors.secondary,
+          ),
+        ),
+      ],
+    );
+  }
+
 
   Widget _buildSectionTitle(String title) {
     return Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: CustomColors.secondary));

@@ -17,6 +17,8 @@ class EndPoints {
 
   static const checkAvailability = "checkAvailability";
   static const confirmBooking = "confirmBooking";
+  static const confirmProfessionalBooking = "confirmProfessionalBooking";
+
   static const fetchUserBookings = "fetchUserBookings";
   static const fetchUserBookingDetails = "fetchUserBookingDetails";
   static const cancelBooking = "cancelBooking";
@@ -38,5 +40,7 @@ class EndPoints {
   static const addRatingAndReviews = "addRatingAndReviews";
   static const fetchRatingAndReviews = "fetchRatingAndReviews";
   static const fetchTableRatingAndReviews = "fetchTableRatingAndReviews";
+
+  static const updateFavouriteStatus = "updateFavouriteStatus";
 
 }

@@ -37,10 +37,11 @@ abstract class AvailabilityBookingDetails with _$AvailabilityBookingDetails {
   const factory AvailabilityBookingDetails({
     String? checkIn,
     String? checkOut,
-    int? duration,
-    int? perHourCharge,
-    int? subTotal,
-    int? totalAmount,
+    dynamic duration,
+    dynamic perHourCharge,
+    dynamic subTotal,
+    dynamic totalAmount,
+    dynamic professionalCharge,
     String? maxAdvanceBooking,
   }) = _AvailabilityBookingDetails;
 
@@ -76,7 +77,7 @@ abstract class ConfirmBookingResponse with _$ConfirmBookingResponse {
 @freezed
 abstract class ConfirmBookingData with _$ConfirmBookingData {
   const factory ConfirmBookingData({
-    String? bookingId,
+    @JsonKey(name: '_id') String? bookingId,
     dynamic userId,
     String? outletId,
     String? tableId,
@@ -127,8 +128,8 @@ abstract class BookingModel with _$BookingModel {
     dynamic guestDetailsList,
     bool? userVisited,
     dynamic cancellationDetails,
-    String? createdAt,
-    String? updatedAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _BookingModel;
 
   factory BookingModel.fromJson(Map<String, dynamic> json) =>

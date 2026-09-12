@@ -9,6 +9,8 @@ part of 'booking_request_model.dart';
 _$BookingRequestModelImpl _$$BookingRequestModelImplFromJson(
         Map<String, dynamic> json) =>
     _$BookingRequestModelImpl(
+      excludingBookingId: json['excludingBookingId'] as String?,
+      bookingId: json['bookingId'] as String?,
       outletId: json['outletId'] as String?,
       tableId: json['tableId'] as String?,
       seatId: json['seatId'] as String?,
@@ -28,6 +30,8 @@ _$BookingRequestModelImpl _$$BookingRequestModelImplFromJson(
 Map<String, dynamic> _$$BookingRequestModelImplToJson(
         _$BookingRequestModelImpl instance) =>
     <String, dynamic>{
+      'excludingBookingId': instance.excludingBookingId,
+      'bookingId': instance.bookingId,
       'outletId': instance.outletId,
       'tableId': instance.tableId,
       'seatId': instance.seatId,

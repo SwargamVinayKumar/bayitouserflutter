@@ -45,6 +45,7 @@ abstract class SignInResponseDataModel with _$SignInResponseDataModel {
 abstract class ProfileData with _$ProfileData {
   const factory ProfileData({
     @JsonKey(name: '_id') String? id,
+    String? profilePic,
     String? outletType,
     String? approvalStatus,
     String? reason,

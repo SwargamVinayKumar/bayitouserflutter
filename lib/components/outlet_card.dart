@@ -1,4 +1,5 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
+import 'package:bayitouser/pages/outlet_detail_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -108,8 +109,8 @@ class OutletCard extends StatelessWidget {
                   const SizedBox(height: 14),
                   CustomGradientButton(
                     title: "Book Table",
-                    onTap: onTap ?? () {
-                      Get.to(() => const BookTablePage());
+                    onTap: () {
+                      Get.to(() => OutletDetailsPage(outletId: outlet?.id ?? "",));
                     },
                   ),
                 ],

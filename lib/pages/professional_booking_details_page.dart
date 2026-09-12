@@ -62,8 +62,8 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
             init: () => const SizedBox.shrink(),
             loading: (msg) => const Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
             success: (data) {
-              final booking = data.data;
-              bookingViewModel.selectedTable.value = booking.tableId;
+              final booking = (data as BookingDetailsResponse).data;
+              bookingViewModel.selectedTable.value = booking?.tableId;
               if (booking == null) return const Center(child: Text("No details found"));
               return Stack(
                 children: [
@@ -94,9 +94,9 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
                           _infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
                         ]),
                         const SizedBox(height: 24),
-                        _buildSeatSection(booking.outletId),
+                        _buildSeatSection(booking.outletId,booking.seatId ?? "",booking),
                         const SizedBox(height: 32),
-                        _buildBookingActions(booking.outletId),
+                        _buildBookingActions(booking.outletId,booking),
                         const SizedBox(height: 30),
                       ],
                     ),
@@ -147,7 +147,7 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
     );
   }
 
-  Widget _buildBookingActions(OutletModel? outletModel) {
+  Widget _buildBookingActions(OutletModel? outletModel,BookingModel? booking) {
     return Obx(() {
       final availabilityState = bookingViewModel.checkAvailabilityObserver.value;
 
@@ -177,11 +177,14 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
                   children: [
                     _buildPriceSummary(data.data!.bookingDetails!),
                     const SizedBox(height: 24),
-                    CustomGradientButton(
-                      title: "Confirm Booking",
-                      onTap: () => bookingViewModel.confirmBooking(outletModel!.id!),
-                      height: 56,
-                      fontSize: 18,
+
+                    Obx(() => CustomGradientButton(
+                        title: "Confirm Booking",
+                        onTap: () => bookingViewModel.confirmBooking(outletModel?.id ?? "",widget.bookingId),
+                        height: 56,
+                        fontSize: 18,
+                        loading: bookingViewModel.confirmBookingObserver.value.maybeWhen(loading: (c) => true,orElse: ()=> false)
+                    ),
                     ),
                   ],
                 );
@@ -214,7 +217,7 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
                     const SizedBox(height: 16),
                     CustomGradientButton(
                       title: "Check Availability",
-                      onTap: () => bookingViewModel.checkAvailability(outletModel!.id!),
+                      onTap: () => bookingViewModel.checkAvailability(outletModel!.id!,booking),
                       height: 56,
                       fontSize: 18,
                     ),
@@ -256,7 +259,7 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
 
               return CustomGradientButton(
                 title: "Check Availability",
-                onTap: () => bookingViewModel.checkAvailability(outletModel!.id!),
+                onTap: () => bookingViewModel.checkAvailability(outletModel!.id!,booking),
                 height: 56,
                 fontSize: 18,
               );
@@ -320,6 +323,12 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
           ),
           const SizedBox(height: 10),
           _buildPriceRow(
+            "Professional Charges",
+            "₹${details.professionalCharge}/hr",
+            Icons.currency_rupee_rounded,
+          ),
+          const SizedBox(height: 10),
+          _buildPriceRow(
             "Duration",
             "${details.duration} Hours",
             Icons.timer_rounded,
@@ -338,7 +347,7 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
 
 
 
-  Widget _buildSeatSection(OutletModel? outlet) {
+  Widget _buildSeatSection(OutletModel? outlet,String? seatId,BookingModel? booking) {
     return Obx(() {
       final table = bookingViewModel.selectedTable.value;
       if (table == null || table.seats == null || table.seats!.isEmpty) {
@@ -352,10 +361,11 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
           const SizedBox(height: 16),
           TableItemWidgetPrime(
             table: table,
-            isSelected: false,
+            ratingAndReviewModel: table.topRated,
+            isSelected: true,
             onTap: (){},
             onViewRating: () {
-              Get.to(() => RatingReviewsPage(rating: table.rating, categoryRating: table.categoryRating,outletId: outlet?.id ?? "",));
+              Get.to(() => RatingReviewsPage(rating: table.rating, categoryRating: table.categoryRating,tableId: table.id ?? "",));
             },
           ),
           const SizedBox(height: 16),
@@ -373,11 +383,16 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
             ),
             itemBuilder: (context, index) {
               final seat = table.seats![index];
+              print(seat.id);
+              print(seatId);
               return Obx(() => SeatItemWidget(
                 seat: seat,
                 isSelected: bookingViewModel.selectedSeat.value?.id == seat.id,
-                isBooked: seat.available == false,
-                onTap: () => bookingViewModel.selectSeat(seat),
+                isBooked: (seat.available == false) || (seat.id == (seatId ?? "")),
+                onTap: () {
+                  bookingViewModel.selectSeat(seat);
+                  bookingViewModel.checkAvailability(outlet?.id ?? "",booking);
+                } ,
               ),
               );
             },
@@ -386,6 +401,7 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
       );
     });
   }
+
 
 
   Widget _buildUserDetails(BookingModel? booking){

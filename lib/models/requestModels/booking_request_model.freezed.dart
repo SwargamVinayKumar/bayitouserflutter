@@ -20,6 +20,8 @@ BookingRequestModel _$BookingRequestModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BookingRequestModel {
+  String? get excludingBookingId => throw _privateConstructorUsedError;
+  String? get bookingId => throw _privateConstructorUsedError;
   String? get outletId => throw _privateConstructorUsedError;
   String? get tableId => throw _privateConstructorUsedError;
   String? get seatId => throw _privateConstructorUsedError;
@@ -48,7 +50,9 @@ abstract class $BookingRequestModelCopyWith<$Res> {
       _$BookingRequestModelCopyWithImpl<$Res, BookingRequestModel>;
   @useResult
   $Res call(
-      {String? outletId,
+      {String? excludingBookingId,
+      String? bookingId,
+      String? outletId,
       String? tableId,
       String? seatId,
       String? checkIn,
@@ -75,6 +79,8 @@ class _$BookingRequestModelCopyWithImpl<$Res, $Val extends BookingRequestModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? excludingBookingId = freezed,
+    Object? bookingId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
     Object? seatId = freezed,
@@ -89,6 +95,14 @@ class _$BookingRequestModelCopyWithImpl<$Res, $Val extends BookingRequestModel>
     Object? paymentId = freezed,
   }) {
     return _then(_value.copyWith(
+      excludingBookingId: freezed == excludingBookingId
+          ? _value.excludingBookingId
+          : excludingBookingId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bookingId: freezed == bookingId
+          ? _value.bookingId
+          : bookingId // ignore: cast_nullable_to_non_nullable
+              as String?,
       outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
@@ -150,7 +164,9 @@ abstract class _$$BookingRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? outletId,
+      {String? excludingBookingId,
+      String? bookingId,
+      String? outletId,
       String? tableId,
       String? seatId,
       String? checkIn,
@@ -175,6 +191,8 @@ class __$$BookingRequestModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? excludingBookingId = freezed,
+    Object? bookingId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
     Object? seatId = freezed,
@@ -189,6 +207,14 @@ class __$$BookingRequestModelImplCopyWithImpl<$Res>
     Object? paymentId = freezed,
   }) {
     return _then(_$BookingRequestModelImpl(
+      excludingBookingId: freezed == excludingBookingId
+          ? _value.excludingBookingId
+          : excludingBookingId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bookingId: freezed == bookingId
+          ? _value.bookingId
+          : bookingId // ignore: cast_nullable_to_non_nullable
+              as String?,
       outletId: freezed == outletId
           ? _value.outletId
           : outletId // ignore: cast_nullable_to_non_nullable
@@ -245,7 +271,9 @@ class __$$BookingRequestModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BookingRequestModelImpl implements _BookingRequestModel {
   const _$BookingRequestModelImpl(
-      {this.outletId,
+      {this.excludingBookingId,
+      this.bookingId,
+      this.outletId,
       this.tableId,
       this.seatId,
       this.checkIn,
@@ -263,6 +291,10 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
   factory _$BookingRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingRequestModelImplFromJson(json);
 
+  @override
+  final String? excludingBookingId;
+  @override
+  final String? bookingId;
   @override
   final String? outletId;
   @override
@@ -307,7 +339,7 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
 
   @override
   String toString() {
-    return 'BookingRequestModel(outletId: $outletId, tableId: $tableId, seatId: $seatId, checkIn: $checkIn, checkOut: $checkOut, paymentType: $paymentType, bookingType: $bookingType, guestDetailsList: $guestDetailsList, couponId: $couponId, paymentDetails: $paymentDetails, orderId: $orderId, paymentId: $paymentId)';
+    return 'BookingRequestModel(excludingBookingId: $excludingBookingId, bookingId: $bookingId, outletId: $outletId, tableId: $tableId, seatId: $seatId, checkIn: $checkIn, checkOut: $checkOut, paymentType: $paymentType, bookingType: $bookingType, guestDetailsList: $guestDetailsList, couponId: $couponId, paymentDetails: $paymentDetails, orderId: $orderId, paymentId: $paymentId)';
   }
 
   @override
@@ -315,6 +347,10 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BookingRequestModelImpl &&
+            (identical(other.excludingBookingId, excludingBookingId) ||
+                other.excludingBookingId == excludingBookingId) &&
+            (identical(other.bookingId, bookingId) ||
+                other.bookingId == bookingId) &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.tableId, tableId) || other.tableId == tableId) &&
@@ -341,6 +377,8 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      excludingBookingId,
+      bookingId,
       outletId,
       tableId,
       seatId,
@@ -371,7 +409,9 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
 
 abstract class _BookingRequestModel implements BookingRequestModel {
   const factory _BookingRequestModel(
-      {final String? outletId,
+      {final String? excludingBookingId,
+      final String? bookingId,
+      final String? outletId,
       final String? tableId,
       final String? seatId,
       final String? checkIn,
@@ -387,6 +427,10 @@ abstract class _BookingRequestModel implements BookingRequestModel {
   factory _BookingRequestModel.fromJson(Map<String, dynamic> json) =
       _$BookingRequestModelImpl.fromJson;
 
+  @override
+  String? get excludingBookingId;
+  @override
+  String? get bookingId;
   @override
   String? get outletId;
   @override

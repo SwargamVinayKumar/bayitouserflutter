@@ -68,6 +68,7 @@ _$OutletModelImpl _$$OutletModelImplFromJson(Map<String, dynamic> json) =>
       categoryRating: (json['categoryRating'] as List<dynamic>?)
           ?.map((e) => CategoryRating.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isFavorite: json['isFavorite'] as bool?,
     );
 
 Map<String, dynamic> _$$OutletModelImplToJson(_$OutletModelImpl instance) =>
@@ -100,6 +101,7 @@ Map<String, dynamic> _$$OutletModelImplToJson(_$OutletModelImpl instance) =>
       'rating': instance.rating,
       'amenities': instance.amenities,
       'categoryRating': instance.categoryRating,
+      'isFavorite': instance.isFavorite,
     };
 
 _$OutletDetailsResponseModelImpl _$$OutletDetailsResponseModelImplFromJson(

@@ -234,6 +234,7 @@ mixin _$OutletModel {
   List<AmenitiesModel>? get amenities => throw _privateConstructorUsedError;
   List<CategoryRating>? get categoryRating =>
       throw _privateConstructorUsedError;
+  bool? get isFavorite => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -275,7 +276,8 @@ abstract class $OutletModelCopyWith<$Res> {
       int? ratingCount,
       double? rating,
       List<AmenitiesModel>? amenities,
-      List<CategoryRating>? categoryRating});
+      List<CategoryRating>? categoryRating,
+      bool? isFavorite});
 
   $LocationModelCopyWith<$Res>? get location;
   $DeviceDetailsCopyWith<$Res>? get deviceDetails;
@@ -322,6 +324,7 @@ class _$OutletModelCopyWithImpl<$Res, $Val extends OutletModel>
     Object? rating = freezed,
     Object? amenities = freezed,
     Object? categoryRating = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -436,6 +439,10 @@ class _$OutletModelCopyWithImpl<$Res, $Val extends OutletModel>
           ? _value.categoryRating
           : categoryRating // ignore: cast_nullable_to_non_nullable
               as List<CategoryRating>?,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -500,7 +507,8 @@ abstract class _$$OutletModelImplCopyWith<$Res>
       int? ratingCount,
       double? rating,
       List<AmenitiesModel>? amenities,
-      List<CategoryRating>? categoryRating});
+      List<CategoryRating>? categoryRating,
+      bool? isFavorite});
 
   @override
   $LocationModelCopyWith<$Res>? get location;
@@ -547,6 +555,7 @@ class __$$OutletModelImplCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? amenities = freezed,
     Object? categoryRating = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_$OutletModelImpl(
       id: freezed == id
@@ -661,6 +670,10 @@ class __$$OutletModelImplCopyWithImpl<$Res>
           ? _value._categoryRating
           : categoryRating // ignore: cast_nullable_to_non_nullable
               as List<CategoryRating>?,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -696,7 +709,8 @@ class _$OutletModelImpl implements _OutletModel {
       this.ratingCount,
       this.rating,
       final List<AmenitiesModel>? amenities,
-      final List<CategoryRating>? categoryRating})
+      final List<CategoryRating>? categoryRating,
+      this.isFavorite})
       : _images = images,
         _tables = tables,
         _daySlots = daySlots,
@@ -804,8 +818,11 @@ class _$OutletModelImpl implements _OutletModel {
   }
 
   @override
+  final bool? isFavorite;
+
+  @override
   String toString() {
-    return 'OutletModel(id: $id, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, profilePic: $profilePic, mobile: $mobile, otp: $otp, name: $name, email: $email, images: $images, tables: $tables, blocked: $blocked, version: $version, daySlots: $daySlots, createdAt: $createdAt, updatedAt: $updatedAt, aboutBusiness: $aboutBusiness, businessLicence: $businessLicence, businessLogo: $businessLogo, businessName: $businessName, fssaiId: $fssaiId, gstIn: $gstIn, location: $location, deviceDetails: $deviceDetails, ratingCount: $ratingCount, rating: $rating, amenities: $amenities, categoryRating: $categoryRating)';
+    return 'OutletModel(id: $id, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, profilePic: $profilePic, mobile: $mobile, otp: $otp, name: $name, email: $email, images: $images, tables: $tables, blocked: $blocked, version: $version, daySlots: $daySlots, createdAt: $createdAt, updatedAt: $updatedAt, aboutBusiness: $aboutBusiness, businessLicence: $businessLicence, businessLogo: $businessLogo, businessName: $businessName, fssaiId: $fssaiId, gstIn: $gstIn, location: $location, deviceDetails: $deviceDetails, ratingCount: $ratingCount, rating: $rating, amenities: $amenities, categoryRating: $categoryRating, isFavorite: $isFavorite)';
   }
 
   @override
@@ -854,7 +871,9 @@ class _$OutletModelImpl implements _OutletModel {
             const DeepCollectionEquality()
                 .equals(other._amenities, _amenities) &&
             const DeepCollectionEquality()
-                .equals(other._categoryRating, _categoryRating));
+                .equals(other._categoryRating, _categoryRating) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @JsonKey(ignore: true)
@@ -888,7 +907,8 @@ class _$OutletModelImpl implements _OutletModel {
         ratingCount,
         rating,
         const DeepCollectionEquality().hash(_amenities),
-        const DeepCollectionEquality().hash(_categoryRating)
+        const DeepCollectionEquality().hash(_categoryRating),
+        isFavorite
       ]);
 
   @JsonKey(ignore: true)
@@ -934,7 +954,8 @@ abstract class _OutletModel implements OutletModel {
       final int? ratingCount,
       final double? rating,
       final List<AmenitiesModel>? amenities,
-      final List<CategoryRating>? categoryRating}) = _$OutletModelImpl;
+      final List<CategoryRating>? categoryRating,
+      final bool? isFavorite}) = _$OutletModelImpl;
 
   factory _OutletModel.fromJson(Map<String, dynamic> json) =
       _$OutletModelImpl.fromJson;
@@ -996,6 +1017,8 @@ abstract class _OutletModel implements OutletModel {
   List<AmenitiesModel>? get amenities;
   @override
   List<CategoryRating>? get categoryRating;
+  @override
+  bool? get isFavorite;
   @override
   @JsonKey(ignore: true)
   _$$OutletModelImplCopyWith<_$OutletModelImpl> get copyWith =>

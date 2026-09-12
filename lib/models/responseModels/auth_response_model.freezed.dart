@@ -652,6 +652,7 @@ ProfileData _$ProfileDataFromJson(Map<String, dynamic> json) {
 mixin _$ProfileData {
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
+  String? get profilePic => throw _privateConstructorUsedError;
   String? get outletType => throw _privateConstructorUsedError;
   String? get approvalStatus => throw _privateConstructorUsedError;
   String? get reason => throw _privateConstructorUsedError;
@@ -679,6 +680,7 @@ abstract class $ProfileDataCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: '_id') String? id,
+      String? profilePic,
       String? outletType,
       String? approvalStatus,
       String? reason,
@@ -710,6 +712,7 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
   @override
   $Res call({
     Object? id = freezed,
+    Object? profilePic = freezed,
     Object? outletType = freezed,
     Object? approvalStatus = freezed,
     Object? reason = freezed,
@@ -727,6 +730,10 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      profilePic: freezed == profilePic
+          ? _value.profilePic
+          : profilePic // ignore: cast_nullable_to_non_nullable
               as String?,
       outletType: freezed == outletType
           ? _value.outletType
@@ -814,6 +821,7 @@ abstract class _$$ProfileDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: '_id') String? id,
+      String? profilePic,
       String? outletType,
       String? approvalStatus,
       String? reason,
@@ -845,6 +853,7 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? profilePic = freezed,
     Object? outletType = freezed,
     Object? approvalStatus = freezed,
     Object? reason = freezed,
@@ -862,6 +871,10 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      profilePic: freezed == profilePic
+          ? _value.profilePic
+          : profilePic // ignore: cast_nullable_to_non_nullable
               as String?,
       outletType: freezed == outletType
           ? _value.outletType
@@ -920,6 +933,7 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
 class _$ProfileDataImpl implements _ProfileData {
   const _$ProfileDataImpl(
       {@JsonKey(name: '_id') this.id,
+      this.profilePic,
       this.outletType,
       this.approvalStatus,
       this.reason,
@@ -940,6 +954,8 @@ class _$ProfileDataImpl implements _ProfileData {
   @override
   @JsonKey(name: '_id')
   final String? id;
+  @override
+  final String? profilePic;
   @override
   final String? outletType;
   @override
@@ -975,7 +991,7 @@ class _$ProfileDataImpl implements _ProfileData {
 
   @override
   String toString() {
-    return 'ProfileData(id: $id, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, password: $password, charges: $charges, location: $location, tables: $tables, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ProfileData(id: $id, profilePic: $profilePic, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, password: $password, charges: $charges, location: $location, tables: $tables, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -984,6 +1000,8 @@ class _$ProfileDataImpl implements _ProfileData {
         (other.runtimeType == runtimeType &&
             other is _$ProfileDataImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.profilePic, profilePic) ||
+                other.profilePic == profilePic) &&
             (identical(other.outletType, outletType) ||
                 other.outletType == outletType) &&
             (identical(other.approvalStatus, approvalStatus) ||
@@ -1009,6 +1027,7 @@ class _$ProfileDataImpl implements _ProfileData {
   int get hashCode => Object.hash(
       runtimeType,
       id,
+      profilePic,
       outletType,
       approvalStatus,
       reason,
@@ -1039,6 +1058,7 @@ class _$ProfileDataImpl implements _ProfileData {
 abstract class _ProfileData implements ProfileData {
   const factory _ProfileData(
       {@JsonKey(name: '_id') final String? id,
+      final String? profilePic,
       final String? outletType,
       final String? approvalStatus,
       final String? reason,
@@ -1058,6 +1078,8 @@ abstract class _ProfileData implements ProfileData {
   @override
   @JsonKey(name: '_id')
   String? get id;
+  @override
+  String? get profilePic;
   @override
   String? get outletType;
   @override

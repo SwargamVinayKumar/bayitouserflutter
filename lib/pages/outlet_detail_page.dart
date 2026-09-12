@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/outlet_detail_card.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
+import 'package:bayitouser/models/responseModels/table_response_model.dart';
 import 'package:bayitouser/pages/rating_reviews_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../components/custom_lottie_loading.dart';
 import '../components/custom_network_image.dart';
 import '../components/empty_data_view.dart';
 import '../components/table_seat_item.dart';
@@ -35,6 +37,8 @@ class OutletDetailsPage extends StatelessWidget {
     return StatefulWrapper(
       onInit: () {
         outletViewModel.fetchOutletDetails(outletId);
+      },
+      onStart: (){
         bookingViewModel.getTables(outletId);
       },
       child: Scaffold(
@@ -51,208 +55,216 @@ class OutletDetailsPage extends StatelessWidget {
               final outlet = (response as OutletDetailsResponseModel).data;
               final todaySlot = getTodaySlot(outlet?.daySlots);
 
-              return Column(
+              return Stack(
                 children: [
-                  Expanded(
-                    child: NestedScrollView(
-                      headerSliverBuilder: (context, innerBoxIsScrolled) {
-                        return [
-                          SliverAppBar(
-                            expandedHeight: 330,
-                            floating: false,
-                            pinned: true,
-                            backgroundColor: Colors.transparent,
-                            flexibleSpace: FlexibleSpaceBar(
-                              background: CustomNetworkImage(
-                                imageUrl: outlet?.businessLogo ?? "",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            leading: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomActionButton(
-                                icon: Icons.arrow_back_ios_new_rounded,
-                                onTap: Get.back,
-                              ),
-                            ),
-                            actions: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CustomActionButton(
-                                  icon: Icons.favorite_border_rounded,
-                                  onTap: () {},
-                                ),
-                              ),
-                            ],
-                          ),
-                        ];
-                      },
-                      body: Container(
-                        padding: const EdgeInsets.all(22),
-                        decoration: const BoxDecoration(
-                          color: Color(0xffF7F3F0),
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(34),
-                          ),
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                outlet?.businessName ?? "No Name",
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w800,
-                                  color: CustomColors.secondary,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                "${outlet?.location?.address1 ?? ""}, ${outlet?.location?.address2 ?? ""}",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey.shade700,
-                                ),
-                              ),
-                              const SizedBox(height: 14),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.star_rounded,
-                                    color: Colors.orange,
-                                    size: 22,
+                  Column(
+                    children: [
+                      Expanded(
+                        child: NestedScrollView(
+                          headerSliverBuilder: (context, innerBoxIsScrolled) {
+                            return [
+                              SliverAppBar(
+                                expandedHeight: 330,
+                                floating: false,
+                                pinned: true,
+                                backgroundColor: Colors.transparent,
+                                flexibleSpace: FlexibleSpaceBar(
+                                  background: CustomNetworkImage(
+                                    imageUrl: outlet?.businessLogo ?? "",
+                                    fit: BoxFit.cover,
                                   ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    "${outlet?.ratingCount ?? 0.0}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                ),
+                                leading: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomActionButton(
+                                    icon: Icons.arrow_back_ios_new_rounded,
+                                    onTap: Get.back,
                                   ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    "(${outlet?.ratingCount} reviews)",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey.shade600,
+                                ),
+                                actions: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CustomActionButton(
+                                      icon: outlet?.isFavorite == true ? Icons.favorite  : Icons.favorite_border_rounded,
+                                      onTap: () {
+                                         outletViewModel.updateFavouriteStatus(outletId, outlet?.isFavorite ?? false);
+                                      },
                                     ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 14),
-                              Row(
+                            ];
+                          },
+                          body: Container(
+                            padding: const EdgeInsets.all(22),
+                            decoration: const BoxDecoration(
+                              color: Color(0xffF7F3F0),
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(34),
+                              ),
+                            ),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    todaySlot?.status == true ? "Open Now" : "Closed",
+                                    outlet?.businessName ?? "No Name",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: todaySlot?.status == true ? Colors.green : Colors.red,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w800,
+                                      color: CustomColors.secondary,
                                     ),
                                   ),
-                                  if (todaySlot != null) ...[
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      "• ${formatTime(todaySlot.startTime)} - ${formatTime(todaySlot.endTime)}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: CustomColors.secondary.withOpacity(0.7),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    "${outlet?.location?.address1 ?? ""}, ${outlet?.location?.address2 ?? ""}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 14),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.star_rounded,
+                                        color: Colors.orange,
+                                        size: 22,
                                       ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "${outlet?.ratingCount ?? 0.0}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        "(${outlet?.ratingCount} reviews)",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 14),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        todaySlot?.status == true ? "Open Now" : "Closed",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: todaySlot?.status == true ? Colors.green : Colors.red,
+                                        ),
+                                      ),
+                                      if (todaySlot != null) ...[
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          "• ${formatTime(todaySlot.startTime)} - ${formatTime(todaySlot.endTime)}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: CustomColors.secondary.withOpacity(0.7),
+                                          ),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                  const SizedBox(height: 28),
+                                  const Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      OutletDetailCard(
+                                        icon: Icons.call_outlined,
+                                        title: "Call",
+                                      ),
+                                      OutletDetailCard(
+                                        icon: Icons.location_on_outlined,
+                                        title: "Direction",
+                                      ),
+                                      OutletDetailCard(
+                                        icon: Icons.share_outlined,
+                                        title: "Share",
+                                      ),
+                                      OutletDetailCard(
+                                        icon: Icons.bookmark_border_rounded,
+                                        title: "Save",
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 28),
+                                  Text(
+                                    "About",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: CustomColors.darkBlack,
                                     ),
-                                  ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    outlet?.aboutBusiness ?? "No description available.",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      height: 1.5,
+                                      color: CustomColors.secondary.withOpacity(0.8),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  Text(
+                                    "Highlights",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: CustomColors.darkBlack,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 14),
+                                  Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: outlet?.amenities?.map((ameniny) => OutletDetailCard(
+                                      title: ameniny.name ?? "",
+                                      isChip: true,
+                                    )).toList() ?? [],
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text(
+                                    "Tables",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: CustomColors.darkBlack,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 14),
+                                  _buildTableSelection(outlet?.id ?? ""),
+                                  const SizedBox(height: 20),
                                 ],
                               ),
-                              const SizedBox(height: 28),
-                              const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  OutletDetailCard(
-                                    icon: Icons.call_outlined,
-                                    title: "Call",
-                                  ),
-                                  OutletDetailCard(
-                                    icon: Icons.location_on_outlined,
-                                    title: "Direction",
-                                  ),
-                                  OutletDetailCard(
-                                    icon: Icons.share_outlined,
-                                    title: "Share",
-                                  ),
-                                  OutletDetailCard(
-                                    icon: Icons.bookmark_border_rounded,
-                                    title: "Save",
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 28),
-                              Text(
-                                "About",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: CustomColors.darkBlack,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                outlet?.aboutBusiness ?? "No description available.",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  height: 1.5,
-                                  color: CustomColors.secondary.withOpacity(0.8),
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              Text(
-                                "Highlights",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: CustomColors.darkBlack,
-                                ),
-                              ),
-                              const SizedBox(height: 14),
-                              Wrap(
-                                spacing: 10,
-                                runSpacing: 10,
-                                children: outlet?.amenities?.map((ameniny) => OutletDetailCard(
-                                  title: ameniny.name ?? "",
-                                  isChip: true,
-                                )).toList() ?? [],
-                              ),
-                              const SizedBox(height: 20),
-                              Text(
-                                "Tables",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: CustomColors.darkBlack,
-                                ),
-                              ),
-                              const SizedBox(height: 14),
-                              _buildTableSelection(outlet?.id ?? ""),
-                              const SizedBox(height: 20),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      Obx(() => Visibility(
+                        visible: bookingViewModel.selectedTable.value?.id.isNotEmpty == true,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: CustomGradientButton(
+                            title: "Book Table",
+                            onTap: () {
+                              Get.to(() => BookTablePage(outletModel: outlet));
+                            },
+                          ),
+                        ),
+                      )),
+                    ],
                   ),
-                  Obx(() => Visibility(
-                    visible: bookingViewModel.selectedTable.value?.id.isNotEmpty == true,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: CustomGradientButton(
-                        title: "Book Table",
-                        onTap: () {
-                          Get.to(() => BookTablePage(outletModel: outlet));
-                        },
-                      ),
-                    ),
-                  )),
+                  Obx(() => outletViewModel.updateFavouritesObserver.value.maybeWhen(loading: (cds)  =>
+                  const CustomLottieLoading(), orElse: () => const SizedBox()))
                 ],
               );
             },
@@ -283,7 +295,8 @@ class OutletDetailsPage extends StatelessWidget {
           ),
         ),
         success: (data) {
-          if (data.data?.tables == null || data.data!.tables!.isEmpty) {
+          final tables = (data as FetchTablesResponse).data?.tables;
+          if (tables == null || tables!.isEmpty) {
             return Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
@@ -298,17 +311,18 @@ class OutletDetailsPage extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: data.data!.tables!.length,
+            itemCount: tables.length,
             separatorBuilder: (_, __) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
-              final table = data.data!.tables![index];
+              final table = tables?[index];
               return Obx(() =>
                   TableItemWidgetPrime(
                     table: table,
+                    ratingAndReviewModel: table?.topRated,
                     isSelected: bookingViewModel.selectedTable.value?.id == table?.id,
                     onTap: () => bookingViewModel.selectTable(table!),
                     onViewRating: () {
-                      Get.to(() => RatingReviewsPage(rating: table.rating, categoryRating: table.categoryRating,outletId: outletId,));
+                      Get.to(() => RatingReviewsPage(rating: table?.rating, categoryRating: table?.categoryRating,tableId: table?.id,));
                     },
                   ),
               );

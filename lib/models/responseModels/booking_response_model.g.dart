@@ -53,10 +53,11 @@ _$AvailabilityBookingDetailsImpl _$$AvailabilityBookingDetailsImplFromJson(
     _$AvailabilityBookingDetailsImpl(
       checkIn: json['checkIn'] as String?,
       checkOut: json['checkOut'] as String?,
-      duration: json['duration'] as int?,
-      perHourCharge: json['perHourCharge'] as int?,
-      subTotal: json['subTotal'] as int?,
-      totalAmount: json['totalAmount'] as int?,
+      duration: json['duration'],
+      perHourCharge: json['perHourCharge'],
+      subTotal: json['subTotal'],
+      totalAmount: json['totalAmount'],
+      professionalCharge: json['professionalCharge'],
       maxAdvanceBooking: json['maxAdvanceBooking'] as String?,
     );
 
@@ -69,6 +70,7 @@ Map<String, dynamic> _$$AvailabilityBookingDetailsImplToJson(
       'perHourCharge': instance.perHourCharge,
       'subTotal': instance.subTotal,
       'totalAmount': instance.totalAmount,
+      'professionalCharge': instance.professionalCharge,
       'maxAdvanceBooking': instance.maxAdvanceBooking,
     };
 
@@ -111,7 +113,7 @@ Map<String, dynamic> _$$ConfirmBookingResponseImplToJson(
 _$ConfirmBookingDataImpl _$$ConfirmBookingDataImplFromJson(
         Map<String, dynamic> json) =>
     _$ConfirmBookingDataImpl(
-      bookingId: json['bookingId'] as String?,
+      bookingId: json['_id'] as String?,
       userId: json['userId'],
       outletId: json['outletId'] as String?,
       tableId: json['tableId'] as String?,
@@ -134,7 +136,7 @@ _$ConfirmBookingDataImpl _$$ConfirmBookingDataImplFromJson(
 Map<String, dynamic> _$$ConfirmBookingDataImplToJson(
         _$ConfirmBookingDataImpl instance) =>
     <String, dynamic>{
-      'bookingId': instance.bookingId,
+      '_id': instance.bookingId,
       'userId': instance.userId,
       'outletId': instance.outletId,
       'tableId': instance.tableId,
@@ -188,8 +190,12 @@ _$BookingModelImpl _$$BookingModelImplFromJson(Map<String, dynamic> json) =>
       guestDetailsList: json['guestDetailsList'],
       userVisited: json['userVisited'] as bool?,
       cancellationDetails: json['cancellationDetails'],
-      createdAt: json['createdAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
@@ -218,8 +224,8 @@ Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
       'guestDetailsList': instance.guestDetailsList,
       'userVisited': instance.userVisited,
       'cancellationDetails': instance.cancellationDetails,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
     };
 
 _$BookingLogImpl _$$BookingLogImplFromJson(Map<String, dynamic> json) =>

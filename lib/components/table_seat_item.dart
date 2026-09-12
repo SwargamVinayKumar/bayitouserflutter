@@ -13,6 +13,7 @@ class TableItemWidgetPrime extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
   final VoidCallback onViewRating;
+  final bool? showRating;
 
 
   const TableItemWidgetPrime({
@@ -21,7 +22,8 @@ class TableItemWidgetPrime extends StatelessWidget {
     this.ratingAndReviewModel,
     required this.isSelected,
     required this.onTap,
-    required this.onViewRating
+    required this.onViewRating,
+    this.showRating = true
   });
 
   @override
@@ -67,37 +69,46 @@ class TableItemWidgetPrime extends StatelessWidget {
                 size: 40,
               ),
             const SizedBox(height: 8),
-            Row(
-              children: [
-                IconButton(icon: const Icon(Icons.mode_comment_outlined,size: 20),
-                  color: isSelected ? Colors.white : CustomColors.secondary,
-                  onPressed: onViewRating,
-                ),
-                Text(
-                  "${table?.ratingCount ?? 0}",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: isSelected ? Colors.white : CustomColors.secondary,
+            if(showRating == true) InkWell(
+              onTap: onViewRating,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset("assets/images/star.png",width: 20,height: 20,),
                   ),
-                )
-              ],
+                  Text(
+                    "${table?.rating ?? 0}",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: isSelected ? Colors.white : CustomColors.secondary,
+                    ),
+                  )
+                ],
+              ),
             ),
-            if(ratingAndReviewModel?.review != null  || ratingAndReviewModel?.review?.isNotEmpty == true) Container(
-              decoration: isSelected ? AppStyles.strokeWhiteBorder : AppStyles.strokePrimaryBorder,
-              child: Text(
-                "${ratingAndReviewModel?.review}",
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: isSelected ? CustomColors.secondary.withOpacity(0.7) : Colors.white70,
+            if(ratingAndReviewModel?.review != null  || ratingAndReviewModel?.review?.isNotEmpty == true) InkWell(
+              onTap: onViewRating,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                decoration: isSelected ? AppStyles.strokeWhiteBorder : AppStyles.strokePrimaryBorder,
+                child: Text(
+                  "${ratingAndReviewModel?.review}",
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: isSelected ? CustomColors.secondary : Colors.white70,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              "Table ${table?.tableNumber}",
+              "${table?.tableNumber}",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -195,7 +206,7 @@ class TableItemWidget extends StatelessWidget {
 }
 
 class SeatItemWidget extends StatelessWidget {
-  final SeatModel seat;
+  final SeatModel? seat;
   final bool isSelected;
   final bool isBooked;
   final VoidCallback onTap;
@@ -255,16 +266,16 @@ class SeatItemWidget extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              seat.seatNumber ?? "" + "(${seat.seatType ?? ""})",
+              seat?.seatNumber ?? "" + "(${seat?.seatType ?? ""})",
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: getContentColor(),
               ),
             ),
-            if (seat.charges?.perHour != null)
+            if (seat?.charges?.perHour != null)
               Text(
-                "₹${seat.charges!.perHour}/hr",
+                "₹${seat?.charges!.perHour}/hr",
                 style: TextStyle(
                   fontSize: 10,
                   color: getContentColor().withOpacity(0.8),

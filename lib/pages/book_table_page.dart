@@ -78,7 +78,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
       // Debounce the call
       Future.delayed(const Duration(milliseconds: 300), () {
         if (mounted) {
-          bookingViewModel.checkAvailability(widget.outletModel!.id!);
+          bookingViewModel.checkAvailability(widget.outletModel!.id!,null);
         }
       });
     }
@@ -162,7 +162,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               ),
             ),
             Obx(() => bookingViewModel.checkAvailabilityObserver.value.maybeWhen(loading: (cds)  =>
-                CustomLottieLoading(),
+                const CustomLottieLoading(),
                 orElse: () => const SizedBox()))
           ],
         ),
@@ -694,11 +694,13 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                   children: [
                     _buildPriceSummary(data.data!.bookingDetails!),
                     const SizedBox(height: 24),
-                    CustomGradientButton(
-                      title: "Confirm Booking",
-                      onTap: () => bookingViewModel.confirmBooking(widget.outletModel!.id!),
-                      height: 56,
-                      fontSize: 18,
+                    Obx(() => CustomGradientButton(
+                        title: "Confirm Booking",
+                        onTap: () => bookingViewModel.confirmBooking(widget.outletModel?.id ?? "",null),
+                        height: 56,
+                        fontSize: 18,
+                          loading: bookingViewModel.confirmBookingObserver.value.maybeWhen(loading: (c) => true,orElse: ()=> false)
+                      ),
                     ),
                   ],
                 );
@@ -731,7 +733,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                     const SizedBox(height: 16),
                     CustomGradientButton(
                       title: "Check Availability",
-                      onTap: () => bookingViewModel.checkAvailability(widget.outletModel!.id!),
+                      onTap: () => bookingViewModel.checkAvailability(widget.outletModel!.id!,null),
                       height: 56,
                       fontSize: 18,
                     ),
@@ -773,7 +775,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
 
               return CustomGradientButton(
                 title: "Check Availability",
-                onTap: () => bookingViewModel.checkAvailability(widget.outletModel!.id!),
+                onTap: () => bookingViewModel.checkAvailability(widget.outletModel!.id!,null),
                 height: 56,
                 fontSize: 18,
               );

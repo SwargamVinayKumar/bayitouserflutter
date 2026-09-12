@@ -404,9 +404,11 @@ mixin _$TableModel {
   String? get createdAt => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
   int? get tableCount => throw _privateConstructorUsedError;
+  int? get totalVotes => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError;
   List<CategoryRating>? get categoryRating =>
       throw _privateConstructorUsedError;
+  RatingAndReviewModel? get topRated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -434,8 +436,12 @@ abstract class $TableModelCopyWith<$Res> {
       String? createdAt,
       String? updatedAt,
       int? tableCount,
+      int? totalVotes,
       double? rating,
-      List<CategoryRating>? categoryRating});
+      List<CategoryRating>? categoryRating,
+      RatingAndReviewModel? topRated});
+
+  $RatingAndReviewModelCopyWith<$Res>? get topRated;
 }
 
 /// @nodoc
@@ -464,8 +470,10 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? tableCount = freezed,
+    Object? totalVotes = freezed,
     Object? rating = freezed,
     Object? categoryRating = freezed,
+    Object? topRated = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -520,6 +528,10 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
           ? _value.tableCount
           : tableCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      totalVotes: freezed == totalVotes
+          ? _value.totalVotes
+          : totalVotes // ignore: cast_nullable_to_non_nullable
+              as int?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -528,7 +540,23 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
           ? _value.categoryRating
           : categoryRating // ignore: cast_nullable_to_non_nullable
               as List<CategoryRating>?,
+      topRated: freezed == topRated
+          ? _value.topRated
+          : topRated // ignore: cast_nullable_to_non_nullable
+              as RatingAndReviewModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RatingAndReviewModelCopyWith<$Res>? get topRated {
+    if (_value.topRated == null) {
+      return null;
+    }
+
+    return $RatingAndReviewModelCopyWith<$Res>(_value.topRated!, (value) {
+      return _then(_value.copyWith(topRated: value) as $Val);
+    });
   }
 }
 
@@ -554,8 +582,13 @@ abstract class _$$TableModelImplCopyWith<$Res>
       String? createdAt,
       String? updatedAt,
       int? tableCount,
+      int? totalVotes,
       double? rating,
-      List<CategoryRating>? categoryRating});
+      List<CategoryRating>? categoryRating,
+      RatingAndReviewModel? topRated});
+
+  @override
+  $RatingAndReviewModelCopyWith<$Res>? get topRated;
 }
 
 /// @nodoc
@@ -582,8 +615,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? tableCount = freezed,
+    Object? totalVotes = freezed,
     Object? rating = freezed,
     Object? categoryRating = freezed,
+    Object? topRated = freezed,
   }) {
     return _then(_$TableModelImpl(
       id: null == id
@@ -638,6 +673,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
           ? _value.tableCount
           : tableCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      totalVotes: freezed == totalVotes
+          ? _value.totalVotes
+          : totalVotes // ignore: cast_nullable_to_non_nullable
+              as int?,
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -646,6 +685,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
           ? _value._categoryRating
           : categoryRating // ignore: cast_nullable_to_non_nullable
               as List<CategoryRating>?,
+      topRated: freezed == topRated
+          ? _value.topRated
+          : topRated // ignore: cast_nullable_to_non_nullable
+              as RatingAndReviewModel?,
     ));
   }
 }
@@ -667,8 +710,10 @@ class _$TableModelImpl implements _TableModel {
       this.createdAt,
       this.updatedAt,
       this.tableCount,
+      this.totalVotes,
       this.rating,
-      final List<CategoryRating>? categoryRating})
+      final List<CategoryRating>? categoryRating,
+      this.topRated})
       : _images = images,
         _seats = seats,
         _categoryRating = categoryRating;
@@ -720,6 +765,8 @@ class _$TableModelImpl implements _TableModel {
   @override
   final int? tableCount;
   @override
+  final int? totalVotes;
+  @override
   final double? rating;
   final List<CategoryRating>? _categoryRating;
   @override
@@ -732,8 +779,11 @@ class _$TableModelImpl implements _TableModel {
   }
 
   @override
+  final RatingAndReviewModel? topRated;
+
+  @override
   String toString() {
-    return 'TableModel(id: $id, outletId: $outletId, tableNumber: $tableNumber, description: $description, seatType: $seatType, images: $images, available: $available, seatCapacity: $seatCapacity, seats: $seats, ratingCount: $ratingCount, createdAt: $createdAt, updatedAt: $updatedAt, tableCount: $tableCount, rating: $rating, categoryRating: $categoryRating)';
+    return 'TableModel(id: $id, outletId: $outletId, tableNumber: $tableNumber, description: $description, seatType: $seatType, images: $images, available: $available, seatCapacity: $seatCapacity, seats: $seats, ratingCount: $ratingCount, createdAt: $createdAt, updatedAt: $updatedAt, tableCount: $tableCount, totalVotes: $totalVotes, rating: $rating, categoryRating: $categoryRating, topRated: $topRated)';
   }
 
   @override
@@ -764,9 +814,13 @@ class _$TableModelImpl implements _TableModel {
                 other.updatedAt == updatedAt) &&
             (identical(other.tableCount, tableCount) ||
                 other.tableCount == tableCount) &&
+            (identical(other.totalVotes, totalVotes) ||
+                other.totalVotes == totalVotes) &&
             (identical(other.rating, rating) || other.rating == rating) &&
             const DeepCollectionEquality()
-                .equals(other._categoryRating, _categoryRating));
+                .equals(other._categoryRating, _categoryRating) &&
+            (identical(other.topRated, topRated) ||
+                other.topRated == topRated));
   }
 
   @JsonKey(ignore: true)
@@ -786,8 +840,10 @@ class _$TableModelImpl implements _TableModel {
       createdAt,
       updatedAt,
       tableCount,
+      totalVotes,
       rating,
-      const DeepCollectionEquality().hash(_categoryRating));
+      const DeepCollectionEquality().hash(_categoryRating),
+      topRated);
 
   @JsonKey(ignore: true)
   @override
@@ -818,8 +874,10 @@ abstract class _TableModel implements TableModel {
       final String? createdAt,
       final String? updatedAt,
       final int? tableCount,
+      final int? totalVotes,
       final double? rating,
-      final List<CategoryRating>? categoryRating}) = _$TableModelImpl;
+      final List<CategoryRating>? categoryRating,
+      final RatingAndReviewModel? topRated}) = _$TableModelImpl;
 
   factory _TableModel.fromJson(Map<String, dynamic> json) =
       _$TableModelImpl.fromJson;
@@ -852,9 +910,13 @@ abstract class _TableModel implements TableModel {
   @override
   int? get tableCount;
   @override
+  int? get totalVotes;
+  @override
   double? get rating;
   @override
   List<CategoryRating>? get categoryRating;
+  @override
+  RatingAndReviewModel? get topRated;
   @override
   @JsonKey(ignore: true)
   _$$TableModelImplCopyWith<_$TableModelImpl> get copyWith =>

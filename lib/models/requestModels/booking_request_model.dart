@@ -6,6 +6,8 @@ part 'booking_request_model.g.dart';
 @freezed
 abstract class BookingRequestModel with _$BookingRequestModel {
   const factory BookingRequestModel({
+    String? excludingBookingId,
+    String? bookingId,
     String? outletId,
     String? tableId,
     String? seatId,

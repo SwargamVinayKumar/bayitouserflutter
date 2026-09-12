@@ -55,7 +55,7 @@ class HelperBottomSheet extends StatelessWidget {
                             child: Text(
                               btn1Txt ?? "",
                               style: TextStyle(
-                                color: CustomColors.primary,
+                                color: CustomColors.secondary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -69,7 +69,7 @@ class HelperBottomSheet extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: CustomColors.primary,
+                            color: CustomColors.secondary,
                           ),
                           child: TextButton(
                             onPressed: btn2Click,

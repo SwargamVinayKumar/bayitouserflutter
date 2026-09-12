@@ -1,10 +1,16 @@
+import 'package:bayitouser/components/custom_network_image.dart';
 import 'package:bayitouser/components/profile_stat_component.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../models/responseModels/auth_response_model.dart';
+
 class ProfileHeaderComponent extends StatelessWidget {
-  const ProfileHeaderComponent({super.key});
+  final ProfileData? profileData;
+  final VoidCallback onLogout;
+  final bool? loading;
+  const ProfileHeaderComponent({super.key, required this.onLogout,this.loading = false, this.profileData});
 
   @override
   Widget build(BuildContext context) {
@@ -33,33 +39,20 @@ class ProfileHeaderComponent extends StatelessWidget {
                 color: CustomColors.white.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.logout,
-                color: CustomColors.white,
-                size: 18,
+              child:  InkWell(
+                onTap:onLogout,
+                child: loading == true ? const CircularProgressIndicator() :const Icon(
+                  Icons.logout,
+                  color: CustomColors.white,
+                  size: 18,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 10),
           Stack(
             children: [
-              Container(
-                height: 90,
-                width: 90,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: CustomColors.white,
-                    width: 3,
-                  ),
-                  image: const DecorationImage(
-                    image: AssetImage(
-                      "assets/images/Outlet.jpg",
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              CustomNetworkImage(imageUrl: profileData?.profilePic ?? "",width: 80,height: 80,borderRadius: 200,fit: BoxFit.cover,),
               Positioned(
                 right: 0,
                 bottom: 0,
@@ -85,7 +78,7 @@ class ProfileHeaderComponent extends StatelessWidget {
           ),
           const SizedBox(height: 14),
            Text(
-            "Venkatesh",
+             profileData?.name ??  "Unknown",
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w700,
@@ -94,7 +87,7 @@ class ProfileHeaderComponent extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            "@venky_25",
+            profileData?.email ?? "",
             style: TextStyle(
               fontSize: 16,
               color: CustomColors.white.withOpacity(0.85),
@@ -106,15 +99,15 @@ class ProfileHeaderComponent extends StatelessWidget {
             MainAxisAlignment.spaceEvenly,
             children: [
               ProfileStatComponent(
-                count: "25",
+                count: "0",
                 title: "Reservations",
               ),
               ProfileStatComponent(
-                count: "48",
+                count: "0",
                 title: "Connections",
               ),
               ProfileStatComponent(
-                count: "16",
+                count: "0",
                 title: "Favorites",
               ),
             ],

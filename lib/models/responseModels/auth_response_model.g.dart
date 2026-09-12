@@ -68,6 +68,7 @@ Map<String, dynamic> _$$SignInResponseDataModelImplToJson(
 _$ProfileDataImpl _$$ProfileDataImplFromJson(Map<String, dynamic> json) =>
     _$ProfileDataImpl(
       id: json['_id'] as String?,
+      profilePic: json['profilePic'] as String?,
       outletType: json['outletType'] as String?,
       approvalStatus: json['approvalStatus'] as String?,
       reason: json['reason'] as String?,
@@ -91,6 +92,7 @@ _$ProfileDataImpl _$$ProfileDataImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
+      'profilePic': instance.profilePic,
       'outletType': instance.outletType,
       'approvalStatus': instance.approvalStatus,
       'reason': instance.reason,

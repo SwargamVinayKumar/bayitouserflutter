@@ -23,7 +23,7 @@ class OutletViewModel extends GetxController {
 
   final fetchAmenitiesObserver =  PaginationModel(data:  ApiResult<FetchAmenitiesResponseModel>.init().obs, isLoading: false, isPaginationCompleted: false, page: 1, error: "").obs;
 
-  final fetchRatingAndReviewsObserver =  PaginationModel(data:  ApiResult<FetchRatingAndReviewsResponseModel>.init().obs, isLoading: false, isPaginationCompleted: false, page: 1, error: "").obs;
+  final fetchRatingAndReviewsObserver =  PaginationModel(data:ApiResult<FetchRatingAndReviewsResponseModel>.init().obs, isLoading: false, isPaginationCompleted: false, page: 1, error: "").obs;
 
   final addRatingAndReviewObserver =   ApiResult<PrimaryResponseModel>.init().obs;
 
@@ -69,6 +69,8 @@ class OutletViewModel extends GetxController {
   ).obs;
 
   final fetchOutletDetailObserver = ApiResult<OutletDetailsResponseModel>.init().obs;
+
+  final updateFavouritesObserver =  ApiResult<PrimaryResponseModel>.init().obs;
 
 
   Future<void> fetchOutlets(PaginationRequestModel request, bool refresh,) async {
@@ -220,6 +222,37 @@ class OutletViewModel extends GetxController {
     }
   }
 
+  Future<void> updateFavouriteStatus(String outletId,bool isFavorite) async {
+    try{
+      updateFavouritesObserver.value =  ApiResult.loading("");
+      final response = await apiProvider.post(EndPoints.updateFavouriteStatus,{"outletId":outletId});
+      final body = response.body;
+      if(response.isOk && body !=null){
+        var responseData = PrimaryResponseModel.fromJson(body);
+        if(responseData.status == 1){
+          fetchOutletDetailObserver.value.whenOrNull(
+              success: (data) {
+                final observerData = (data as OutletDetailsResponseModel);
+                final updatedData = observerData.data?.copyWith(isFavorite: !isFavorite);
+                fetchOutletDetailObserver.value = ApiResult.success(observerData.copyWith(data: updatedData));
+                fetchOutletDetailObserver.refresh();
+              }
+          );
+          await Future.delayed(const Duration(milliseconds: 500));
+          updateFavouritesObserver.value = ApiResult.success(responseData);
+          return;
+        }
+        throw "${responseData.message}";
+      }
+      throw "Response Body Null";
+    }
+    catch(e){
+      Get.snackbar("Error", e.toString(),backgroundColor: CustomColors.primary,colorText: CustomColors.white,snackPosition: SnackPosition.BOTTOM);
+      updateFavouritesObserver.value = ApiResult.error(e.toString());
+    }
+  }
+
+
   Future<void> fetchOutletDetails(String outletId) async {
     try {
       fetchOutletDetailObserver.value = ApiResult.loading("loading");
@@ -307,7 +340,7 @@ class OutletViewModel extends GetxController {
   Future<void> addRatingAndReview(RatingReviewRequestModel request,BuildContext context) async {
     try{
       addRatingAndReviewObserver.value = ApiResult.loading("");
-      final String? validatorResponse = AuthUtils.validateRequestFields(['outletId','rating','review'], request.toJson());
+      final String? validatorResponse = AuthUtils.validateRequestFields(['rating','review'], request.toJson());
       if(validatorResponse != null) throw validatorResponse;
       final response = await apiProvider.post(EndPoints.addRatingAndReviews,request.toJson());
       final body = response.body;
@@ -337,7 +370,7 @@ class OutletViewModel extends GetxController {
       throw "Response Body Null";
     }
     catch(e){
-      Get.snackbar("Error", e.toString(),backgroundColor: CustomColors.primary,colorText: CustomColors.white,snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error", e.toString(),backgroundColor: CustomColors.primary,colorText: CustomColors.secondary,snackPosition: SnackPosition.BOTTOM);
       addRatingAndReviewObserver.value = ApiResult.error(e.toString());
     }
   }

@@ -1,5 +1,7 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/models/responseModels/booking_response_model.dart';
+import 'package:bayitouser/utils/auth_utils.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -45,11 +47,11 @@ class MeetPeopleCard extends StatelessWidget {
             Row(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(200),
                   child: CustomNetworkImage(
                     imageUrl: booking?.userId?.profilePic ?? "",
                     width: 95,
-                    height: 120,
+                    height: 95,
                     fit: BoxFit.cover,
                     borderRadius: 18,
                   ),
@@ -111,16 +113,8 @@ class MeetPeopleCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Divider(color: CustomColors.secondary,height: 1),
+            DottedLine(dashColor: CustomColors.darkGray),
             const SizedBox(height: 8),
-            Text(
-              "Table Details",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: titleColor,
-              ),
-            ),
             Text(
               booking?.outletId?.businessName ?? "",
               style: TextStyle(
@@ -146,7 +140,7 @@ class MeetPeopleCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Divider(color: CustomColors.secondary,height: 1),
+            DottedLine(dashColor: CustomColors.darkGray),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -159,6 +153,14 @@ class MeetPeopleCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 5),
+                // Text(
+                //   "Available at ${AuthUtils.formatDate(booking.checkIn)}",
+                //   style: TextStyle(
+                //     fontSize: 12,
+                //     fontWeight: FontWeight.w500,
+                //     color: CustomColors.secondary,
+                //   ),
+                // ),
                 Text(
                   "Online",
                   style: TextStyle(

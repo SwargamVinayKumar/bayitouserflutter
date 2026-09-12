@@ -80,7 +80,7 @@ class BookingViewModel extends GetxController {
     }
   }
 
-  Future<void> checkAvailability(String outletId) async {
+  Future<void> checkAvailability(String outletId,BookingModel? bookingModel) async {
     if (selectedTable.value == null || selectedSeat.value == null || selectedTimeIndex.value == -1) {
       Get.showCustomSnackBar(title: "Error", message: "Please select table, seat and time slot");
       return;
@@ -92,13 +92,20 @@ class BookingViewModel extends GetxController {
       final checkIn = _getDateTimeFromSlot(selectedDate.value, timeSlots[selectedTimeIndex.value]);
       final checkOut = checkIn.add(Duration(hours: durationHours.value));
 
-      final request = BookingRequestModel(
+      final request = bookingModel == null ? BookingRequestModel(
         outletId: outletId,
         tableId: selectedTable.value!.id,
         seatId: selectedSeat.value!.id,
         checkIn: checkIn.toIso8601String(),
         checkOut: checkOut.toIso8601String(),
-      );
+      ) : BookingRequestModel(
+        outletId: outletId,
+        excludingBookingId: bookingModel.id,
+        tableId: selectedTable.value!.id,
+        seatId: selectedSeat.value!.id,
+        checkIn: bookingModel.checkIn,
+        checkOut: bookingModel.checkOut,
+        );
 
       final response = await apiProvider.post(EndPoints.checkAvailability, request.toJson());
       
@@ -121,7 +128,7 @@ class BookingViewModel extends GetxController {
     }
   }
 
-  Future<void> confirmBooking(String outletId) async {
+  Future<void> confirmBooking(String outletId,String? bookingId) async {
     razorpay.clear();
     if (checkAvailabilityObserver.value.maybeWhen(success: (data) => data.data?.available != true, orElse: () => true)) {
       Get.showCustomSnackBar(title: "Error", message: "Please check availability first");
@@ -135,6 +142,7 @@ class BookingViewModel extends GetxController {
       final checkOut = checkIn.add(Duration(hours: durationHours.value));
 
       final request = BookingRequestModel(
+        bookingId:bookingId,
         outletId: outletId,
         tableId: selectedTable.value!.id,
         seatId: selectedSeat.value!.id,
@@ -144,7 +152,7 @@ class BookingViewModel extends GetxController {
         bookingType: "classic",
       );
 
-      final response = await apiProvider.post(EndPoints.confirmBooking, request.toJson());
+      final response = await apiProvider.post(bookingId != null ? EndPoints.confirmProfessionalBooking  : EndPoints.confirmBooking, request.toJson());
       
       if (response.isOk && response.body != null) {
         final data = ConfirmBookingResponse.fromJson(response.body);
