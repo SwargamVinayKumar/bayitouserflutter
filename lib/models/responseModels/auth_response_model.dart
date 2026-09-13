@@ -9,7 +9,8 @@ abstract class ProfileResponseModel with _$ProfileResponseModel {
     int? status,
     String? message,
     String? approvalStatus,
-    ProfileData? data
+    ProfileData? data,
+    ContactSupportModel? support
   }) = _ProfileResponseModel;
 
   factory ProfileResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -34,11 +35,23 @@ abstract class SignInResponseDataModel with _$SignInResponseDataModel {
     String? token,
     String? page,
     String? approvalStatus,
-    ProfileData? details
+    ProfileData? details,
+
   }) = _SignInResponseDataModel;
 
   factory SignInResponseDataModel.fromJson(Map<String, dynamic> json) =>
       _$SignInResponseDataModelFromJson(json);
+}
+
+@freezed
+abstract class ContactSupportModel with _$ContactSupportModel {
+  const factory ContactSupportModel({
+    dynamic supportEmail,
+    dynamic supportNumber
+  }) = _ContactSupportModel;
+
+  factory ContactSupportModel.fromJson(Map<String, dynamic> json) =>
+      _$ContactSupportModelFromJson(json);
 }
 
 @freezed
@@ -58,6 +71,9 @@ abstract class ProfileData with _$ProfileData {
     List<DesignationModel>? tables,
     String? createdAt,
     String? updatedAt,
+    dynamic reservationCount,
+    dynamic connectionsCount,
+    dynamic favouritesCount
   }) = _ProfileData;
 
   factory ProfileData.fromJson(Map<String, dynamic> json) =>

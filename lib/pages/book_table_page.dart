@@ -132,23 +132,22 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       const SizedBox(height: 12),
-                      _buildOutletInfo(),
+                      buildOutletInfo(widget.outletModel),
                       const SizedBox(height: 28),
-                      _buildSectionHeader("Select Date", Icons.calendar_today_rounded),
+                      buildSectionHeader("Select Date", Icons.calendar_today_rounded),
                       const SizedBox(height: 12),
                       _buildDatePicker(),
                       const SizedBox(height: 28),
-                      _buildSectionHeader("Select Time Slot", Icons.access_time_rounded),
+                      buildSectionHeader("Select Time Slot", Icons.access_time_rounded),
                       const SizedBox(height: 14),
                       _buildTimeSlotPicker(),
                       const SizedBox(height: 28),
-                      _buildSectionHeader("Duration", Icons.timer_rounded),
+                      buildSectionHeader("Duration", Icons.timer_rounded),
                       const SizedBox(height: 12),
                       _buildDurationPicker(),
                       const SizedBox(height: 28),
-                      _buildSectionHeader("Select Table", Icons.table_restaurant_rounded),
+                      buildSectionHeader("Select Table", Icons.table_restaurant_rounded),
                       const SizedBox(height: 16),
                       _buildTableSelection(),
                       const SizedBox(height: 28),
@@ -208,157 +207,6 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
     );
   }
 
-  Widget _buildSectionHeader(String title, IconData icon) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                CustomColors.secondary.withOpacity(0.2),
-                CustomColors.secondary.withOpacity(0.05),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            icon,
-            color: CustomColors.secondary,
-            size: 18,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: CustomColors.secondary,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildOutletInfo() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            CustomColors.secondary,
-            CustomColors.secondary.withOpacity(0.8),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: CustomColors.secondary.withOpacity(0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.white.withOpacity(0.3), width: 2),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: CustomNetworkImage(
-                imageUrl: widget.outletModel?.businessLogo ?? "",
-                width: 75,
-                height: 75,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.outletModel?.name ?? "Outlet Name",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    letterSpacing: -0.3,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.location_on_rounded,
-                      color: Colors.white.withOpacity(0.8),
-                      size: 16,
-                    ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        widget.outletModel?.location?.address1 ?? "Location not available",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.white.withOpacity(0.9),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.star_rounded,
-                        color: Colors.amber.shade300,
-                        size: 14,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        "4.8",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        "(124 reviews)",
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
-                          fontSize: 11,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildDatePicker() {
     return GestureDetector(
@@ -636,7 +484,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionHeader("Select Seat", Icons.event_seat_rounded),
+          buildSectionHeader("Select Seat", Icons.event_seat_rounded),
           const SizedBox(height: 16),
           GridView.builder(
             shrinkWrap: true,

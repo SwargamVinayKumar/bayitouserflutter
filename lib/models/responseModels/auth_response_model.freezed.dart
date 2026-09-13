@@ -24,6 +24,7 @@ mixin _$ProfileResponseModel {
   String? get message => throw _privateConstructorUsedError;
   String? get approvalStatus => throw _privateConstructorUsedError;
   ProfileData? get data => throw _privateConstructorUsedError;
+  ContactSupportModel? get support => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,9 +42,11 @@ abstract class $ProfileResponseModelCopyWith<$Res> {
       {int? status,
       String? message,
       String? approvalStatus,
-      ProfileData? data});
+      ProfileData? data,
+      ContactSupportModel? support});
 
   $ProfileDataCopyWith<$Res>? get data;
+  $ContactSupportModelCopyWith<$Res>? get support;
 }
 
 /// @nodoc
@@ -64,6 +67,7 @@ class _$ProfileResponseModelCopyWithImpl<$Res,
     Object? message = freezed,
     Object? approvalStatus = freezed,
     Object? data = freezed,
+    Object? support = freezed,
   }) {
     return _then(_value.copyWith(
       status: freezed == status
@@ -82,6 +86,10 @@ class _$ProfileResponseModelCopyWithImpl<$Res,
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as ProfileData?,
+      support: freezed == support
+          ? _value.support
+          : support // ignore: cast_nullable_to_non_nullable
+              as ContactSupportModel?,
     ) as $Val);
   }
 
@@ -94,6 +102,18 @@ class _$ProfileResponseModelCopyWithImpl<$Res,
 
     return $ProfileDataCopyWith<$Res>(_value.data!, (value) {
       return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ContactSupportModelCopyWith<$Res>? get support {
+    if (_value.support == null) {
+      return null;
+    }
+
+    return $ContactSupportModelCopyWith<$Res>(_value.support!, (value) {
+      return _then(_value.copyWith(support: value) as $Val);
     });
   }
 }
@@ -110,10 +130,13 @@ abstract class _$$ProfileResponseModelImplCopyWith<$Res>
       {int? status,
       String? message,
       String? approvalStatus,
-      ProfileData? data});
+      ProfileData? data,
+      ContactSupportModel? support});
 
   @override
   $ProfileDataCopyWith<$Res>? get data;
+  @override
+  $ContactSupportModelCopyWith<$Res>? get support;
 }
 
 /// @nodoc
@@ -131,6 +154,7 @@ class __$$ProfileResponseModelImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? approvalStatus = freezed,
     Object? data = freezed,
+    Object? support = freezed,
   }) {
     return _then(_$ProfileResponseModelImpl(
       status: freezed == status
@@ -149,6 +173,10 @@ class __$$ProfileResponseModelImplCopyWithImpl<$Res>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as ProfileData?,
+      support: freezed == support
+          ? _value.support
+          : support // ignore: cast_nullable_to_non_nullable
+              as ContactSupportModel?,
     ));
   }
 }
@@ -157,7 +185,11 @@ class __$$ProfileResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProfileResponseModelImpl implements _ProfileResponseModel {
   const _$ProfileResponseModelImpl(
-      {this.status, this.message, this.approvalStatus, this.data});
+      {this.status,
+      this.message,
+      this.approvalStatus,
+      this.data,
+      this.support});
 
   factory _$ProfileResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileResponseModelImplFromJson(json);
@@ -170,10 +202,12 @@ class _$ProfileResponseModelImpl implements _ProfileResponseModel {
   final String? approvalStatus;
   @override
   final ProfileData? data;
+  @override
+  final ContactSupportModel? support;
 
   @override
   String toString() {
-    return 'ProfileResponseModel(status: $status, message: $message, approvalStatus: $approvalStatus, data: $data)';
+    return 'ProfileResponseModel(status: $status, message: $message, approvalStatus: $approvalStatus, data: $data, support: $support)';
   }
 
   @override
@@ -185,13 +219,14 @@ class _$ProfileResponseModelImpl implements _ProfileResponseModel {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.approvalStatus, approvalStatus) ||
                 other.approvalStatus == approvalStatus) &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.support, support) || other.support == support));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, status, message, approvalStatus, data);
+      Object.hash(runtimeType, status, message, approvalStatus, data, support);
 
   @JsonKey(ignore: true)
   @override
@@ -214,7 +249,8 @@ abstract class _ProfileResponseModel implements ProfileResponseModel {
       {final int? status,
       final String? message,
       final String? approvalStatus,
-      final ProfileData? data}) = _$ProfileResponseModelImpl;
+      final ProfileData? data,
+      final ContactSupportModel? support}) = _$ProfileResponseModelImpl;
 
   factory _ProfileResponseModel.fromJson(Map<String, dynamic> json) =
       _$ProfileResponseModelImpl.fromJson;
@@ -227,6 +263,8 @@ abstract class _ProfileResponseModel implements ProfileResponseModel {
   String? get approvalStatus;
   @override
   ProfileData? get data;
+  @override
+  ContactSupportModel? get support;
   @override
   @JsonKey(ignore: true)
   _$$ProfileResponseModelImplCopyWith<_$ProfileResponseModelImpl>
@@ -644,6 +682,166 @@ abstract class _SignInResponseDataModel implements SignInResponseDataModel {
       get copyWith => throw _privateConstructorUsedError;
 }
 
+ContactSupportModel _$ContactSupportModelFromJson(Map<String, dynamic> json) {
+  return _ContactSupportModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ContactSupportModel {
+  dynamic get supportEmail => throw _privateConstructorUsedError;
+  dynamic get supportNumber => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ContactSupportModelCopyWith<ContactSupportModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ContactSupportModelCopyWith<$Res> {
+  factory $ContactSupportModelCopyWith(
+          ContactSupportModel value, $Res Function(ContactSupportModel) then) =
+      _$ContactSupportModelCopyWithImpl<$Res, ContactSupportModel>;
+  @useResult
+  $Res call({dynamic supportEmail, dynamic supportNumber});
+}
+
+/// @nodoc
+class _$ContactSupportModelCopyWithImpl<$Res, $Val extends ContactSupportModel>
+    implements $ContactSupportModelCopyWith<$Res> {
+  _$ContactSupportModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? supportEmail = freezed,
+    Object? supportNumber = freezed,
+  }) {
+    return _then(_value.copyWith(
+      supportEmail: freezed == supportEmail
+          ? _value.supportEmail
+          : supportEmail // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      supportNumber: freezed == supportNumber
+          ? _value.supportNumber
+          : supportNumber // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ContactSupportModelImplCopyWith<$Res>
+    implements $ContactSupportModelCopyWith<$Res> {
+  factory _$$ContactSupportModelImplCopyWith(_$ContactSupportModelImpl value,
+          $Res Function(_$ContactSupportModelImpl) then) =
+      __$$ContactSupportModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({dynamic supportEmail, dynamic supportNumber});
+}
+
+/// @nodoc
+class __$$ContactSupportModelImplCopyWithImpl<$Res>
+    extends _$ContactSupportModelCopyWithImpl<$Res, _$ContactSupportModelImpl>
+    implements _$$ContactSupportModelImplCopyWith<$Res> {
+  __$$ContactSupportModelImplCopyWithImpl(_$ContactSupportModelImpl _value,
+      $Res Function(_$ContactSupportModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? supportEmail = freezed,
+    Object? supportNumber = freezed,
+  }) {
+    return _then(_$ContactSupportModelImpl(
+      supportEmail: freezed == supportEmail
+          ? _value.supportEmail
+          : supportEmail // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      supportNumber: freezed == supportNumber
+          ? _value.supportNumber
+          : supportNumber // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ContactSupportModelImpl implements _ContactSupportModel {
+  const _$ContactSupportModelImpl({this.supportEmail, this.supportNumber});
+
+  factory _$ContactSupportModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ContactSupportModelImplFromJson(json);
+
+  @override
+  final dynamic supportEmail;
+  @override
+  final dynamic supportNumber;
+
+  @override
+  String toString() {
+    return 'ContactSupportModel(supportEmail: $supportEmail, supportNumber: $supportNumber)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ContactSupportModelImpl &&
+            const DeepCollectionEquality()
+                .equals(other.supportEmail, supportEmail) &&
+            const DeepCollectionEquality()
+                .equals(other.supportNumber, supportNumber));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(supportEmail),
+      const DeepCollectionEquality().hash(supportNumber));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ContactSupportModelImplCopyWith<_$ContactSupportModelImpl> get copyWith =>
+      __$$ContactSupportModelImplCopyWithImpl<_$ContactSupportModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ContactSupportModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ContactSupportModel implements ContactSupportModel {
+  const factory _ContactSupportModel(
+      {final dynamic supportEmail,
+      final dynamic supportNumber}) = _$ContactSupportModelImpl;
+
+  factory _ContactSupportModel.fromJson(Map<String, dynamic> json) =
+      _$ContactSupportModelImpl.fromJson;
+
+  @override
+  dynamic get supportEmail;
+  @override
+  dynamic get supportNumber;
+  @override
+  @JsonKey(ignore: true)
+  _$$ContactSupportModelImplCopyWith<_$ContactSupportModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 ProfileData _$ProfileDataFromJson(Map<String, dynamic> json) {
   return _ProfileData.fromJson(json);
 }
@@ -665,6 +863,9 @@ mixin _$ProfileData {
   List<DesignationModel>? get tables => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
+  dynamic get reservationCount => throw _privateConstructorUsedError;
+  dynamic get connectionsCount => throw _privateConstructorUsedError;
+  dynamic get favouritesCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -692,7 +893,10 @@ abstract class $ProfileDataCopyWith<$Res> {
       LocationModel? location,
       List<DesignationModel>? tables,
       String? createdAt,
-      String? updatedAt});
+      String? updatedAt,
+      dynamic reservationCount,
+      dynamic connectionsCount,
+      dynamic favouritesCount});
 
   $ChargesModelCopyWith<$Res>? get charges;
   $LocationModelCopyWith<$Res>? get location;
@@ -725,6 +929,9 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
     Object? tables = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? reservationCount = freezed,
+    Object? connectionsCount = freezed,
+    Object? favouritesCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -783,6 +990,18 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      reservationCount: freezed == reservationCount
+          ? _value.reservationCount
+          : reservationCount // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      connectionsCount: freezed == connectionsCount
+          ? _value.connectionsCount
+          : connectionsCount // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      favouritesCount: freezed == favouritesCount
+          ? _value.favouritesCount
+          : favouritesCount // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 
@@ -833,7 +1052,10 @@ abstract class _$$ProfileDataImplCopyWith<$Res>
       LocationModel? location,
       List<DesignationModel>? tables,
       String? createdAt,
-      String? updatedAt});
+      String? updatedAt,
+      dynamic reservationCount,
+      dynamic connectionsCount,
+      dynamic favouritesCount});
 
   @override
   $ChargesModelCopyWith<$Res>? get charges;
@@ -866,6 +1088,9 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
     Object? tables = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? reservationCount = freezed,
+    Object? connectionsCount = freezed,
+    Object? favouritesCount = freezed,
   }) {
     return _then(_$ProfileDataImpl(
       id: freezed == id
@@ -924,6 +1149,18 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      reservationCount: freezed == reservationCount
+          ? _value.reservationCount
+          : reservationCount // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      connectionsCount: freezed == connectionsCount
+          ? _value.connectionsCount
+          : connectionsCount // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      favouritesCount: freezed == favouritesCount
+          ? _value.favouritesCount
+          : favouritesCount // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
@@ -945,7 +1182,10 @@ class _$ProfileDataImpl implements _ProfileData {
       this.location,
       final List<DesignationModel>? tables,
       this.createdAt,
-      this.updatedAt})
+      this.updatedAt,
+      this.reservationCount,
+      this.connectionsCount,
+      this.favouritesCount})
       : _tables = tables;
 
   factory _$ProfileDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -988,10 +1228,16 @@ class _$ProfileDataImpl implements _ProfileData {
   final String? createdAt;
   @override
   final String? updatedAt;
+  @override
+  final dynamic reservationCount;
+  @override
+  final dynamic connectionsCount;
+  @override
+  final dynamic favouritesCount;
 
   @override
   String toString() {
-    return 'ProfileData(id: $id, profilePic: $profilePic, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, password: $password, charges: $charges, location: $location, tables: $tables, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ProfileData(id: $id, profilePic: $profilePic, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, password: $password, charges: $charges, location: $location, tables: $tables, createdAt: $createdAt, updatedAt: $updatedAt, reservationCount: $reservationCount, connectionsCount: $connectionsCount, favouritesCount: $favouritesCount)';
   }
 
   @override
@@ -1019,7 +1265,13 @@ class _$ProfileDataImpl implements _ProfileData {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            const DeepCollectionEquality()
+                .equals(other.reservationCount, reservationCount) &&
+            const DeepCollectionEquality()
+                .equals(other.connectionsCount, connectionsCount) &&
+            const DeepCollectionEquality()
+                .equals(other.favouritesCount, favouritesCount));
   }
 
   @JsonKey(ignore: true)
@@ -1039,7 +1291,10 @@ class _$ProfileDataImpl implements _ProfileData {
       location,
       const DeepCollectionEquality().hash(_tables),
       createdAt,
-      updatedAt);
+      updatedAt,
+      const DeepCollectionEquality().hash(reservationCount),
+      const DeepCollectionEquality().hash(connectionsCount),
+      const DeepCollectionEquality().hash(favouritesCount));
 
   @JsonKey(ignore: true)
   @override
@@ -1070,7 +1325,10 @@ abstract class _ProfileData implements ProfileData {
       final LocationModel? location,
       final List<DesignationModel>? tables,
       final String? createdAt,
-      final String? updatedAt}) = _$ProfileDataImpl;
+      final String? updatedAt,
+      final dynamic reservationCount,
+      final dynamic connectionsCount,
+      final dynamic favouritesCount}) = _$ProfileDataImpl;
 
   factory _ProfileData.fromJson(Map<String, dynamic> json) =
       _$ProfileDataImpl.fromJson;
@@ -1104,6 +1362,12 @@ abstract class _ProfileData implements ProfileData {
   String? get createdAt;
   @override
   String? get updatedAt;
+  @override
+  dynamic get reservationCount;
+  @override
+  dynamic get connectionsCount;
+  @override
+  dynamic get favouritesCount;
   @override
   @JsonKey(ignore: true)
   _$$ProfileDataImplCopyWith<_$ProfileDataImpl> get copyWith =>

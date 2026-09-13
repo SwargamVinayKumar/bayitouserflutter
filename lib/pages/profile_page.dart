@@ -6,6 +6,7 @@ import 'package:bayitouser/shimmer/profile_page_shimmer.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:bayitouser/view_models/auth_view_model.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get.dart';
@@ -78,14 +79,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       // logOutConfirmationDialog(userModel);
                     }),
                 ),
+                const SizedBox(height: 30),
                 ProfileItemComponent(
                   icon: Icons.edit_outlined,
                   title: "Edit Profile",
                 ),
+                DottedLine(dashColor: CustomColors.darkGray),
                 ProfileItemComponent(
                   icon: Icons.security_outlined,
                   title: "Privacy & Security",
                 ),
+                DottedLine(dashColor: CustomColors.darkGray),
                 // ProfileItemComponent(
                 //   icon: Icons.settings_outlined,
                 //   title: "Settings",

@@ -15,6 +15,10 @@ _$ProfileResponseModelImpl _$$ProfileResponseModelImplFromJson(
       data: json['data'] == null
           ? null
           : ProfileData.fromJson(json['data'] as Map<String, dynamic>),
+      support: json['support'] == null
+          ? null
+          : ContactSupportModel.fromJson(
+              json['support'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProfileResponseModelImplToJson(
@@ -24,6 +28,7 @@ Map<String, dynamic> _$$ProfileResponseModelImplToJson(
       'message': instance.message,
       'approvalStatus': instance.approvalStatus,
       'data': instance.data,
+      'support': instance.support,
     };
 
 _$SignInResponseModelImpl _$$SignInResponseModelImplFromJson(
@@ -65,6 +70,20 @@ Map<String, dynamic> _$$SignInResponseDataModelImplToJson(
       'details': instance.details,
     };
 
+_$ContactSupportModelImpl _$$ContactSupportModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ContactSupportModelImpl(
+      supportEmail: json['supportEmail'],
+      supportNumber: json['supportNumber'],
+    );
+
+Map<String, dynamic> _$$ContactSupportModelImplToJson(
+        _$ContactSupportModelImpl instance) =>
+    <String, dynamic>{
+      'supportEmail': instance.supportEmail,
+      'supportNumber': instance.supportNumber,
+    };
+
 _$ProfileDataImpl _$$ProfileDataImplFromJson(Map<String, dynamic> json) =>
     _$ProfileDataImpl(
       id: json['_id'] as String?,
@@ -87,6 +106,9 @@ _$ProfileDataImpl _$$ProfileDataImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
+      reservationCount: json['reservationCount'],
+      connectionsCount: json['connectionsCount'],
+      favouritesCount: json['favouritesCount'],
     );
 
 Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
@@ -105,6 +127,9 @@ Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
       'tables': instance.tables,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
+      'reservationCount': instance.reservationCount,
+      'connectionsCount': instance.connectionsCount,
+      'favouritesCount': instance.favouritesCount,
     };
 
 _$LocationModelImpl _$$LocationModelImplFromJson(Map<String, dynamic> json) =>
