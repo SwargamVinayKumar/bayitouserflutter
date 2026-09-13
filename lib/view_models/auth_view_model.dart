@@ -115,6 +115,7 @@ class AuthViewModel extends GetxController {
 
 
   Future<Position?> fetchCurrentLocation() async {
+
     try {
       if (locationPosition.value != null) {
         return locationPosition.value;
@@ -233,6 +234,7 @@ class AuthViewModel extends GetxController {
       final response =
       await apiProvider.post(EndPoints.validateVersion, request.toJson());
       final body = response.body;
+      print("Body :$body");
       if (response.statusCode == 401) {
         await preferenceManager.clearAll();
         Get.offAll(() => const SignInPage());

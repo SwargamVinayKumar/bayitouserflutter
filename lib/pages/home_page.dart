@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      "assets/images/bayitoLogo.jpeg",
+                      "assets/images/Bayitologo.png",
                       fit: BoxFit.contain,
                     ),
                   ),

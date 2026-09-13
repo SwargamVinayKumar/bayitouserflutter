@@ -36,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               const Spacer(),
               Image.asset(
-                'assets/images/bayitoLogo.jpeg',
+                'assets/images/Bayitologo.png',
                 fit: BoxFit.cover,
               ),
               const Spacer(),

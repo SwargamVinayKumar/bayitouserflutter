@@ -3,22 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/custom_color.dart';
 
 class HomeMenuCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color ctnColor;
-  final Color titleColor;
+  final String imagePath;
   final VoidCallback? onTap;
   final double? customWidth;
   final double? customHeight;
 
   const HomeMenuCard({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    this.ctnColor = CustomColors.primary,
-    this.titleColor = CustomColors.secondary,
+    required this.imagePath,
     this.onTap,
     this.customWidth,
     this.customHeight,
@@ -92,70 +84,13 @@ class HomeMenuCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: cardWidth,
-        height: cardHeight,
-        decoration: BoxDecoration(
-          color: ctnColor,
-          borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: [
-            BoxShadow(
-              color: titleColor.withOpacity(0.4),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(paddingSize),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Icon Container - Responsive
-              Container(
-                padding: EdgeInsets.all(iconPaddingSize),
-                decoration: BoxDecoration(
-                  color: CustomColors.white.withOpacity(0.18),
-                  borderRadius: BorderRadius.circular(iconBorderRadius),
-                ),
-                child: Icon(
-                  icon,
-                  color: titleColor,
-                  size: iconSize,
-                ),
-              ),
-
-              // Title & Subtitle - Responsive
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: titleFontSize,
-                      fontWeight: FontWeight.w600,
-                      color: titleColor,
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: isTablet ? 4 : 2),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      color: titleColor.withOpacity(0.9),
-                      fontSize: subtitleFontSize,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ],
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Image.asset(
+            imagePath,
+            fit: BoxFit.fill,
           ),
         ),
       ),

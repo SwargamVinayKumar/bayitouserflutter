@@ -71,27 +71,19 @@ class ResponsiveSliverGrid extends StatelessWidget {
   Widget _buildMenuCard(int index) {
     final menuItems = [
       {
-        'title': 'Nearby',
-        'subtitle': 'Discover places',
-        'icon': Icons.location_on_rounded,
+        'imagePath': 'assets/images/Nearby.png',
         'page': const OutletPage(type: 'nearby'),
       },
       {
-        'title': 'Book Table',
-        'subtitle': 'Reserve instantly',
-        'icon': Icons.table_restaurant,
+        'imagePath': 'assets/images/BookTable.png',
         'page': const OutletPage(type: 'all'),
       },
       {
-        'title': 'Meet People',
-        'subtitle': 'Connect nearby',
-        'icon': Icons.handshake,
+        'imagePath': 'assets/images/MeetPeople.png',
         'page': const MeetPeoplePage(),
       },
       {
-        'title': 'Reservations',
-        'subtitle': 'Booking history',
-        'icon': Icons.event,
+        'imagePath': 'assets/images/Reservations.png',
         'page': const ReservationPage(showBackArrow: true),
       },
     ];
@@ -99,9 +91,7 @@ class ResponsiveSliverGrid extends StatelessWidget {
     final item = menuItems[index];
 
     return HomeMenuCard(
-      title: item['title'] as String,
-      subtitle: item['subtitle'] as String,
-      icon: item['icon'] as IconData,
+      imagePath: item['imagePath'] as String,
       onTap: () {
         Get.to(() => item['page'] as Widget);
       },
