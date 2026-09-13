@@ -25,8 +25,8 @@ class EndPoints {
 
 
   static const fetchOutlets = "fetchOutlets";
-  static const fetchSearchOutlets = "fetchOutlets";
-  static const fetchTrendingOutlets = "fetchOutlets";
+  static const fetchSearchOutlets = "fetchSearchOutlets";
+  static const fetchTrendingOutlets = "fetchTrendingOutlets";
   static const fetchFavOutlets = "fetchFavOutlets";
   static const fetchNearByOutlets = "fetchNearByOutlets";
   static const fetchOutletDetails = "fetchOutletDetails";

@@ -117,11 +117,14 @@ abstract class BookingModel with _$BookingModel {
     String? paymentId,
     String? checkIn,
     String? checkOut,
-    int? amount,
-    int? discount,
-    int? charges,
-    int? subTotal,
-    int? refundedAmount,
+    dynamic bookingHours,
+    dynamic baseCharges,
+    dynamic professionalCharges,
+    dynamic amount,
+    dynamic discount,
+    dynamic charges,
+    dynamic subTotal,
+    dynamic refundedAmount,
     List<BookingLog>? logs,
     String? couponId,
     List<dynamic>? paymentLogs,
@@ -130,6 +133,8 @@ abstract class BookingModel with _$BookingModel {
     dynamic cancellationDetails,
     DateTime? createdAt,
     DateTime? updatedAt,
+    BookingModel? bookingMappedTo,
+    List<BookingModel>? userBookings
   }) = _BookingModel;
 
   factory BookingModel.fromJson(Map<String, dynamic> json) =>

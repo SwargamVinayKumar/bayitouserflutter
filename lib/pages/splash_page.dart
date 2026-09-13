@@ -22,6 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return StatefulWrapper(
       onInit: () async {
+        await authViewModel.fetchCurrentLocation();
         final version = await AuthUtils.getAppVersion();
         await authViewModel.validateVersion(ValidateVersionRequestModel(version: version));
   //      Future.delayed(const Duration(seconds: 2), () { Get.offAll(() =>  const SignInPage()); });

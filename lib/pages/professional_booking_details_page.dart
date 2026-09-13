@@ -1,3 +1,4 @@
+import 'package:bayitouser/shimmer/booking_details_shimmer.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_network_image.dart';
 import 'package:bayitouser/pages/rating_reviews_page.dart';
@@ -58,7 +59,7 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
         child: Obx(() {
           return bookingViewModel.fetchBookingDetailsObserver.value.when(
             init: () => const SizedBox.shrink(),
-            loading: (msg) => const Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
+            loading: (msg) => const BookingDetailsShimmer(),
             success: (data) {
               final booking = (data as BookingDetailsResponse).data;
               if (booking == null) return const Center(child: Text("No details found"));

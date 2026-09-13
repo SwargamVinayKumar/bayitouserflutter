@@ -22,7 +22,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
   final authViewModel = Get.find<AuthViewModel>();
   GoogleMapController? mapController;
   LatLng? selectedLocation;
-  LocationRequestModel? selectedLocationAddress;
+  LocationModel? selectedLocationAddress;
   bool isSheetOpen = false;
 
   @override
@@ -155,7 +155,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
       );
       
       if (placeMark != null) {
-        selectedLocationAddress = LocationRequestModel(
+        selectedLocationAddress = LocationModel(
           address1: '${placeMark.street ?? ''} ${placeMark.subLocality ?? ''}',
           address2: placeMark.locality ?? '',
           city: placeMark.locality ?? '',

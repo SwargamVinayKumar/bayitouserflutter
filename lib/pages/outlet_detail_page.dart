@@ -1,3 +1,4 @@
+import '../shimmer/outlet_detail_shimmer.dart';
 import 'package:bayitouser/components/outlet_detail_card.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
@@ -44,10 +45,8 @@ class OutletDetailsPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: CustomColors.primary,
         body: Obx(() {
-          return outletViewModel.fetchOutletDetailObserver.value.when(
-            loading: (_) => const Center(
-              child: CircularProgressIndicator(),
-            ),
+          return outletViewModel.fetchOutletDetailsObserver.value.when(
+            loading: (_) => const OutletDetailShimmer(),
             error: (error) => Center(
               child: Text(error),
             ),

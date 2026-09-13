@@ -9,7 +9,7 @@ import 'custom_gradient_button.dart';
 import 'custom_textfield.dart';
 
 class AddressSheet extends StatefulWidget {
-  final LocationRequestModel? locationDetails;
+  final LocationModel? locationDetails;
 
   const AddressSheet({super.key, required this.locationDetails});
 
@@ -111,7 +111,7 @@ class _AddressSheetState extends State<AddressSheet> {
                 orElse: () => CustomGradientButton(
                   title: "Confirm & Create Account",
                   onTap: () {
-                    final location = LocationRequestModel(
+                    final location = LocationModel(
                       address1: authViewModel.address1Controller.text,
                       address2: authViewModel.address2Controller.text,
                       city: authViewModel.cityController.text,

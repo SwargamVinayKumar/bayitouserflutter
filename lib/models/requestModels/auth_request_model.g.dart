@@ -33,7 +33,7 @@ _$RegisterUserRequestModelImpl _$$RegisterUserRequestModelImplFromJson(
       gender: json['gender'] as String?,
       location: json['location'] == null
           ? null
-          : RegisterLocationRequestModel.fromJson(
+          : RegisterLocationModel.fromJson(
               json['location'] as Map<String, dynamic>),
       referralCode: json['referralCode'] as String?,
     );
@@ -62,9 +62,9 @@ Map<String, dynamic> _$$RegisterChargesRequestModelImplToJson(
       'perHour': instance.perHour,
     };
 
-_$RegisterLocationRequestModelImpl _$$RegisterLocationRequestModelImplFromJson(
+_$RegisterLocationModelImpl _$$RegisterLocationModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$RegisterLocationRequestModelImpl(
+    _$RegisterLocationModelImpl(
       address1: json['address1'] as String?,
       address2: json['address2'] as String?,
       landMark: json['landMark'] as String?,
@@ -75,8 +75,8 @@ _$RegisterLocationRequestModelImpl _$$RegisterLocationRequestModelImplFromJson(
       longitude: (json['longitude'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$RegisterLocationRequestModelImplToJson(
-        _$RegisterLocationRequestModelImpl instance) =>
+Map<String, dynamic> _$$RegisterLocationModelImplToJson(
+        _$RegisterLocationModelImpl instance) =>
     <String, dynamic>{
       'address1': instance.address1,
       'address2': instance.address2,

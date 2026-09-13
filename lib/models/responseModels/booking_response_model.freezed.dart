@@ -1682,11 +1682,14 @@ mixin _$BookingModel {
   String? get paymentId => throw _privateConstructorUsedError;
   String? get checkIn => throw _privateConstructorUsedError;
   String? get checkOut => throw _privateConstructorUsedError;
-  int? get amount => throw _privateConstructorUsedError;
-  int? get discount => throw _privateConstructorUsedError;
-  int? get charges => throw _privateConstructorUsedError;
-  int? get subTotal => throw _privateConstructorUsedError;
-  int? get refundedAmount => throw _privateConstructorUsedError;
+  dynamic get bookingHours => throw _privateConstructorUsedError;
+  dynamic get baseCharges => throw _privateConstructorUsedError;
+  dynamic get professionalCharges => throw _privateConstructorUsedError;
+  dynamic get amount => throw _privateConstructorUsedError;
+  dynamic get discount => throw _privateConstructorUsedError;
+  dynamic get charges => throw _privateConstructorUsedError;
+  dynamic get subTotal => throw _privateConstructorUsedError;
+  dynamic get refundedAmount => throw _privateConstructorUsedError;
   List<BookingLog>? get logs => throw _privateConstructorUsedError;
   String? get couponId => throw _privateConstructorUsedError;
   List<dynamic>? get paymentLogs => throw _privateConstructorUsedError;
@@ -1695,6 +1698,8 @@ mixin _$BookingModel {
   dynamic get cancellationDetails => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
+  BookingModel? get bookingMappedTo => throw _privateConstructorUsedError;
+  List<BookingModel>? get userBookings => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1722,11 +1727,14 @@ abstract class $BookingModelCopyWith<$Res> {
       String? paymentId,
       String? checkIn,
       String? checkOut,
-      int? amount,
-      int? discount,
-      int? charges,
-      int? subTotal,
-      int? refundedAmount,
+      dynamic bookingHours,
+      dynamic baseCharges,
+      dynamic professionalCharges,
+      dynamic amount,
+      dynamic discount,
+      dynamic charges,
+      dynamic subTotal,
+      dynamic refundedAmount,
       List<BookingLog>? logs,
       String? couponId,
       List<dynamic>? paymentLogs,
@@ -1734,11 +1742,14 @@ abstract class $BookingModelCopyWith<$Res> {
       bool? userVisited,
       dynamic cancellationDetails,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      BookingModel? bookingMappedTo,
+      List<BookingModel>? userBookings});
 
   $UserModelCopyWith<$Res>? get userId;
   $OutletModelCopyWith<$Res>? get outletId;
   $TableModelCopyWith<$Res>? get tableId;
+  $BookingModelCopyWith<$Res>? get bookingMappedTo;
 }
 
 /// @nodoc
@@ -1767,6 +1778,9 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
     Object? paymentId = freezed,
     Object? checkIn = freezed,
     Object? checkOut = freezed,
+    Object? bookingHours = freezed,
+    Object? baseCharges = freezed,
+    Object? professionalCharges = freezed,
     Object? amount = freezed,
     Object? discount = freezed,
     Object? charges = freezed,
@@ -1780,6 +1794,8 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
     Object? cancellationDetails = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? bookingMappedTo = freezed,
+    Object? userBookings = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1834,26 +1850,38 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
           ? _value.checkOut
           : checkOut // ignore: cast_nullable_to_non_nullable
               as String?,
+      bookingHours: freezed == bookingHours
+          ? _value.bookingHours
+          : bookingHours // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      baseCharges: freezed == baseCharges
+          ? _value.baseCharges
+          : baseCharges // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      professionalCharges: freezed == professionalCharges
+          ? _value.professionalCharges
+          : professionalCharges // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       charges: freezed == charges
           ? _value.charges
           : charges // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       subTotal: freezed == subTotal
           ? _value.subTotal
           : subTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       refundedAmount: freezed == refundedAmount
           ? _value.refundedAmount
           : refundedAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       logs: freezed == logs
           ? _value.logs
           : logs // ignore: cast_nullable_to_non_nullable
@@ -1886,6 +1914,14 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      bookingMappedTo: freezed == bookingMappedTo
+          ? _value.bookingMappedTo
+          : bookingMappedTo // ignore: cast_nullable_to_non_nullable
+              as BookingModel?,
+      userBookings: freezed == userBookings
+          ? _value.userBookings
+          : userBookings // ignore: cast_nullable_to_non_nullable
+              as List<BookingModel>?,
     ) as $Val);
   }
 
@@ -1924,6 +1960,18 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
       return _then(_value.copyWith(tableId: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BookingModelCopyWith<$Res>? get bookingMappedTo {
+    if (_value.bookingMappedTo == null) {
+      return null;
+    }
+
+    return $BookingModelCopyWith<$Res>(_value.bookingMappedTo!, (value) {
+      return _then(_value.copyWith(bookingMappedTo: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -1948,11 +1996,14 @@ abstract class _$$BookingModelImplCopyWith<$Res>
       String? paymentId,
       String? checkIn,
       String? checkOut,
-      int? amount,
-      int? discount,
-      int? charges,
-      int? subTotal,
-      int? refundedAmount,
+      dynamic bookingHours,
+      dynamic baseCharges,
+      dynamic professionalCharges,
+      dynamic amount,
+      dynamic discount,
+      dynamic charges,
+      dynamic subTotal,
+      dynamic refundedAmount,
       List<BookingLog>? logs,
       String? couponId,
       List<dynamic>? paymentLogs,
@@ -1960,7 +2011,9 @@ abstract class _$$BookingModelImplCopyWith<$Res>
       bool? userVisited,
       dynamic cancellationDetails,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      BookingModel? bookingMappedTo,
+      List<BookingModel>? userBookings});
 
   @override
   $UserModelCopyWith<$Res>? get userId;
@@ -1968,6 +2021,8 @@ abstract class _$$BookingModelImplCopyWith<$Res>
   $OutletModelCopyWith<$Res>? get outletId;
   @override
   $TableModelCopyWith<$Res>? get tableId;
+  @override
+  $BookingModelCopyWith<$Res>? get bookingMappedTo;
 }
 
 /// @nodoc
@@ -1994,6 +2049,9 @@ class __$$BookingModelImplCopyWithImpl<$Res>
     Object? paymentId = freezed,
     Object? checkIn = freezed,
     Object? checkOut = freezed,
+    Object? bookingHours = freezed,
+    Object? baseCharges = freezed,
+    Object? professionalCharges = freezed,
     Object? amount = freezed,
     Object? discount = freezed,
     Object? charges = freezed,
@@ -2007,6 +2065,8 @@ class __$$BookingModelImplCopyWithImpl<$Res>
     Object? cancellationDetails = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? bookingMappedTo = freezed,
+    Object? userBookings = freezed,
   }) {
     return _then(_$BookingModelImpl(
       id: freezed == id
@@ -2061,26 +2121,38 @@ class __$$BookingModelImplCopyWithImpl<$Res>
           ? _value.checkOut
           : checkOut // ignore: cast_nullable_to_non_nullable
               as String?,
+      bookingHours: freezed == bookingHours
+          ? _value.bookingHours
+          : bookingHours // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      baseCharges: freezed == baseCharges
+          ? _value.baseCharges
+          : baseCharges // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      professionalCharges: freezed == professionalCharges
+          ? _value.professionalCharges
+          : professionalCharges // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       charges: freezed == charges
           ? _value.charges
           : charges // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       subTotal: freezed == subTotal
           ? _value.subTotal
           : subTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       refundedAmount: freezed == refundedAmount
           ? _value.refundedAmount
           : refundedAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
       logs: freezed == logs
           ? _value._logs
           : logs // ignore: cast_nullable_to_non_nullable
@@ -2113,6 +2185,14 @@ class __$$BookingModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      bookingMappedTo: freezed == bookingMappedTo
+          ? _value.bookingMappedTo
+          : bookingMappedTo // ignore: cast_nullable_to_non_nullable
+              as BookingModel?,
+      userBookings: freezed == userBookings
+          ? _value._userBookings
+          : userBookings // ignore: cast_nullable_to_non_nullable
+              as List<BookingModel>?,
     ));
   }
 }
@@ -2134,6 +2214,9 @@ class _$BookingModelImpl implements _BookingModel {
       this.paymentId,
       this.checkIn,
       this.checkOut,
+      this.bookingHours,
+      this.baseCharges,
+      this.professionalCharges,
       this.amount,
       this.discount,
       this.charges,
@@ -2146,9 +2229,12 @@ class _$BookingModelImpl implements _BookingModel {
       this.userVisited,
       this.cancellationDetails,
       this.createdAt,
-      this.updatedAt})
+      this.updatedAt,
+      this.bookingMappedTo,
+      final List<BookingModel>? userBookings})
       : _logs = logs,
-        _paymentLogs = paymentLogs;
+        _paymentLogs = paymentLogs,
+        _userBookings = userBookings;
 
   factory _$BookingModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingModelImplFromJson(json);
@@ -2181,15 +2267,21 @@ class _$BookingModelImpl implements _BookingModel {
   @override
   final String? checkOut;
   @override
-  final int? amount;
+  final dynamic bookingHours;
   @override
-  final int? discount;
+  final dynamic baseCharges;
   @override
-  final int? charges;
+  final dynamic professionalCharges;
   @override
-  final int? subTotal;
+  final dynamic amount;
   @override
-  final int? refundedAmount;
+  final dynamic discount;
+  @override
+  final dynamic charges;
+  @override
+  final dynamic subTotal;
+  @override
+  final dynamic refundedAmount;
   final List<BookingLog>? _logs;
   @override
   List<BookingLog>? get logs {
@@ -2222,10 +2314,21 @@ class _$BookingModelImpl implements _BookingModel {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
+  @override
+  final BookingModel? bookingMappedTo;
+  final List<BookingModel>? _userBookings;
+  @override
+  List<BookingModel>? get userBookings {
+    final value = _userBookings;
+    if (value == null) return null;
+    if (_userBookings is EqualUnmodifiableListView) return _userBookings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'BookingModel(id: $id, status: $status, userId: $userId, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingType: $bookingType, bookingOTP: $bookingOTP, paymentType: $paymentType, orderId: $orderId, paymentId: $paymentId, checkIn: $checkIn, checkOut: $checkOut, amount: $amount, discount: $discount, charges: $charges, subTotal: $subTotal, refundedAmount: $refundedAmount, logs: $logs, couponId: $couponId, paymentLogs: $paymentLogs, guestDetailsList: $guestDetailsList, userVisited: $userVisited, cancellationDetails: $cancellationDetails, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'BookingModel(id: $id, status: $status, userId: $userId, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingType: $bookingType, bookingOTP: $bookingOTP, paymentType: $paymentType, orderId: $orderId, paymentId: $paymentId, checkIn: $checkIn, checkOut: $checkOut, bookingHours: $bookingHours, baseCharges: $baseCharges, professionalCharges: $professionalCharges, amount: $amount, discount: $discount, charges: $charges, subTotal: $subTotal, refundedAmount: $refundedAmount, logs: $logs, couponId: $couponId, paymentLogs: $paymentLogs, guestDetailsList: $guestDetailsList, userVisited: $userVisited, cancellationDetails: $cancellationDetails, createdAt: $createdAt, updatedAt: $updatedAt, bookingMappedTo: $bookingMappedTo, userBookings: $userBookings)';
   }
 
   @override
@@ -2252,14 +2355,18 @@ class _$BookingModelImpl implements _BookingModel {
             (identical(other.checkIn, checkIn) || other.checkIn == checkIn) &&
             (identical(other.checkOut, checkOut) ||
                 other.checkOut == checkOut) &&
-            (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.discount, discount) ||
-                other.discount == discount) &&
-            (identical(other.charges, charges) || other.charges == charges) &&
-            (identical(other.subTotal, subTotal) ||
-                other.subTotal == subTotal) &&
-            (identical(other.refundedAmount, refundedAmount) ||
-                other.refundedAmount == refundedAmount) &&
+            const DeepCollectionEquality()
+                .equals(other.bookingHours, bookingHours) &&
+            const DeepCollectionEquality()
+                .equals(other.baseCharges, baseCharges) &&
+            const DeepCollectionEquality()
+                .equals(other.professionalCharges, professionalCharges) &&
+            const DeepCollectionEquality().equals(other.amount, amount) &&
+            const DeepCollectionEquality().equals(other.discount, discount) &&
+            const DeepCollectionEquality().equals(other.charges, charges) &&
+            const DeepCollectionEquality().equals(other.subTotal, subTotal) &&
+            const DeepCollectionEquality()
+                .equals(other.refundedAmount, refundedAmount) &&
             const DeepCollectionEquality().equals(other._logs, _logs) &&
             (identical(other.couponId, couponId) ||
                 other.couponId == couponId) &&
@@ -2274,7 +2381,11 @@ class _$BookingModelImpl implements _BookingModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.bookingMappedTo, bookingMappedTo) ||
+                other.bookingMappedTo == bookingMappedTo) &&
+            const DeepCollectionEquality()
+                .equals(other._userBookings, _userBookings));
   }
 
   @JsonKey(ignore: true)
@@ -2294,11 +2405,14 @@ class _$BookingModelImpl implements _BookingModel {
         paymentId,
         checkIn,
         checkOut,
-        amount,
-        discount,
-        charges,
-        subTotal,
-        refundedAmount,
+        const DeepCollectionEquality().hash(bookingHours),
+        const DeepCollectionEquality().hash(baseCharges),
+        const DeepCollectionEquality().hash(professionalCharges),
+        const DeepCollectionEquality().hash(amount),
+        const DeepCollectionEquality().hash(discount),
+        const DeepCollectionEquality().hash(charges),
+        const DeepCollectionEquality().hash(subTotal),
+        const DeepCollectionEquality().hash(refundedAmount),
         const DeepCollectionEquality().hash(_logs),
         couponId,
         const DeepCollectionEquality().hash(_paymentLogs),
@@ -2306,7 +2420,9 @@ class _$BookingModelImpl implements _BookingModel {
         userVisited,
         const DeepCollectionEquality().hash(cancellationDetails),
         createdAt,
-        updatedAt
+        updatedAt,
+        bookingMappedTo,
+        const DeepCollectionEquality().hash(_userBookings)
       ]);
 
   @JsonKey(ignore: true)
@@ -2338,11 +2454,14 @@ abstract class _BookingModel implements BookingModel {
       final String? paymentId,
       final String? checkIn,
       final String? checkOut,
-      final int? amount,
-      final int? discount,
-      final int? charges,
-      final int? subTotal,
-      final int? refundedAmount,
+      final dynamic bookingHours,
+      final dynamic baseCharges,
+      final dynamic professionalCharges,
+      final dynamic amount,
+      final dynamic discount,
+      final dynamic charges,
+      final dynamic subTotal,
+      final dynamic refundedAmount,
       final List<BookingLog>? logs,
       final String? couponId,
       final List<dynamic>? paymentLogs,
@@ -2350,7 +2469,9 @@ abstract class _BookingModel implements BookingModel {
       final bool? userVisited,
       final dynamic cancellationDetails,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$BookingModelImpl;
+      final DateTime? updatedAt,
+      final BookingModel? bookingMappedTo,
+      final List<BookingModel>? userBookings}) = _$BookingModelImpl;
 
   factory _BookingModel.fromJson(Map<String, dynamic> json) =
       _$BookingModelImpl.fromJson;
@@ -2383,15 +2504,21 @@ abstract class _BookingModel implements BookingModel {
   @override
   String? get checkOut;
   @override
-  int? get amount;
+  dynamic get bookingHours;
   @override
-  int? get discount;
+  dynamic get baseCharges;
   @override
-  int? get charges;
+  dynamic get professionalCharges;
   @override
-  int? get subTotal;
+  dynamic get amount;
   @override
-  int? get refundedAmount;
+  dynamic get discount;
+  @override
+  dynamic get charges;
+  @override
+  dynamic get subTotal;
+  @override
+  dynamic get refundedAmount;
   @override
   List<BookingLog>? get logs;
   @override
@@ -2408,6 +2535,10 @@ abstract class _BookingModel implements BookingModel {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
+  @override
+  BookingModel? get bookingMappedTo;
+  @override
+  List<BookingModel>? get userBookings;
   @override
   @JsonKey(ignore: true)
   _$$BookingModelImplCopyWith<_$BookingModelImpl> get copyWith =>

@@ -17,26 +17,11 @@ abstract class SignUpRequestModel with _$SignUpRequestModel {
     int? otp,
     @Default([]) List<String>? designations,
     ChargesModel? businessLicence,
-    LocationRequestModel? location
+    LocationModel? location
   }) = _SignUpRequestModel;
 
   factory SignUpRequestModel.fromJson(Map<String, dynamic> json) =>
       _$SignUpRequestModelFromJson(json);
 }
 
-@freezed
-abstract class LocationRequestModel with _$LocationRequestModel {
-  const factory LocationRequestModel({
-    String? address1,
-    String? address2,
-    String? city,
-    String? state,
-    String? landMark,
-    String? pinCode,
-    String? latitude,
-    String? longitude,
-  }) = _LocationRequestModel;
 
-  factory LocationRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$LocationRequestModelFromJson(json);
-}

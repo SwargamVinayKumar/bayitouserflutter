@@ -1,3 +1,4 @@
+import 'package:bayitouser/shimmer/home_page_shimmer.dart';
 import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/components/featured_place_card.dart';
 import 'package:bayitouser/components/home_menu_card.dart';
@@ -131,17 +132,10 @@ class HomePage extends StatelessWidget {
 
                   return state.when(
                     init: () {
-                      return const SizedBox(
-                        height: 150,
-                      );
+                      return const HomePageShimmer();
                     },
                     loading: (_) {
-                      return const SizedBox(
-                        height: 150,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
+                      return const HomePageShimmer();
                     },
                     error: (error) {
                       return SizedBox(

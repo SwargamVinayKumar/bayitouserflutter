@@ -2,11 +2,13 @@ import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_network_image.dart';
 import 'package:bayitouser/pages/rating_reviews_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
+import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../api/api_result.dart';
 import '../components/custom_gradient_button.dart';
 import '../components/custom_lottie_loading.dart';
 import '../components/table_seat_item.dart';
@@ -56,60 +58,65 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Obx(() {
-          return bookingViewModel.fetchBookingDetailsObserver.value.when(
-            init: () => const SizedBox.shrink(),
-            loading: (msg) => const Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
-            success: (data) {
-              final booking = (data as BookingDetailsResponse).data;
-              bookingViewModel.selectedTable.value = booking?.tableId;
-              if (booking == null) return const Center(child: Text("No details found"));
-              return Stack(
-                children: [
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        buildSectionTitle("User Details"),
-                        const SizedBox(height: 8),
-                        buildUserDetails(booking),
-                        const SizedBox(height: 24),
-                        buildSectionTitle("Outlet Details"),
-                        const SizedBox(height: 8),
-                        buildOutletHeader(booking),
-                        const SizedBox(height: 24),
-                        buildSectionTitle("Booking Status"),
-                        const SizedBox(height: 8),
-                        buildStatusChip(booking.status ?? ""),
-                        const SizedBox(height: 24),
-                        buildSectionTitle("Reservation Details"),
-                        const SizedBox(height: 16),
-                        buildInfoCard([
-                          infoRow(Icons.calendar_today, "Date", _formatDate(booking.checkIn ?? "")),
-                          infoRow(Icons.access_time, "Time", "${_formatTime(booking.checkIn ?? "")} - ${_formatTime(booking.checkOut ?? "")}"),
-                          infoRow(Icons.table_restaurant, "Table", "${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
-                          infoRow(Icons.event_seat, "Seat", "${booking.seatId ?? ''} (${booking.tableId?.seatType ?? ''})"),
-                          infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
-                        ]),
-                        const SizedBox(height: 24),
-                        _buildSeatSection(booking.outletId,booking.seatId ?? "",booking,bookingViewModel),
-                        const SizedBox(height: 32),
-                        _buildBookingActions(booking.outletId,booking,bookingViewModel),
-                        const SizedBox(height: 30),
-                      ],
+      body: StatefulWrapper(
+        onInit: (){
+          bookingViewModel.checkAvailabilityObserver.value = ApiResult.init();
+        },
+        child: SafeArea(
+          child: Obx(() {
+            return bookingViewModel.fetchBookingDetailsObserver.value.when(
+              init: () => const SizedBox.shrink(),
+              loading: (msg) => const Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
+              success: (data) {
+                final booking = (data as BookingDetailsResponse).data;
+                bookingViewModel.selectedTable.value = booking?.tableId;
+                if (booking == null) return const Center(child: Text("No details found"));
+                return Stack(
+                  children: [
+                    SingleChildScrollView(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildSectionTitle("User Details"),
+                          const SizedBox(height: 8),
+                          buildUserDetails(booking),
+                          const SizedBox(height: 24),
+                          buildSectionTitle("Outlet Details"),
+                          const SizedBox(height: 8),
+                          buildOutletHeader(booking),
+                          const SizedBox(height: 24),
+                          buildSectionTitle("Booking Status"),
+                          const SizedBox(height: 8),
+                          buildStatusChip(booking.status ?? ""),
+                          const SizedBox(height: 24),
+                          buildSectionTitle("Reservation Details"),
+                          const SizedBox(height: 16),
+                          buildInfoCard([
+                            infoRow(Icons.calendar_today, "Date", _formatDate(booking.checkIn ?? "")),
+                            infoRow(Icons.access_time, "Time", "${_formatTime(booking.checkIn ?? "")} - ${_formatTime(booking.checkOut ?? "")}"),
+                            infoRow(Icons.table_restaurant, "Table", "${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
+                            infoRow(Icons.event_seat, "Seat", "${booking.seatId ?? ''} (${booking.tableId?.seatType ?? ''})"),
+                            infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
+                          ]),
+                          const SizedBox(height: 24),
+                          _buildSeatSection(booking.outletId,booking.seatId ?? "",booking,bookingViewModel),
+                          const SizedBox(height: 32),
+                          _buildBookingActions(booking.outletId,booking,bookingViewModel),
+                          const SizedBox(height: 30),
+                        ],
+                      ),
                     ),
-                  ),
-                  Obx(() => bookingViewModel.checkAvailabilityObserver.value.maybeWhen(loading: (cds)  =>
-                      const CustomLottieLoading(),
-                      orElse: () => const SizedBox()))
-                ],
-              );
-            },
-            error: (err) => Center(child: Text(err)),
-          );
-        }),
+                    Obx(() => bookingViewModel.checkAvailabilityObserver.value.maybeWhen(loading: (cds)  =>
+                        const CustomLottieLoading(),
+                        orElse: () => const SizedBox()))
+                  ],
+                );
+              },
+              error: (err) => Center(child: Text(err)),
+            );
+          }),
+        ),
       ),
     );
   }

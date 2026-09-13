@@ -68,7 +68,7 @@ class OutletViewModel extends GetxController {
     error: "",
   ).obs;
 
-  final fetchOutletDetailObserver = ApiResult<OutletDetailsResponseModel>.init().obs;
+  final fetchOutletDetailsObserver = ApiResult<OutletDetailsResponseModel>.init().obs;
 
   final updateFavouritesObserver =  ApiResult<PrimaryResponseModel>.init().obs;
 
@@ -123,7 +123,7 @@ class OutletViewModel extends GetxController {
         observer.refresh();
       }
 
-      const int maxListApiReturns = 10;
+      const int maxListApiReturns = 20;
 
 
       final requestData = request.copyWith(
@@ -230,12 +230,12 @@ class OutletViewModel extends GetxController {
       if(response.isOk && body !=null){
         var responseData = PrimaryResponseModel.fromJson(body);
         if(responseData.status == 1){
-          fetchOutletDetailObserver.value.whenOrNull(
+          fetchOutletDetailsObserver.value.whenOrNull(
               success: (data) {
                 final observerData = (data as OutletDetailsResponseModel);
                 final updatedData = observerData.data?.copyWith(isFavorite: !isFavorite);
-                fetchOutletDetailObserver.value = ApiResult.success(observerData.copyWith(data: updatedData));
-                fetchOutletDetailObserver.refresh();
+                fetchOutletDetailsObserver.value = ApiResult.success(observerData.copyWith(data: updatedData));
+                fetchOutletDetailsObserver.refresh();
               }
           );
           await Future.delayed(const Duration(milliseconds: 500));
@@ -255,7 +255,7 @@ class OutletViewModel extends GetxController {
 
   Future<void> fetchOutletDetails(String outletId) async {
     try {
-      fetchOutletDetailObserver.value = ApiResult.loading("loading");
+      fetchOutletDetailsObserver.value = ApiResult.loading("loading");
       final response = await apiProvider.post(
         EndPoints.fetchOutletDetails,
         {
@@ -267,16 +267,16 @@ class OutletViewModel extends GetxController {
       if (response.isOk && body != null) {
         final data = OutletDetailsResponseModel.fromJson(body);
         if (data.status == 1) {
-          fetchOutletDetailObserver.value = ApiResult.success(data);
+          fetchOutletDetailsObserver.value = ApiResult.success(data);
         } else {
           Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
-          fetchOutletDetailObserver.value = ApiResult.error(data.message ?? "");
+          fetchOutletDetailsObserver.value = ApiResult.error(data.message ?? "");
         }
       } else {
-        fetchOutletDetailObserver.value = ApiResult.error("Something went wrong");
+        fetchOutletDetailsObserver.value = ApiResult.error("Something went wrong");
       }
     } catch (e) {
-      fetchOutletDetailObserver.value = ApiResult.error(e.toString());
+      fetchOutletDetailsObserver.value = ApiResult.error(e.toString());
       Get.showCustomSnackBar(title: 'Error', message:  e.toString());
     }
   }

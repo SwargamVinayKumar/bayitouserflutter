@@ -1,3 +1,4 @@
+import 'package:bayitouser/api/api_result.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/components/custom_lottie_loading.dart';
@@ -5,6 +6,7 @@ import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/components/table_seat_item.dart';
 import 'package:bayitouser/models/responseModels/outlet_response_model.dart';
 import 'package:bayitouser/utils/progress_dialog.dart';
+import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -120,50 +122,55 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
     return Scaffold(
       backgroundColor: CustomColors.white,
       appBar: _buildAppBar(),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            FadeTransition(
-              opacity: _fadeAnimation,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 12),
-                      buildOutletInfo(widget.outletModel),
-                      const SizedBox(height: 28),
-                      buildSectionHeader("Select Date", Icons.calendar_today_rounded),
-                      const SizedBox(height: 12),
-                      _buildDatePicker(),
-                      const SizedBox(height: 28),
-                      buildSectionHeader("Select Time Slot", Icons.access_time_rounded),
-                      const SizedBox(height: 14),
-                      _buildTimeSlotPicker(),
-                      const SizedBox(height: 28),
-                      buildSectionHeader("Duration", Icons.timer_rounded),
-                      const SizedBox(height: 12),
-                      _buildDurationPicker(),
-                      const SizedBox(height: 28),
-                      buildSectionHeader("Select Table", Icons.table_restaurant_rounded),
-                      const SizedBox(height: 16),
-                      _buildTableSelection(),
-                      const SizedBox(height: 28),
-                      _buildSeatSection(),
-                      const SizedBox(height: 32),
-                      _buildBookingActions(),
-                      const SizedBox(height: 30),
-                    ],
+      body: StatefulWrapper(
+        onInit: (){
+          bookingViewModel.checkAvailabilityObserver.value = ApiResult.init();
+        },
+        child: SafeArea(
+          child: Stack(
+            children: [
+              FadeTransition(
+                opacity: _fadeAnimation,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 12),
+                        buildOutletInfo(widget.outletModel),
+                        const SizedBox(height: 28),
+                        buildSectionHeader("Select Date", Icons.calendar_today_rounded),
+                        const SizedBox(height: 12),
+                        _buildDatePicker(),
+                        const SizedBox(height: 28),
+                        buildSectionHeader("Select Time Slot", Icons.access_time_rounded),
+                        const SizedBox(height: 14),
+                        _buildTimeSlotPicker(),
+                        const SizedBox(height: 28),
+                        buildSectionHeader("Duration", Icons.timer_rounded),
+                        const SizedBox(height: 12),
+                        _buildDurationPicker(),
+                        const SizedBox(height: 28),
+                        buildSectionHeader("Select Table", Icons.table_restaurant_rounded),
+                        const SizedBox(height: 16),
+                        _buildTableSelection(),
+                        const SizedBox(height: 28),
+                        _buildSeatSection(),
+                        const SizedBox(height: 32),
+                        _buildBookingActions(),
+                        const SizedBox(height: 30),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Obx(() => bookingViewModel.checkAvailabilityObserver.value.maybeWhen(loading: (cds)  =>
-                const CustomLottieLoading(),
-                orElse: () => const SizedBox()))
-          ],
+              Obx(() => bookingViewModel.checkAvailabilityObserver.value.maybeWhen(loading: (cds)  =>
+                  const CustomLottieLoading(),
+                  orElse: () => const SizedBox()))
+            ],
+          ),
         ),
       ),
     );

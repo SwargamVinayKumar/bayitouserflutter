@@ -78,7 +78,7 @@ class OutletCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            "4.5",
+                            "${outlet?.rating ?? 0}",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: titleColor,

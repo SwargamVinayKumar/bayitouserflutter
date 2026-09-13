@@ -29,7 +29,7 @@ mixin _$SignUpRequestModel {
   int? get otp => throw _privateConstructorUsedError;
   List<String>? get designations => throw _privateConstructorUsedError;
   ChargesModel? get businessLicence => throw _privateConstructorUsedError;
-  LocationRequestModel? get location => throw _privateConstructorUsedError;
+  LocationModel? get location => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,10 +53,10 @@ abstract class $SignUpRequestModelCopyWith<$Res> {
       int? otp,
       List<String>? designations,
       ChargesModel? businessLicence,
-      LocationRequestModel? location});
+      LocationModel? location});
 
   $ChargesModelCopyWith<$Res>? get businessLicence;
-  $LocationRequestModelCopyWith<$Res>? get location;
+  $LocationModelCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -123,7 +123,7 @@ class _$SignUpRequestModelCopyWithImpl<$Res, $Val extends SignUpRequestModel>
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as LocationRequestModel?,
+              as LocationModel?,
     ) as $Val);
   }
 
@@ -141,12 +141,12 @@ class _$SignUpRequestModelCopyWithImpl<$Res, $Val extends SignUpRequestModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $LocationRequestModelCopyWith<$Res>? get location {
+  $LocationModelCopyWith<$Res>? get location {
     if (_value.location == null) {
       return null;
     }
 
-    return $LocationRequestModelCopyWith<$Res>(_value.location!, (value) {
+    return $LocationModelCopyWith<$Res>(_value.location!, (value) {
       return _then(_value.copyWith(location: value) as $Val);
     });
   }
@@ -170,12 +170,12 @@ abstract class _$$SignUpRequestModelImplCopyWith<$Res>
       int? otp,
       List<String>? designations,
       ChargesModel? businessLicence,
-      LocationRequestModel? location});
+      LocationModel? location});
 
   @override
   $ChargesModelCopyWith<$Res>? get businessLicence;
   @override
-  $LocationRequestModelCopyWith<$Res>? get location;
+  $LocationModelCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -240,7 +240,7 @@ class __$$SignUpRequestModelImplCopyWithImpl<$Res>
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as LocationRequestModel?,
+              as LocationModel?,
     ));
   }
 }
@@ -292,7 +292,7 @@ class _$SignUpRequestModelImpl implements _SignUpRequestModel {
   @override
   final ChargesModel? businessLicence;
   @override
-  final LocationRequestModel? location;
+  final LocationModel? location;
 
   @override
   String toString() {
@@ -363,7 +363,7 @@ abstract class _SignUpRequestModel implements SignUpRequestModel {
       final int? otp,
       final List<String>? designations,
       final ChargesModel? businessLicence,
-      final LocationRequestModel? location}) = _$SignUpRequestModelImpl;
+      final LocationModel? location}) = _$SignUpRequestModelImpl;
 
   factory _SignUpRequestModel.fromJson(Map<String, dynamic> json) =
       _$SignUpRequestModelImpl.fromJson;
@@ -387,19 +387,19 @@ abstract class _SignUpRequestModel implements SignUpRequestModel {
   @override
   ChargesModel? get businessLicence;
   @override
-  LocationRequestModel? get location;
+  LocationModel? get location;
   @override
   @JsonKey(ignore: true)
   _$$SignUpRequestModelImplCopyWith<_$SignUpRequestModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-LocationRequestModel _$LocationRequestModelFromJson(Map<String, dynamic> json) {
-  return _LocationRequestModel.fromJson(json);
+LocationModel _$LocationModelFromJson(Map<String, dynamic> json) {
+  return _LocationModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$LocationRequestModel {
+mixin _$LocationModel {
   String? get address1 => throw _privateConstructorUsedError;
   String? get address2 => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
@@ -411,15 +411,15 @@ mixin _$LocationRequestModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LocationRequestModelCopyWith<LocationRequestModel> get copyWith =>
+  $LocationModelCopyWith<LocationModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LocationRequestModelCopyWith<$Res> {
-  factory $LocationRequestModelCopyWith(LocationRequestModel value,
-          $Res Function(LocationRequestModel) then) =
-      _$LocationRequestModelCopyWithImpl<$Res, LocationRequestModel>;
+abstract class $LocationModelCopyWith<$Res> {
+  factory $LocationModelCopyWith(LocationModel value,
+          $Res Function(LocationModel) then) =
+      _$LocationModelCopyWithImpl<$Res, LocationModel>;
   @useResult
   $Res call(
       {String? address1,
@@ -433,10 +433,10 @@ abstract class $LocationRequestModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LocationRequestModelCopyWithImpl<$Res,
-        $Val extends LocationRequestModel>
-    implements $LocationRequestModelCopyWith<$Res> {
-  _$LocationRequestModelCopyWithImpl(this._value, this._then);
+class _$LocationModelCopyWithImpl<$Res,
+        $Val extends LocationModel>
+    implements $LocationModelCopyWith<$Res> {
+  _$LocationModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -493,11 +493,11 @@ class _$LocationRequestModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$LocationRequestModelImplCopyWith<$Res>
-    implements $LocationRequestModelCopyWith<$Res> {
-  factory _$$LocationRequestModelImplCopyWith(_$LocationRequestModelImpl value,
-          $Res Function(_$LocationRequestModelImpl) then) =
-      __$$LocationRequestModelImplCopyWithImpl<$Res>;
+abstract class _$$LocationModelImplCopyWith<$Res>
+    implements $LocationModelCopyWith<$Res> {
+  factory _$$LocationModelImplCopyWith(_$LocationModelImpl value,
+          $Res Function(_$LocationModelImpl) then) =
+      __$$LocationModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -512,11 +512,11 @@ abstract class _$$LocationRequestModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LocationRequestModelImplCopyWithImpl<$Res>
-    extends _$LocationRequestModelCopyWithImpl<$Res, _$LocationRequestModelImpl>
-    implements _$$LocationRequestModelImplCopyWith<$Res> {
-  __$$LocationRequestModelImplCopyWithImpl(_$LocationRequestModelImpl _value,
-      $Res Function(_$LocationRequestModelImpl) _then)
+class __$$LocationModelImplCopyWithImpl<$Res>
+    extends _$LocationModelCopyWithImpl<$Res, _$LocationModelImpl>
+    implements _$$LocationModelImplCopyWith<$Res> {
+  __$$LocationModelImplCopyWithImpl(_$LocationModelImpl _value,
+      $Res Function(_$LocationModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -531,7 +531,7 @@ class __$$LocationRequestModelImplCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitude = freezed,
   }) {
-    return _then(_$LocationRequestModelImpl(
+    return _then(_$LocationModelImpl(
       address1: freezed == address1
           ? _value.address1
           : address1 // ignore: cast_nullable_to_non_nullable
@@ -570,8 +570,8 @@ class __$$LocationRequestModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$LocationRequestModelImpl implements _LocationRequestModel {
-  const _$LocationRequestModelImpl(
+class _$LocationModelImpl implements _LocationModel {
+  const _$LocationModelImpl(
       {this.address1,
       this.address2,
       this.city,
@@ -581,8 +581,8 @@ class _$LocationRequestModelImpl implements _LocationRequestModel {
       this.latitude,
       this.longitude});
 
-  factory _$LocationRequestModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$LocationRequestModelImplFromJson(json);
+  factory _$LocationModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LocationModelImplFromJson(json);
 
   @override
   final String? address1;
@@ -603,14 +603,14 @@ class _$LocationRequestModelImpl implements _LocationRequestModel {
 
   @override
   String toString() {
-    return 'LocationRequestModel(address1: $address1, address2: $address2, city: $city, state: $state, landMark: $landMark, pinCode: $pinCode, latitude: $latitude, longitude: $longitude)';
+    return 'LocationModel(address1: $address1, address2: $address2, city: $city, state: $state, landMark: $landMark, pinCode: $pinCode, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LocationRequestModelImpl &&
+            other is _$LocationModelImpl &&
             (identical(other.address1, address1) ||
                 other.address1 == address1) &&
             (identical(other.address2, address2) ||
@@ -634,21 +634,21 @@ class _$LocationRequestModelImpl implements _LocationRequestModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LocationRequestModelImplCopyWith<_$LocationRequestModelImpl>
+  _$$LocationModelImplCopyWith<_$LocationModelImpl>
       get copyWith =>
-          __$$LocationRequestModelImplCopyWithImpl<_$LocationRequestModelImpl>(
+          __$$LocationModelImplCopyWithImpl<_$LocationModelImpl>(
               this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$LocationRequestModelImplToJson(
+    return _$$LocationModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _LocationRequestModel implements LocationRequestModel {
-  const factory _LocationRequestModel(
+abstract class _LocationModel implements LocationModel {
+  const factory _LocationModel(
       {final String? address1,
       final String? address2,
       final String? city,
@@ -656,10 +656,10 @@ abstract class _LocationRequestModel implements LocationRequestModel {
       final String? landMark,
       final String? pinCode,
       final String? latitude,
-      final String? longitude}) = _$LocationRequestModelImpl;
+      final String? longitude}) = _$LocationModelImpl;
 
-  factory _LocationRequestModel.fromJson(Map<String, dynamic> json) =
-      _$LocationRequestModelImpl.fromJson;
+  factory _LocationModel.fromJson(Map<String, dynamic> json) =
+      _$LocationModelImpl.fromJson;
 
   @override
   String? get address1;
@@ -679,6 +679,6 @@ abstract class _LocationRequestModel implements LocationRequestModel {
   String? get longitude;
   @override
   @JsonKey(ignore: true)
-  _$$LocationRequestModelImplCopyWith<_$LocationRequestModelImpl>
+  _$$LocationModelImplCopyWith<_$LocationModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

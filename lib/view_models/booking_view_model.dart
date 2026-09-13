@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../models/responseModels/auth_response_model.dart';
+import '../models/responseModels/page_model.dart';
 import '../models/responseModels/user_response_model.dart';
 import '../pages/booking_details_page.dart';
 import '../utils/ConfigKeys.dart';
@@ -21,22 +22,13 @@ class BookingViewModel extends GetxController {
   final confirmBookingObserver = ApiResult<ConfirmBookingResponse>.init().obs;
   final fetchTablesObserver = ApiResult<FetchTablesResponse>.init().obs;
   
-  // Separate observers and lists for each tab
+  final upcomingObserver = PaginationModel(data: ApiResult<BookingListResponse>.init().obs, isLoading: false, isPaginationCompleted: false, page: 1, error: "").obs;
+  final completedObserver = PaginationModel(data: ApiResult<BookingListResponse>.init().obs, isLoading: false, isPaginationCompleted: false, page: 1, error: "").obs;
+  final cancelledObserver = PaginationModel(data: ApiResult<BookingListResponse>.init().obs, isLoading: false, isPaginationCompleted: false, page: 1, error: "").obs;
+
   final upcomingBookings = <BookingModel>[].obs;
   final completedBookings = <BookingModel>[].obs;
   final cancelledBookings = <BookingModel>[].obs;
-
-  final upcomingObserver = ApiResult<BookingListResponse>.init().obs;
-  final completedObserver = ApiResult<BookingListResponse>.init().obs;
-  final cancelledObserver = ApiResult<BookingListResponse>.init().obs;
-
-  final upcomingPage = 1.obs;
-  final completedPage = 1.obs;
-  final cancelledPage = 1.obs;
-
-  final hasMoreUpcoming = true.obs;
-  final hasMoreCompleted = true.obs;
-  final hasMoreCancelled = true.obs;
 
   final fetchBookingDetailsObserver = ApiResult<BookingDetailsResponse>.init().obs;
 
@@ -198,69 +190,87 @@ class BookingViewModel extends GetxController {
   Future<void> fetchUserBookingsByTab(int tabIndex, {bool isRefresh = false}) async {
     String status = "confirmed";
     RxList<BookingModel> list;
-    Rx<ApiResult<BookingListResponse>> observer;
-    RxInt page;
-    RxBool hasMore;
+    Rx<PaginationModel<Rx<ApiResult<BookingListResponse>>>> observer;
 
     if (tabIndex == 0) {
-      status = "confirmed"; // Also includes pending_payment and checked-in on backend potentially
+      status = "confirmed";
       list = upcomingBookings;
       observer = upcomingObserver;
-      page = upcomingPage;
-      hasMore = hasMoreUpcoming;
     } else if (tabIndex == 1) {
       status = "completed";
       list = completedBookings;
       observer = completedObserver;
-      page = completedPage;
-      hasMore = hasMoreCompleted;
     } else {
       status = "cancelled";
       list = cancelledBookings;
       observer = cancelledObserver;
-      page = cancelledPage;
-      hasMore = hasMoreCancelled;
     }
 
     try {
       if (isRefresh) {
-        page.value = 1;
+        observer.value =
+            PaginationModel(
+          data: ApiResult<BookingListResponse>.init().obs,
+          isLoading: false,
+          isPaginationCompleted: false,
+          page: 1,
+          error: "",
+        );
         list.clear();
-        hasMore.value = true;
-        observer.value = ApiResult.loading("Loading bookings...");
       }
 
-      if (!hasMore.value) return;
+      if (observer.value.isPaginationCompleted || observer.value.isLoading) return;
+
+      if (observer.value.page == 1) {
+        observer.value.data.value = ApiResult.loading("Loading bookings...");
+      } else {
+        observer.value.isLoading = true;
+        observer.refresh();
+      }
+
+      const int limit = 20;
 
       final response = await apiProvider.post(EndPoints.fetchUserBookings, {
-        "page": page.value,
-        "status": status
+        "page": observer.value.page,
+        "status": status,
+        "limit": limit,
       });
-      print("hello");
 
       if (response.isOk && response.body != null) {
         final data = BookingListResponse.fromJson(response.body);
-        print(data);
-        print("hello 1");
         if (data.status == 1) {
           final newBookings = data.data?.bookings ?? [];
           list.addAll(newBookings);
-          
-          if (newBookings.isEmpty || (data.data?.pagination?.currentPage ?? 1) >= (data.data?.pagination?.totalPages ?? 1)) {
-            hasMore.value = false;
-          } else {
-            page.value++;
+
+          observer.value.data.value.maybeWhen(
+            success: (oldResponse) {
+              observer.value.data.value = ApiResult.success(data.copyWith(
+                data: data.data?.copyWith(bookings: list.toList()),
+              ));
+            },
+            orElse: () {
+              observer.value.data.value = ApiResult.success(data);
+            },
+          );
+
+          observer.value.page++;
+
+          if (newBookings.length < limit || (data.data?.pagination?.currentPage ?? 1) >= (data.data?.pagination?.totalPages ?? 1)) {
+            observer.value.isPaginationCompleted = true;
           }
-          observer.value = ApiResult.success(data);
-        } else {
-          observer.value = ApiResult.error(data.message ?? "Failed to fetch bookings");
+
+          observer.value.isLoading = false;
+          observer.refresh();
+          return;
         }
+        throw data.message ?? "Failed to fetch bookings";
       } else {
-        observer.value = ApiResult.error("Something went wrong");
+        observer.value.data.value = ApiResult.error("Something went wrong");
       }
     } catch (e) {
-      Get.showCustomSnackBar(title: "Failed", message: e.toString() ?? "Booking failed");
-      observer.value = ApiResult.error(e.toString());
+      observer.value.data.value = ApiResult.error(e.toString());
+      observer.value.isLoading = false;
+      observer.refresh();
     }
   }
 

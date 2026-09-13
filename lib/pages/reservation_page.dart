@@ -1,4 +1,8 @@
+import 'package:bayitouser/components/empty_data_view.dart';
+import 'package:bayitouser/pages/professional_booking_details_page.dart';
+import 'package:bayitouser/shimmer/single_item_shimmer.dart';
 import 'package:bayitouser/components/custom_tab_component.dart';
+import 'package:bayitouser/shimmer/reservation_list_shimmer.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +10,7 @@ import '../api/api_result.dart';
 import '../components/custom_action_button.dart';
 import '../components/reservation_outlet_card.dart';
 import '../models/responseModels/booking_response_model.dart';
+import '../models/responseModels/page_model.dart';
 import '../utils/custom_color.dart';
 import 'booking_details_page.dart';
 import 'package:get/get.dart';
@@ -108,7 +113,7 @@ class _ReservationPageState extends State<ReservationPage> {
                   builder: (context, tabIndex, child) {
                     return Obx(() {
                       RxList<BookingModel> list;
-                      Rx<ApiResult<BookingListResponse>> observer;
+                      Rx<PaginationModel<Rx<ApiResult<BookingListResponse>>>> observer;
 
                       if (tabIndex == 0) {
                         list = bookingViewModel.upcomingBookings;
@@ -121,17 +126,17 @@ class _ReservationPageState extends State<ReservationPage> {
                         observer = bookingViewModel.cancelledObserver;
                       }
 
-                      return observer.value.when(
+                      return observer.value.data.value.when(
                         init: () => const SizedBox.shrink(),
                         loading: (msg) => list.isEmpty
-                            ? const Center(child: CircularProgressIndicator(color: CustomColors.secondary))
-                            : _buildList(list, tabIndex),
+                            ? const ReservationListShimmer()
+                            : _buildList(list, observer.value),
                         success: (data) => list.isEmpty
-                            ? const Center(child: Text("No Reservations Found", style: TextStyle(color: Colors.white)))
-                            : _buildList(list, tabIndex),
+                            ? const r
+                            : _buildList(list, observer.value),
                         error: (err) => list.isEmpty
-                            ? Center(child: Text(err, style: const TextStyle(color: Colors.white)))
-                            : _buildList(list, tabIndex),
+                            ? Center(child: EmptyDataView(text: err))
+                            : _buildList(list, observer.value),
                       );
                     });
                   },
@@ -144,23 +149,24 @@ class _ReservationPageState extends State<ReservationPage> {
     );
   }
 
-  Widget _buildList(List<BookingModel> bookings, int tabIndex) {
+  Widget _buildList(List<BookingModel> bookings, PaginationModel pagination) {
     return RefreshIndicator(
       onRefresh: () async => _fetchBookings(isRefresh: true),
       child: ListView.builder(
         controller: _scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
-        itemCount: bookings.length + (bookingViewModel.hasMore(tabIndex) ? 1 : 0),
+        itemCount: bookings.length + (pagination.isPaginationCompleted ? 0 : 1),
         itemBuilder: (context, index) {
           if (index == bookings.length) {
             return const Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
-              child: Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
+              child: SingleReservationShimmer(),
             );
           }
 
           final booking = bookings[index];
           return ReservationOutletCard(
+            bookingType: booking.bookingType ?? "classic",
             image: booking.outletId?.businessLogo ?? "",
             OutletName: booking.outletId?.businessName ?? "Outlet Name",
             location: booking.outletId?.location?.address1 ?? "Location",
@@ -168,7 +174,12 @@ class _ReservationPageState extends State<ReservationPage> {
             time: booking.checkIn != null ? _formatTime(booking.checkIn!) : "",
             table: "Table ${booking.tableId?.tableNumber ?? ''}",
             onTap: () {
-              Get.to(() => BookingDetailsPage(bookingId: booking.id ?? ""));
+              if((booking.bookingType ?? "classic") != "classic"){
+                Get.to(() => ProfessionalBookingDetailsPage(bookingId: booking.id ?? ""));
+              }
+              else{
+                Get.to(() => BookingDetailsPage(bookingId: booking.id ?? ""));
+              }
             },
           );
         },
@@ -200,13 +211,5 @@ class _ReservationPageState extends State<ReservationPage> {
   String _getMonth(int month) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     return months[month - 1];
-  }
-}
-
-extension BookingViewModelExtension on BookingViewModel {
-  bool hasMore(int tabIndex) {
-    if (tabIndex == 0) return hasMoreUpcoming.value;
-    if (tabIndex == 1) return hasMoreCompleted.value;
-    return hasMoreCancelled.value;
   }
 }

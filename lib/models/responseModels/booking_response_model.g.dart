@@ -177,11 +177,14 @@ _$BookingModelImpl _$$BookingModelImplFromJson(Map<String, dynamic> json) =>
       paymentId: json['paymentId'] as String?,
       checkIn: json['checkIn'] as String?,
       checkOut: json['checkOut'] as String?,
-      amount: json['amount'] as int?,
-      discount: json['discount'] as int?,
-      charges: json['charges'] as int?,
-      subTotal: json['subTotal'] as int?,
-      refundedAmount: json['refundedAmount'] as int?,
+      bookingHours: json['bookingHours'],
+      baseCharges: json['baseCharges'],
+      professionalCharges: json['professionalCharges'],
+      amount: json['amount'],
+      discount: json['discount'],
+      charges: json['charges'],
+      subTotal: json['subTotal'],
+      refundedAmount: json['refundedAmount'],
       logs: (json['logs'] as List<dynamic>?)
           ?.map((e) => BookingLog.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -196,6 +199,13 @@ _$BookingModelImpl _$$BookingModelImplFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
+      bookingMappedTo: json['bookingMappedTo'] == null
+          ? null
+          : BookingModel.fromJson(
+              json['bookingMappedTo'] as Map<String, dynamic>),
+      userBookings: (json['userBookings'] as List<dynamic>?)
+          ?.map((e) => BookingModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
@@ -213,6 +223,9 @@ Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
       'paymentId': instance.paymentId,
       'checkIn': instance.checkIn,
       'checkOut': instance.checkOut,
+      'bookingHours': instance.bookingHours,
+      'baseCharges': instance.baseCharges,
+      'professionalCharges': instance.professionalCharges,
       'amount': instance.amount,
       'discount': instance.discount,
       'charges': instance.charges,
@@ -226,6 +239,8 @@ Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
       'cancellationDetails': instance.cancellationDetails,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
+      'bookingMappedTo': instance.bookingMappedTo,
+      'userBookings': instance.userBookings,
     };
 
 _$BookingLogImpl _$$BookingLogImplFromJson(Map<String, dynamic> json) =>

@@ -21,7 +21,7 @@ abstract class RegisterUserRequestModel with _$RegisterUserRequestModel {
     String? name,
     String? dob,
     String? gender,
-    RegisterLocationRequestModel? location,
+    RegisterLocationModel? location,
     String? referralCode,
   }) = _RegisterUserRequestModel;
 
@@ -40,8 +40,8 @@ abstract class RegisterChargesRequestModel with _$RegisterChargesRequestModel {
 }
 
 @freezed
-abstract class RegisterLocationRequestModel with _$RegisterLocationRequestModel {
-  const factory RegisterLocationRequestModel({
+abstract class RegisterLocationModel with _$RegisterLocationModel {
+  const factory RegisterLocationModel({
     String? address1,
     String? address2,
     String? landMark,
@@ -50,8 +50,8 @@ abstract class RegisterLocationRequestModel with _$RegisterLocationRequestModel 
     int? pinCode,
     double? latitude,
     double? longitude,
-  }) = _RegisterLocationRequestModel;
+  }) = _RegisterLocationModel;
 
-  factory RegisterLocationRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$RegisterLocationRequestModelFromJson(json);
+  factory RegisterLocationModel.fromJson(Map<String, dynamic> json) =>
+      _$RegisterLocationModelFromJson(json);
 }

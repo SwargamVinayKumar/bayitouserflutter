@@ -57,8 +57,7 @@ class UserViewModel extends GetxController {
         observer.refresh();
       }
 
-      const int maxListApiReturns = 10;
-
+      const int maxListApiReturns = 20;
 
       final requestData = request.copyWith(
         page: observer.value.page,
@@ -86,10 +85,27 @@ class UserViewModel extends GetxController {
       if (response.isOk && body != null) {
         final responseData = BookingListResponse.fromJson(body);
         if (responseData.status == 1) {
-          observer.value.data.value = ApiResult.success(responseData);
+          final newBookings = responseData.data?.bookings ?? [];
+          
+          observer.value.data.value.maybeWhen(
+            success: (oldResponse) {
+              final oldList = List<BookingModel>.from(oldResponse?.data?.bookings ?? []);
+              for (final booking in newBookings) {
+                if (!oldList.any((e) => e.id == booking.id)) {
+                  oldList.add(booking);
+                }
+              }
+              observer.value.data.value = ApiResult.success(responseData.copyWith(
+                data: responseData.data?.copyWith(bookings: oldList),
+              ));
+            },
+            orElse: () {
+              observer.value.data.value = ApiResult.success(responseData);
+            },
+          );
+
           observer.value.page++;
-          if ((responseData.data?.bookings?.length ?? 0) <
-              maxListApiReturns) {
+          if (newBookings.length < maxListApiReturns) {
             observer.value.isPaginationCompleted = true;
           }
           observer.value.isLoading = false;

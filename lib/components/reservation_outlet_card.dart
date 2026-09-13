@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/custom_color.dart';
 
 class ReservationOutletCard extends StatelessWidget {
+  final String? bookingType;
   final String image;
   final String OutletName;
   final String location;
@@ -18,6 +19,7 @@ class ReservationOutletCard extends StatelessWidget {
 
   const ReservationOutletCard({
     super.key,
+    this.bookingType = "classic",
     required this.image,
     required this.OutletName,
     required this.location,
@@ -104,6 +106,8 @@ class ReservationOutletCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
+                  _buildStatusChip(bookingType),
+                  const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -126,4 +130,24 @@ class ReservationOutletCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildStatusChip(String? status) {
+    Color color = Colors.orange;
+    if (status == "professional") color = Colors.green;
+    if (status == "classic") color = Colors.orange;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: color),
+      ),
+      child: Text(
+        status?.toUpperCase().replaceAll("_", " ") ?? "",
+        style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: color),
+      ),
+    );
+  }
+
 }

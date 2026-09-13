@@ -98,7 +98,7 @@ class AuthViewModel extends GetxController {
   final fssaiNumberController = TextEditingController();
 
   // Location Picker State
-  final locationDetails = Rxn<LocationRequestModel>();
+  final locationDetails = Rxn<LocationModel>();
   final locationPosition = Rxn<Position>();
 
   // Opening Hours
@@ -111,6 +111,72 @@ class AuthViewModel extends GetxController {
   void onInit() {
     super.onInit();
     _determinePosition();
+  }
+
+
+  Future<Position?> fetchCurrentLocation() async {
+    try {
+      if (locationPosition.value != null) {
+        return locationPosition.value;
+      }
+
+      await Geolocator.requestPermission();
+
+
+
+
+      LocationPermission permission = await Geolocator.checkPermission();
+
+      // bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      // print("helloLocation");
+      // print(serviceEnabled);
+      // if (!serviceEnabled) {
+      //   return _setDefaultLocation();
+      // }
+
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        return _setDefaultLocation();
+
+      }
+
+      final position = await Geolocator.getCurrentPosition();
+
+      final geoAddress = await GeoUtil().getApiAddress(position.latitude, position.longitude);
+
+      locationPosition.value = position;
+      locationDetails.value = geoAddress;
+
+      return position;
+    } catch (e) {
+      print("Location Error: $e");
+      return _setDefaultLocation();
+    }
+  }
+
+  Position defaultAmeerpetPosition() {
+    return Position(
+        latitude: 17.4375,
+        longitude: 78.4483,
+        timestamp: DateTime.now(),
+        accuracy: 0,
+        altitude: 0,
+        heading: 0,
+        speed: 0,
+        speedAccuracy: 0,
+        altitudeAccuracy: 0,
+        headingAccuracy: 0);
+  }
+
+  Future<Position> _setDefaultLocation() async {
+    final defaultPosition = defaultAmeerpetPosition();
+
+    final geoAddress = await GeoUtil()
+        .getApiAddress(defaultPosition.latitude, defaultPosition.longitude);
+
+    locationPosition.value = defaultPosition;
+    locationDetails.value = geoAddress;
+
+    return defaultPosition;
   }
 
   Future<void> _determinePosition() async {
@@ -392,7 +458,7 @@ class AuthViewModel extends GetxController {
         charges: RegisterChargesRequestModel(
           perHour: int.tryParse(perHourController.text) ?? 0,
         ),
-        location: RegisterLocationRequestModel(
+        location: RegisterLocationModel(
           address1: address1Controller.text,
           address2: address2Controller.text,
           landMark: landmarkController.text,
