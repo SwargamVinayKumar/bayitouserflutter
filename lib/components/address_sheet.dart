@@ -5,6 +5,7 @@ import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../models/responseModels/auth_response_model.dart';
 import 'custom_gradient_button.dart';
 import 'custom_textfield.dart';
 
@@ -27,10 +28,10 @@ class _AddressSheetState extends State<AddressSheet> {
     authViewModel.address2Controller.text = widget.locationDetails?.address2 ?? '';
     authViewModel.cityController.text = widget.locationDetails?.city ?? '';
     authViewModel.stateController.text = widget.locationDetails?.state ?? '';
-    authViewModel.pincodeController.text = widget.locationDetails?.pinCode ?? '';
+    authViewModel.pincodeController.text = (widget.locationDetails?.pinCode ?? 0).toString();
     authViewModel.landmarkController.text = widget.locationDetails?.landMark ?? '';
-    authViewModel.latitudeController.text = widget.locationDetails?.latitude ?? '';
-    authViewModel.longitudeController.text = widget.locationDetails?.longitude ?? '';
+    authViewModel.latitudeController.text = (widget.locationDetails?.latitude ?? 0.0).toString();
+    authViewModel.longitudeController.text = (widget.locationDetails?.longitude ?? 0.0).toString();
   }
 
   @override
@@ -117,9 +118,9 @@ class _AddressSheetState extends State<AddressSheet> {
                       city: authViewModel.cityController.text,
                       state: authViewModel.stateController.text,
                       landMark: authViewModel.landmarkController.text,
-                      pinCode: authViewModel.pincodeController.text,
-                      latitude: authViewModel.latitudeController.text,
-                      longitude: authViewModel.longitudeController.text,
+                      pinCode: int.tryParse(authViewModel.pincodeController.text) ?? 0,
+                      latitude: double.tryParse(authViewModel.latitudeController.text) ?? 0.0,
+                      longitude: double.tryParse(authViewModel.longitudeController.text) ?? 0.0,
                     );
                     
                     authViewModel.locationDetails.value = location;

@@ -11,6 +11,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../models/responseModels/auth_response_model.dart';
+
 class LocationPickerPage extends StatefulWidget {
   const LocationPickerPage({super.key});
 
@@ -90,8 +92,8 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Icon(Icons.location_on_sharp, color: CustomColors.secondary),
                             SizedBox(width: 8),
                             Text(
@@ -160,9 +162,9 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
           address2: placeMark.locality ?? '',
           city: placeMark.locality ?? '',
           state: placeMark.administrativeArea ?? '',
-          pinCode: placeMark.postalCode ?? '',
-          latitude: selectedLocation!.latitude.toString(),
-          longitude: selectedLocation!.longitude.toString(),
+          pinCode: int.tryParse(placeMark.postalCode ?? "0") ?? 0,
+          latitude: selectedLocation?.latitude  ?? 0.0,
+          longitude: selectedLocation?.longitude ?? 0.0,
         );
       }
       completer.complete(placeMark);

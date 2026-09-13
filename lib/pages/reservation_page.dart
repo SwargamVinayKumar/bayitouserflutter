@@ -132,11 +132,11 @@ class _ReservationPageState extends State<ReservationPage> {
                             ? const ReservationListShimmer()
                             : _buildList(list, observer.value),
                         success: (data) => list.isEmpty
-                            ? const r
+                            ? const Center(child: EmptyDataView(text: "No Reservations yet"))
                             : _buildList(list, observer.value),
                         error: (err) => list.isEmpty
                             ? Center(child: EmptyDataView(text: err))
-                            : _buildList(list, observer.value),
+                            : _buildList(list, observer.value)
                       );
                     });
                   },

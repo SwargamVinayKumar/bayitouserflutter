@@ -26,8 +26,7 @@ _$SignUpRequestModelImpl _$$SignUpRequestModelImplFromJson(
               json['businessLicence'] as Map<String, dynamic>),
       location: json['location'] == null
           ? null
-          : LocationModel.fromJson(
-              json['location'] as Map<String, dynamic>),
+          : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$SignUpRequestModelImplToJson(
@@ -43,30 +42,4 @@ Map<String, dynamic> _$$SignUpRequestModelImplToJson(
       'designations': instance.designations,
       'businessLicence': instance.businessLicence,
       'location': instance.location,
-    };
-
-_$LocationModelImpl _$$LocationModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$LocationModelImpl(
-      address1: json['address1'] as String?,
-      address2: json['address2'] as String?,
-      city: json['city'] as String?,
-      state: json['state'] as String?,
-      landMark: json['landMark'] as String?,
-      pinCode: json['pinCode'] as String?,
-      latitude: json['latitude'] as String?,
-      longitude: json['longitude'] as String?,
-    );
-
-Map<String, dynamic> _$$LocationModelImplToJson(
-        _$LocationModelImpl instance) =>
-    <String, dynamic>{
-      'address1': instance.address1,
-      'address2': instance.address2,
-      'city': instance.city,
-      'state': instance.state,
-      'landMark': instance.landMark,
-      'pinCode': instance.pinCode,
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
     };
