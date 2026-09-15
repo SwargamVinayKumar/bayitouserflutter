@@ -22,10 +22,13 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return StatefulWrapper(
       onInit: () async {
-        await authViewModel.fetchCurrentLocation();
         final version = await AuthUtils.getAppVersion();
-        await authViewModel.validateVersion(ValidateVersionRequestModel(version: version));
-  //      Future.delayed(const Duration(seconds: 2), () { Get.offAll(() =>  const SignInPage()); });
+        
+        // Run location fetch and version validation in parallel to reduce delay
+        await Future.wait([
+          authViewModel.fetchCurrentLocation(),
+          authViewModel.validateVersion(ValidateVersionRequestModel(version: version)),
+        ]);
       },
       child: Scaffold(
         backgroundColor: CustomColors.secondary,
@@ -36,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               const Spacer(),
               Image.asset(
-                'assets/images/Bayitologo.png',
+                'assets/images/bayito_logo.png',
                 fit: BoxFit.cover,
               ),
               const Spacer(),

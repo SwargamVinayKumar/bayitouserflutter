@@ -115,32 +115,28 @@ class AuthViewModel extends GetxController {
 
 
   Future<Position?> fetchCurrentLocation() async {
-
     try {
       if (locationPosition.value != null) {
         return locationPosition.value;
       }
 
-      await Geolocator.requestPermission();
-
-
-
-
       LocationPermission permission = await Geolocator.checkPermission();
-
-      // bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      // print("helloLocation");
-      // print(serviceEnabled);
-      // if (!serviceEnabled) {
-      //   return _setDefaultLocation();
-      // }
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
 
       if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
         return _setDefaultLocation();
-
       }
 
-      final position = await Geolocator.getCurrentPosition();
+      // Try to get last known position first for speed
+      Position? position = await Geolocator.getLastKnownPosition();
+      
+      // If no last known, or it's old, get current position
+      position ??= await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium,
+        timeLimit: const Duration(seconds: 5),
+      );
 
       final geoAddress = await GeoUtil().getApiAddress(position.latitude, position.longitude);
 
