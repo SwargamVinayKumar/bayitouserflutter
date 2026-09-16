@@ -42,7 +42,7 @@ class TableItemWidgetPrime extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.all(12),
+        // padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? CustomColors.secondary : CustomColors.white.withOpacity(0.1),
           borderRadius: BorderRadius.circular(20),
@@ -65,73 +65,143 @@ class TableItemWidgetPrime extends StatelessWidget {
             if (table?.images != null && table?.images?.isNotEmpty == true)
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: ImageCarouselComponent(
-                  imageUrls: table?.images ?? [],
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+                child: Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    ImageCarouselComponent(
+                      imageUrls: table?.images ?? [],
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                    if (ratingAndReviewModel?.review != null && ratingAndReviewModel?.review?.isNotEmpty == true)
+                      Positioned(
+                        top: 12,
+                        left: 12,
+                        right: 12,
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.black.withOpacity(0.85),
+                                const Color(0xFF9C7C38).withOpacity(0.9), // Deep gold
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              )
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/star.png",
+                                    width: 16,
+                                    height: 16,
+                                    color: const Color(0xFFFFD700), // Tint star to gold
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    "${table?.rating ?? 0}",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  const Icon(
+                                    Icons.verified_rounded,
+                                    color: Color(0xFFFFD700),
+                                    size: 16,
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                "${ratingAndReviewModel?.review}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               )
             else
-              Icon(
-                Icons.table_restaurant_rounded,
-                color: isSelected ? Colors.white : CustomColors.secondary,
-                size: 40,
-              ),
-            const SizedBox(height: 8),
-            if(showRating == true) InkWell(
-              onTap: onViewRating,
-              child: Row(
+              Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset("assets/images/star.png",width: 20,height: 20,),
+                  Icon(
+                    Icons.table_restaurant_rounded,
+                    color: isSelected ? Colors.white : CustomColors.secondary,
+                    size: 40,
                   ),
-                  Text(
-                    "${table?.rating ?? 0}",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: isSelected ? Colors.white : CustomColors.secondary,
+                  if(showRating == true)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.star_rounded, color: Colors.orange, size: 18),
+                          const SizedBox(width: 4),
+                          Text(
+                            "${table?.rating ?? 0}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: isSelected ? Colors.white : CustomColors.secondary,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  )
                 ],
               ),
-            ),
-            if(ratingAndReviewModel?.review != null  || ratingAndReviewModel?.review?.isNotEmpty == true) InkWell(
-              onTap: onViewRating,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                width: double.infinity,
-                decoration: isSelected ? AppStyles.strokeWhiteBorder : AppStyles.strokePrimaryBorder,
-                child: Text(
-                  "${ratingAndReviewModel?.review}",
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(children: [
+                Text(
+                  "${table?.tableNumber}",
                   style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: isSelected ? CustomColors.secondary : Colors.white70,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: isSelected ? Colors.white : CustomColors.secondary,
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              "${table?.tableNumber}",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: isSelected ? Colors.white : CustomColors.secondary,
-              ),
-            ),
-            Text(
-              "${table?.seatCapacity} Seater",
-              style: TextStyle(
-                fontSize: 12,
-                color: isSelected ? Colors.white70 : CustomColors.secondary.withOpacity(0.7),
-              ),
-            ),
+                const SizedBox(height: 4),
+                Text(
+                  "${table?.seatCapacity} Seater",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: isSelected ? Colors.white70 : CustomColors.secondary.withOpacity(0.7),
+                  ),
+                ),
+              ],),
+            )
+
           ],
         ),
       ),
@@ -471,6 +541,24 @@ Widget buildUserDetails(BookingModel? booking){
                 const SizedBox(height: 4),
                 Text(
                   "Charges : ${booking?.userId?.charges?.perHour ?? ""}/hr",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: CustomColors.textColor,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Mobile : ${booking?.userId?.mobile ?? ""}",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: CustomColors.textColor,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Email : ${booking?.userId?.email ?? ""}",
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,

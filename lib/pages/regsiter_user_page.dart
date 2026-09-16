@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../models/responseModels/auth_response_model.dart';
+
 class RegisterUserPage extends StatefulWidget {
-  const RegisterUserPage({super.key});
+  final ProfileData? userModel;
+  const RegisterUserPage({super.key, this.userModel});
 
   @override
   State<RegisterUserPage> createState() => _RegisterUserPageState();
@@ -22,6 +25,9 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       authViewModel.fetchDesignations();
+      if (widget.userModel != null) {
+        authViewModel.populateUserFields(widget.userModel);
+      }
     });
   }
 
@@ -42,7 +48,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
     return Scaffold(
       backgroundColor: CustomColors.white,
       appBar: AppBar(
-        title: const Text("Register Profile", style: TextStyle(color: CustomColors.secondary, fontWeight: FontWeight.bold)),
+        title: Text(widget.userModel != null ? "Edit Profile" : "Register Profile", style: const TextStyle(color: CustomColors.secondary, fontWeight: FontWeight.bold)),
         backgroundColor: CustomColors.white,
         elevation: 0,
         centerTitle: true,
@@ -194,16 +200,16 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 20),
-            const Text("Referral Code (Optional)", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: CustomColors.secondary)),
-            const SizedBox(height: 10),
-            CustomTextFieldComponent(
-              hintText: "Referral Code",
-              textController: authViewModel.referralCodeController,
-              prefixIcon: const Icon(Icons.card_giftcard, color: CustomColors.secondary),
-            ),
+            // const Text("Referral Code (Optional)", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: CustomColors.secondary)),
+            // const SizedBox(height: 10),
+            // CustomTextFieldComponent(
+            //   hintText: "Referral Code",
+            //   textController: authViewModel.referralCodeController,
+            //   prefixIcon: const Icon(Icons.card_giftcard, color: CustomColors.secondary),
+            // ),
             const SizedBox(height: 30),
             PrimaryButton(
-              buttonTxt: "Register Now",
+              buttonTxt: widget.userModel != null ? "Update Profile" : "Register Now",
               observer: authViewModel.registerUserObserver,
               buttonClick: () {
                 authViewModel.registerUser();

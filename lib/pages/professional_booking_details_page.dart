@@ -83,6 +83,20 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
                       _infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
                     ]),
                     const SizedBox(height: 16),
+                    buildSectionTitle("Professional User Details"),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration:BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(20)),color: CustomColors.white,boxShadow: [
+                        BoxShadow(
+                          color: CustomColors.midBlack.withOpacity(0.4),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ]),
+                      child: buildUserDetails(booking.bookingMappedTo),
+                    ),
+                    const SizedBox(height: 16),
                     _buildSectionHeader("Reserved Table", Icons.event_seat_rounded),
                     const SizedBox(height: 16),
                     TableItemWidgetPrime(

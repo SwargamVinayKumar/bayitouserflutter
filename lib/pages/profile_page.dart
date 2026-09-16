@@ -1,7 +1,10 @@
 import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/components/profile_header_component.dart';
 import 'package:bayitouser/components/profile_item_component.dart';
+import 'package:bayitouser/pages/privacy_security_page.dart';
+import 'package:bayitouser/pages/regsiter_user_page.dart';
 import 'package:bayitouser/pages/sign_in_page.dart';
+import 'package:bayitouser/pages/support_page.dart';
 import 'package:bayitouser/shimmer/profile_page_shimmer.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
@@ -83,11 +86,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 ProfileItemComponent(
                   icon: Icons.edit_outlined,
                   title: "Edit Profile",
+                  onTap: () {
+                    Get.to(() => RegisterUserPage(userModel: userModel));
+                  },
                 ),
                 DottedLine(dashColor: CustomColors.darkGray),
                 ProfileItemComponent(
                   icon: Icons.security_outlined,
                   title: "Privacy & Security",
+                  onTap: () {
+                    Get.to(() => const PrivacySecurityPage());
+                  },
                 ),
                 DottedLine(dashColor: CustomColors.darkGray),
                 // ProfileItemComponent(
@@ -97,6 +106,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 ProfileItemComponent(
                   icon: Icons.help_outline_rounded,
                   title: "Help & Support",
+                  onTap: () {
+                    final supportData = (data as ProfileResponseModel).support;
+                    Get.to(() => SupportPage(supportData: supportData));
+                  },
                 ),
               ],
             );

@@ -1,9 +1,11 @@
+import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/shimmer/booking_details_shimmer.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_network_image.dart';
 import 'package:bayitouser/pages/rating_reviews_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,6 +84,21 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                       _infoRow(Icons.table_restaurant, "Table", "Table ${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
                       _infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
                     ]),
+                    _buildSectionTitle("Appointed Users"),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration:BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(20)),color: CustomColors.white,boxShadow: [
+                        BoxShadow(
+                          color: CustomColors.midBlack.withOpacity(0.4),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ]),
+                      child: (booking.userBookings ?? []).isEmpty == true ? const Center(child: EmptyDataView(text: "No One Booked Yet!"),) :Column(
+                        children: booking.userBookings?.map((userBooking) => buildUserDetails(userBooking)).toList() ?? [],
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     _buildSectionHeader("Reserved Table", Icons.event_seat_rounded),
                     const SizedBox(height: 16),

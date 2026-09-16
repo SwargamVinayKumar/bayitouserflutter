@@ -39,6 +39,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       dob: json['dob'] as String?,
       gender: json['gender'] as String?,
       email: json['email'] as String?,
+      mobile: json['mobile'],
       charges: json['charges'] == null
           ? null
           : ChargesModel.fromJson(json['charges'] as Map<String, dynamic>),
@@ -54,6 +55,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'dob': instance.dob,
       'gender': instance.gender,
       'email': instance.email,
+      'mobile': instance.mobile,
       'charges': instance.charges,
     };
 

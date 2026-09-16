@@ -217,6 +217,7 @@ mixin _$UserModel {
   String? get dob => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  dynamic get mobile => throw _privateConstructorUsedError;
   ChargesModel? get charges => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -239,6 +240,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? dob,
       String? gender,
       String? email,
+      dynamic mobile,
       ChargesModel? charges});
 
   $UserLocationModelCopyWith<$Res>? get location;
@@ -266,6 +268,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? dob = freezed,
     Object? gender = freezed,
     Object? email = freezed,
+    Object? mobile = freezed,
     Object? charges = freezed,
   }) {
     return _then(_value.copyWith(
@@ -301,6 +304,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      mobile: freezed == mobile
+          ? _value.mobile
+          : mobile // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       charges: freezed == charges
           ? _value.charges
           : charges // ignore: cast_nullable_to_non_nullable
@@ -350,6 +357,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? dob,
       String? gender,
       String? email,
+      dynamic mobile,
       ChargesModel? charges});
 
   @override
@@ -377,6 +385,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? dob = freezed,
     Object? gender = freezed,
     Object? email = freezed,
+    Object? mobile = freezed,
     Object? charges = freezed,
   }) {
     return _then(_$UserModelImpl(
@@ -412,6 +421,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      mobile: freezed == mobile
+          ? _value.mobile
+          : mobile // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       charges: freezed == charges
           ? _value.charges
           : charges // ignore: cast_nullable_to_non_nullable
@@ -432,6 +445,7 @@ class _$UserModelImpl implements _UserModel {
       this.dob,
       this.gender,
       this.email,
+      this.mobile,
       this.charges})
       : _designations = designations;
 
@@ -464,11 +478,13 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? email;
   @override
+  final dynamic mobile;
+  @override
   final ChargesModel? charges;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, profilePic: $profilePic, designations: $designations, location: $location, name: $name, dob: $dob, gender: $gender, email: $email, charges: $charges)';
+    return 'UserModel(id: $id, profilePic: $profilePic, designations: $designations, location: $location, name: $name, dob: $dob, gender: $gender, email: $email, mobile: $mobile, charges: $charges)';
   }
 
   @override
@@ -487,6 +503,7 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.dob, dob) || other.dob == dob) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.email, email) || other.email == email) &&
+            const DeepCollectionEquality().equals(other.mobile, mobile) &&
             (identical(other.charges, charges) || other.charges == charges));
   }
 
@@ -502,6 +519,7 @@ class _$UserModelImpl implements _UserModel {
       dob,
       gender,
       email,
+      const DeepCollectionEquality().hash(mobile),
       charges);
 
   @JsonKey(ignore: true)
@@ -528,6 +546,7 @@ abstract class _UserModel implements UserModel {
       final String? dob,
       final String? gender,
       final String? email,
+      final dynamic mobile,
       final ChargesModel? charges}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -550,6 +569,8 @@ abstract class _UserModel implements UserModel {
   String? get gender;
   @override
   String? get email;
+  @override
+  dynamic get mobile;
   @override
   ChargesModel? get charges;
   @override

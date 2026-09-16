@@ -7,15 +7,19 @@ class ProfileItemComponent extends StatelessWidget {
 
   final IconData icon;
   final String title;
+  final VoidCallback? onTap;
 
   const ProfileItemComponent({super.key,
     required this.icon,
-    required this.title
+    required this.title,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
@@ -56,6 +60,7 @@ class ProfileItemComponent extends StatelessWidget {
           ),
         ],
       ),
+    )
     );
   }
 }

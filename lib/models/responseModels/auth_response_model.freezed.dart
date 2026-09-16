@@ -857,6 +857,8 @@ mixin _$ProfileData {
   int? get mobile => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get dob => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
   ChargesModel? get charges => throw _privateConstructorUsedError;
   LocationModel? get location => throw _privateConstructorUsedError;
@@ -888,6 +890,8 @@ abstract class $ProfileDataCopyWith<$Res> {
       int? mobile,
       String? name,
       String? email,
+      String? dob,
+      String? gender,
       String? password,
       ChargesModel? charges,
       LocationModel? location,
@@ -923,6 +927,8 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
     Object? mobile = freezed,
     Object? name = freezed,
     Object? email = freezed,
+    Object? dob = freezed,
+    Object? gender = freezed,
     Object? password = freezed,
     Object? charges = freezed,
     Object? location = freezed,
@@ -965,6 +971,14 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
@@ -1047,6 +1061,8 @@ abstract class _$$ProfileDataImplCopyWith<$Res>
       int? mobile,
       String? name,
       String? email,
+      String? dob,
+      String? gender,
       String? password,
       ChargesModel? charges,
       LocationModel? location,
@@ -1082,6 +1098,8 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
     Object? mobile = freezed,
     Object? name = freezed,
     Object? email = freezed,
+    Object? dob = freezed,
+    Object? gender = freezed,
     Object? password = freezed,
     Object? charges = freezed,
     Object? location = freezed,
@@ -1124,6 +1142,14 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
@@ -1177,6 +1203,8 @@ class _$ProfileDataImpl implements _ProfileData {
       this.mobile,
       this.name,
       this.email,
+      this.dob,
+      this.gender,
       this.password,
       this.charges,
       this.location,
@@ -1209,6 +1237,10 @@ class _$ProfileDataImpl implements _ProfileData {
   @override
   final String? email;
   @override
+  final String? dob;
+  @override
+  final String? gender;
+  @override
   final String? password;
   @override
   final ChargesModel? charges;
@@ -1237,7 +1269,7 @@ class _$ProfileDataImpl implements _ProfileData {
 
   @override
   String toString() {
-    return 'ProfileData(id: $id, profilePic: $profilePic, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, password: $password, charges: $charges, location: $location, tables: $tables, createdAt: $createdAt, updatedAt: $updatedAt, reservationCount: $reservationCount, connectionsCount: $connectionsCount, favouritesCount: $favouritesCount)';
+    return 'ProfileData(id: $id, profilePic: $profilePic, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, dob: $dob, gender: $gender, password: $password, charges: $charges, location: $location, tables: $tables, createdAt: $createdAt, updatedAt: $updatedAt, reservationCount: $reservationCount, connectionsCount: $connectionsCount, favouritesCount: $favouritesCount)';
   }
 
   @override
@@ -1256,6 +1288,8 @@ class _$ProfileDataImpl implements _ProfileData {
             (identical(other.mobile, mobile) || other.mobile == mobile) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.charges, charges) || other.charges == charges) &&
@@ -1276,25 +1310,28 @@ class _$ProfileDataImpl implements _ProfileData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      profilePic,
-      outletType,
-      approvalStatus,
-      reason,
-      mobile,
-      name,
-      email,
-      password,
-      charges,
-      location,
-      const DeepCollectionEquality().hash(_tables),
-      createdAt,
-      updatedAt,
-      const DeepCollectionEquality().hash(reservationCount),
-      const DeepCollectionEquality().hash(connectionsCount),
-      const DeepCollectionEquality().hash(favouritesCount));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        profilePic,
+        outletType,
+        approvalStatus,
+        reason,
+        mobile,
+        name,
+        email,
+        dob,
+        gender,
+        password,
+        charges,
+        location,
+        const DeepCollectionEquality().hash(_tables),
+        createdAt,
+        updatedAt,
+        const DeepCollectionEquality().hash(reservationCount),
+        const DeepCollectionEquality().hash(connectionsCount),
+        const DeepCollectionEquality().hash(favouritesCount)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1320,6 +1357,8 @@ abstract class _ProfileData implements ProfileData {
       final int? mobile,
       final String? name,
       final String? email,
+      final String? dob,
+      final String? gender,
       final String? password,
       final ChargesModel? charges,
       final LocationModel? location,
@@ -1350,6 +1389,10 @@ abstract class _ProfileData implements ProfileData {
   String? get name;
   @override
   String? get email;
+  @override
+  String? get dob;
+  @override
+  String? get gender;
   @override
   String? get password;
   @override

@@ -443,6 +443,33 @@ class AuthViewModel extends GetxController {
     }
   }
 
+  void populateUserFields(ProfileData? user) {
+    if (user == null) return;
+    
+    fullNameController.text = user.name ?? "";
+    dobController.text = user.dob ?? "";
+    gender.value = user.gender ?? "Male";
+    
+    perHourController.text = user.charges?.perHour?.toString() ?? "";
+    
+    if (user.location != null) {
+      address1Controller.text = user.location?.address1 ?? "";
+      address2Controller.text = user.location?.address2 ?? "";
+      cityController.text = user.location?.city ?? "";
+      stateController.text = user.location?.state ?? "";
+      pincodeController.text = user.location?.pinCode?.toString() ?? "";
+      landmarkController.text = user.location?.landMark ?? "";
+      latitudeController.text = user.location?.latitude?.toString() ?? "";
+      longitudeController.text = user.location?.longitude?.toString() ?? "";
+    }
+    
+    // designations
+    selectedDesignations.clear();
+    if (user.tables != null) {
+      selectedDesignations.addAll(user.tables!.map((e) => e.id ?? "").where((id) => id.isNotEmpty));
+    }
+  }
+
   Future<void> registerUser() async {
     try {
       registerUserObserver.value = ApiResult.loading("loading");

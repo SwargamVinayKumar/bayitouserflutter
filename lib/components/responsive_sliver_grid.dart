@@ -27,7 +27,7 @@ class ResponsiveSliverGrid extends StatelessWidget {
           ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 4, // Number of menu items
+          itemCount: 4, // Restored to 6 items
           itemBuilder: (context, index) {
             return _buildMenuCard(index);
           },
@@ -37,31 +37,27 @@ class ResponsiveSliverGrid extends StatelessWidget {
   }
 
   GridConfig _getGridConfig(double screenWidth) {
+    const double imageAspectRatio = 16 / 9; // Perfect 16:9 for 1280x720 images
+
     if (screenWidth >= 1024) {
       return GridConfig(
-        crossAxisCount: 4,
-        childAspectRatio: 1.6,
+        crossAxisCount: 3, // 3 per row looks better for 6 items on wide screens
+        childAspectRatio: imageAspectRatio,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       );
     } else if (screenWidth >= 600) {
       return GridConfig(
-        crossAxisCount: 3,
-        childAspectRatio: 1.5,
+        crossAxisCount: 2,
+        childAspectRatio: imageAspectRatio,
         crossAxisSpacing: 18,
         mainAxisSpacing: 18,
       );
-    } else if (screenWidth > 500) {
-      return GridConfig(
-        crossAxisCount: 2,
-        childAspectRatio: 1.4,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      );
     } else {
+      // Mobile
       return GridConfig(
         crossAxisCount: 2,
-        childAspectRatio: 1.2,
+        childAspectRatio: imageAspectRatio,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
       );
@@ -85,7 +81,7 @@ class ResponsiveSliverGrid extends StatelessWidget {
       {
         'imagePath': 'assets/images/Reservations.png',
         'page': const ReservationPage(showBackArrow: true),
-      },
+      }
     ];
 
     final item = menuItems[index];
@@ -112,3 +108,5 @@ class GridConfig {
     required this.mainAxisSpacing,
   });
 }
+
+

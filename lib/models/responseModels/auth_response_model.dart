@@ -65,6 +65,8 @@ abstract class ProfileData with _$ProfileData {
     int? mobile,
     String? name,
     String? email,
+    String? dob,
+    String? gender,
     String? password,
     ChargesModel? charges,
     LocationModel? location,

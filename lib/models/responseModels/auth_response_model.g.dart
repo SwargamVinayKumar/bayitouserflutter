@@ -94,6 +94,8 @@ _$ProfileDataImpl _$$ProfileDataImplFromJson(Map<String, dynamic> json) =>
       mobile: json['mobile'] as int?,
       name: json['name'] as String?,
       email: json['email'] as String?,
+      dob: json['dob'] as String?,
+      gender: json['gender'] as String?,
       password: json['password'] as String?,
       charges: json['charges'] == null
           ? null
@@ -121,6 +123,8 @@ Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
       'mobile': instance.mobile,
       'name': instance.name,
       'email': instance.email,
+      'dob': instance.dob,
+      'gender': instance.gender,
       'password': instance.password,
       'charges': instance.charges,
       'location': instance.location,

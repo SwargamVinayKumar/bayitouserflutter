@@ -15,6 +15,8 @@ _$PaginationRequestModelImpl _$$PaginationRequestModelImplFromJson(
       type: json['type'] as String?,
       outletId: json['outletId'] as String?,
       tableId: json['tableId'] as String?,
+      longitude: json['longitude'],
+      latitude: json['latitude'],
     );
 
 Map<String, dynamic> _$$PaginationRequestModelImplToJson(
@@ -26,4 +28,6 @@ Map<String, dynamic> _$$PaginationRequestModelImplToJson(
       'type': instance.type,
       'outletId': instance.outletId,
       'tableId': instance.tableId,
+      'longitude': instance.longitude,
+      'latitude': instance.latitude,
     };

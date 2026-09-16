@@ -67,9 +67,10 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,
                   children: [
-                    const SectionTitleItem(
+                     SectionTitleItem(
                       title: "Quick Access",
                       fontSize: 16,
+
                     ),
                     Text(
                       "See All",

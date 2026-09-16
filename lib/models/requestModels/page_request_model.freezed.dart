@@ -27,6 +27,8 @@ mixin _$PaginationRequestModel {
   String? get type => throw _privateConstructorUsedError;
   String? get outletId => throw _privateConstructorUsedError;
   String? get tableId => throw _privateConstructorUsedError;
+  dynamic get longitude => throw _privateConstructorUsedError;
+  dynamic get latitude => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,7 +48,9 @@ abstract class $PaginationRequestModelCopyWith<$Res> {
       String? query,
       String? type,
       String? outletId,
-      String? tableId});
+      String? tableId,
+      dynamic longitude,
+      dynamic latitude});
 }
 
 /// @nodoc
@@ -69,6 +73,8 @@ class _$PaginationRequestModelCopyWithImpl<$Res,
     Object? type = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
   }) {
     return _then(_value.copyWith(
       bookingType: freezed == bookingType
@@ -95,6 +101,14 @@ class _$PaginationRequestModelCopyWithImpl<$Res,
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as String?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 }
@@ -114,7 +128,9 @@ abstract class _$$PaginationRequestModelImplCopyWith<$Res>
       String? query,
       String? type,
       String? outletId,
-      String? tableId});
+      String? tableId,
+      dynamic longitude,
+      dynamic latitude});
 }
 
 /// @nodoc
@@ -136,6 +152,8 @@ class __$$PaginationRequestModelImplCopyWithImpl<$Res>
     Object? type = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
   }) {
     return _then(_$PaginationRequestModelImpl(
       bookingType: freezed == bookingType
@@ -162,6 +180,14 @@ class __$$PaginationRequestModelImplCopyWithImpl<$Res>
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as String?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
@@ -175,7 +201,9 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
       this.query,
       this.type,
       this.outletId,
-      this.tableId});
+      this.tableId,
+      this.longitude,
+      this.latitude});
 
   factory _$PaginationRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PaginationRequestModelImplFromJson(json);
@@ -192,10 +220,14 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
   final String? outletId;
   @override
   final String? tableId;
+  @override
+  final dynamic longitude;
+  @override
+  final dynamic latitude;
 
   @override
   String toString() {
-    return 'PaginationRequestModel(bookingType: $bookingType, page: $page, query: $query, type: $type, outletId: $outletId, tableId: $tableId)';
+    return 'PaginationRequestModel(bookingType: $bookingType, page: $page, query: $query, type: $type, outletId: $outletId, tableId: $tableId, longitude: $longitude, latitude: $latitude)';
   }
 
   @override
@@ -210,13 +242,23 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
             (identical(other.type, type) || other.type == type) &&
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
-            (identical(other.tableId, tableId) || other.tableId == tableId));
+            (identical(other.tableId, tableId) || other.tableId == tableId) &&
+            const DeepCollectionEquality().equals(other.longitude, longitude) &&
+            const DeepCollectionEquality().equals(other.latitude, latitude));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, bookingType, page, query, type, outletId, tableId);
+      runtimeType,
+      bookingType,
+      page,
+      query,
+      type,
+      outletId,
+      tableId,
+      const DeepCollectionEquality().hash(longitude),
+      const DeepCollectionEquality().hash(latitude));
 
   @JsonKey(ignore: true)
   @override
@@ -240,7 +282,9 @@ abstract class _PaginationRequestModel implements PaginationRequestModel {
       final String? query,
       final String? type,
       final String? outletId,
-      final String? tableId}) = _$PaginationRequestModelImpl;
+      final String? tableId,
+      final dynamic longitude,
+      final dynamic latitude}) = _$PaginationRequestModelImpl;
 
   factory _PaginationRequestModel.fromJson(Map<String, dynamic> json) =
       _$PaginationRequestModelImpl.fromJson;
@@ -257,6 +301,10 @@ abstract class _PaginationRequestModel implements PaginationRequestModel {
   String? get outletId;
   @override
   String? get tableId;
+  @override
+  dynamic get longitude;
+  @override
+  dynamic get latitude;
   @override
   @JsonKey(ignore: true)
   _$$PaginationRequestModelImplCopyWith<_$PaginationRequestModelImpl>

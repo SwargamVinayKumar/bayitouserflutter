@@ -94,20 +94,20 @@ class ProfileHeaderComponent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const Row(
+           Row(
             mainAxisAlignment:
             MainAxisAlignment.spaceEvenly,
             children: [
               ProfileStatComponent(
-                count: "0",
+                count: (profileData?.reservationCount ?? 0).toString(),
                 title: "Reservations",
               ),
               ProfileStatComponent(
-                count: "0",
+                count: (profileData?.connectionsCount ?? 0).toString(),
                 title: "Connections",
               ),
               ProfileStatComponent(
-                count: "0",
+                count: (profileData?.favouritesCount ?? 0).toString(),
                 title: "Favorites",
               ),
             ],

@@ -27,6 +27,7 @@ abstract class UserModel with _$UserModel {
     String? dob,
     String? gender,
     String? email,
+    dynamic mobile,
     ChargesModel? charges
   }) = _UserModel;
 

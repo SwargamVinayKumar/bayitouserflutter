@@ -11,7 +11,9 @@ abstract class PaginationRequestModel with _$PaginationRequestModel{
     String? query,
     String? type,
     String? outletId,
-    String? tableId
+    String? tableId,
+    dynamic longitude,
+    dynamic latitude
   }) = _PaginationRequestModel;
 
   factory PaginationRequestModel.fromJson(Map<String, dynamic> json) => _$PaginationRequestModelFromJson(json);

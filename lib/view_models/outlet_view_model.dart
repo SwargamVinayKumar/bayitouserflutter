@@ -1,4 +1,5 @@
 import 'package:bayitouser/models/responseModels/outlet_response_model.dart';
+import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,7 @@ import '../utils/snack_bar_extension.dart';
 
 class OutletViewModel extends GetxController {
   final apiProvider = Get.put(ApiProvider());
+  final authViewModel = Get.put(AuthViewModel());
   final preferenceManager = Get.put(PreferenceManager());
 
   final fetchAmenitiesObserver =  PaginationModel(data:  ApiResult<FetchAmenitiesResponseModel>.init().obs, isLoading: false, isPaginationCompleted: false, page: 1, error: "").obs;
@@ -126,9 +128,17 @@ class OutletViewModel extends GetxController {
       const int maxListApiReturns = 20;
 
 
-      final requestData = request.copyWith(
+      var requestData = request.copyWith(
         page: observer.value.page,
       );
+
+      if(request.type == "nearby"){
+        requestData = request.copyWith(
+          page: observer.value.page,
+          longitude: authViewModel.locationPosition.value?.longitude,
+          latitude: authViewModel.locationPosition.value?.latitude
+        );
+      }
 
       final String? validatorResponse =
       AuthUtils.validateRequestFields(
