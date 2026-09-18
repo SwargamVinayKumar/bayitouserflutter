@@ -11,7 +11,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
  
-  // Parallelize initializations to speed up startup
+  //Parallelize initializations to speed up startup
   await Future.wait([
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -27,7 +27,7 @@ Future<void> main() async {
   await notificationService.initAwesomeNotification();
   notificationService.initPushNotification();
   notificationService.setListeners();
-  
+
   // Request permissions in the background (non-blocking)
   notificationService.requestPermissions();
 

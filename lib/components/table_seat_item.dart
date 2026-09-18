@@ -78,71 +78,73 @@ class TableItemWidgetPrime extends StatelessWidget {
                       Positioned(
                         top: 12,
                         left: 12,
-                        right: 12,
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width * 0.4,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.black.withOpacity(0.85),
-                                const Color(0xFF9C7C38).withOpacity(0.9), // Deep gold
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/star.png",
-                                    width: 16,
-                                    height: 16,
-                                    color: const Color(0xFFFFD700), // Tint star to gold
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    "${table?.rating ?? 0}",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  const Icon(
-                                    Icons.verified_rounded,
-                                    color: Color(0xFFFFD700),
-                                    size: 16,
-                                  )
+                        child: InkWell(
+                          onTap: onViewRating,
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width * 0.3,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.black.withOpacity(0.85),
+                                  const Color(0xFF9C7C38).withOpacity(0.9), // Deep gold
                                 ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                              const SizedBox(height: 6),
-                              Text(
-                                "${ratingAndReviewModel?.review}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                  fontStyle: FontStyle.italic,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                )
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/star.png",
+                                      width: 12,
+                                      height: 12,
+                                      color: const Color(0xFFFFD700), // Tint star to gold
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      "${table?.rating ?? 0}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    const Icon(
+                                      Icons.verified_rounded,
+                                      color: Color(0xFFFFD700),
+                                      size: 12,
+                                    )
+                                  ],
                                 ),
-                              ),
-                            ],
+                                const SizedBox(height: 6),
+                                Text(
+                                  "${ratingAndReviewModel?.review}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
