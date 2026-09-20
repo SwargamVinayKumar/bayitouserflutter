@@ -110,19 +110,19 @@ class TableItemWidgetPrime extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         // padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? CustomColors.secondary : CustomColors.white.withOpacity(0.1),
+          color: !isSelected ? CustomColors.white : CustomColors.secondary,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? CustomColors.secondary : Colors.white24,
+            color: !isSelected ? Colors.white24 : CustomColors.secondary,
             width: 2,
           ),
-          boxShadow: isSelected ? [
+          boxShadow: !isSelected ? [] : [
             BoxShadow(
               color: CustomColors.secondary.withOpacity(0.3),
               blurRadius: 10,
               offset: const Offset(0, 4),
             )
-          ] : [],
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -130,146 +130,12 @@ class TableItemWidgetPrime extends StatelessWidget {
           children: [
             if (table?.images != null && table?.images?.isNotEmpty == true)
               ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Stack(
-                  alignment: Alignment.topLeft,
-                  children: [
-                    ImageCarouselComponent(
-                      imageUrls: table?.images ?? [],
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    if (ratingAndReviewModel?.review != null && ratingAndReviewModel?.review?.isNotEmpty == true)
-                      Positioned(
-                        top: 12,
-                        left: 12,
-                        child: InkWell(
-                          onTap: onViewRating,
-                          child: Stack(
-                            alignment: Alignment.topLeft,
-                            children: [
-
-                              Padding(
-                                padding: const EdgeInsets.only(left: 30,top: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(0.3),
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 4),
-                                          )
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 30,top: 10,right: 10,bottom: 10),
-                                        child: Text(
-                                          ("${table?.seatType}".capitalizeFirst ?? "") + " Table",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                            fontStyle: FontStyle.normal,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    ,
-                                    Container(
-                                      width: MediaQuery.sizeOf(context).width * 0.3,
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.black.withOpacity(0.85),
-                                            const Color(0xFF9C7C38).withOpacity(0.9), // Deep gold
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(0.3),
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 4),
-                                          )
-                                        ],
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              "${ratingAndReviewModel?.review}",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                                fontStyle: FontStyle.normal,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 5,),
-                                          Icon( Icons.favorite,color: CustomColors.red,size: 12,)
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(color: Colors.black,
-                                  borderRadius: BorderRadius.circular(200),
-                                  border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.3),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    )
-                                  ],
-                                ),
-                                // child: Padding(
-                                //   padding: const EdgeInsets.all(5),
-                                //   child: Container(
-                                //       decoration: BoxDecoration(color:  const Color(0xFFFFD700),
-                                //         borderRadius: BorderRadius.circular(200) // Gold border
-                                //       ),
-                                //       child: Center(
-                                //         child: Padding(
-                                //           padding: const EdgeInsets.all(8.0),
-                                //           child: Icon(Icons.laptop,size: 20,color: Colors.white),
-                                //         ),
-                                //       )),
-                                // ),
-                                child: Icon(
-                                  categories.firstWhere((category) => category['value'].toString().trim().toLowerCase() == table?.seatType.toString().trim().toLowerCase())['icon'],
-                                  color: Colors.white,
-                                  size: 15,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
+                borderRadius: BorderRadius.circular(20),
+                child: ImageCarouselComponent(
+                  imageUrls: table?.images ?? [],
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               )
             else
@@ -277,7 +143,7 @@ class TableItemWidgetPrime extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.table_restaurant_rounded,
-                    color: isSelected ? Colors.white : CustomColors.secondary,
+                    color: !isSelected ? CustomColors.secondary : Colors.white,
                     size: 40,
                   ),
                   if(showRating == true)
@@ -293,7 +159,7 @@ class TableItemWidgetPrime extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
-                              color: isSelected ? Colors.white : CustomColors.secondary,
+                              color: !isSelected  ? CustomColors.secondary : Colors.white,
                             ),
                           )
                         ],
@@ -301,6 +167,127 @@ class TableItemWidgetPrime extends StatelessWidget {
                     ),
                 ],
               ),
+            const SizedBox(height: 12),
+            if (ratingAndReviewModel?.review != null && ratingAndReviewModel?.review?.isNotEmpty == true) InkWell(
+              onTap: onViewRating,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10,right: 10),
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color:  CustomColors.secondary ,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: !isSelected ?  CustomColors.primary : CustomColors.secondary , width: 1.5), // Gold border
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          )
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(color: !isSelected ? CustomColors.secondary : Colors.green ,
+                              borderRadius: BorderRadius.circular(200),
+                              border: Border.all(color: !isSelected ? CustomColors.secondary : CustomColors.primary, width: 1.5), // Gold border
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                )
+                              ],
+                            ),
+                            child: Icon(
+                              categories.firstWhere((category) => category['value'].toString().trim().toLowerCase() == table?.seatType.toString().trim().toLowerCase())['icon'],
+                              color:  Colors.white  ,
+                              size: 20,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Container(width: 1,height: 15,color:  CustomColors.primary ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left:10,top: 10,right: 5,bottom: 10),
+                            child: Text(
+                              ("${table?.seatType}".capitalizeFirst ?? ""),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style:  TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                color:  Colors.white,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10,right: 10,bottom: 10),
+                            child: Text(
+                              "Table",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style:  TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                color:  Colors.green,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                          Container(width: 1,height: 15,color:  CustomColors.primary ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5,right: 5),
+                            child: Container(width: 100,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: isSelected ? Colors.green : CustomColors.primary,
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: CustomColors.primary, width: 1.5), // Gold border
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 4),
+                                  )
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "${ratingAndReviewModel?.review}",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style:  TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: isSelected ? Colors.white : Colors.green,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5,),
+                                  Icon( Icons.favorite,color: CustomColors.red,size: 12,)
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.all(12),
@@ -310,7 +297,7 @@ class TableItemWidgetPrime extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
-                    color: isSelected ? Colors.white : CustomColors.secondary,
+                    color: !isSelected ? CustomColors.secondary :  Colors.white,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -319,7 +306,7 @@ class TableItemWidgetPrime extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: isSelected ? Colors.white70 : CustomColors.secondary.withOpacity(0.7),
+                    color: !isSelected ? CustomColors.secondary.withOpacity(0.7) : Colors.white70 ,
                   ),
                 ),
                 InkWell(
@@ -330,14 +317,13 @@ class TableItemWidgetPrime extends StatelessWidget {
                       Image.asset(
                         "assets/images/star.png",
                         width: 12,
-                        height: 12,
-                        color: const Color(0xFFFFD700), // Tint star to gold
+                        height: 12, color: Colors.orange // Tint star to gold
                       ),
                       const SizedBox(width: 6),
                       Text(
                         "${table?.rating ?? 0}",
                         style:  TextStyle(
-                          color: isSelected ? Colors.white70 : CustomColors.secondary.withOpacity(0.7),
+                          color: !isSelected ? CustomColors.secondary.withOpacity(0.7) : Colors.white70,
                           fontWeight: FontWeight.w800,
                           fontSize: 12,
                         ),

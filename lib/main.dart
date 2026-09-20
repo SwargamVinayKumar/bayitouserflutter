@@ -9,22 +9,22 @@ import 'package:get/get.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  //
-  // // // Initialize notifications
-  // // final notificationService = FireBaseNotification();
-  //
-  // // Parallelize initializations to speed up startup
-  // await Future.wait([
-  //   // Firebase.initializeApp(
-  //   //   options: DefaultFirebaseOptions.currentPlatform,
-  //   // ),
-  //   SystemChrome.setPreferredOrientations([
-  //     DeviceOrientation.portraitUp,
-  //     DeviceOrientation.portraitDown,
-  //   ]),
-  //   // notificationService.initAwesomeNotification(),
-  // ]);
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize notifications
+  // final notificationService = FireBaseNotification();
+
+  // Parallelize initializations to speed up startup
+  await Future.wait([
+    // Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // ),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]),
+    // notificationService.initAwesomeNotification(),
+  ]);
 
   // notificationService.initPushNotification();
   // notificationService.setListeners();
@@ -32,9 +32,9 @@ Future<void> main() async {
   // // Request permissions in the background (non-blocking)
   // notificationService.requestPermissions();
 
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //   statusBarColor: CustomColors.primary,
-  // ));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: CustomColors.secondary,
+  ));
 
   runApp(const MyApp());
 }
