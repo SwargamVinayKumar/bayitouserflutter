@@ -9,31 +9,32 @@ import 'package:get/get.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
- 
-  //Parallelize initializations to speed up startup
-  await Future.wait([
-    Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    ),
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]),
-  ]);
+  // WidgetsFlutterBinding.ensureInitialized();
+  //
+  // // // Initialize notifications
+  // // final notificationService = FireBaseNotification();
+  //
+  // // Parallelize initializations to speed up startup
+  // await Future.wait([
+  //   // Firebase.initializeApp(
+  //   //   options: DefaultFirebaseOptions.currentPlatform,
+  //   // ),
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ]),
+  //   // notificationService.initAwesomeNotification(),
+  // ]);
 
-  // Initialize notifications
-  final notificationService = FireBaseNotification();
-  await notificationService.initAwesomeNotification();
-  notificationService.initPushNotification();
-  notificationService.setListeners();
+  // notificationService.initPushNotification();
+  // notificationService.setListeners();
+  //
+  // // Request permissions in the background (non-blocking)
+  // notificationService.requestPermissions();
 
-  // Request permissions in the background (non-blocking)
-  notificationService.requestPermissions();
-
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: CustomColors.primary,
-  ));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   statusBarColor: CustomColors.primary,
+  // ));
 
   runApp(const MyApp());
 }

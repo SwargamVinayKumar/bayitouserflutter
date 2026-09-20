@@ -96,7 +96,6 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
                             infoRow(Icons.calendar_today, "Date", _formatDate(booking.checkIn ?? "")),
                             infoRow(Icons.access_time, "Time", "${_formatTime(booking.checkIn ?? "")} - ${_formatTime(booking.checkOut ?? "")}"),
                             infoRow(Icons.table_restaurant, "Table", "${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
-                            infoRow(Icons.event_seat, "Seat", "${booking.seatId ?? ''} (${booking.tableId?.seatType ?? ''})"),
                             infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
                           ]),
                           const SizedBox(height: 24),

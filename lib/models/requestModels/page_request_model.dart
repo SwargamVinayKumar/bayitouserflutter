@@ -8,6 +8,7 @@ abstract class PaginationRequestModel with _$PaginationRequestModel{
   const factory PaginationRequestModel({
     String? bookingType,
     int? page,
+    int? limit,
     String? query,
     String? type,
     String? outletId,

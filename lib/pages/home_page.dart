@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      "assets/images/bayito_logo.png",
+                      "assets/images/bayitoLogo.png",
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -140,7 +140,7 @@ class HomePage extends StatelessWidget {
                     },
                     error: (error) {
                       return SizedBox(
-                        height: 150,
+                        height: 200,
                         child: Center(
                           child: Text(
                             error,
@@ -158,11 +158,9 @@ class HomePage extends StatelessWidget {
                         return const EmptyDataView(text: "No trending places found");
                       }
                       return SizedBox(
-                        height:
-                        MediaQuery.sizeOf(context).height * 0.2,
+                        height: 200,
                         child: ListView.separated(
-                          scrollDirection:
-                          Axis.horizontal,
+                          scrollDirection: Axis.horizontal,
                           itemCount: outlets.length,
                           separatorBuilder: (_, __) {
                             return const SizedBox(

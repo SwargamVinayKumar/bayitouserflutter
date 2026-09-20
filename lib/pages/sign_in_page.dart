@@ -31,7 +31,7 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(height: 40),
                 const CircleAvatar(
                   radius: 80,
-                  backgroundImage: AssetImage("assets/images/Bayitologo.png"),
+                  backgroundImage: AssetImage("assets/images/bayitoLogo.png"),
                   backgroundColor: Colors.transparent,
                 ),
                 const SizedBox(height: 30),

@@ -23,6 +23,7 @@ PaginationRequestModel _$PaginationRequestModelFromJson(
 mixin _$PaginationRequestModel {
   String? get bookingType => throw _privateConstructorUsedError;
   int? get page => throw _privateConstructorUsedError;
+  int? get limit => throw _privateConstructorUsedError;
   String? get query => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get outletId => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $PaginationRequestModelCopyWith<$Res> {
   $Res call(
       {String? bookingType,
       int? page,
+      int? limit,
       String? query,
       String? type,
       String? outletId,
@@ -69,6 +71,7 @@ class _$PaginationRequestModelCopyWithImpl<$Res,
   $Res call({
     Object? bookingType = freezed,
     Object? page = freezed,
+    Object? limit = freezed,
     Object? query = freezed,
     Object? type = freezed,
     Object? outletId = freezed,
@@ -84,6 +87,10 @@ class _$PaginationRequestModelCopyWithImpl<$Res,
       page: freezed == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
+              as int?,
+      limit: freezed == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
               as int?,
       query: freezed == query
           ? _value.query
@@ -125,6 +132,7 @@ abstract class _$$PaginationRequestModelImplCopyWith<$Res>
   $Res call(
       {String? bookingType,
       int? page,
+      int? limit,
       String? query,
       String? type,
       String? outletId,
@@ -148,6 +156,7 @@ class __$$PaginationRequestModelImplCopyWithImpl<$Res>
   $Res call({
     Object? bookingType = freezed,
     Object? page = freezed,
+    Object? limit = freezed,
     Object? query = freezed,
     Object? type = freezed,
     Object? outletId = freezed,
@@ -163,6 +172,10 @@ class __$$PaginationRequestModelImplCopyWithImpl<$Res>
       page: freezed == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
+              as int?,
+      limit: freezed == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
               as int?,
       query: freezed == query
           ? _value.query
@@ -198,6 +211,7 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
   const _$PaginationRequestModelImpl(
       {this.bookingType,
       this.page,
+      this.limit,
       this.query,
       this.type,
       this.outletId,
@@ -213,6 +227,8 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
   @override
   final int? page;
   @override
+  final int? limit;
+  @override
   final String? query;
   @override
   final String? type;
@@ -227,7 +243,7 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
 
   @override
   String toString() {
-    return 'PaginationRequestModel(bookingType: $bookingType, page: $page, query: $query, type: $type, outletId: $outletId, tableId: $tableId, longitude: $longitude, latitude: $latitude)';
+    return 'PaginationRequestModel(bookingType: $bookingType, page: $page, limit: $limit, query: $query, type: $type, outletId: $outletId, tableId: $tableId, longitude: $longitude, latitude: $latitude)';
   }
 
   @override
@@ -238,6 +254,7 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
             (identical(other.bookingType, bookingType) ||
                 other.bookingType == bookingType) &&
             (identical(other.page, page) || other.page == page) &&
+            (identical(other.limit, limit) || other.limit == limit) &&
             (identical(other.query, query) || other.query == query) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.outletId, outletId) ||
@@ -253,6 +270,7 @@ class _$PaginationRequestModelImpl implements _PaginationRequestModel {
       runtimeType,
       bookingType,
       page,
+      limit,
       query,
       type,
       outletId,
@@ -279,6 +297,7 @@ abstract class _PaginationRequestModel implements PaginationRequestModel {
   const factory _PaginationRequestModel(
       {final String? bookingType,
       final int? page,
+      final int? limit,
       final String? query,
       final String? type,
       final String? outletId,
@@ -293,6 +312,8 @@ abstract class _PaginationRequestModel implements PaginationRequestModel {
   String? get bookingType;
   @override
   int? get page;
+  @override
+  int? get limit;
   @override
   String? get query;
   @override

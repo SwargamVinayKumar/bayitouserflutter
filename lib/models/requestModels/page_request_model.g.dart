@@ -11,6 +11,7 @@ _$PaginationRequestModelImpl _$$PaginationRequestModelImplFromJson(
     _$PaginationRequestModelImpl(
       bookingType: json['bookingType'] as String?,
       page: json['page'] as int?,
+      limit: json['limit'] as int?,
       query: json['query'] as String?,
       type: json['type'] as String?,
       outletId: json['outletId'] as String?,
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$PaginationRequestModelImplToJson(
     <String, dynamic>{
       'bookingType': instance.bookingType,
       'page': instance.page,
+      'limit': instance.limit,
       'query': instance.query,
       'type': instance.type,
       'outletId': instance.outletId,

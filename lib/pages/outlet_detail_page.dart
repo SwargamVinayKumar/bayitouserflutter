@@ -1,3 +1,6 @@
+import 'package:bayitouser/pages/outlets_map_view.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../shimmer/outlet_detail_shimmer.dart';
 import 'package:bayitouser/components/outlet_detail_card.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
@@ -107,7 +110,7 @@ class OutletDetailsPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    outlet?.businessName ?? "No Name",
+                                    (outlet?.businessName ?? "No Name").capitalizeFirst ?? "",
                                     style: TextStyle(
                                       fontSize: 28,
                                       fontWeight: FontWeight.w800,
@@ -141,7 +144,7 @@ class OutletDetailsPage extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        "(${outlet?.ratingCount} reviews)",
+                                        "(${outlet?.ratingCount ?? 0} reviews)",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
@@ -173,24 +176,27 @@ class OutletDetailsPage extends StatelessWidget {
                                     ],
                                   ),
                                   const SizedBox(height: 28),
-                                  const Row(
+                                  Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       OutletDetailCard(
                                         icon: Icons.call_outlined,
                                         title: "Call",
+                                        onTap: () => _makePhoneCall(outlet?.mobile.toString() ?? "+91 1234567890"),
                                       ),
                                       OutletDetailCard(
                                         icon: Icons.location_on_outlined,
                                         title: "Direction",
+                                        onTap: (){
+                                          Get.to(() => OutletsMapView(outletId: outlet?.id ?? "",));
+                                        },
                                       ),
                                       OutletDetailCard(
-                                        icon: Icons.share_outlined,
-                                        title: "Share",
-                                      ),
-                                      OutletDetailCard(
-                                        icon: Icons.bookmark_border_rounded,
+                                        icon: outlet?.isFavorite == true ? Icons.favorite  : Icons.favorite_border_rounded,
                                         title: "Save",
+                                        onTap: () {
+                                          outletViewModel.updateFavouriteStatus(outletId, outlet?.isFavorite ?? false);
+                                        },
                                       ),
                                     ],
                                   ),
@@ -355,6 +361,16 @@ class OutletDetailsPage extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    }
   }
 
   String formatTime(int? milliseconds) {

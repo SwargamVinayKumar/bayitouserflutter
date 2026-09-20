@@ -32,7 +32,7 @@ class FeaturedPlaceCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: CustomColors.secondary.withOpacity(0.08),
+          color: CustomColors.white,
           borderRadius: BorderRadius.circular(28),
           border: Border.all(
             color: CustomColors.secondary.withOpacity(0.1),
@@ -46,13 +46,11 @@ class FeaturedPlaceCard extends StatelessWidget {
               if (hasImage)
                 Stack(
                   children: [
-                    AspectRatio(
-                      aspectRatio: 14 / 9,
-                      child: CustomNetworkImage(
-                        imageUrl: businessLogo,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      ),
+                    CustomNetworkImage(
+                      height: 100,
+                      imageUrl: businessLogo,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
                     ),
                   ],
                 ),

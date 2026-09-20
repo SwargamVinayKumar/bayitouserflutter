@@ -1,5 +1,6 @@
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OutletDetailCard extends StatelessWidget {
@@ -38,7 +39,7 @@ class OutletDetailCard extends StatelessWidget {
           ],
         ),
         child: Text(
-          title,
+          (title ?? "").capitalizeFirst ?? "",
           style: TextStyle(
               fontWeight: FontWeight.w600,
           ),
@@ -65,7 +66,7 @@ class OutletDetailCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            title,
+            (title ?? "").capitalizeFirst ?? "",
             style:TextStyle(
                 fontWeight: FontWeight.w500,
                 color: CustomColors.secondary.withOpacity(0.6),

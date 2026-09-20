@@ -3,6 +3,7 @@ import 'package:bayitouser/models/responseModels/booking_response_model.dart';
 import 'package:bayitouser/utils/auth_utils.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/responseModels/user_response_model.dart';
@@ -63,7 +64,7 @@ class MeetPeopleCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        booking?.userId?.name ?? "",
+                        (booking?.userId?.name ?? "").capitalizeFirst ?? "",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,

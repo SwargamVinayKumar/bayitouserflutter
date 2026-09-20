@@ -110,7 +110,8 @@ class AuthViewModel extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _determinePosition();
+    // Removed _determinePosition() to prevent slowing down app startup.
+    // fetchCurrentLocation() is called in SplashPage.
   }
 
 

@@ -61,6 +61,7 @@ class UserViewModel extends GetxController {
 
       final requestData = request.copyWith(
         page: observer.value.page,
+        limit: maxListApiReturns,
       );
 
       final String? validatorResponse =

@@ -36,8 +36,74 @@ class TableItemWidgetPrime extends StatelessWidget {
     this.showRating = true
   });
 
+
+
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> categories = [
+      {
+        "title": "Corner Table",
+        "value":"Corner",
+        "icon": Icons.table_bar_outlined,
+      },
+      {
+        "title": "Middle Table",
+        "value":"Middle",
+        "icon": Icons.deck_outlined,
+      },
+      {
+        "title": "Ventilation Table",
+        "value":"Ventilation",
+        "icon": Icons.window_sharp,
+      },
+      {
+        "title": "Stress Free",
+        "value":"Stress Free",
+        "icon": Icons.coffee_outlined,
+      },
+      {
+        "title": "Luxury table",
+        "value":"Luxury",
+        "icon": Icons.star_border_purple500_outlined,
+      },
+      {
+        "title": "Family",
+        "value":"Family",
+        "icon": Icons.family_restroom,
+      },
+      {
+        "title": "Photography Table",
+        "value":"Photography",
+        "icon": Icons.camera,
+      },
+      {
+        "title": "Work Table",
+        "value":"Work",
+        "icon": Icons.laptop,
+      },
+      {
+        "title": "Business Table",
+        "value":"Business",
+        "icon": Icons.handshake,
+      },
+      {
+        "title": "Study Table",
+        "value":"Study",
+        "icon": Icons.book,
+      },
+      {
+        "title": "Sofa Type Table",
+        "value":"Sofa Type",
+        "icon": Icons.chair,
+      },
+      {
+        "title": "Date & Couple Table",
+        "value":"Date & Couple",
+        "icon": Icons.deck_outlined,
+      },
+    ];
+
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -80,71 +146,126 @@ class TableItemWidgetPrime extends StatelessWidget {
                         left: 12,
                         child: InkWell(
                           onTap: onViewRating,
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width * 0.3,
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.black.withOpacity(0.85),
-                                  const Color(0xFF9C7C38).withOpacity(0.9), // Deep gold
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 4),
-                                )
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
+                          child: Stack(
+                            alignment: Alignment.topLeft,
+                            children: [
+
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30,top: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Image.asset(
-                                      "assets/images/star.png",
-                                      width: 12,
-                                      height: 12,
-                                      color: const Color(0xFFFFD700), // Tint star to gold
-                                    ),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      "${table?.rating ?? 0}",
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.3),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 4),
+                                          )
+                                        ],
                                       ),
-                                    ),
-                                    const Spacer(),
-                                    const Icon(
-                                      Icons.verified_rounded,
-                                      color: Color(0xFFFFD700),
-                                      size: 12,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 30,top: 10,right: 10,bottom: 10),
+                                        child: Text(
+                                          ("${table?.seatType}".capitalizeFirst ?? "") + " Table",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                            fontStyle: FontStyle.normal,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    ,
+                                    Container(
+                                      width: MediaQuery.sizeOf(context).width * 0.3,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Colors.black.withOpacity(0.85),
+                                            const Color(0xFF9C7C38).withOpacity(0.9), // Deep gold
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.3),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 4),
+                                          )
+                                        ],
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              "${ratingAndReviewModel?.review}",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                                fontStyle: FontStyle.normal,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5,),
+                                          Icon( Icons.favorite,color: CustomColors.red,size: 12,)
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
-                                const SizedBox(height: 6),
-                                Text(
-                                  "${ratingAndReviewModel?.review}",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                    fontStyle: FontStyle.italic,
-                                  ),
+                              ),
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(color: Colors.black,
+                                  borderRadius: BorderRadius.circular(200),
+                                  border: Border.all(color: const Color(0xFFFFD700), width: 1.5), // Gold border
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.3),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    )
+                                  ],
                                 ),
-                              ],
-                            ),
+                                // child: Padding(
+                                //   padding: const EdgeInsets.all(5),
+                                //   child: Container(
+                                //       decoration: BoxDecoration(color:  const Color(0xFFFFD700),
+                                //         borderRadius: BorderRadius.circular(200) // Gold border
+                                //       ),
+                                //       child: Center(
+                                //         child: Padding(
+                                //           padding: const EdgeInsets.all(8.0),
+                                //           child: Icon(Icons.laptop,size: 20,color: Colors.white),
+                                //         ),
+                                //       )),
+                                // ),
+                                child: Icon(
+                                  categories.firstWhere((category) => category['value'].toString().trim().toLowerCase() == table?.seatType.toString().trim().toLowerCase())['icon'],
+                                  color: Colors.white,
+                                  size: 15,
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -185,7 +306,7 @@ class TableItemWidgetPrime extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: Column(children: [
                 Text(
-                  "${table?.tableNumber}",
+                  "${table?.tableNumber}".capitalizeFirst ?? "",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
@@ -201,6 +322,29 @@ class TableItemWidgetPrime extends StatelessWidget {
                     color: isSelected ? Colors.white70 : CustomColors.secondary.withOpacity(0.7),
                   ),
                 ),
+                InkWell(
+                  onTap: onViewRating,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        "assets/images/star.png",
+                        width: 12,
+                        height: 12,
+                        color: const Color(0xFFFFD700), // Tint star to gold
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        "${table?.rating ?? 0}",
+                        style:  TextStyle(
+                          color: isSelected ? Colors.white70 : CustomColors.secondary.withOpacity(0.7),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],),
             )
 

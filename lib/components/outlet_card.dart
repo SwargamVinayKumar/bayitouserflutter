@@ -61,7 +61,7 @@ class OutletCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          outlet?.businessName ?? "",
+                          (outlet?.businessName ?? "").capitalizeFirst ?? "",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,

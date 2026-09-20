@@ -1,3 +1,4 @@
+import 'package:bayitouser/pages/outlets_map_view.dart';
 import 'package:bayitouser/shimmer/single_item_shimmer.dart';
 import 'package:bayitouser/shimmer/outlet_list_shimmer.dart';
 import 'package:bayitouser/components/custom_search_bar.dart';
@@ -113,6 +114,13 @@ class _OutletPageState extends State<OutletPage> {
                         style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: CustomColors.secondary),
                       ),
                     ),
+                    if (widget.type == "nearby")
+                      IconButton(
+                        onPressed: () {
+                          Get.to(() => const OutletsMapView());
+                        },
+                        icon: const Icon(Icons.map_outlined, color: CustomColors.secondary),
+                      ),
                   ],
                 ),
                 const SizedBox(height: 24),

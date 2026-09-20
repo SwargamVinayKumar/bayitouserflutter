@@ -70,6 +70,14 @@ class OutletViewModel extends GetxController {
     error: "",
   ).obs;
 
+  final fetchMapLocationsObserver = PaginationModel(
+    data: ApiResult<FetchOutletsResponse>.init().obs,
+    isLoading: false,
+    isPaginationCompleted: false,
+    page: 1,
+    error: "",
+  ).obs;
+
   final fetchOutletDetailsObserver = ApiResult<OutletDetailsResponseModel>.init().obs;
 
   final updateFavouritesObserver =  ApiResult<PrimaryResponseModel>.init().obs;
@@ -127,9 +135,9 @@ class OutletViewModel extends GetxController {
 
       const int maxListApiReturns = 20;
 
-
       var requestData = request.copyWith(
         page: observer.value.page,
+        limit: maxListApiReturns,
       );
 
       if(request.type == "nearby"){
@@ -227,6 +235,82 @@ class OutletViewModel extends GetxController {
       observer.value.data.value =
           ApiResult.error(e.toString());
 
+      observer.value.isLoading = false;
+      observer.refresh();
+    }
+  }
+
+  Future<void> fetchMapLocations(PaginationRequestModel request, bool refresh) async {
+    final observer = fetchMapLocationsObserver;
+    try {
+      if (refresh) {
+        observer.value = PaginationModel(
+          data: ApiResult<FetchOutletsResponse>.init().obs,
+          isLoading: false,
+          isPaginationCompleted: false,
+          page: 1,
+          error: "",
+        );
+      }
+
+      if (observer.value.isPaginationCompleted || observer.value.isLoading) return;
+
+      if (observer.value.page == 1) {
+        observer.value.data.value = ApiResult.loading("loading");
+      } else {
+        observer.value.isLoading = true;
+        observer.refresh();
+      }
+
+      const int limit = 20;
+
+      final requestData = request.copyWith(
+        page: observer.value.page,
+      );
+
+      final response = await apiProvider.post(
+        EndPoints.fetchNearByOutlets,
+        requestData.toJson(),
+      );
+
+      final body = response.body;
+
+      if (response.isOk && body != null) {
+        final responseData = FetchOutletsResponse.fromJson(body);
+        if (responseData.status == 1) {
+          final newOutlets = responseData.data ?? [];
+
+          observer.value.data.value.maybeWhen(
+            success: (oldResponse) {
+              final oldList = List<OutletModel>.from(oldResponse?.data ?? []);
+              for (final outlet in newOutlets) {
+                if (!oldList.any((e) => e.id == outlet.id)) {
+                  oldList.add(outlet);
+                }
+              }
+              observer.value.data.value = ApiResult.success(responseData.copyWith(
+                data: oldList,
+              ));
+            },
+            orElse: () {
+              observer.value.data.value = ApiResult.success(responseData);
+            },
+          );
+
+          observer.value.page++;
+          if (newOutlets.length < limit) {
+            observer.value.isPaginationCompleted = true;
+          }
+
+          observer.value.isLoading = false;
+          observer.refresh();
+          return;
+        }
+        throw responseData.message ?? "Unable to fetch locations";
+      }
+      throw "Response Body Null";
+    } catch (e) {
+      observer.value.data.value = ApiResult.error(e.toString());
       observer.value.isLoading = false;
       observer.refresh();
     }

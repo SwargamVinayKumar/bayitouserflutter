@@ -34,139 +34,70 @@ class PrivacySecurityPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionHeader("Account Security"),
-            _buildSecurityItem(
-              icon: Icons.lock_outline,
-              title: "Change Password",
-              subtitle: "Update your account password regularly",
-              onTap: () {
-                // TODO: Implement change password
-              },
-            ),
-            _buildSecurityItem(
-              icon: Icons.phonelink_lock_outlined,
-              title: "Two-Step Verification",
-              subtitle: "Add an extra layer of security to your account",
-              onTap: () {},
-            ),
-            const SizedBox(height: 30),
-            _buildSectionHeader("Privacy"),
-            _buildSecurityItem(
-              icon: Icons.privacy_tip_outlined,
-              title: "Privacy Policy",
-              subtitle: "Read our privacy policy to understand how we use your data",
-              onTap: () {},
-            ),
-            _buildSecurityItem(
-              icon: Icons.description_outlined,
-              title: "Terms of Service",
-              subtitle: "Read our terms and conditions",
-              onTap: () {},
-            ),
-            _buildSecurityItem(
-              icon: Icons.delete_outline,
-              title: "Delete Account",
-              subtitle: "Permanently remove your account and data",
-              onTap: () {
-                _showDeleteAccountDialog(context);
-              },
-              isCritical: true,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15, left: 5),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: CustomColors.secondary,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSecurityItem({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required VoidCallback onTap,
-    bool isCritical = false,
-  }) {
-    final color = isCritical ? Colors.red : CustomColors.secondary;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: color),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: color,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                ],
+            const Text(
+              "Privacy & Support Information",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: CustomColors.secondary,
               ),
             ),
-            const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+            const SizedBox(height: 25),
+            _buildInfoItem(
+              "1. Activities Outside the Bayito Space",
+              "Bayito is not responsible for any activities, interactions, meetings, travel, relationships, or incidents that occur after users leave the Bayito-authorized café or venue.",
+            ),
+            _buildInfoItem(
+              "2. Respectful Behavior Inside Bayito Spaces",
+              "Users must maintain appropriate and respectful behavior inside Bayito spaces. Excessive noise, intimate behavior, or romantic activities that disturb other customers or staff are not permitted.",
+            ),
+            _buildInfoItem(
+              "3. Unauthorized Transactions & Fraud",
+              "Bayito is not responsible for any fraud, financial transaction, business deal, or other transaction conducted outside Bayito-authorized services or spaces.",
+            ),
+            _buildInfoItem(
+              "4. Unauthorized Services",
+              "Any service, arrangement, offer, or activity provided or accepted outside Bayito's officially authorized platform or services is independent of Bayito, and Bayito does not assume responsibility for it.",
+            ),
+            _buildInfoItem(
+              "5. User-to-User Contact After the Meeting",
+              "If users exchange phone numbers, social-media accounts, or other contact information and continue communicating or meeting outside the Bayito space, those subsequent interactions are between the users and are not controlled or managed by Bayito.",
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
 
-  void _showDeleteAccountDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Delete Account"),
-        content: const Text("Are you sure you want to permanently delete your account? This action cannot be undone."),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text("Cancel"),
+  Widget _buildInfoItem(String title, String content) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: CustomColors.secondary.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: CustomColors.secondary.withOpacity(0.1)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: CustomColors.secondary,
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              // TODO: Implement delete account logic
-              Get.back();
-            },
-            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+          const SizedBox(height: 10),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 14,
+              height: 1.5,
+              color: CustomColors.secondary.withOpacity(0.8),
+            ),
           ),
         ],
       ),

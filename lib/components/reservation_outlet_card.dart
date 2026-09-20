@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/components/custom_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/custom_color.dart';
@@ -67,7 +68,7 @@ class ReservationOutletCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    OutletName,
+                    OutletName.capitalizeFirst ?? "",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -112,7 +113,7 @@ class ReservationOutletCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        table,
+                        (table ?? "").capitalizeFirst ?? "",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
