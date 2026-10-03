@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 
 import '../utils/progress_dialog.dart';
 import 'custom_gradient_button.dart';
+import 'outlet_detail_card.dart';
 
 class TableItemWidgetPrime extends StatelessWidget {
   final TableModel? table;
@@ -25,7 +26,6 @@ class TableItemWidgetPrime extends StatelessWidget {
   final VoidCallback onViewRating;
   final bool? showRating;
 
-
   const TableItemWidgetPrime({
     super.key,
     required this.table,
@@ -33,82 +33,57 @@ class TableItemWidgetPrime extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
     required this.onViewRating,
-    this.showRating = true
+    this.showRating = true,
   });
 
+  static const List<Map<String, dynamic>> _categories = [
+    {"title": "Corner Table", "value": "Corner", "icon": Icons.table_bar_outlined},
+    {"title": "Middle Table", "value": "Middle", "icon": Icons.deck_outlined},
+    {"title": "Ventilation Table", "value": "Ventilation", "icon": Icons.window_sharp},
+    {"title": "Stress Free", "value": "Stress Free", "icon": Icons.coffee_outlined},
+    {"title": "Luxury table", "value": "Luxury", "icon": Icons.star_border_purple500_outlined},
+    {"title": "Family", "value": "Family", "icon": Icons.family_restroom},
+    {"title": "Photography Table", "value": "Photography", "icon": Icons.camera},
+    {"title": "Work Table", "value": "Work", "icon": Icons.laptop},
+    {"title": "Business Table", "value": "Business", "icon": Icons.handshake},
+    {"title": "Study Table", "value": "Study", "icon": Icons.book},
+    {"title": "Sofa Type Table", "value": "Sofa Type", "icon": Icons.chair},
+    {"title": "Date & Couple Table", "value": "Date & Couple", "icon": Icons.deck_outlined},
+  ];
 
+  IconData _iconForSeatTypeIcon(String? seatType) {
+    final needle = (seatType ?? '').trim().toLowerCase();
+    return _categories.firstWhere(
+          (c) => c['value'].toString().trim().toLowerCase() == needle,
+      orElse: () => _categories.first,
+    )['icon'] as IconData;
+  }
+
+  String _iconForSeatTypeAsset(String? seatType) {
+    final needle = (seatType ?? '').trim().toLowerCase();
+    return "assets/images/${_categories.firstWhere(
+          (c) => c['value'].toString().trim().toLowerCase() == needle,
+      orElse: () => _categories.first,
+    )['value']}.jpeg";
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> categories = [
-      {
-        "title": "Corner Table",
-        "value":"Corner",
-        "icon": Icons.table_bar_outlined,
-      },
-      {
-        "title": "Middle Table",
-        "value":"Middle",
-        "icon": Icons.deck_outlined,
-      },
-      {
-        "title": "Ventilation Table",
-        "value":"Ventilation",
-        "icon": Icons.window_sharp,
-      },
-      {
-        "title": "Stress Free",
-        "value":"Stress Free",
-        "icon": Icons.coffee_outlined,
-      },
-      {
-        "title": "Luxury table",
-        "value":"Luxury",
-        "icon": Icons.star_border_purple500_outlined,
-      },
-      {
-        "title": "Family",
-        "value":"Family",
-        "icon": Icons.family_restroom,
-      },
-      {
-        "title": "Photography Table",
-        "value":"Photography",
-        "icon": Icons.camera,
-      },
-      {
-        "title": "Work Table",
-        "value":"Work",
-        "icon": Icons.laptop,
-      },
-      {
-        "title": "Business Table",
-        "value":"Business",
-        "icon": Icons.handshake,
-      },
-      {
-        "title": "Study Table",
-        "value":"Study",
-        "icon": Icons.book,
-      },
-      {
-        "title": "Sofa Type Table",
-        "value":"Sofa Type",
-        "icon": Icons.chair,
-      },
-      {
-        "title": "Date & Couple Table",
-        "value":"Date & Couple",
-        "icon": Icons.deck_outlined,
-      },
-    ];
+    final hasImages = table?.images?.isNotEmpty == true;
+    final hasReview =
+        ratingAndReviewModel?.review?.isNotEmpty == true;
 
+    // Common text colors
+    final primaryText =
+    !isSelected ? CustomColors.secondary : Colors.white;
+    final subText = !isSelected
+        ? CustomColors.secondary.withOpacity(0.7)
+        : Colors.white70;
 
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        // padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: !isSelected ? CustomColors.white : CustomColors.secondary,
           borderRadius: BorderRadius.circular(20),
@@ -116,224 +91,285 @@ class TableItemWidgetPrime extends StatelessWidget {
             color: !isSelected ? Colors.white24 : CustomColors.secondary,
             width: 2,
           ),
-          boxShadow: !isSelected ? [] : [
+          boxShadow: !isSelected
+              ? const []
+              : [
             BoxShadow(
               color: CustomColors.secondary.withOpacity(0.3),
               blurRadius: 10,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            if (table?.images != null && table?.images?.isNotEmpty == true)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: ImageCarouselComponent(
-                  imageUrls: table?.images ?? [],
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+            // ---------- IMAGE / PLACEHOLDER ----------
+            if (hasImages)
+              Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ImageCarouselComponent(
+                      imageUrls: table?.images ?? [],
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  if(table?.vip == true) Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Image.asset("assets/images/VIP.png",width: 100,height: 50,),
+                  )
+                ],
               )
             else
-              Column(
-                children: [
-                  Icon(
-                    Icons.table_restaurant_rounded,
-                    color: !isSelected ? CustomColors.secondary : Colors.white,
-                    size: 40,
-                  ),
-                  if(showRating == true)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.star_rounded, color: Colors.orange, size: 18),
-                          const SizedBox(width: 4),
-                          Text(
-                            "${table?.rating ?? 0}",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: !isSelected  ? CustomColors.secondary : Colors.white,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-            const SizedBox(height: 12),
-            if (ratingAndReviewModel?.review != null && ratingAndReviewModel?.review?.isNotEmpty == true) InkWell(
-              onTap: onViewRating,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10,right: 10),
-                child: Row(
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color:  CustomColors.secondary ,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: !isSelected ?  CustomColors.primary : CustomColors.secondary , width: 1.5), // Gold border
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(color: !isSelected ? CustomColors.secondary : Colors.green ,
-                              borderRadius: BorderRadius.circular(200),
-                              border: Border.all(color: !isSelected ? CustomColors.secondary : CustomColors.primary, width: 1.5), // Gold border
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 4),
-                                )
-                              ],
-                            ),
-                            child: Icon(
-                              categories.firstWhere((category) => category['value'].toString().trim().toLowerCase() == table?.seatType.toString().trim().toLowerCase())['icon'],
-                              color:  Colors.white  ,
-                              size: 20,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Container(width: 1,height: 15,color:  CustomColors.primary ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left:10,top: 10,right: 5,bottom: 10),
-                            child: Text(
-                              ("${table?.seatType}".capitalizeFirst ?? ""),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style:  TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color:  Colors.white,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10,right: 10,bottom: 10),
-                            child: Text(
-                              "Table",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style:  TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color:  Colors.green,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ),
-                          Container(width: 1,height: 15,color:  CustomColors.primary ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5,right: 5),
-                            child: Container(width: 100,
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: isSelected ? Colors.green : CustomColors.primary,
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: CustomColors.primary, width: 1.5), // Gold border
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.3),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  )
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "${ratingAndReviewModel?.review}",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: isSelected ? Colors.white : Colors.green,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Icon( Icons.favorite,color: CustomColors.red,size: 12,)
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                    Icon(
+                      Icons.table_restaurant_rounded,
+                      color: !isSelected
+                          ? CustomColors.secondary
+                          : Colors.white,
+                      size: 40,
                     ),
+                    if (showRating == true)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.star_rounded,
+                                color: Colors.orange, size: 18),
+                            const SizedBox(width: 4),
+                            Text(
+                              "${table?.rating ?? 0}",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: primaryText,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(children: [
-                Text(
-                  "${table?.tableNumber}".capitalizeFirst ?? "",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: !isSelected ? CustomColors.secondary :  Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  "${table?.seatCapacity} Seater",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: !isSelected ? CustomColors.secondary.withOpacity(0.7) : Colors.white70 ,
-                  ),
-                ),
-                InkWell(
-                  onTap: onViewRating,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        "assets/images/star.png",
-                        width: 12,
-                        height: 12, color: Colors.orange // Tint star to gold
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        "${table?.rating ?? 0}",
-                        style:  TextStyle(
-                          color: !isSelected ? CustomColors.secondary.withOpacity(0.7) : Colors.white70,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],),
-            )
 
+            // ---------- REVIEW CHIP (FIXED + RESPONSIVE) ----------
+            if (hasReview)
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                child: InkWell(
+                  onTap: onViewRating,
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: CustomColors.secondary,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: !isSelected
+                            ? CustomColors.primary
+                            : CustomColors.secondary,
+                        width: 1.5,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+
+                      ClipRRect(
+                      borderRadius: BorderRadius.circular(200),
+                      child:Image.asset(_iconForSeatTypeAsset(table?.seatType),width: 40,height: 40)
+                      ),
+                        // -------- Category icon circle --------
+                        // Container(
+                        //   width: 40,
+                        //   height: 40,
+                        //   decoration: BoxDecoration(
+                        //     color: !isSelected
+                        //         ? CustomColors.secondary
+                        //         : Colors.green,
+                        //     shape: BoxShape.circle,
+                        //     border: Border.all(
+                        //       color: !isSelected
+                        //           ? CustomColors.secondary
+                        //           : CustomColors.primary,
+                        //       width: 1.5,
+                        //     ),
+                        //   ),
+                        //   child:
+                        //
+                        //   Icon(
+                        //     _iconForSeatTypeIcon(table?.seatType),
+                        //     color: Colors.white,
+                        //     size: 20,
+                        //   ),
+                        // ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(width:1,height: 15,color: CustomColors.primary),
+                        ),
+
+                        // -------- Seat type (flexible) --------
+                        Flexible(
+                          child: Text(
+                            "${table?.seatType}".capitalizeFirst ?? "",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 4),
+
+                        // -------- "Table" label --------
+                        const Text(
+                          "Table",
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.green,
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(width:1,height: 15,color: CustomColors.primary),
+                        ),
+
+                        // -------- Review chip (flexible) --------
+                        Flexible(
+                          flex: 2,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? Colors.green
+                                  : CustomColors.primary,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(
+                                color: CustomColors.primary,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    "${ratingAndReviewModel?.review}",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: isSelected
+                                          ? Colors.white
+                                          : Colors.green,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const Icon(
+                                  Icons.favorite,
+                                  color: CustomColors.red,
+                                  size: 12,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+            // ---------- BOTTOM INFO ----------
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${table?.tableNumber}".capitalizeFirst ?? "",
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                      color: primaryText,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "${table?.seatCapacity} Seater",
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: subText,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  InkWell(
+                    onTap: onViewRating,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/images/star.png",
+                            width: 12,
+                            height: 12,
+                            color: Colors.orange,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            "${table?.rating ?? 0}",
+                            style: TextStyle(
+                              color: subText,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -379,14 +415,23 @@ class TableItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (table.images != null && table.images!.isNotEmpty)
-               ClipRRect(
-                 borderRadius: BorderRadius.circular(12),
-                 child: ImageCarouselComponent(
-                   imageUrls: table.images ?? [],
-                   height: 60,
-                   width: 60,
-                   fit: BoxFit.cover,
-                 ),
+               Stack(
+                 alignment: Alignment.topLeft,
+                 children: [
+                   ClipRRect(
+                     borderRadius: BorderRadius.circular(12),
+                     child: ImageCarouselComponent(
+                       imageUrls: table.images ?? [],
+                       height: 60,
+                       width: 60,
+                       fit: BoxFit.cover,
+                     ),
+                   ),
+                   if(table?.vip == true) Padding(
+                     padding: const EdgeInsets.all(8),
+                     child: Image.asset("assets/images/VIP.png",width: 30,height: 10,),
+                   )
+                 ],
                )
             else
               Icon(
@@ -396,7 +441,7 @@ class TableItemWidget extends StatelessWidget {
               ),
             const SizedBox(height: 8),
             Text(
-              "Table ${table.tableNumber}",
+              "${table.tableNumber}",
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
@@ -762,9 +807,16 @@ Widget buildOutletHeader(dynamic booking) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                booking.outletId?.businessName ?? "",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: CustomColors.secondary),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      booking.outletId?.businessName ?? "",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: CustomColors.secondary),
+                    ),
+                  ),
+                  if(booking.outletId?.verified == true) Image.asset("assets/images/verified.png",width: 20,height: 20,)
+                ],
               ),
               const SizedBox(height: 4),
               Text(
@@ -780,121 +832,144 @@ Widget buildOutletHeader(dynamic booking) {
 }
 
 Widget buildOutletInfo(OutletModel? outletModel) {
-  return Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          CustomColors.secondary,
-          CustomColors.secondary.withOpacity(0.8),
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      borderRadius: BorderRadius.circular(24),
-      boxShadow: [
-        BoxShadow(
-          color: CustomColors.secondary.withOpacity(0.3),
-          blurRadius: 20,
-          offset: const Offset(0, 8),
-        ),
-      ],
-    ),
-    child: Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.white.withOpacity(0.3), width: 2),
+  return Column(
+    children: [
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              CustomColors.secondary,
+              CustomColors.secondary.withOpacity(0.8),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(14),
-            child: CustomNetworkImage(
-              imageUrl: outletModel?.businessLogo ?? "",
-              width: 75,
-              height: 75,
-              fit: BoxFit.cover,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: CustomColors.secondary.withOpacity(0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
             ),
-          ),
+          ],
         ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                outletModel?.name ?? "Outlet Name",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  letterSpacing: -0.3,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+        child: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white.withOpacity(0.3), width: 2),
               ),
-              const SizedBox(height: 4),
-              Row(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: CustomNetworkImage(
+                  imageUrl: outletModel?.businessLogo ?? "",
+                  width: 75,
+                  height: 75,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.location_on_rounded,
-                    color: Colors.white.withOpacity(0.8),
-                    size: 16,
+                  Text(
+                    outletModel?.businessName ?? "Outlet Name",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      letterSpacing: -0.3,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      outletModel?.location?.address1 ?? "Location not available",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white.withOpacity(0.9),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_rounded,
+                        color: Colors.white.withOpacity(0.8),
+                        size: 16,
                       ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          outletModel?.location?.address1 ?? "Location not available",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.white.withOpacity(0.9),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.star_rounded,
+                          color: Colors.amber.shade300,
+                          size: 14,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          outletModel?.rating.toString() ?? "0",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "(${outletModel?.ratingCount ?? 0})",
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.7),
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.star_rounded,
-                      color: Colors.amber.shade300,
-                      size: 14,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      "4.8",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      "(124 reviews)",
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 11,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
-    ),
+      ),
+      const SizedBox(height: 20),
+      Text(
+        "Highlights",
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: CustomColors.darkBlack,
+        ),
+      ),
+      const SizedBox(height: 14),
+      Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        children: outletModel?.amenities?.map((ameniny) => OutletDetailCard(
+          title: ameniny.name ?? "",
+          isChip: true,
+        )).toList() ?? [],
+      ),
+      const SizedBox(height: 20),
+    ],
   );
 }
 

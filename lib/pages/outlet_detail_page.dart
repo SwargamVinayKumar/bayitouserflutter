@@ -109,13 +109,20 @@ class OutletDetailsPage extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    (outlet?.businessName ?? "No Name").capitalizeFirst ?? "",
-                                    style: TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.w800,
-                                      color: CustomColors.secondary,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          (outlet?.businessName ?? "No Name").capitalizeFirst ?? "",
+                                          style: TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.w800,
+                                            color: CustomColors.secondary,
+                                          ),
+                                        ),
+                                      ),
+                                      if(outlet?.verified == true) Image.asset("assets/images/verified.png",width: 20,height: 20,)
+                                    ],
                                   ),
                                   const SizedBox(height: 6),
                                   Text(

@@ -25,6 +25,7 @@ abstract class BookingAvailabilityData with _$BookingAvailabilityData {
   const factory BookingAvailabilityData({
     bool? available,
     AvailabilityBookingDetails? bookingDetails,
+    List<SeatModel>? seats,
     List<BookingConflict>? conflicts,
   }) = _BookingAvailabilityData;
 

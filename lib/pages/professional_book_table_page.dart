@@ -156,8 +156,6 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
             ),
             itemBuilder: (context, index) {
               final seat = table.seats![index];
-              print(seat.id);
-              print(seatId);
               return Obx(() => SeatItemWidget(
                 seat: seat,
                 isSelected: bookingViewModel.selectedSeat.value?.id == seat.id,
@@ -255,8 +253,7 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
               }
             },
             orElse: () {
-              final hasAllSelections = bookingViewModel.selectedTable.value != null &&
-                  bookingViewModel.selectedSeat.value != null;
+              final hasAllSelections = bookingViewModel.selectedTable.value != null;
 
               if (!hasAllSelections) {
                 return Container(

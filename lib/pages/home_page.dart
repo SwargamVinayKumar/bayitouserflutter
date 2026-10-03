@@ -72,15 +72,15 @@ class HomePage extends StatelessWidget {
                       fontSize: 16,
 
                     ),
-                    Text(
-                      "See All",
-                      style: TextStyle(
-                        color: CustomColors.secondary
-                            .withOpacity(0.7),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    // Text(
+                    //   "See All",
+                    //   style: TextStyle(
+                    //     color: CustomColors.secondary
+                    //         .withOpacity(0.7),
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w600,
+                    //   ),
+                    // ),
                   ],
                 ),
                 const Divider(
@@ -89,6 +89,26 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 18),
                 ResponsiveSliverGrid(),
+                const SizedBox(height: 10),
+                InkWell(onTap: (){
+                  Get.to(() => const OutletPage(type: 'vip'));
+                },
+                  child: Container(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).height * 0.22,
+                    decoration: BoxDecoration(
+                      color: CustomColors.primary,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        "assets/images/VIPTEMPLETE.png",
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment:

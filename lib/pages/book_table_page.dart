@@ -125,6 +125,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
       body: StatefulWrapper(
         onInit: (){
           bookingViewModel.checkAvailabilityObserver.value = ApiResult.init();
+          bookingViewModel.checkAvailability(widget.outletModel!.id!,null);
         },
         child: SafeArea(
           child: Stack(
@@ -156,8 +157,6 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                         buildSectionHeader("Select Table", Icons.table_restaurant_rounded),
                         const SizedBox(height: 16),
                         _buildTableSelection(),
-                        const SizedBox(height: 28),
-                        _buildSeatSection(),
                         const SizedBox(height: 32),
                         _buildBookingActions(),
                         const SizedBox(height: 30),
@@ -197,19 +196,19 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
         ),
       ),
       actions: [
-        Container(
-          margin: const EdgeInsets.only(right: 16),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: CustomColors.secondary.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            Icons.restaurant_menu_rounded,
-            color: CustomColors.secondary,
-            size: 20,
-          ),
-        ),
+        // Container(
+        //   margin: const EdgeInsets.only(right: 16),
+        //   padding: const EdgeInsets.all(8),
+        //   decoration: BoxDecoration(
+        //     color: CustomColors.secondary.withOpacity(0.1),
+        //     shape: BoxShape.circle,
+        //   ),
+        //   child: Icon(
+        //     Icons.restaurant_menu_rounded,
+        //     color: CustomColors.secondary,
+        //     size: 20,
+        //   ),
+        // ),
       ],
     );
   }
@@ -352,7 +351,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Row(
-        children: [1, 2, 3, 4].map((hours) {
+        children: [1, 2, 3, 4,5].map((hours) {
           return Expanded(
             child: Obx(() {
               bool isSelected = bookingViewModel.durationHours.value == hours;
@@ -481,7 +480,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
     });
   }
 
-  Widget _buildSeatSection() {
+  Widget _buildSeatSection(List<SeatModel>? seats) {
     return Obx(() {
       final table = bookingViewModel.selectedTable.value;
       if (table == null || table.seats == null || table.seats!.isEmpty) {
@@ -496,7 +495,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: table.seats!.length,
+            itemCount: seats?.length ?? 0,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
               crossAxisSpacing: 12,
@@ -504,11 +503,11 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               childAspectRatio: 0.85,
             ),
             itemBuilder: (context, index) {
-              final seat = table.seats![index];
+              final seat = seats?[index];
               return Obx(() => SeatItemWidget(
                   seat: seat,
-                  isSelected: bookingViewModel.selectedSeat.value?.id == seat.id,
-                  isBooked: seat.available == false,
+                  isSelected: bookingViewModel.selectedSeat.value?.id == seat?.id,
+                  isBooked: seat?.available == false,
                   onTap: () => bookingViewModel.selectSeat(seat),
                 ),
               );
@@ -547,9 +546,11 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               if (data.data?.available == true) {
                 return Column(
                   children: [
-                    _buildPriceSummary(data.data!.bookingDetails!),
+                    _buildSeatSection(data.data.seats),
                     const SizedBox(height: 24),
-                    Obx(() => CustomGradientButton(
+                    if(data.data?.bookingDetails != null) _buildPriceSummary(data.data!.bookingDetails!),
+                    if(data.data?.bookingDetails != null) const SizedBox(height: 24),
+                    if(data.data?.bookingDetails != null) Obx(() => CustomGradientButton(
                         title: "Confirm Booking",
                         onTap: () => bookingViewModel.confirmBooking(widget.outletModel?.id ?? "",null),
                         height: 56,
@@ -597,8 +598,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               }
             },
             orElse: () {
-              final hasAllSelections = bookingViewModel.selectedTable.value != null &&
-                  bookingViewModel.selectedSeat.value != null;
+              final hasAllSelections = bookingViewModel.selectedTable.value != null;
 
               if (!hasAllSelections) {
                 return Container(

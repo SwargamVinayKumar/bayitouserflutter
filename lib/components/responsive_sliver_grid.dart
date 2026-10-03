@@ -81,6 +81,10 @@ class ResponsiveSliverGrid extends StatelessWidget {
       {
         'imagePath': 'assets/images/Reservations.png',
         'page': const ReservationPage(showBackArrow: true),
+      },
+      {
+        'imagePath': 'assets/images/VIPTEMPLETE.jpeg',
+        'page': const OutletPage(type: 'all'),
       }
     ];
 

@@ -39,8 +39,10 @@ class BookingViewModel extends GetxController {
   final durationHours = 1.obs;
 
   List<String> timeSlots = [
-    "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM",
-    "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM", "09:00 PM"
+    "12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM",
+    "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM",
+    "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM",
+    "06:00 PM", "07:00 PM", "08:00 PM", "09:00 PM", "10:00 PM", "11:00 PM"
   ];
 
   void selectTable(TableModel table) {
@@ -48,7 +50,7 @@ class BookingViewModel extends GetxController {
     selectedSeat.value = null;
   }
 
-  void selectSeat(SeatModel seat) {
+  void selectSeat(SeatModel? seat) {
     selectedSeat.value = seat;
   }
 
@@ -73,7 +75,7 @@ class BookingViewModel extends GetxController {
   }
 
   Future<void> checkAvailability(String outletId,BookingModel? bookingModel) async {
-    if (selectedTable.value == null || selectedSeat.value == null || selectedTimeIndex.value == -1) {
+    if (selectedTable.value == null || selectedTimeIndex.value == -1) {
       Get.showCustomSnackBar(title: "Error", message: "Please select table, seat and time slot");
       return;
     }
@@ -86,15 +88,15 @@ class BookingViewModel extends GetxController {
 
       final request = bookingModel == null ? BookingRequestModel(
         outletId: outletId,
-        tableId: selectedTable.value!.id,
-        seatId: selectedSeat.value!.id,
+        tableId: selectedTable.value?.id,
+        seatId: selectedSeat.value?.id,
         checkIn: checkIn.toIso8601String(),
         checkOut: checkOut.toIso8601String(),
       ) : BookingRequestModel(
         outletId: outletId,
         excludingBookingId: bookingModel.id,
-        tableId: selectedTable.value!.id,
-        seatId: selectedSeat.value!.id,
+        tableId: selectedTable.value?.id,
+        seatId: selectedSeat.value?.id,
         checkIn: bookingModel.checkIn,
         checkOut: bookingModel.checkOut,
         );

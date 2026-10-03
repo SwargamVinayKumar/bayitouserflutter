@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/requestModels/auth_request_model.dart';
 import '../utils/auth_utils.dart';
+import '../utils/snack_bar_extension.dart';
 import '../view_models/auth_view_model.dart';
 
 class SplashPage extends StatefulWidget {
@@ -21,11 +22,14 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return StatefulWrapper(
-      onInit: ()  {
-        authViewModel.fetchCurrentLocation();
-        AuthUtils.getAppVersion().then((version) =>
-        authViewModel.validateVersion(ValidateVersionRequestModel(version: version))
-        );
+      onInit: ()  async {
+       final location = await authViewModel.fetchCurrentLocation();
+       if(location == null ){
+         Get.showCustomSnackBar(title: 'Error', message: "Location is required.Please enable location and continue");
+         return;
+       }
+
+        AuthUtils.getAppVersion().then((version) => authViewModel.validateVersion(ValidateVersionRequestModel(version: version)));
       },
       child: Scaffold(
         backgroundColor: CustomColors.secondary,

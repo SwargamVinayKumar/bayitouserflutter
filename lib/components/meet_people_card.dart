@@ -116,13 +116,20 @@ class MeetPeopleCard extends StatelessWidget {
             const SizedBox(height: 8),
             DottedLine(dashColor: CustomColors.darkGray),
             const SizedBox(height: 8),
-            Text(
-              booking?.outletId?.businessName ?? "",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: titleColor,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    booking?.outletId?.businessName ?? "",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: titleColor,
+                    ),
+                  ),
+                ),
+                if(booking?.outletId?.verified == true) Image.asset("assets/images/verified.png",width: 20,height: 20,)
+              ],
             ),
             Text(
               booking?.outletId?.location?.address1 ?? "",

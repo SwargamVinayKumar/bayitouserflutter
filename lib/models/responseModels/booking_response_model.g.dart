@@ -35,6 +35,9 @@ _$BookingAvailabilityDataImpl _$$BookingAvailabilityDataImplFromJson(
           ? null
           : AvailabilityBookingDetails.fromJson(
               json['bookingDetails'] as Map<String, dynamic>),
+      seats: (json['seats'] as List<dynamic>?)
+          ?.map((e) => SeatModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       conflicts: (json['conflicts'] as List<dynamic>?)
           ?.map((e) => BookingConflict.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -45,6 +48,7 @@ Map<String, dynamic> _$$BookingAvailabilityDataImplToJson(
     <String, dynamic>{
       'available': instance.available,
       'bookingDetails': instance.bookingDetails,
+      'seats': instance.seats,
       'conflicts': instance.conflicts,
     };
 

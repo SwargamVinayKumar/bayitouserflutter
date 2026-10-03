@@ -67,6 +67,7 @@ _$TableModelImpl _$$TableModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : RatingAndReviewModel.fromJson(
               json['topRated'] as Map<String, dynamic>),
+      vip: json['vip'] as bool?,
     );
 
 Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
@@ -88,6 +89,7 @@ Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
       'rating': instance.rating,
       'categoryRating': instance.categoryRating,
       'topRated': instance.topRated,
+      'vip': instance.vip,
     };
 
 _$SeatModelImpl _$$SeatModelImplFromJson(Map<String, dynamic> json) =>
@@ -98,6 +100,7 @@ _$SeatModelImpl _$$SeatModelImplFromJson(Map<String, dynamic> json) =>
       images:
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
       available: json['available'] as bool?,
+      isBooked: json['isBooked'] as bool?,
       charges: json['charges'] == null
           ? null
           : Charges.fromJson(json['charges'] as Map<String, dynamic>),
@@ -112,6 +115,7 @@ Map<String, dynamic> _$$SeatModelImplToJson(_$SeatModelImpl instance) =>
       'seatType': instance.seatType,
       'images': instance.images,
       'available': instance.available,
+      'isBooked': instance.isBooked,
       'charges': instance.charges,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,

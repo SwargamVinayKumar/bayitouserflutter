@@ -69,6 +69,7 @@ class OutletCard extends StatelessWidget {
                           ),
                         ),
                       ),
+                      if(outlet?.verified == true) Image.asset("assets/images/verified.png",width: 20,height: 20,),
                       Row(
                         children: [
                           const Icon(

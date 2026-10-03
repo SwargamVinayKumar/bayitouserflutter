@@ -162,9 +162,16 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  booking.outletId?.businessName ?? "",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: CustomColors.secondary),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        booking.outletId?.businessName ?? "",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: CustomColors.secondary),
+                      ),
+                    ),
+                    if(booking.outletId?.verified == true) Image.asset("assets/images/verified.png",width: 20,height: 20,)
+                  ],
                 ),
                 const SizedBox(height: 4),
                 Text(

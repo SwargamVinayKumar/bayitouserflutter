@@ -49,7 +49,8 @@ abstract class OutletModel with _$OutletModel {
     double? rating,
     List<AmenitiesModel>? amenities,
     List<CategoryRating>? categoryRating,
-    bool? isFavorite
+    bool? isFavorite,
+    bool? verified
   }) = _OutletModel;
 
   factory OutletModel.fromJson(Map<String, dynamic> json) =>

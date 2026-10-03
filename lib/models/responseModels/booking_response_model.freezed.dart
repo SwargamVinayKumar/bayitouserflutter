@@ -249,6 +249,7 @@ mixin _$BookingAvailabilityData {
   bool? get available => throw _privateConstructorUsedError;
   AvailabilityBookingDetails? get bookingDetails =>
       throw _privateConstructorUsedError;
+  List<SeatModel>? get seats => throw _privateConstructorUsedError;
   List<BookingConflict>? get conflicts => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -266,6 +267,7 @@ abstract class $BookingAvailabilityDataCopyWith<$Res> {
   $Res call(
       {bool? available,
       AvailabilityBookingDetails? bookingDetails,
+      List<SeatModel>? seats,
       List<BookingConflict>? conflicts});
 
   $AvailabilityBookingDetailsCopyWith<$Res>? get bookingDetails;
@@ -287,6 +289,7 @@ class _$BookingAvailabilityDataCopyWithImpl<$Res,
   $Res call({
     Object? available = freezed,
     Object? bookingDetails = freezed,
+    Object? seats = freezed,
     Object? conflicts = freezed,
   }) {
     return _then(_value.copyWith(
@@ -298,6 +301,10 @@ class _$BookingAvailabilityDataCopyWithImpl<$Res,
           ? _value.bookingDetails
           : bookingDetails // ignore: cast_nullable_to_non_nullable
               as AvailabilityBookingDetails?,
+      seats: freezed == seats
+          ? _value.seats
+          : seats // ignore: cast_nullable_to_non_nullable
+              as List<SeatModel>?,
       conflicts: freezed == conflicts
           ? _value.conflicts
           : conflicts // ignore: cast_nullable_to_non_nullable
@@ -331,6 +338,7 @@ abstract class _$$BookingAvailabilityDataImplCopyWith<$Res>
   $Res call(
       {bool? available,
       AvailabilityBookingDetails? bookingDetails,
+      List<SeatModel>? seats,
       List<BookingConflict>? conflicts});
 
   @override
@@ -352,6 +360,7 @@ class __$$BookingAvailabilityDataImplCopyWithImpl<$Res>
   $Res call({
     Object? available = freezed,
     Object? bookingDetails = freezed,
+    Object? seats = freezed,
     Object? conflicts = freezed,
   }) {
     return _then(_$BookingAvailabilityDataImpl(
@@ -363,6 +372,10 @@ class __$$BookingAvailabilityDataImplCopyWithImpl<$Res>
           ? _value.bookingDetails
           : bookingDetails // ignore: cast_nullable_to_non_nullable
               as AvailabilityBookingDetails?,
+      seats: freezed == seats
+          ? _value._seats
+          : seats // ignore: cast_nullable_to_non_nullable
+              as List<SeatModel>?,
       conflicts: freezed == conflicts
           ? _value._conflicts
           : conflicts // ignore: cast_nullable_to_non_nullable
@@ -377,8 +390,10 @@ class _$BookingAvailabilityDataImpl implements _BookingAvailabilityData {
   const _$BookingAvailabilityDataImpl(
       {this.available,
       this.bookingDetails,
+      final List<SeatModel>? seats,
       final List<BookingConflict>? conflicts})
-      : _conflicts = conflicts;
+      : _seats = seats,
+        _conflicts = conflicts;
 
   factory _$BookingAvailabilityDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingAvailabilityDataImplFromJson(json);
@@ -387,6 +402,16 @@ class _$BookingAvailabilityDataImpl implements _BookingAvailabilityData {
   final bool? available;
   @override
   final AvailabilityBookingDetails? bookingDetails;
+  final List<SeatModel>? _seats;
+  @override
+  List<SeatModel>? get seats {
+    final value = _seats;
+    if (value == null) return null;
+    if (_seats is EqualUnmodifiableListView) return _seats;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   final List<BookingConflict>? _conflicts;
   @override
   List<BookingConflict>? get conflicts {
@@ -399,7 +424,7 @@ class _$BookingAvailabilityDataImpl implements _BookingAvailabilityData {
 
   @override
   String toString() {
-    return 'BookingAvailabilityData(available: $available, bookingDetails: $bookingDetails, conflicts: $conflicts)';
+    return 'BookingAvailabilityData(available: $available, bookingDetails: $bookingDetails, seats: $seats, conflicts: $conflicts)';
   }
 
   @override
@@ -411,13 +436,18 @@ class _$BookingAvailabilityDataImpl implements _BookingAvailabilityData {
                 other.available == available) &&
             (identical(other.bookingDetails, bookingDetails) ||
                 other.bookingDetails == bookingDetails) &&
+            const DeepCollectionEquality().equals(other._seats, _seats) &&
             const DeepCollectionEquality()
                 .equals(other._conflicts, _conflicts));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, available, bookingDetails,
+  int get hashCode => Object.hash(
+      runtimeType,
+      available,
+      bookingDetails,
+      const DeepCollectionEquality().hash(_seats),
       const DeepCollectionEquality().hash(_conflicts));
 
   @JsonKey(ignore: true)
@@ -439,6 +469,7 @@ abstract class _BookingAvailabilityData implements BookingAvailabilityData {
   const factory _BookingAvailabilityData(
       {final bool? available,
       final AvailabilityBookingDetails? bookingDetails,
+      final List<SeatModel>? seats,
       final List<BookingConflict>? conflicts}) = _$BookingAvailabilityDataImpl;
 
   factory _BookingAvailabilityData.fromJson(Map<String, dynamic> json) =
@@ -448,6 +479,8 @@ abstract class _BookingAvailabilityData implements BookingAvailabilityData {
   bool? get available;
   @override
   AvailabilityBookingDetails? get bookingDetails;
+  @override
+  List<SeatModel>? get seats;
   @override
   List<BookingConflict>? get conflicts;
   @override

@@ -166,6 +166,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
           final booking = bookings[index];
           return ReservationOutletCard(
+            verified: booking.outletId?.verified ?? false,
             bookingType: booking.bookingType ?? "classic",
             image: booking.outletId?.businessLogo ?? "",
             OutletName: booking.outletId?.businessName ?? "Outlet Name",

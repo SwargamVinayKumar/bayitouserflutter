@@ -39,6 +39,7 @@ class AuthViewModel extends GetxController {
   final openingHoursObserver = ApiResult<OpeningHoursResponseModel>.init().obs;
   final fetchDesignationsObserver = ApiResult<DesignationResponseModel>.init().obs;
   final registerUserObserver = ApiResult<SignInResponseModel>.init().obs;
+  final changePasswordObserver = ApiResult<PrimaryResponseModel>.init().obs;
 
 
   // Observers
@@ -401,7 +402,41 @@ class AuthViewModel extends GetxController {
   }
 
 
-  
+  Future<void> changePassword(int? otp,String password,String confirmPassword) async {
+    try {
+
+      final request = SignUpRequestModel(
+        password: password,
+        confirmPassword: confirmPassword,
+        otp: otp,
+      );
+
+      final response = await apiProvider.post(EndPoints.verifyOtp, request.toJson());
+      final body = response.body;
+      if (response.isOk && body != null) {
+        final data = SignInResponseModel.fromJson(body);
+        if (data.status == 1) {
+          verifyOtpObserver.value = ApiResult.success(data);
+          final page = data.data?.page;
+          preferenceManager.setValue("page", page ?? "");
+          preferenceManager.setValue("token", data.data?.token ?? "");
+          Get.showCustomSnackBar(title: 'Success', message: data.message ?? 'Otp Send successful');
+          AuthUtils.navigateFromPageName(data.data?.page);
+        } else {
+          verifyOtpObserver.value = ApiResult.error(data.message ?? "");
+          Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
+        }
+      } else {
+        verifyOtpObserver.value = ApiResult.error("Something went wrong");
+      }
+    } catch (e) {
+      verifyOtpObserver.value = ApiResult.error(e.toString());
+    }
+  }
+
+
+
+
   Future<void> fetchProfileDetails() async {
     try {
       fetchProfileDetailObserver.value = ApiResult.loading("loading");

@@ -7,6 +7,7 @@ class EndPoints {
   static const signIn = "signIn";
   static const signUp = "signUp";
   static const verifyOtp = "verifyOtp";
+  static const changePassword = "changePassword";
   static const registerOutlet = "registerOutlet";
   static const getProfile = "getProfile";
   static const fetchDesignations = "fetchDesignations";

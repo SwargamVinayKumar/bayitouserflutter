@@ -45,7 +45,8 @@ abstract class TableModel with _$TableModel {
     int? totalVotes,
     double? rating,
     List<CategoryRating>? categoryRating,
-    RatingAndReviewModel? topRated
+    RatingAndReviewModel? topRated,
+    bool? vip
   }) = _TableModel;
 
   factory TableModel.fromJson(Map<String, dynamic> json) =>
@@ -60,6 +61,7 @@ abstract class SeatModel with _$SeatModel {
     String? seatType,
     List<String>? images,
     bool? available,
+    bool? isBooked,
     Charges? charges,
     String? createdAt,
     String? updatedAt,

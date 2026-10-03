@@ -63,7 +63,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: widget.hinTxt ?? "Search cafés...",
+                  hintText: widget.hinTxt ?? "Cafés,Work Spaces,Hotels,Dining,...",
                   hintStyle: TextStyle(
                     color: CustomColors.secondary
                         .withOpacity(0.6),

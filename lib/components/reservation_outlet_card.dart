@@ -17,6 +17,7 @@ class ReservationOutletCard extends StatelessWidget {
   final VoidCallback onTap;
   final Color ctnColor;
   final Color titleColor;
+  final bool verified;
 
   const ReservationOutletCard({
     super.key,
@@ -30,6 +31,7 @@ class ReservationOutletCard extends StatelessWidget {
     required this.onTap,
     this.ctnColor = CustomColors.primary,
     this.titleColor = CustomColors.secondary,
+    required this.verified,
   });
 
   @override
@@ -67,13 +69,20 @@ class ReservationOutletCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    OutletName.capitalizeFirst ?? "",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: titleColor,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          OutletName.capitalizeFirst ?? "",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: titleColor,
+                          ),
+                        ),
+                      ),
+                      if(verified == true) Image.asset("assets/images/verified.png",width: 20,height: 20,)
+                    ],
                   ),
                   const SizedBox(height: 4),
                   Text(

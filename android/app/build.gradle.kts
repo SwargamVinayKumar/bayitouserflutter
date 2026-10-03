@@ -33,11 +33,22 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:/FlutterProjects/Bayito/bayitouserflutter/android/upload-keystore.jks")
+            storePassword = "Bayito@123"
+            keyAlias = "bayitoBayito@123"
+            keyPassword = "Bayito@123"
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
@@ -46,5 +57,6 @@ flutter {
     source = "../.."
 }
 dependencies {
+    implementation("com.google.android.recaptcha:recaptcha:18.4.0")
     implementation("androidx.appcompat:appcompat:1.4.0")
 }
