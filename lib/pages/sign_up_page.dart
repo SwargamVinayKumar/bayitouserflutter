@@ -12,7 +12,8 @@ import '../utils/snack_bar_extension.dart';
 import '../view_models/auth_view_model.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  final bool? forgotPassword;
+  const SignUpPage({super.key, this.forgotPassword = false});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -36,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
   @override
   void codeUpdated() {
     authViewModel.otpController.text = code.toString();
-    authViewModel.verifyOtp();
+    authViewModel.verifyOtp(widget.forgotPassword);
   }
 
   @override
@@ -72,10 +73,15 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                             ),
                           ),
                         ),
+                        if(widget.forgotPassword == true) CustomTextFieldComponent(
+                          hintText: "Confirm Password",
+                          isPassword: true,
+                          textController: authViewModel.signUpPasswordController,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                           child: Text(
-                            "Verification Code Sent To ${authViewModel.mobileController.text}",
+                            "Verification Code Sent To ${authViewModel.emailMobileController.text}",
                             style: const TextStyle(
                               color: CustomColors.secondary,
                               fontWeight: FontWeight.w400,
@@ -103,35 +109,49 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40),
                           child: CustomGradientButton(
-                            title: "Next",
+                            title: "Confirm",
                             fontSize: 18,
                             onTap: () async {
-                              if (authViewModel.fullNameController.text.isEmpty) {
-                                Get.showCustomSnackBar(title: 'Error', message: "Please enter full name");
-                                return;
+
+                              if(widget.forgotPassword == false){
+                                if (authViewModel.fullNameController.text.isEmpty) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Please enter full name");
+                                  return;
+                                }
+                                if (!GetUtils.isEmail(authViewModel.signUpEmailController.text)) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Please enter a valid email");
+                                  return;
+                                }
+                                if (authViewModel.mobileController.text.length < 10) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Please enter a valid mobile number");
+                                  return;
+                                }
+                                if (authViewModel.signUpPasswordController.text.length < 6) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Password must be at least 6 characters");
+                                  return;
+                                }
+                                if (authViewModel.otpController.text.trim().length != 6) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Otp must be  6 characters");
+                                  return;
+                                }
+                                if (authViewModel.signUpPasswordController.text !=
+                                    authViewModel.confirmPasswordController.text) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Passwords do not match");
+                                  return;
+                                }
+                                await authViewModel.verifyOtp(false);
                               }
-                              if (!GetUtils.isEmail(authViewModel.signUpEmailController.text)) {
-                                Get.showCustomSnackBar(title: 'Error', message: "Please enter a valid email");
-                                return;
+                              else{
+                                if (authViewModel.otpController.text.trim().length != 6) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Otp must be  6 characters");
+                                  return;
+                                }
+                                if (authViewModel.signUpPasswordController.text.trim().isEmpty) {
+                                  Get.showCustomSnackBar(title: 'Error', message: "Passwords do not match");
+                                  return;
+                                }
+                                await authViewModel.verifyOtp(true);
                               }
-                              if (authViewModel.mobileController.text.length < 10) {
-                                Get.showCustomSnackBar(title: 'Error', message: "Please enter a valid mobile number");
-                                return;
-                              }
-                              if (authViewModel.signUpPasswordController.text.length < 6) {
-                                Get.showCustomSnackBar(title: 'Error', message: "Password must be at least 6 characters");
-                                return;
-                              }
-                              if (authViewModel.otpController.text.trim().length != 6) {
-                                Get.showCustomSnackBar(title: 'Error', message: "Otp must be  6 characters");
-                                return;
-                              }
-                              if (authViewModel.signUpPasswordController.text !=
-                                  authViewModel.confirmPasswordController.text) {
-                                Get.showCustomSnackBar(title: 'Error', message: "Passwords do not match");
-                                return;
-                              }
-                              await authViewModel.verifyOtp();
                             },
                           ),
                         ),
@@ -224,6 +244,7 @@ class _SignUpPageState extends State<SignUpPage> with CodeAutoFill {
                                   Get.showCustomSnackBar(title: 'Error', message: "Passwords do not match");
                                   return;
                                 }
+                                authViewModel.emailMobileController.text = authViewModel.mobileController.text;
                                 await authViewModel.signUp();
                               },
                             ),

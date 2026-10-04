@@ -1,9 +1,12 @@
+import 'package:bayitouser/api/api_result.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/components/custom_textfield.dart';
 import 'package:bayitouser/pages/sign_up_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../models/responseModels/auth_response_model.dart';
+import '../utils/snack_bar_extension.dart';
 import '../view_models/auth_view_model.dart';
 import 'package:get/get.dart';
 
@@ -44,6 +47,36 @@ class SignInPage extends StatelessWidget {
                   hintText: "Password",
                   isPassword: true,
                   textController: authViewModel.signInPasswordController,
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        if(authViewModel.emailMobileController.text.trim().isEmpty){
+                          Get.showCustomSnackBar(title: 'Failed', message: "Email Or Mobile should be entered");
+                        }
+                        else{
+                          authViewModel.signUpObserver.value = ApiResult.success(SignInResponseModel(status: 1,message: "success"));
+                          Get.to(() =>  const SignUpPage(forgotPassword: true));
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          "Forgot Password",
+                          style: TextStyle(
+                            color: CustomColors.secondary,
+                            fontSize: 16,
+                            decoration: TextDecoration.underline,
+                            decorationColor: CustomColors.secondary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
                 const SizedBox(height: 24),
                 Obx(() {

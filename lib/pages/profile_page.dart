@@ -1,6 +1,7 @@
 import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/components/profile_header_component.dart';
 import 'package:bayitouser/components/profile_item_component.dart';
+import 'package:bayitouser/pages/change_password_page.dart';
 import 'package:bayitouser/pages/privacy_security_page.dart';
 import 'package:bayitouser/pages/regsiter_user_page.dart';
 import 'package:bayitouser/pages/sign_in_page.dart';
@@ -90,7 +91,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     Get.to(() => RegisterUserPage(userModel: userModel));
                   },
                 ),
-                DottedLine(dashColor: CustomColors.darkGray),
+                const DottedLine(dashColor: CustomColors.darkGray),
+                ProfileItemComponent(
+                  icon: Icons.password,
+                  title: "Change Password",
+                  onTap: () {
+                    Get.to(() => ChangePasswordPage(profileData: userModel));
+                  },
+                ),
+                const DottedLine(dashColor: CustomColors.darkGray),
                 ProfileItemComponent(
                   icon: Icons.security_outlined,
                   title: "Privacy & Security",

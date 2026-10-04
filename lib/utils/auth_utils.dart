@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:bayitouser/pages/main_page.dart';
 import 'package:bayitouser/pages/splash_page.dart';
+import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +18,8 @@ import '../pages/user_blocked.dart';
 class AuthUtils {
 
   AuthUtils._();
+
+  static final AuthViewModel authViewModel = Get.put(AuthViewModel());
 
   static DateTime _toIndianTime(DateTime date) {
     return date.toUtc().add(const Duration(hours: 5, minutes: 30));
@@ -45,6 +49,37 @@ class AuthUtils {
     return "${formatDateToLong(indiaCheckIn)} - ${formatDateToLong(indiaCheckOut)}";
 
   }
+
+  static String getDistanceString({
+    required double lat2,
+    required double lng2,
+  }) {
+    const double earthRadiusKm = 6371.0;
+
+    final lat1 = (authViewModel.locationPosition.value?.latitude ?? 17.43836) ;
+    final lng1 = (authViewModel.locationPosition.value?.longitude ?? 78.436373) ;
+
+    final double dLat = _toRadians(lat2 - lat1);
+    final double dLng = _toRadians(lng2 - lng1);
+
+    final double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(_toRadians(lat1)) *
+            cos(_toRadians(lat2)) *
+            sin(dLng / 2) *
+            sin(dLng / 2);
+
+    final double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    final double km = earthRadiusKm * c;
+    final double meters = km * 1000;
+
+    if (km < 1) {
+      return "${meters.toStringAsFixed(0)} m";
+    }
+    return "${km.toStringAsFixed(2)} km";
+  }
+
+  static double _toRadians(double degree) => degree * pi / 180.0;
+
 
   static String dateFormatToCheckInCheckOut(DateTime? checkInDate, DateTime? checkOutDate) {
     if (checkInDate == null || checkOutDate == null) return "";

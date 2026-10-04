@@ -68,6 +68,9 @@ _$TableModelImpl _$$TableModelImplFromJson(Map<String, dynamic> json) =>
           : RatingAndReviewModel.fromJson(
               json['topRated'] as Map<String, dynamic>),
       vip: json['vip'] as bool?,
+      amenities: (json['amenities'] as List<dynamic>?)
+          ?.map((e) => AmenitiesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
@@ -90,6 +93,7 @@ Map<String, dynamic> _$$TableModelImplToJson(_$TableModelImpl instance) =>
       'categoryRating': instance.categoryRating,
       'topRated': instance.topRated,
       'vip': instance.vip,
+      'amenities': instance.amenities,
     };
 
 _$SeatModelImpl _$$SeatModelImplFromJson(Map<String, dynamic> json) =>

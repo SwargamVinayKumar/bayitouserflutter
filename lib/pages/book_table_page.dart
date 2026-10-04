@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bayitouser/api/api_result.dart';
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../components/custom_network_image.dart';
+import '../components/outlet_detail_card.dart';
 import '../components/section_title_item.dart';
 import '../models/responseModels/booking_response_model.dart';
 import '../models/responseModels/table_response_model.dart';
@@ -27,10 +30,17 @@ class BookTablePage extends StatefulWidget {
   State<BookTablePage> createState() => _BookTablePageState();
 }
 
-class _BookTablePageState extends State<BookTablePage> with SingleTickerProviderStateMixin {
+class _BookTablePageState extends State<BookTablePage>
+    with SingleTickerProviderStateMixin {
   final bookingViewModel = Get.put(BookingViewModel());
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+
+  // ✅ Store workers so they can be disposed
+  final List<Worker> _workers = [];
+
+  // ✅ Debounce timer for API calls
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -43,51 +53,46 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
-
-    // Add listeners for auto-check availability
+    // ✅ Setup listeners immediately (no addPostFrameCallback needed)
     _setupListeners();
 
     Future.delayed(const Duration(milliseconds: 300), () {
-      _animationController.forward();
+      if (mounted) _animationController.forward();
     });
   }
 
+  // ✅ Using ever() instead of listen() — fires reliably on Rx changes
   void _setupListeners() {
-    // Listen to selection changes and auto-check availability
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      bookingViewModel.selectedDate.listen((_) {
-        _autoCheckAvailability();
-      });
-      bookingViewModel.selectedTimeIndex.listen((_) {
-        _autoCheckAvailability();
-      });
-      bookingViewModel.durationHours.listen((_) {
-        _autoCheckAvailability();
-      });
-      bookingViewModel.selectedTable.listen((_) {
-        _autoCheckAvailability();
-      });
-      bookingViewModel.selectedSeat.listen((_) {
-        _autoCheckAvailability();
-      });
-    });
+    _workers.addAll([
+      ever(bookingViewModel.selectedDate, (_) => _autoCheckAvailability()),
+      ever(bookingViewModel.selectedTimeIndex, (_) => _autoCheckAvailability()),
+      ever(bookingViewModel.durationHours, (_) => _autoCheckAvailability()),
+      ever(bookingViewModel.selectedTable, (_) => _autoCheckAvailability()),
+      ever(bookingViewModel.selectedSeat, (_) => _autoCheckAvailability()),
+    ]);
   }
 
+  // ✅ Debounced auto-check
   void _autoCheckAvailability() {
-    if (widget.outletModel?.id != null &&
-        bookingViewModel.selectedTable.value != null &&
-        bookingViewModel.selectedSeat.value != null) {
-      // Debounce the call
-      Future.delayed(const Duration(milliseconds: 300), () {
-        if (mounted) {
-          bookingViewModel.checkAvailability(widget.outletModel!.id!,null);
-        }
-      });
-    }
+    if (widget.outletModel?.id == null) return;
+    if (bookingViewModel.selectedTable.value == null) return;
+    if (bookingViewModel.selectedSeat.value == null) return;
+
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 400), () {
+      if (!mounted) return;
+      bookingViewModel.checkAvailability(widget.outletModel!.id!, null);
+    });
   }
 
   @override
   void dispose() {
+    // ✅ Dispose workers and debounce timer
+    for (final worker in _workers) {
+      worker.dispose();
+    }
+    _workers.clear();
+    _debounce?.cancel();
     _animationController.dispose();
     super.dispose();
   }
@@ -123,9 +128,9 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
       backgroundColor: CustomColors.white,
       appBar: _buildAppBar(),
       body: StatefulWrapper(
-        onInit: (){
+        onInit: () {
           bookingViewModel.checkAvailabilityObserver.value = ApiResult.init();
-          bookingViewModel.checkAvailability(widget.outletModel!.id!,null);
+          bookingViewModel.checkAvailability(widget.outletModel!.id!, null);
         },
         child: SafeArea(
           child: Stack(
@@ -142,11 +147,13 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                         const SizedBox(height: 12),
                         buildOutletInfo(widget.outletModel),
                         const SizedBox(height: 28),
-                        buildSectionHeader("Select Date", Icons.calendar_today_rounded),
+                        buildSectionHeader(
+                            "Select Date", Icons.calendar_today_rounded),
                         const SizedBox(height: 12),
                         _buildDatePicker(),
                         const SizedBox(height: 28),
-                        buildSectionHeader("Select Time Slot", Icons.access_time_rounded),
+                        buildSectionHeader(
+                            "Select Time Slot", Icons.access_time_rounded),
                         const SizedBox(height: 14),
                         _buildTimeSlotPicker(),
                         const SizedBox(height: 28),
@@ -154,7 +161,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                         const SizedBox(height: 12),
                         _buildDurationPicker(),
                         const SizedBox(height: 28),
-                        buildSectionHeader("Select Table", Icons.table_restaurant_rounded),
+                        buildSectionHeader(
+                            "Select Table", Icons.table_restaurant_rounded),
                         const SizedBox(height: 16),
                         _buildTableSelection(),
                         const SizedBox(height: 32),
@@ -165,9 +173,12 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                   ),
                 ),
               ),
-              Obx(() => bookingViewModel.checkAvailabilityObserver.value.maybeWhen(loading: (cds)  =>
-                  const CustomLottieLoading(),
-                  orElse: () => const SizedBox()))
+              Obx(() => bookingViewModel
+                  .checkAvailabilityObserver.value
+                  .maybeWhen(
+                loading: (cds) => const CustomLottieLoading(),
+                orElse: () => const SizedBox(),
+              )),
             ],
           ),
         ),
@@ -183,7 +194,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
         padding: const EdgeInsets.all(8.0),
         child: CustomActionButton(
           icon: Icons.arrow_back_ios_new_rounded,
-          onTap: () => Get.back()
+          onTap: () => Get.back(),
         ),
       ),
       title: Text(
@@ -195,24 +206,9 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
           letterSpacing: -0.5,
         ),
       ),
-      actions: [
-        // Container(
-        //   margin: const EdgeInsets.only(right: 16),
-        //   padding: const EdgeInsets.all(8),
-        //   decoration: BoxDecoration(
-        //     color: CustomColors.secondary.withOpacity(0.1),
-        //     shape: BoxShape.circle,
-        //   ),
-        //   child: Icon(
-        //     Icons.restaurant_menu_rounded,
-        //     color: CustomColors.secondary,
-        //     size: 20,
-        //   ),
-        // ),
-      ],
+      actions: const [],
     );
   }
-
 
   Widget _buildDatePicker() {
     return GestureDetector(
@@ -251,7 +247,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                 ),
                 const SizedBox(width: 14),
                 Obx(() => Text(
-                  DateFormat("EEE, d MMM yyyy").format(bookingViewModel.selectedDate.value),
+                  DateFormat("EEE, d MMM yyyy")
+                      .format(bookingViewModel.selectedDate.value),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -279,14 +276,15 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
   }
 
   Widget _buildTimeSlotPicker() {
-    return Container(
+    return SizedBox(
       height: 50,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return Obx(() {
-            bool isSelected = bookingViewModel.selectedTimeIndex.value == index;
+            bool isSelected =
+                bookingViewModel.selectedTimeIndex.value == index;
             return GestureDetector(
               onTap: () {
                 bookingViewModel.selectedTimeIndex.value = index;
@@ -328,7 +326,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      color: isSelected ? Colors.white : CustomColors.secondary,
+                      color:
+                      isSelected ? Colors.white : CustomColors.secondary,
                     ),
                   ),
                 ),
@@ -351,7 +350,7 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Row(
-        children: [1, 2, 3, 4,5].map((hours) {
+        children: [1, 2, 3, 4, 5].map((hours) {
           return Expanded(
             child: Obx(() {
               bool isSelected = bookingViewModel.durationHours.value == hours;
@@ -387,7 +386,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: isSelected ? Colors.white : CustomColors.secondary,
+                      color:
+                      isSelected ? Colors.white : CustomColors.secondary,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -428,27 +428,48 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.grey.shade200),
               ),
-              child: EmptyDataView(text: "No tables available \nPlease try another time or date"),
+              child: const EmptyDataView(
+                  text: "No tables available \nPlease try another time or date"),
             );
           }
-          return SizedBox(
-            height: 160,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              itemCount: data.data!.tables!.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 16),
-              itemBuilder: (context, index) {
-                final table = data.data!.tables![index];
-                return Obx(() =>
-                   TableItemWidget(
-                    table: table,
-                    isSelected: bookingViewModel.selectedTable.value?.id == table.id,
-                    onTap: () => bookingViewModel.selectTable(table),
-                  ),
-                );
-              },
-            ),
+          return Column(
+            children: [
+              SizedBox(
+                height: 160,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: data.data!.tables!.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 16),
+                  itemBuilder: (context, index) {
+                    final table = data.data!.tables![index];
+                    return Obx(() => TableItemWidget(
+                      table: table,
+                      isSelected: bookingViewModel.selectedTable.value?.id == table.id,
+                      onTap: () => bookingViewModel.selectTable(table),
+                    ));
+                  },
+                ),
+              ),
+              Text(
+                "Highlights",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: CustomColors.darkBlack,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Obx(() => Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: bookingViewModel.selectedTable.value?.amenities?.map((ameniny) => OutletDetailCard(
+                    title: ameniny.name ?? "",
+                    isChip: true,
+                  )).toList() ?? [],
+                ),
+              ),
+            ],
           );
         },
         error: (err) => Center(
@@ -462,7 +483,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.error_outline_rounded, color: Colors.red.shade400, size: 32),
+                Icon(Icons.error_outline_rounded,
+                    color: Colors.red.shade400, size: 32),
                 const SizedBox(height: 8),
                 Text(
                   "Error: $err",
@@ -505,12 +527,12 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
             itemBuilder: (context, index) {
               final seat = seats?[index];
               return Obx(() => SeatItemWidget(
-                  seat: seat,
-                  isSelected: bookingViewModel.selectedSeat.value?.id == seat?.id,
-                  isBooked: seat?.available == false,
-                  onTap: () => bookingViewModel.selectSeat(seat),
-                ),
-              );
+                seat: seat,
+                isSelected:
+                bookingViewModel.selectedSeat.value?.id == seat?.id,
+                isBooked: seat?.available == false,
+                onTap: () => bookingViewModel.selectSeat(seat),
+              ));
             },
           ),
         ],
@@ -520,7 +542,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
 
   Widget _buildBookingActions() {
     return Obx(() {
-      final availabilityState = bookingViewModel.checkAvailabilityObserver.value;
+      final availabilityState =
+          bookingViewModel.checkAvailabilityObserver.value;
 
       return Column(
         children: [
@@ -548,16 +571,23 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                   children: [
                     _buildSeatSection(data.data.seats),
                     const SizedBox(height: 24),
-                    if(data.data?.bookingDetails != null) _buildPriceSummary(data.data!.bookingDetails!),
-                    if(data.data?.bookingDetails != null) const SizedBox(height: 24),
-                    if(data.data?.bookingDetails != null) Obx(() => CustomGradientButton(
+                    if (data.data?.bookingDetails != null)
+                      _buildPriceSummary(data.data!.bookingDetails!),
+                    if (data.data?.bookingDetails != null)
+                      const SizedBox(height: 24),
+                    if (data.data?.bookingDetails != null)
+                      Obx(() => CustomGradientButton(
                         title: "Confirm Booking",
-                        onTap: () => bookingViewModel.confirmBooking(widget.outletModel?.id ?? "",null),
+                        onTap: () => bookingViewModel.confirmBooking(
+                            widget.outletModel?.id ?? "", null),
                         height: 56,
                         fontSize: 18,
-                          loading: bookingViewModel.confirmBookingObserver.value.maybeWhen(loading: (c) => true,orElse: ()=> false)
-                      ),
-                    ),
+                        loading: bookingViewModel
+                            .confirmBookingObserver.value
+                            .maybeWhen(
+                            loading: (c) => true,
+                            orElse: () => false),
+                      )),
                   ],
                 );
               } else {
@@ -572,11 +602,13 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.info_outline_rounded, color: Colors.orange.shade700),
+                          Icon(Icons.info_outline_rounded,
+                              color: Colors.orange.shade700),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              data.data?.message ?? "Selected combination is not available",
+                              data.data?.message ??
+                                  "Selected combination is not available",
                               style: TextStyle(
                                 color: Colors.orange.shade700,
                                 fontSize: 14,
@@ -589,7 +621,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                     const SizedBox(height: 16),
                     CustomGradientButton(
                       title: "Check Availability",
-                      onTap: () => bookingViewModel.checkAvailability(widget.outletModel!.id!,null),
+                      onTap: () => bookingViewModel.checkAvailability(
+                          widget.outletModel!.id!, null),
                       height: 56,
                       fontSize: 18,
                     ),
@@ -598,7 +631,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               }
             },
             orElse: () {
-              final hasAllSelections = bookingViewModel.selectedTable.value != null;
+              final hasAllSelections =
+                  bookingViewModel.selectedTable.value != null;
 
               if (!hasAllSelections) {
                 return Container(
@@ -611,7 +645,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.info_outline_rounded, color: Colors.grey.shade600),
+                      Icon(Icons.info_outline_rounded,
+                          color: Colors.grey.shade600),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
@@ -630,7 +665,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
 
               return CustomGradientButton(
                 title: "Check Availability",
-                onTap: () => bookingViewModel.checkAvailability(widget.outletModel!.id!,null),
+                onTap: () => bookingViewModel.checkAvailability(
+                    widget.outletModel!.id!, null),
                 height: 56,
                 fontSize: 18,
               );
@@ -710,7 +746,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
     );
   }
 
-  Widget _buildPriceRow(String label, String value, IconData icon, {bool isTotal = false}) {
+  Widget _buildPriceRow(String label, String value, IconData icon,
+      {bool isTotal = false}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -727,7 +764,8 @@ class _BookTablePageState extends State<BookTablePage> with SingleTickerProvider
               style: TextStyle(
                 fontSize: isTotal ? 16 : 14,
                 fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
-                color: isTotal ? CustomColors.secondary : Colors.grey.shade700,
+                color:
+                isTotal ? CustomColors.secondary : Colors.grey.shade700,
               ),
             ),
           ],

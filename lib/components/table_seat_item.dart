@@ -833,6 +833,7 @@ Widget buildOutletHeader(dynamic booking) {
 
 Widget buildOutletInfo(OutletModel? outletModel) {
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Container(
         padding: const EdgeInsets.all(16),

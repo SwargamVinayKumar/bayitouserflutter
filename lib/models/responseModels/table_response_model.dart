@@ -46,7 +46,8 @@ abstract class TableModel with _$TableModel {
     double? rating,
     List<CategoryRating>? categoryRating,
     RatingAndReviewModel? topRated,
-    bool? vip
+    bool? vip,
+    List<AmenitiesModel>? amenities,
   }) = _TableModel;
 
   factory TableModel.fromJson(Map<String, dynamic> json) =>

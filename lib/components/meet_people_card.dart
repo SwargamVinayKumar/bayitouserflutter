@@ -140,7 +140,7 @@ class MeetPeopleCard extends StatelessWidget {
               ),
             ),
             Text(
-              "5Km away",
+              AuthUtils.getDistanceString(lat2: booking?.outletId?.location?.latitude ?? 17.439250,lng2: booking?.outletId?.location?.longitude ?? 78.437653),
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w500,

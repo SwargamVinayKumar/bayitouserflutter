@@ -21,6 +21,7 @@ import '../models/requestModels/sign_up_request_model.dart';
 import '../models/responseModels/auth_response_model.dart';
 import '../models/responseModels/file_upload_response_model.dart';
 import '../models/responseModels/open_hour_model.dart';
+import '../pages/main_page.dart';
 import '../pages/update_version_screen.dart';
 import '../pages/user_blocked.dart';
 import '../utils/auth_utils.dart';
@@ -47,8 +48,6 @@ class AuthViewModel extends GetxController {
   final signInObserver = ApiResult<SignInResponseModel>.init().obs;
   final signUpObserver = ApiResult<SignInResponseModel>.init().obs;
   final verifyOtpObserver = ApiResult<SignInResponseModel>.init().obs;
-
-  final registerOutLetObserver = ApiResult<SignInResponseModel>.init().obs;
 
   final uploadFileObserver = ApiResult<FileUploadResponseModel>.init().obs;
 
@@ -353,13 +352,19 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  Future<void> verifyOtp() async {
+  Future<void> verifyOtp(bool? changePassword) async {
     try {
       // Final Validation
-      if (fullNameController.text.isEmpty ||
+      if ((fullNameController.text.isEmpty ||
           signUpEmailController.text.isEmpty ||
           mobileController.text.isEmpty ||
-          signUpPasswordController.text.isEmpty || otpController.text.isEmpty) {
+          signUpPasswordController.text.isEmpty || otpController.text.isEmpty) && changePassword == false) {
+        Get.showCustomSnackBar(title: 'Error', message: "Please complete all registration steps");
+        return;
+      }
+
+      if ((signUpPasswordController.text.isEmpty ||
+          emailMobileController.text.isEmpty || otpController.text.isEmpty) && changePassword == false) {
         Get.showCustomSnackBar(title: 'Error', message: "Please complete all registration steps");
         return;
       }
@@ -405,32 +410,30 @@ class AuthViewModel extends GetxController {
   Future<void> changePassword(int? otp,String password,String confirmPassword) async {
     try {
 
+      changePasswordObserver.value = ApiResult.loading("loading");
+
       final request = SignUpRequestModel(
         password: password,
         confirmPassword: confirmPassword,
         otp: otp,
       );
 
-      final response = await apiProvider.post(EndPoints.verifyOtp, request.toJson());
+      final response = await apiProvider.post(EndPoints.changePassword, request.toJson());
       final body = response.body;
       if (response.isOk && body != null) {
-        final data = SignInResponseModel.fromJson(body);
+        final data = PrimaryResponseModel.fromJson(body);
         if (data.status == 1) {
-          verifyOtpObserver.value = ApiResult.success(data);
-          final page = data.data?.page;
-          preferenceManager.setValue("page", page ?? "");
-          preferenceManager.setValue("token", data.data?.token ?? "");
-          Get.showCustomSnackBar(title: 'Success', message: data.message ?? 'Otp Send successful');
-          AuthUtils.navigateFromPageName(data.data?.page);
+          changePasswordObserver.value = ApiResult.success(data);
+          Get.offAll(() => const MainPage());
         } else {
-          verifyOtpObserver.value = ApiResult.error(data.message ?? "");
+          changePasswordObserver.value = ApiResult.error(data.message ?? "");
           Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
         }
       } else {
-        verifyOtpObserver.value = ApiResult.error("Something went wrong");
+        changePasswordObserver.value = ApiResult.error("Something went wrong");
       }
     } catch (e) {
-      verifyOtpObserver.value = ApiResult.error(e.toString());
+      changePasswordObserver.value = ApiResult.error(e.toString());
     }
   }
 

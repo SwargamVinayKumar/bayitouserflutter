@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/responseModels/outlet_response_model.dart';
 import '../pages/book_table_page.dart';
+import '../utils/auth_utils.dart';
 import 'custom_network_image.dart';
 
 class OutletCard extends StatelessWidget {
@@ -95,6 +96,15 @@ class OutletCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       color: titleColor.withOpacity(0.6),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    AuthUtils.getDistanceString(lat2: outlet?.location?.latitude ?? 17.439250,lng2: outlet?.location?.longitude ?? 78.437653),
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: titleColor,
                     ),
                   ),
                   const SizedBox(height: 8),
