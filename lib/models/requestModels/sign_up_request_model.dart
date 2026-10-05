@@ -9,6 +9,7 @@ part 'sign_up_request_model.g.dart';
 abstract class SignUpRequestModel with _$SignUpRequestModel {
   const factory SignUpRequestModel({
     int? mobile,
+    String? key,
     String? name,
     String? email,
     String? password,

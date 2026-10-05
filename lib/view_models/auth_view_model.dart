@@ -374,7 +374,7 @@ class AuthViewModel extends GetxController {
 
 
       final request = SignUpRequestModel(
-        mobile: int.tryParse(mobileController.text),
+        key: emailMobileController.text,
         name: fullNameController.text,
         email: signUpEmailController.text,
         password: signUpPasswordController.text,
