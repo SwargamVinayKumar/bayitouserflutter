@@ -133,6 +133,7 @@ _$ConfirmBookingDataImpl _$$ConfirmBookingDataImplFromJson(
       paymentType: json['paymentType'] as String?,
       status: json['status'] as String?,
       paymentLink: json['paymentLink'] as String?,
+      razorPayId: json['razorPayId'] as String?,
       orderId: json['orderId'] as String?,
       paymentId: json['paymentId'] as String?,
     );
@@ -156,6 +157,7 @@ Map<String, dynamic> _$$ConfirmBookingDataImplToJson(
       'paymentType': instance.paymentType,
       'status': instance.status,
       'paymentLink': instance.paymentLink,
+      'razorPayId': instance.razorPayId,
       'orderId': instance.orderId,
       'paymentId': instance.paymentId,
     };

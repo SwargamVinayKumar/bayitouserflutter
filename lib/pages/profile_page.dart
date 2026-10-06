@@ -14,8 +14,10 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get.dart';
+import '../components/empty_data_view_with_button.dart';
 import '../components/helper_bottom_sheet.dart';
 import '../models/responseModels/auth_response_model.dart';
+import '../utils/auth_utils.dart';
 import '../utils/preference_manager.dart';
 
 
@@ -32,101 +34,134 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final logOuting = false.obs;
 
+  final version = "".obs;
+
 
   @override
   Widget build(BuildContext context) {
     return StatefulWrapper(
       onInit: (){
-        authViewModel.fetchProfileDetails();
+        _refreshData();
       },
       child: Scaffold(
         backgroundColor: CustomColors.primary,
-        body: SingleChildScrollView(
-          child: Obx(() => authViewModel.fetchProfileDetailObserver.value.maybeWhen(success: (data){
-            final userModel = (data as ProfileResponseModel).data;
-            return Column(
-              children: [
-                Obx(() =>
-                    ProfileHeaderComponent(profileData:userModel,loading: logOuting.value,onLogout: (){
-                      showModalBottomSheet(
-                        context:
-                        context,
-                        isScrollControlled:
-                        true, // allows full height scroll
-                        shape:
-                        const RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(16)),
-                        ),
-                        builder:
-                            (context) {
-                          return HelperBottomSheet(
-                              assetImage: "assets/images/log_out.png",
-                              title: "Are you sure you want to log out?",
-                              message: "You will need to sign in again to access your account.",
-                              btn1Txt: "NO",
-                              btn1Click: () {
-                                Get.back();
-                              },
-                              btn2Txt: "Yes",
-                              btn2Click: () async {
-                                Get.back();
-                                logOuting.value = true;
-                                await preferenceManager.clearAll();
-                                // await _auth.signOut();
-                                // await _googleSignIn.signOut();
-                                logOuting.value = false;
-                                Get.offAll(() => SignInPage());
-                              });
-                        },
-                      );
-                      // logOutConfirmationDialog(userModel);
-                    }),
-                ),
-                const SizedBox(height: 30),
-                ProfileItemComponent(
-                  icon: Icons.edit_outlined,
-                  title: "Edit Profile",
-                  onTap: () {
-                    Get.to(() => RegisterUserPage(userModel: userModel));
-                  },
-                ),
-                const DottedLine(dashColor: CustomColors.darkGray),
-                ProfileItemComponent(
-                  icon: Icons.password,
-                  title: "Change Password",
-                  onTap: () {
-                    Get.to(() => ChangePasswordPage(profileData: userModel));
-                  },
-                ),
-                const DottedLine(dashColor: CustomColors.darkGray),
-                ProfileItemComponent(
-                  icon: Icons.security_outlined,
-                  title: "Privacy & Security",
-                  onTap: () {
-                    Get.to(() => const PrivacySecurityPage());
-                  },
-                ),
-                DottedLine(dashColor: CustomColors.darkGray),
-                // ProfileItemComponent(
-                //   icon: Icons.settings_outlined,
-                //   title: "Settings",
-                // ),
-                ProfileItemComponent(
-                  icon: Icons.help_outline_rounded,
-                  title: "Help & Support",
-                  onTap: () {
-                    final supportData = (data as ProfileResponseModel).support;
-                    Get.to(() => SupportPage(supportData: supportData));
-                  },
-                ),
-              ],
-            );
-          },loading: (ds) => const ProfilePageShimmer(),orElse: () => const SizedBox(height:400,child: Center(child: EmptyDataView(text: "Something went wrong please try again")))),
+        body: Obx(() => authViewModel.userAuthenticated.value == false ? Center(child: EmptyDataViewWithButton(onClick: () {
+          Get.offAll(() => const SignInPage());
+        }))
+            : RefreshIndicator(
+          onRefresh: _refreshData,
+          child: SingleChildScrollView(
+            child: Obx(() => authViewModel.fetchProfileDetailObserver.value.maybeWhen(success: (data){
+              final userModel = (data as ProfileResponseModel).data;
+              return Column(
+                children: [
+                  Obx(() =>
+                      ProfileHeaderComponent(profileData:userModel,loading: logOuting.value,onLogout: (){
+                        showModalBottomSheet(
+                          context:
+                          context,
+                          isScrollControlled:
+                          true, // allows full height scroll
+                          shape:
+                          const RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(16)),
+                          ),
+                          builder:
+                              (context) {
+                            return HelperBottomSheet(
+                                assetImage: "assets/images/log_out.png",
+                                title: "Are you sure you want to log out?",
+                                message: "You will need to sign in again to access your account.",
+                                btn1Txt: "NO",
+                                btn1Click: () {
+                                  Get.back();
+                                },
+                                btn2Txt: "Yes",
+                                btn2Click: () async {
+                                  Get.back();
+                                  logOuting.value = true;
+                                  await preferenceManager.clearAll();
+                                  // await _auth.signOut();
+                                  // await _googleSignIn.signOut();
+                                  logOuting.value = false;
+                                  Get.offAll(() => SignInPage());
+                                });
+                          },
+                        );
+                        // logOutConfirmationDialog(userModel);
+                      }),
+                  ),
+                  const SizedBox(height: 30),
+                  ProfileItemComponent(
+                    icon: Icons.edit_outlined,
+                    title: "Edit Profile",
+                    onTap: () {
+                      Get.to(() => RegisterUserPage(userModel: userModel));
+                    },
+                  ),
+                  const DottedLine(dashColor: CustomColors.darkGray),
+                  ProfileItemComponent(
+                    icon: Icons.password,
+                    title: "Change Password",
+                    onTap: () {
+                      Get.to(() => ChangePasswordPage(profileData: userModel));
+                    },
+                  ),
+                  const DottedLine(dashColor: CustomColors.darkGray),
+                  ProfileItemComponent(
+                    icon: Icons.delete,
+                    title: "Delete Account",
+                    onTap: () {
+                      final supportData = (data as ProfileResponseModel).support;
+                      Get.to(() => SupportPage(supportData: supportData));
+                    },
+                  ),
+                  const DottedLine(dashColor: CustomColors.darkGray),
+                  ProfileItemComponent(
+                    icon: Icons.security_outlined,
+                    title: "Privacy & Security",
+                    onTap: () {
+                      Get.to(() => const PrivacySecurityPage());
+                    },
+                  ),
+                  DottedLine(dashColor: CustomColors.darkGray),
+                  // ProfileItemComponent(
+                  //   icon: Icons.settings_outlined,
+                  //   title: "Settings",
+                  // ),
+                  ProfileItemComponent(
+                    icon: Icons.help_outline_rounded,
+                    title: "Help & Support",
+                    onTap: () {
+                      final supportData = (data as ProfileResponseModel).support;
+                      Get.to(() => SupportPage(supportData: supportData));
+                    },
+                  ),
+                  Obx(
+                        () => Text(
+                        "V ${version.value ?? ""}",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight:
+                            FontWeight.w600,
+                            color: CustomColors
+                                .textColor)),
+                  ),
+                ],
+              );
+            },loading: (ds) => const ProfilePageShimmer(),orElse: () => const SizedBox(height:400,child: Center(child: EmptyDataView(text: "Something went wrong please try again")))),
+            ),
           ),
+        )
         ),
       ),
     );
+  }
+
+  Future<void> _refreshData() async {
+    authViewModel.fetchProfileDetails();
+    version.value = await AuthUtils.getAppVersion() ?? "";
   }
 }
 

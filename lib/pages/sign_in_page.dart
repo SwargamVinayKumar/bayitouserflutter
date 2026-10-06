@@ -1,6 +1,7 @@
 import 'package:bayitouser/api/api_result.dart';
 import 'package:bayitouser/components/custom_gradient_button.dart';
 import 'package:bayitouser/components/custom_textfield.dart';
+import 'package:bayitouser/pages/main_page.dart';
 import 'package:bayitouser/pages/privacy_security_page.dart';
 import 'package:bayitouser/pages/sign_up_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
@@ -60,7 +61,32 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        authViewModel.userAuthenticated.value = false;
+                        Get.to(()=> const MainPage());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          "Skip Login",
+                          style: TextStyle(
+                            color: CustomColors.secondary,
+                            fontSize: 14,
+                            decoration: TextDecoration.underline,
+                            decorationColor: CustomColors.secondary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 const CircleAvatar(
                   radius: 80,
                   backgroundImage: AssetImage("assets/images/bayitoLogo.jpeg"),
@@ -240,6 +266,27 @@ class _SignInPageState extends State<SignInPage> {
                     ],
                   ),
                 ),
+                // R
+                GestureDetector(
+                  onTap: () {
+                    authViewModel.userAuthenticated.value = false;
+                    Get.to(()=> const MainPage());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "Skip Login",
+                      style: TextStyle(
+                        color: CustomColors.secondary,
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                        decorationColor: CustomColors.secondary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
               ],
             ),
           ),

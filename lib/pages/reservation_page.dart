@@ -1,13 +1,16 @@
 import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/pages/professional_booking_details_page.dart';
+import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:bayitouser/shimmer/single_item_shimmer.dart';
 import 'package:bayitouser/components/custom_tab_component.dart';
 import 'package:bayitouser/shimmer/reservation_list_shimmer.dart';
+import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../api/api_result.dart';
 import '../components/custom_action_button.dart';
+import '../components/empty_data_view_with_button.dart';
 import '../components/reservation_outlet_card.dart';
 import '../models/responseModels/booking_response_model.dart';
 import '../models/responseModels/page_model.dart';
@@ -25,6 +28,7 @@ class ReservationPage extends StatefulWidget {
 }
 
 class _ReservationPageState extends State<ReservationPage> {
+  final authViewModel = Get.put(AuthViewModel());
   final bookingViewModel = Get.put(BookingViewModel());
   final ScrollController _scrollController = ScrollController();
   final ValueNotifier<int> selectedIndex = ValueNotifier(0);
@@ -49,6 +53,7 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   void _fetchBookings({bool isRefresh = false}) {
+    if(authViewModel.userAuthenticated.value == false) return;
     bookingViewModel.fetchUserBookingsByTab(selectedIndex.value, isRefresh: isRefresh);
   }
 
@@ -107,26 +112,29 @@ class _ReservationPageState extends State<ReservationPage> {
                 },
               ),
               const SizedBox(height: 20),
-              Expanded(
-                child: ValueListenableBuilder<int>(
-                  valueListenable: selectedIndex,
-                  builder: (context, tabIndex, child) {
-                    return Obx(() {
-                      RxList<BookingModel> list;
-                      Rx<PaginationModel<Rx<ApiResult<BookingListResponse>>>> observer;
+              Obx(() => authViewModel.userAuthenticated.value == false ? Center(child: EmptyDataViewWithButton(onClick: () {
+              Get.offAll(() => const SignInPage());
+              }))
+                : Expanded(
+              child: ValueListenableBuilder<int>(
+                valueListenable: selectedIndex,
+                builder: (context, tabIndex, child) {
+                  return Obx(() {
+                    RxList<BookingModel> list;
+                    Rx<PaginationModel<Rx<ApiResult<BookingListResponse>>>> observer;
 
-                      if (tabIndex == 0) {
-                        list = bookingViewModel.upcomingBookings;
-                        observer = bookingViewModel.upcomingObserver;
-                      } else if (tabIndex == 1) {
-                        list = bookingViewModel.completedBookings;
-                        observer = bookingViewModel.completedObserver;
-                      } else {
-                        list = bookingViewModel.cancelledBookings;
-                        observer = bookingViewModel.cancelledObserver;
-                      }
+                    if (tabIndex == 0) {
+                      list = bookingViewModel.upcomingBookings;
+                      observer = bookingViewModel.upcomingObserver;
+                    } else if (tabIndex == 1) {
+                      list = bookingViewModel.completedBookings;
+                      observer = bookingViewModel.completedObserver;
+                    } else {
+                      list = bookingViewModel.cancelledBookings;
+                      observer = bookingViewModel.cancelledObserver;
+                    }
 
-                      return observer.value.data.value.when(
+                    return observer.value.data.value.when(
                         init: () => const SizedBox.shrink(),
                         loading: (msg) => list.isEmpty
                             ? const ReservationListShimmer()
@@ -137,11 +145,11 @@ class _ReservationPageState extends State<ReservationPage> {
                         error: (err) => list.isEmpty
                             ? Center(child: EmptyDataView(text: err))
                             : _buildList(list, observer.value)
-                      );
-                    });
-                  },
-                ),
+                    );
+                  });
+                },
               ),
+        )),
             ],
           ),
         ),

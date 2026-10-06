@@ -33,6 +33,8 @@ import '../utils/snack_bar_extension.dart';
 
 
 class AuthViewModel extends GetxController {
+  RxBool userAuthenticated = false.obs;
+
   final apiProvider = Get.put(ApiProvider());
   final preferenceManager = Get.put(PreferenceManager());
 
@@ -245,10 +247,15 @@ class AuthViewModel extends GetxController {
           outletTypesDropList.assignAll(responseData.data?.outletTypes ?? []);
 
           validaVersionObserver.value = ApiResult.success(responseData);
+          userAuthenticated.value = (responseData.data?.userData != null);
 
           if (responseData.data?.validVersion == false) {
             Get.offAll(() => const UpdateVersionScreen());
-          } else if ((responseData.data?.userBlocked ?? false) == true) {
+          }
+          else if(responseData.data?.userData == null){
+            Get.offAll(() => const MainPage());
+          }
+          else if ((responseData.data?.userBlocked ?? false) == true) {
             Get.offAll(() => const UserBlocked());
           } else {
             final prefs = await SharedPreferences.getInstance();
@@ -286,6 +293,7 @@ class AuthViewModel extends GetxController {
       if (response.isOk && body != null) {
         final data = SignInResponseModel.fromJson(body);
         if (data.status == 1) {
+          userAuthenticated.value == true;
           signInObserver.value = ApiResult.success(data);
           final page = data.data?.page;
           preferenceManager.setValue("page", page ?? "");
@@ -388,6 +396,7 @@ class AuthViewModel extends GetxController {
       if (response.isOk && body != null) {
         final data = SignInResponseModel.fromJson(body);
         if (data.status == 1) {
+          userAuthenticated.value = true;
           verifyOtpObserver.value = ApiResult.success(data);
           final page = data.data?.page;
           preferenceManager.setValue("page", page ?? "");
@@ -446,8 +455,10 @@ class AuthViewModel extends GetxController {
       final response = await apiProvider.post(EndPoints.getProfile, {});
       final body = response.body;
       if (response.isOk && body != null) {
+
         final data = ProfileResponseModel.fromJson(body);
         if (data.status == 1) {
+          userAuthenticated.value == true;
           fetchProfileDetailObserver.value = ApiResult.success(data);
         } else {
           Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
@@ -457,6 +468,7 @@ class AuthViewModel extends GetxController {
         fetchProfileDetailObserver.value = ApiResult.error("Something went wrong");
       }
     } catch (e) {
+      userAuthenticated.value == false;
       fetchProfileDetailObserver.value = ApiResult.error(e.toString());
     }
   }
