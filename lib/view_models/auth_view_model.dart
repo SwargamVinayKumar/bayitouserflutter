@@ -293,7 +293,7 @@ class AuthViewModel extends GetxController {
       if (response.isOk && body != null) {
         final data = SignInResponseModel.fromJson(body);
         if (data.status == 1) {
-          userAuthenticated.value == true;
+          userAuthenticated.value = true;
           signInObserver.value = ApiResult.success(data);
           final page = data.data?.page;
           preferenceManager.setValue("page", page ?? "");
@@ -454,11 +454,11 @@ class AuthViewModel extends GetxController {
       fetchProfileDetailObserver.value = ApiResult.loading("loading");
       final response = await apiProvider.post(EndPoints.getProfile, {});
       final body = response.body;
-      if (response.isOk && body != null) {
+      if (response.isOkK && body != null) {
 
         final data = ProfileResponseModel.fromJson(body);
         if (data.status == 1) {
-          userAuthenticated.value == true;
+          userAuthenticated.value = true;
           fetchProfileDetailObserver.value = ApiResult.success(data);
         } else {
           Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
@@ -468,7 +468,7 @@ class AuthViewModel extends GetxController {
         fetchProfileDetailObserver.value = ApiResult.error("Something went wrong");
       }
     } catch (e) {
-      userAuthenticated.value == false;
+      userAuthenticated.value = false;
       fetchProfileDetailObserver.value = ApiResult.error(e.toString());
     }
   }

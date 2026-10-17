@@ -11,6 +11,7 @@ class ApiProvider<T> extends GetConnect {
 
   @override
   void onInit() async {
+    print(apiLiveBaseUrl);
     httpClient.baseUrl = apiLiveBaseUrl;
     httpClient.defaultContentType = 'application/json';
     httpClient.timeout = const Duration(seconds: 25);
