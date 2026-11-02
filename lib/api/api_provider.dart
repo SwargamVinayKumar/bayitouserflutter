@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
@@ -26,33 +25,4 @@ class ApiProvider<T> extends GetConnect {
     });
     super.onInit();
   }
-=======
-import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/request/request.dart';
-
-import '../utils/preference_manager.dart';
-
-class ApiProvider<T> extends GetConnect {
-
-  String apiKey = '343532213454';
-  String apiLiveBaseUrl = true ? 'https://bayito-1b5b8.el.r.appspot.com/user/' : 'http://192.168.68.111:3055/user/';
-  String token = '';
-
-  @override
-  void onInit() async {
-    print(apiLiveBaseUrl);
-    httpClient.baseUrl = apiLiveBaseUrl;
-    httpClient.defaultContentType = 'application/json';
-    httpClient.timeout = const Duration(seconds: 25);
-    httpClient.addRequestModifier<T>((request) async {
-      final preferenceManager = Get.find<PreferenceManager>();
-      token = await preferenceManager.getValue(preferenceManager.token) ?? "";
-      final modifiedRequest = request as Request<T>;
-      modifiedRequest.headers['Authorization'] = token.isNotEmpty ?  "Bearer ${token}" : "";
-      modifiedRequest.headers['ApiKey'] = apiKey;
-      return modifiedRequest;
-    });
-    super.onInit();
-  }
->>>>>>> 763d51e5d567155adc905449066227bae9c5371b
 }

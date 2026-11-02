@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceManager {
@@ -39,48 +38,4 @@ class PreferenceManager {
       await prefs.setString('entity', entityValue);
     }
   }
-
-=======
-import 'package:shared_preferences/shared_preferences.dart';
-
-class PreferenceManager {
-  final token = "token";
-  static const String _keyPolicyAccepted = 'policy_accepted';
-
-
-  Future<void> setPolicyAccepted(bool value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_keyPolicyAccepted, value);
-  }
-
-  Future<bool> getPolicyAccepted() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyPolicyAccepted) ?? false;
-  }
-
-  Future<void> setValue(String key, String value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, value);
-  }
-
-  Future<String?> getValue(String key) async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    return pref.getString(key);
-  }
-
-  Future<void> removeToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove(token);
-  }
-
-  Future<void> clearAll() async {
-    final prefs = await SharedPreferences.getInstance();
-    final entityValue = prefs.getString('entity');
-    await prefs.clear();
-    if (entityValue != null) {
-      await prefs.setString('entity', entityValue);
-    }
-  }
-
->>>>>>> 763d51e5d567155adc905449066227bae9c5371b
 }
