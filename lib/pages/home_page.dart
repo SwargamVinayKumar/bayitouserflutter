@@ -110,6 +110,26 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
+                InkWell(onTap: (){
+                  Get.to(() => const OutletPage(type: 'party99'));
+                },
+                  child: Container(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).height * 0.22,
+                    decoration: BoxDecoration(
+                      color: CustomColors.secondary,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        "assets/images/PARTY99.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,

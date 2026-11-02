@@ -110,18 +110,36 @@ class _SignInPageState extends State<SignInPage> {
                   children: [
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {
-                        if (authViewModel.emailMobileController.text.trim().isEmpty) {
+                      onTap: () async {
+                        final mobile = authViewModel.emailMobileController.text.trim();
+
+                        // Check empty
+                        if (mobile.isEmpty) {
                           Get.showCustomSnackBar(
                             title: 'Failed',
-                            message: "Email Or Mobile should be entered",
+                            message: "Please enter your mobile number",
                           );
-                        } else {
-                          authViewModel.signUpObserver.value = ApiResult.success(
-                            SignInResponseModel(status: 1, message: "success"),
-                          );
-                          Get.to(() => const SignUpPage(forgotPassword: true));
+                          return;
                         }
+
+                        // Check valid 10-digit mobile number
+                        final mobileRegex = RegExp(r'^[6-9]\d{9}$');
+
+                        if (!mobileRegex.hasMatch(mobile)) {
+                          Get.showCustomSnackBar(
+                            title: 'Invalid Mobile Number',
+                            message: "Please enter a valid 10-digit mobile number",
+                          );
+                          return;
+                        }
+
+                        authViewModel.signUpObserver.value = ApiResult.success(
+                          SignInResponseModel(status: 1, message: "success"),
+                        );
+
+                        await authViewModel.sendOtp(mobile);
+
+                        Get.to(() => const SignUpPage(forgotPassword: true));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),

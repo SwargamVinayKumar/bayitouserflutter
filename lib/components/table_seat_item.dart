@@ -49,6 +49,7 @@ class TableItemWidgetPrime extends StatelessWidget {
     {"title": "Study Table", "value": "Study", "icon": Icons.book},
     {"title": "Sofa Type Table", "value": "Sofa Type", "icon": Icons.chair},
     {"title": "Date & Couple Table", "value": "Date & Couple", "icon": Icons.deck_outlined},
+    {"title": "SocialMedia Table", "value": "SocialMedia", "icon": Icons.deck_outlined},
   ];
 
   IconData _iconForSeatTypeIcon(String? seatType) {

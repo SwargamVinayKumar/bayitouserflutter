@@ -4,6 +4,7 @@ class EndPoints {
   static const uploadFile = "uploadFile";
 
   static const validateVersion = "validateVersion";
+  static const sendOtp = "sendOtp";
   static const signIn = "signIn";
   static const signUp = "signUp";
   static const verifyOtp = "verifyOtp";

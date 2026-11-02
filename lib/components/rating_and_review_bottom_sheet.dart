@@ -81,7 +81,7 @@ class _RatingAndReviewBottomSheetState extends State<RatingAndReviewBottomSheet>
                   },
                 ),
                 const SizedBox(height: 10),
-                CustomEditTextComponent(controller: reviewController, title: "Enter You Rating And Review", hint: "Rating And Review",containerHeight:100),
+                CustomEditTextComponent(controller: reviewController, title: "Enter You Rating And Review", hint: "Rating And Review",containerHeight:100,maxLength: 20,),
                 const SizedBox(height: 10),
                 Wrap(
                     spacing: 8,

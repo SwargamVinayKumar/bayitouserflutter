@@ -46,6 +46,7 @@ class AuthViewModel extends GetxController {
 
 
   // Observers
+
   final fetchProfileDetailObserver = ApiResult<ProfileResponseModel>.init().obs;
   final signInObserver = ApiResult<SignInResponseModel>.init().obs;
   final signUpObserver = ApiResult<SignInResponseModel>.init().obs;
@@ -276,6 +277,30 @@ class AuthViewModel extends GetxController {
       validaVersionObserver.value = ApiResult.error(e.toString());
     }
   }
+
+
+  Future<void> sendOtp(dynamic mobile) async {
+    try {
+      signInObserver.value = ApiResult.loading("loading");
+
+      final response = await apiProvider.post(EndPoints.sendOtp, {"mobile":mobile});
+      final body = response.body;
+      if (response.isOk && body != null) {
+        final data = SignInResponseModel.fromJson(body);
+        if (data.status == 1) {
+          signInObserver.value = ApiResult.success(data);
+        } else {
+          signInObserver.value = ApiResult.error(data.message ?? "");
+          Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
+        }
+      } else {
+        signInObserver.value = ApiResult.error("Something went wrong");
+      }
+    } catch (e) {
+      signInObserver.value = ApiResult.error(e.toString());
+    }
+  }
+
 
 
   Future<void> signIn() async {
