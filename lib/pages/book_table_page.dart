@@ -7,6 +7,7 @@ import 'package:bayitouser/components/custom_lottie_loading.dart';
 import 'package:bayitouser/components/empty_data_view.dart';
 import 'package:bayitouser/components/table_seat_item.dart';
 import 'package:bayitouser/models/responseModels/outlet_response_model.dart';
+import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:bayitouser/utils/progress_dialog.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
@@ -14,12 +15,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../components/custom_network_image.dart';
+import '../components/empty_data_view_with_button.dart';
 import '../components/outlet_detail_card.dart';
 import '../components/section_title_item.dart';
 import '../models/responseModels/booking_response_model.dart';
 import '../models/responseModels/table_response_model.dart';
 import '../utils/custom_color.dart';
 import 'package:get/get.dart';
+
+import '../view_models/auth_view_model.dart';
 
 class BookTablePage extends StatefulWidget {
   final OutletModel? outletModel;
@@ -32,6 +36,7 @@ class BookTablePage extends StatefulWidget {
 
 class _BookTablePageState extends State<BookTablePage>
     with SingleTickerProviderStateMixin {
+  final authViewModel = Get.put(AuthViewModel());
   final bookingViewModel = Get.put(BookingViewModel());
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -620,12 +625,29 @@ class _BookTablePageState extends State<BookTablePage>
                     ),
                     const SizedBox(height: 16),
                     CustomGradientButton(
+                        height: 56,
+                        fontSize: 18,
                       title: "Check Availability",
-                      onTap: () => bookingViewModel.checkAvailability(
-                          widget.outletModel!.id!, null),
-                      height: 56,
-                      fontSize: 18,
-                    ),
+                      onTap: () {
+                        if(authViewModel.userAuthenticated.value == false){
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true, // allows full height scroll
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                            ),
+                            builder: (context) {
+                              return  EmptyDataViewWithButton(onClick: (){
+                                Get.offAll(() => const SignInPage());
+                              });
+                            },
+                          );
+                        }
+                          else{
+                            bookingViewModel.checkAvailability(widget.outletModel!.id!, null);
+                          }
+                      }
+                    )
                   ],
                 );
               }
@@ -665,8 +687,27 @@ class _BookTablePageState extends State<BookTablePage>
 
               return CustomGradientButton(
                 title: "Check Availability",
-                onTap: () => bookingViewModel.checkAvailability(
-                    widget.outletModel!.id!, null),
+                onTap: () {
+                  if(authViewModel.userAuthenticated.value == false){
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true, // allows full height scroll
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      ),
+                      builder: (context) {
+                        return  EmptyDataViewWithButton(onClick: (){
+                          Get.offAll(() => const SignInPage());
+                        });
+                      },
+                    );
+                  }
+                  else{
+                    bookingViewModel.checkAvailability(
+                        widget.outletModel!.id!, null);
+                  }
+                }
+                    ,
                 height: 56,
                 fontSize: 18,
               );

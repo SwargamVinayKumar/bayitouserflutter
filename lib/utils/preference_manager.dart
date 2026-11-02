@@ -2,6 +2,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceManager {
   final token = "token";
+  static const String _keyPolicyAccepted = 'policy_accepted';
+
+
+  Future<void> setPolicyAccepted(bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyPolicyAccepted, value);
+  }
+
+  Future<bool> getPolicyAccepted() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyPolicyAccepted) ?? false;
+  }
 
   Future<void> setValue(String key, String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

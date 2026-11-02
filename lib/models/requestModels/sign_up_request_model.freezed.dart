@@ -21,6 +21,7 @@ SignUpRequestModel _$SignUpRequestModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SignUpRequestModel {
   int? get mobile => throw _privateConstructorUsedError;
+  String? get key => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $SignUpRequestModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? mobile,
+      String? key,
       String? name,
       String? email,
       String? password,
@@ -73,6 +75,7 @@ class _$SignUpRequestModelCopyWithImpl<$Res, $Val extends SignUpRequestModel>
   @override
   $Res call({
     Object? mobile = freezed,
+    Object? key = freezed,
     Object? name = freezed,
     Object? email = freezed,
     Object? password = freezed,
@@ -88,6 +91,10 @@ class _$SignUpRequestModelCopyWithImpl<$Res, $Val extends SignUpRequestModel>
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
               as int?,
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -162,6 +169,7 @@ abstract class _$$SignUpRequestModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? mobile,
+      String? key,
       String? name,
       String? email,
       String? password,
@@ -190,6 +198,7 @@ class __$$SignUpRequestModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? mobile = freezed,
+    Object? key = freezed,
     Object? name = freezed,
     Object? email = freezed,
     Object? password = freezed,
@@ -205,6 +214,10 @@ class __$$SignUpRequestModelImplCopyWithImpl<$Res>
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
               as int?,
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -250,6 +263,7 @@ class __$$SignUpRequestModelImplCopyWithImpl<$Res>
 class _$SignUpRequestModelImpl implements _SignUpRequestModel {
   const _$SignUpRequestModelImpl(
       {this.mobile,
+      this.key,
       this.name,
       this.email,
       this.password,
@@ -266,6 +280,8 @@ class _$SignUpRequestModelImpl implements _SignUpRequestModel {
 
   @override
   final int? mobile;
+  @override
+  final String? key;
   @override
   final String? name;
   @override
@@ -296,7 +312,7 @@ class _$SignUpRequestModelImpl implements _SignUpRequestModel {
 
   @override
   String toString() {
-    return 'SignUpRequestModel(mobile: $mobile, name: $name, email: $email, password: $password, confirmPassword: $confirmPassword, profilePic: $profilePic, otp: $otp, designations: $designations, businessLicence: $businessLicence, location: $location)';
+    return 'SignUpRequestModel(mobile: $mobile, key: $key, name: $name, email: $email, password: $password, confirmPassword: $confirmPassword, profilePic: $profilePic, otp: $otp, designations: $designations, businessLicence: $businessLicence, location: $location)';
   }
 
   @override
@@ -305,6 +321,7 @@ class _$SignUpRequestModelImpl implements _SignUpRequestModel {
         (other.runtimeType == runtimeType &&
             other is _$SignUpRequestModelImpl &&
             (identical(other.mobile, mobile) || other.mobile == mobile) &&
+            (identical(other.key, key) || other.key == key) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
@@ -327,6 +344,7 @@ class _$SignUpRequestModelImpl implements _SignUpRequestModel {
   int get hashCode => Object.hash(
       runtimeType,
       mobile,
+      key,
       name,
       email,
       password,
@@ -355,6 +373,7 @@ class _$SignUpRequestModelImpl implements _SignUpRequestModel {
 abstract class _SignUpRequestModel implements SignUpRequestModel {
   const factory _SignUpRequestModel(
       {final int? mobile,
+      final String? key,
       final String? name,
       final String? email,
       final String? password,
@@ -370,6 +389,8 @@ abstract class _SignUpRequestModel implements SignUpRequestModel {
 
   @override
   int? get mobile;
+  @override
+  String? get key;
   @override
   String? get name;
   @override

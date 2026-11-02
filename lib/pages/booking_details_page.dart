@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../components/rating_and_review_bottom_sheet.dart';
 import '../components/table_seat_item.dart';
+import '../components/vip_ticket_view.dart';
 import '../models/responseModels/booking_response_model.dart';
 
 class BookingDetailsPage extends StatefulWidget {
@@ -71,6 +72,16 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildOutletHeader(booking),
+                    // ✅ Insert VIP ticket view here
+                    if (booking.tableId?.vip == true)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: VipTicketView(
+                          bookingId: booking.id,
+                          tableNumber: booking.tableId?.tableNumber,
+                          seatType: booking.tableId?.seatType,
+                        ),
+                      ),
                     const SizedBox(height: 24),
                     _buildSectionTitle("Booking Status"),
                     const SizedBox(height: 8),

@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:bayitouser/pages/main_page.dart';
 import 'package:bayitouser/pages/splash_page.dart';
 import 'package:bayitouser/view_models/auth_view_model.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
@@ -222,61 +221,61 @@ class AuthUtils {
   }
 
   static Future<String?> getDeviceId() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    if (kIsWeb) {
-      WebBrowserInfo webInfo = await deviceInfo.webBrowserInfo;
-      return webInfo.userAgent;
-    }
+    // if (kIsWeb) {
+    //   WebBrowserInfo webInfo = await deviceInfo.webBrowserInfo;
+    //   return webInfo.userAgent;
+    // }
 
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      return androidInfo.id;
-    }
+    // if (Platform.isAndroid) {
+    //   AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    //   return androidInfo.id;
+    // }
 
-    if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      return iosInfo.identifierForVendor;
-    }
+    // if (Platform.isIOS) {
+    //   IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    //   return iosInfo.identifierForVendor;
+    // }
 
     return null;
   }
 
   static Future<Map<String, String?>> getDeviceDetails() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    String? imei;
-    String? deviceVersion;
-    String? deviceId;
+    // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    // String? imei;
+    // String? deviceVersion;
+    // String? deviceId;
 
-    if (kIsWeb) {
-      WebBrowserInfo web = await deviceInfo.webBrowserInfo;
-      imei = "web";
-      deviceVersion = web.appVersion;
-      deviceId = web.userAgent;
-    }
+    // if (kIsWeb) {
+    //   WebBrowserInfo web = await deviceInfo.webBrowserInfo;
+    //   imei = "web";
+    //   deviceVersion = web.appVersion;
+    //   deviceId = web.userAgent;
+    // }
 
-    // ---------- ANDROID ----------
-    else if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    // // ---------- ANDROID ----------
+    // else if (Platform.isAndroid) {
+    //   AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
-      imei = androidInfo.id;                 // Not real IMEI (IMEI restricted by Google)
-      deviceVersion = androidInfo.version.release;
-      deviceId = androidInfo.id;
-    }
+    //   imei = androidInfo.id;                 // Not real IMEI (IMEI restricted by Google)
+    //   deviceVersion = androidInfo.version.release;
+    //   deviceId = androidInfo.id;
+    // }
 
-    else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    // else if (Platform.isIOS) {
+    //   IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
-      imei = iosInfo.identifierForVendor;    // iOS does not provide IMEI
-      deviceVersion = iosInfo.systemVersion;
-      deviceId = iosInfo.identifierForVendor;
-    }
+    //   imei = iosInfo.identifierForVendor;    // iOS does not provide IMEI
+    //   deviceVersion = iosInfo.systemVersion;
+    //   deviceId = iosInfo.identifierForVendor;
+    // }
 
     return {
-      "imei": imei,
+      "imei": "sdc",
       "source":Platform.isAndroid ? "android" : "ios",
-      "deviceVersion": deviceVersion,
-      "deviceId": deviceId,
+      "deviceVersion": "csd",
+      "deviceId": "sdc",
     };
   }
 

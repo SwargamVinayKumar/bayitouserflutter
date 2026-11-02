@@ -6,11 +6,12 @@ import '../utils/preference_manager.dart';
 class ApiProvider<T> extends GetConnect {
 
   String apiKey = '343532213454';
-  String apiLiveBaseUrl = false ? 'https://bayito-1b5b8.el.r.appspot.com/user/' : 'http://192.168.68.111:3055/user/';
+  String apiLiveBaseUrl = true ? 'https://bayito-1b5b8.el.r.appspot.com/user/' : 'http://192.168.68.111:3055/user/';
   String token = '';
 
   @override
   void onInit() async {
+    print(apiLiveBaseUrl);
     httpClient.baseUrl = apiLiveBaseUrl;
     httpClient.defaultContentType = 'application/json';
     httpClient.timeout = const Duration(seconds: 25);

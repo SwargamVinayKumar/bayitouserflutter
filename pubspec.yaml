@@ -3,7 +3,7 @@ description: "Bayito User."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.7+8
+version: 1.0.12+13
 
 environment:
   sdk: ^3.5.4
@@ -17,7 +17,6 @@ dependencies:
   freezed_annotation: 2.4.1
   freezed: 2.4.6
   path_provider: ^2.1.5
-  device_info_plus: ^11.3.0
   focus_detector: ^2.0.1
   intl: ^0.20.2
   permission_handler: ^12.0.1
@@ -50,13 +49,13 @@ dependencies:
   table_calendar: ^3.0.9
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
-  firebase_analytics: ^10.8.0
   firebase_messaging: ^14.7.10
-  awesome_notifications: ^0.11.0
+  # awesome_notifications: ^0.11.0
   razorpay_flutter: ^1.4.6
   google_fonts: ^6.3.0
   dio: ^5.11.0
   lottie: 3.3.1
+
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +69,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/bayitoLogo.jpeg"
+  image_path: "assets/images/app_icon.png"
   min_sdk_android: 21
 
 

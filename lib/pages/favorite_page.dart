@@ -1,10 +1,13 @@
+import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:bayitouser/shimmer/single_item_shimmer.dart';
 import 'package:bayitouser/pages/outlet_detail_page.dart';
 import 'package:bayitouser/shimmer/outlet_list_shimmer.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
+import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/empty_data_view.dart';
+import '../components/empty_data_view_with_button.dart';
 import '../components/outlet_card.dart';
 import '../components/custom_action_button.dart';
 import '../models/requestModels/page_request_model.dart';
@@ -22,6 +25,7 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+  final authViewModel = Get.put(AuthViewModel());
   final OutletViewModel outletViewModel = Get.put(OutletViewModel());
   final ScrollController _scrollController = ScrollController();
 
@@ -38,6 +42,7 @@ class _FavoritePageState extends State<FavoritePage> {
   }
 
   void fetchFavouriteOutlets({bool isRefresh = false}) {
+    if(authViewModel.userAuthenticated.value == false) return;
     outletViewModel.fetchOutlets(
       const PaginationRequestModel(
         page: 1,
@@ -79,31 +84,35 @@ class _FavoritePageState extends State<FavoritePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Expanded(
-                  child: Obx(() {
-                    final paginationModel = outletViewModel.fetchFavouriteOutletsObserver.value;
-                    final state = paginationModel.data.value;
+                Obx( () => authViewModel.userAuthenticated.value == false ? Center(child: EmptyDataViewWithButton(onClick: () {
+          Get.offAll(() => const SignInPage());
+          }))
+              : Expanded(
+                    child: Obx(() {
+                      final paginationModel = outletViewModel.fetchFavouriteOutletsObserver.value;
+                      final state = paginationModel.data.value;
 
-                    return state.when(
-                      init: () => const SizedBox(),
-                      loading: (_) => paginationModel.page == 1 
-                          ? const OutletListShimmer() 
-                          : _buildList(paginationModel),
-                      error: (error) => Center(
-                        child: Text(
-                          error,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white),
+                      return state.when(
+                        init: () => const SizedBox(),
+                        loading: (_) => paginationModel.page == 1
+                            ? const OutletListShimmer()
+                            : _buildList(paginationModel),
+                        error: (error) => Center(
+                          child: Text(
+                            error,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ),
-                      success: (response) {
-                        if ((response?.data ?? []).isEmpty) {
-                          return _buildEmptyView();
-                        }
-                        return _buildList(paginationModel);
-                      },
-                    );
-                  }),
+                        success: (response) {
+                          if ((response?.data ?? []).isEmpty) {
+                            return _buildEmptyView();
+                          }
+                          return _buildList(paginationModel);
+                        },
+                      );
+                    }),
+                  ),
                 ),
               ],
             ),

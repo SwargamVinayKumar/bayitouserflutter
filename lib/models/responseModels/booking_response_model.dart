@@ -94,6 +94,7 @@ abstract class ConfirmBookingData with _$ConfirmBookingData {
     String? paymentType,
     String? status,
     String? paymentLink,
+    String? razorPayId,
     String? orderId,
     String? paymentId,
   }) = _ConfirmBookingData;

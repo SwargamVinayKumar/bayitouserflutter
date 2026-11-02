@@ -152,7 +152,7 @@ class BookingViewModel extends GetxController {
         final data = ConfirmBookingResponse.fromJson(response.body);
         if (data.status == 1) {
           var options = {
-            'key': ConfigKeys.razorPayId,
+            'key': data.data?.razorPayId ?? ConfigKeys.razorPayId,
             'order_id': data.data?.orderId ?? "",
             'name': 'Bayito',
             'description': 'Booking Home Unit',

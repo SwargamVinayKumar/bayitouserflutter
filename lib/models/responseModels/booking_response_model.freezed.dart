@@ -1204,6 +1204,7 @@ mixin _$ConfirmBookingData {
   String? get paymentType => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get paymentLink => throw _privateConstructorUsedError;
+  String? get razorPayId => throw _privateConstructorUsedError;
   String? get orderId => throw _privateConstructorUsedError;
   String? get paymentId => throw _privateConstructorUsedError;
 
@@ -1236,6 +1237,7 @@ abstract class $ConfirmBookingDataCopyWith<$Res> {
       String? paymentType,
       String? status,
       String? paymentLink,
+      String? razorPayId,
       String? orderId,
       String? paymentId});
 }
@@ -1269,6 +1271,7 @@ class _$ConfirmBookingDataCopyWithImpl<$Res, $Val extends ConfirmBookingData>
     Object? paymentType = freezed,
     Object? status = freezed,
     Object? paymentLink = freezed,
+    Object? razorPayId = freezed,
     Object? orderId = freezed,
     Object? paymentId = freezed,
   }) {
@@ -1337,6 +1340,10 @@ class _$ConfirmBookingDataCopyWithImpl<$Res, $Val extends ConfirmBookingData>
           ? _value.paymentLink
           : paymentLink // ignore: cast_nullable_to_non_nullable
               as String?,
+      razorPayId: freezed == razorPayId
+          ? _value.razorPayId
+          : razorPayId // ignore: cast_nullable_to_non_nullable
+              as String?,
       orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
@@ -1374,6 +1381,7 @@ abstract class _$$ConfirmBookingDataImplCopyWith<$Res>
       String? paymentType,
       String? status,
       String? paymentLink,
+      String? razorPayId,
       String? orderId,
       String? paymentId});
 }
@@ -1405,6 +1413,7 @@ class __$$ConfirmBookingDataImplCopyWithImpl<$Res>
     Object? paymentType = freezed,
     Object? status = freezed,
     Object? paymentLink = freezed,
+    Object? razorPayId = freezed,
     Object? orderId = freezed,
     Object? paymentId = freezed,
   }) {
@@ -1473,6 +1482,10 @@ class __$$ConfirmBookingDataImplCopyWithImpl<$Res>
           ? _value.paymentLink
           : paymentLink // ignore: cast_nullable_to_non_nullable
               as String?,
+      razorPayId: freezed == razorPayId
+          ? _value.razorPayId
+          : razorPayId // ignore: cast_nullable_to_non_nullable
+              as String?,
       orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
@@ -1505,6 +1518,7 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
       this.paymentType,
       this.status,
       this.paymentLink,
+      this.razorPayId,
       this.orderId,
       this.paymentId});
 
@@ -1545,13 +1559,15 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
   @override
   final String? paymentLink;
   @override
+  final String? razorPayId;
+  @override
   final String? orderId;
   @override
   final String? paymentId;
 
   @override
   String toString() {
-    return 'ConfirmBookingData(bookingId: $bookingId, userId: $userId, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingOTP: $bookingOTP, checkIn: $checkIn, checkOut: $checkOut, duration: $duration, subTotal: $subTotal, discount: $discount, amount: $amount, bookingType: $bookingType, paymentType: $paymentType, status: $status, paymentLink: $paymentLink, orderId: $orderId, paymentId: $paymentId)';
+    return 'ConfirmBookingData(bookingId: $bookingId, userId: $userId, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingOTP: $bookingOTP, checkIn: $checkIn, checkOut: $checkOut, duration: $duration, subTotal: $subTotal, discount: $discount, amount: $amount, bookingType: $bookingType, paymentType: $paymentType, status: $status, paymentLink: $paymentLink, razorPayId: $razorPayId, orderId: $orderId, paymentId: $paymentId)';
   }
 
   @override
@@ -1585,6 +1601,8 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.paymentLink, paymentLink) ||
                 other.paymentLink == paymentLink) &&
+            (identical(other.razorPayId, razorPayId) ||
+                other.razorPayId == razorPayId) &&
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.paymentId, paymentId) ||
                 other.paymentId == paymentId));
@@ -1592,26 +1610,28 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      bookingId,
-      const DeepCollectionEquality().hash(userId),
-      outletId,
-      tableId,
-      seatId,
-      bookingOTP,
-      checkIn,
-      checkOut,
-      duration,
-      subTotal,
-      discount,
-      amount,
-      bookingType,
-      paymentType,
-      status,
-      paymentLink,
-      orderId,
-      paymentId);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        bookingId,
+        const DeepCollectionEquality().hash(userId),
+        outletId,
+        tableId,
+        seatId,
+        bookingOTP,
+        checkIn,
+        checkOut,
+        duration,
+        subTotal,
+        discount,
+        amount,
+        bookingType,
+        paymentType,
+        status,
+        paymentLink,
+        razorPayId,
+        orderId,
+        paymentId
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1646,6 +1666,7 @@ abstract class _ConfirmBookingData implements ConfirmBookingData {
       final String? paymentType,
       final String? status,
       final String? paymentLink,
+      final String? razorPayId,
       final String? orderId,
       final String? paymentId}) = _$ConfirmBookingDataImpl;
 
@@ -1685,6 +1706,8 @@ abstract class _ConfirmBookingData implements ConfirmBookingData {
   String? get status;
   @override
   String? get paymentLink;
+  @override
+  String? get razorPayId;
   @override
   String? get orderId;
   @override

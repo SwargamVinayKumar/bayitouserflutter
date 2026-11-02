@@ -1,8 +1,10 @@
 import 'package:bayitouser/components/custom_action_button.dart';
 import 'package:bayitouser/components/custom_network_image.dart';
 import 'package:bayitouser/pages/rating_reviews_page.dart';
+import 'package:bayitouser/pages/sign_in_page.dart';
 import 'package:bayitouser/utils/custom_color.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
+import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:bayitouser/view_models/booking_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../api/api_result.dart';
 import '../components/custom_gradient_button.dart';
 import '../components/custom_lottie_loading.dart';
+import '../components/empty_data_view_with_button.dart';
 import '../components/table_seat_item.dart';
 import '../models/responseModels/booking_response_model.dart';
 import '../models/responseModels/outlet_response_model.dart';
@@ -25,6 +28,7 @@ class ProfessionalBookTablePage extends StatefulWidget {
 }
 
 class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
+  final authViewModel = Get.put(AuthViewModel());
   final bookingViewModel = Get.put(BookingViewModel());
 
   @override
@@ -244,7 +248,26 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
                     const SizedBox(height: 16),
                     CustomGradientButton(
                       title: "Check Availability",
-                      onTap: () => bookingViewModel.checkAvailability(outletModel!.id!,booking),
+                      onTap: () {
+              if(authViewModel.userAuthenticated.value == false){
+              showModalBottomSheet(
+              context: context,
+              isScrollControlled: true, // allows full height scroll
+              shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+              builder: (context) {
+              return  EmptyDataViewWithButton(onClick: (){
+              Get.offAll(() => const SignInPage());
+              });
+              },
+              );
+              }
+              else{
+                bookingViewModel.checkAvailability(outletModel!.id!,booking);
+              }
+              }
+                          ,
                       height: 56,
                       fontSize: 18,
                     ),
@@ -285,7 +308,26 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
 
               return CustomGradientButton(
                 title: "Check Availability",
-                onTap: () => bookingViewModel.checkAvailability(outletModel!.id!,booking),
+                onTap: () {
+                  if(authViewModel.userAuthenticated.value == false){
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true, // allows full height scroll
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      ),
+                      builder: (context) {
+                        return  EmptyDataViewWithButton(onClick: (){
+                          Get.offAll(() => const SignInPage());
+                        });
+                      },
+                    );
+                  }
+                  else{
+                    bookingViewModel.checkAvailability(outletModel!.id!,booking);
+                  }
+                }
+                ,
                 height: 56,
                 fontSize: 18,
               );
