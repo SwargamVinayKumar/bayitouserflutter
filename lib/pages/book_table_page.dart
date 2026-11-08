@@ -58,6 +58,9 @@ class _BookTablePageState extends State<BookTablePage>
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
+    // ✅ Set initial time slot to current hour if today
+    _checkAndUpdateTimeSlotForToday();
+
     // ✅ Setup listeners immediately (no addPostFrameCallback needed)
     _setupListeners();
 
@@ -66,10 +69,30 @@ class _BookTablePageState extends State<BookTablePage>
     });
   }
 
+  void _checkAndUpdateTimeSlotForToday() {
+    final now = DateTime.now();
+    final selectedDate = bookingViewModel.selectedDate.value;
+    bool isToday = selectedDate.year == now.year &&
+                   selectedDate.month == now.month &&
+                   selectedDate.day == now.day;
+    if (isToday) {
+      int minAllowedHour = now.hour;
+      if (now.minute > 0) {
+        minAllowedHour = now.hour + 1;
+      }
+      if (bookingViewModel.selectedTimeIndex.value < minAllowedHour) {
+        bookingViewModel.selectedTimeIndex.value = minAllowedHour > 23 ? 23 : minAllowedHour;
+      }
+    }
+  }
+
   // ✅ Using ever() instead of listen() — fires reliably on Rx changes
   void _setupListeners() {
     _workers.addAll([
-      ever(bookingViewModel.selectedDate, (_) => _autoCheckAvailability()),
+      ever(bookingViewModel.selectedDate, (_) {
+        _checkAndUpdateTimeSlotForToday();
+        _autoCheckAvailability();
+      }),
       ever(bookingViewModel.selectedTimeIndex, (_) => _autoCheckAvailability()),
       ever(bookingViewModel.durationHours, (_) => _autoCheckAvailability()),
       ever(bookingViewModel.selectedTable, (_) => _autoCheckAvailability()),
@@ -290,10 +313,24 @@ class _BookTablePageState extends State<BookTablePage>
           return Obx(() {
             bool isSelected =
                 bookingViewModel.selectedTimeIndex.value == index;
+
+            final now = DateTime.now();
+            final selectedDate = bookingViewModel.selectedDate.value;
+            bool isToday = selectedDate.year == now.year &&
+                           selectedDate.month == now.month &&
+                           selectedDate.day == now.day;
+            int minAllowedHour = now.hour;
+            if (now.minute > 0) {
+              minAllowedHour = now.hour + 1;
+            }
+            bool isDisabled = isToday && index < minAllowedHour;
+
             return GestureDetector(
-              onTap: () {
-                bookingViewModel.selectedTimeIndex.value = index;
-              },
+              onTap: isDisabled
+                  ? null
+                  : () {
+                      bookingViewModel.selectedTimeIndex.value = index;
+                    },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
@@ -307,12 +344,16 @@ class _BookTablePageState extends State<BookTablePage>
                     ],
                   )
                       : null,
-                  color: isSelected ? null : Colors.grey.shade50,
+                  color: isDisabled
+                      ? Colors.grey.shade200
+                      : (isSelected ? null : Colors.grey.shade50),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isSelected
-                        ? CustomColors.secondary
-                        : Colors.grey.shade200,
+                    color: isDisabled
+                        ? Colors.grey.shade300
+                        : (isSelected
+                            ? CustomColors.secondary
+                            : Colors.grey.shade200),
                     width: isSelected ? 1.5 : 1,
                   ),
                   boxShadow: isSelected
@@ -331,8 +372,9 @@ class _BookTablePageState extends State<BookTablePage>
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      color:
-                      isSelected ? Colors.white : CustomColors.secondary,
+                      color: isDisabled
+                          ? Colors.grey.shade400
+                          : (isSelected ? Colors.white : CustomColors.secondary),
                     ),
                   ),
                 ),

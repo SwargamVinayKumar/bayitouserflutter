@@ -92,7 +92,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                     _buildInfoCard([
                       _infoRow(Icons.calendar_today, "Date", _formatDate(booking.checkIn ?? "")),
                       _infoRow(Icons.access_time, "Time", "${_formatTime(booking.checkIn ?? "")} - ${_formatTime(booking.checkOut ?? "")}"),
-                      _infoRow(Icons.table_restaurant, "Table", "Table ${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
+                      _infoRow(Icons.table_restaurant, "Table", "${booking.tableId?.tableNumber ?? ''} (${booking.tableId?.seatType ?? ''})"),
                       _infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
                     ]),
                     _buildSectionTitle("Appointed Users"),
@@ -269,13 +269,20 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
   Widget _infoRow(IconData icon, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: CustomColors.secondary.withOpacity(0.7)),
-          const SizedBox(width: 12),
-          Text(label, style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7))),
-          const Spacer(),
+          Row(
+            children: [
+              Icon(icon, size: 20, color: CustomColors.secondary.withOpacity(0.7)),
+              const SizedBox(width: 12),
+              Text(label, style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7))),
+              const Spacer(),
+            ],
+          ),
+          const SizedBox(height: 12),
           Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: CustomColors.secondary)),
+
         ],
       ),
     );

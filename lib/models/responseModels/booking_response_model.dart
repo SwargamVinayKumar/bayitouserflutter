@@ -119,7 +119,7 @@ abstract class BookingModel with _$BookingModel {
     UserModel? userId,
     OutletModel? outletId,
     TableModel? tableId,
-    String? seatId,
+    String? seatIds,
     String? bookingType,
     int? bookingOTP,
     String? paymentType,

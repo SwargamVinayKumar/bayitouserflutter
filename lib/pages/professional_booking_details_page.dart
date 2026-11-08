@@ -255,17 +255,25 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
   Widget _infoRow(IconData icon, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: CustomColors.secondary.withOpacity(0.7)),
-          const SizedBox(width: 12),
-          Text(label, style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7))),
-          const Spacer(),
+          Row(
+            children: [
+              Icon(icon, size: 20, color: CustomColors.secondary.withOpacity(0.7)),
+              const SizedBox(width: 12),
+              Text(label, style: TextStyle(fontSize: 14, color: CustomColors.secondary.withOpacity(0.7))),
+              const Spacer(),
+            ],
+          ),
+          const SizedBox(height: 12),
           Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: CustomColors.secondary)),
+
         ],
       ),
     );
   }
+
 
   String _formatDate(String isoDate) {
     try {

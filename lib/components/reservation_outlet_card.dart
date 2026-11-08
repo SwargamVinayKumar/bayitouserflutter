@@ -121,12 +121,14 @@ class ReservationOutletCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        (table ?? "").capitalizeFirst ?? "",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: titleColor.withOpacity(0.6),
+                      Expanded(
+                        child: Text(
+                          (table ?? "").capitalizeFirst ?? "",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: titleColor.withOpacity(0.6),
+                          ),
                         ),
                       ),
                       CustomGradientButton(title: "View", onTap: onTap,height: 35,width: 100,fontSize: 14,),
