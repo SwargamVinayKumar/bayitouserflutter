@@ -410,6 +410,7 @@ mixin _$TableModel {
       throw _privateConstructorUsedError;
   RatingAndReviewModel? get topRated => throw _privateConstructorUsedError;
   bool? get vip => throw _privateConstructorUsedError;
+  bool? get party99 => throw _privateConstructorUsedError;
   List<AmenitiesModel>? get amenities => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -443,6 +444,7 @@ abstract class $TableModelCopyWith<$Res> {
       List<CategoryRating>? categoryRating,
       RatingAndReviewModel? topRated,
       bool? vip,
+      bool? party99,
       List<AmenitiesModel>? amenities});
 
   $RatingAndReviewModelCopyWith<$Res>? get topRated;
@@ -479,6 +481,7 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
     Object? categoryRating = freezed,
     Object? topRated = freezed,
     Object? vip = freezed,
+    Object? party99 = freezed,
     Object? amenities = freezed,
   }) {
     return _then(_value.copyWith(
@@ -554,6 +557,10 @@ class _$TableModelCopyWithImpl<$Res, $Val extends TableModel>
           ? _value.vip
           : vip // ignore: cast_nullable_to_non_nullable
               as bool?,
+      party99: freezed == party99
+          ? _value.party99
+          : party99 // ignore: cast_nullable_to_non_nullable
+              as bool?,
       amenities: freezed == amenities
           ? _value.amenities
           : amenities // ignore: cast_nullable_to_non_nullable
@@ -601,6 +608,7 @@ abstract class _$$TableModelImplCopyWith<$Res>
       List<CategoryRating>? categoryRating,
       RatingAndReviewModel? topRated,
       bool? vip,
+      bool? party99,
       List<AmenitiesModel>? amenities});
 
   @override
@@ -636,6 +644,7 @@ class __$$TableModelImplCopyWithImpl<$Res>
     Object? categoryRating = freezed,
     Object? topRated = freezed,
     Object? vip = freezed,
+    Object? party99 = freezed,
     Object? amenities = freezed,
   }) {
     return _then(_$TableModelImpl(
@@ -711,6 +720,10 @@ class __$$TableModelImplCopyWithImpl<$Res>
           ? _value.vip
           : vip // ignore: cast_nullable_to_non_nullable
               as bool?,
+      party99: freezed == party99
+          ? _value.party99
+          : party99 // ignore: cast_nullable_to_non_nullable
+              as bool?,
       amenities: freezed == amenities
           ? _value._amenities
           : amenities // ignore: cast_nullable_to_non_nullable
@@ -741,6 +754,7 @@ class _$TableModelImpl implements _TableModel {
       final List<CategoryRating>? categoryRating,
       this.topRated,
       this.vip,
+      this.party99,
       final List<AmenitiesModel>? amenities})
       : _images = images,
         _seats = seats,
@@ -811,6 +825,8 @@ class _$TableModelImpl implements _TableModel {
   final RatingAndReviewModel? topRated;
   @override
   final bool? vip;
+  @override
+  final bool? party99;
   final List<AmenitiesModel>? _amenities;
   @override
   List<AmenitiesModel>? get amenities {
@@ -823,7 +839,7 @@ class _$TableModelImpl implements _TableModel {
 
   @override
   String toString() {
-    return 'TableModel(id: $id, outletId: $outletId, tableNumber: $tableNumber, description: $description, seatType: $seatType, images: $images, available: $available, seatCapacity: $seatCapacity, seats: $seats, ratingCount: $ratingCount, createdAt: $createdAt, updatedAt: $updatedAt, tableCount: $tableCount, totalVotes: $totalVotes, rating: $rating, categoryRating: $categoryRating, topRated: $topRated, vip: $vip, amenities: $amenities)';
+    return 'TableModel(id: $id, outletId: $outletId, tableNumber: $tableNumber, description: $description, seatType: $seatType, images: $images, available: $available, seatCapacity: $seatCapacity, seats: $seats, ratingCount: $ratingCount, createdAt: $createdAt, updatedAt: $updatedAt, tableCount: $tableCount, totalVotes: $totalVotes, rating: $rating, categoryRating: $categoryRating, topRated: $topRated, vip: $vip, party99: $party99, amenities: $amenities)';
   }
 
   @override
@@ -862,6 +878,7 @@ class _$TableModelImpl implements _TableModel {
             (identical(other.topRated, topRated) ||
                 other.topRated == topRated) &&
             (identical(other.vip, vip) || other.vip == vip) &&
+            (identical(other.party99, party99) || other.party99 == party99) &&
             const DeepCollectionEquality()
                 .equals(other._amenities, _amenities));
   }
@@ -888,6 +905,7 @@ class _$TableModelImpl implements _TableModel {
         const DeepCollectionEquality().hash(_categoryRating),
         topRated,
         vip,
+        party99,
         const DeepCollectionEquality().hash(_amenities)
       ]);
 
@@ -925,6 +943,7 @@ abstract class _TableModel implements TableModel {
       final List<CategoryRating>? categoryRating,
       final RatingAndReviewModel? topRated,
       final bool? vip,
+      final bool? party99,
       final List<AmenitiesModel>? amenities}) = _$TableModelImpl;
 
   factory _TableModel.fromJson(Map<String, dynamic> json) =
@@ -967,6 +986,8 @@ abstract class _TableModel implements TableModel {
   RatingAndReviewModel? get topRated;
   @override
   bool? get vip;
+  @override
+  bool? get party99;
   @override
   List<AmenitiesModel>? get amenities;
   @override

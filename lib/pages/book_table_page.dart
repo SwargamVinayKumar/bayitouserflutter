@@ -58,8 +58,12 @@ class _BookTablePageState extends State<BookTablePage>
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
-    // ✅ Set initial time slot to current hour if today
-    _checkAndUpdateTimeSlotForToday();
+    // ✅ Set initial time slot to current hour if today (deferred to post frame)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _checkAndUpdateTimeSlotForToday();
+      }
+    });
 
     // ✅ Setup listeners immediately (no addPostFrameCallback needed)
     _setupListeners();
@@ -96,7 +100,7 @@ class _BookTablePageState extends State<BookTablePage>
       ever(bookingViewModel.selectedTimeIndex, (_) => _autoCheckAvailability()),
       ever(bookingViewModel.durationHours, (_) => _autoCheckAvailability()),
       ever(bookingViewModel.selectedTable, (_) => _autoCheckAvailability()),
-      ever(bookingViewModel.selectedSeat, (_) => _autoCheckAvailability()),
+      ever(bookingViewModel.selectedSeats, (_) => _autoCheckAvailability()),
     ]);
   }
 
@@ -104,7 +108,7 @@ class _BookTablePageState extends State<BookTablePage>
   void _autoCheckAvailability() {
     if (widget.outletModel?.id == null) return;
     if (bookingViewModel.selectedTable.value == null) return;
-    if (bookingViewModel.selectedSeat.value == null) return;
+    if (bookingViewModel.selectedSeats.isEmpty) return;
 
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 400), () {
@@ -325,7 +329,7 @@ class _BookTablePageState extends State<BookTablePage>
             }
             bool isDisabled = isToday && index < minAllowedHour;
 
-            return GestureDetector(
+            return isDisabled ? const SizedBox() : GestureDetector(
               onTap: isDisabled
                   ? null
                   : () {
@@ -451,6 +455,7 @@ class _BookTablePageState extends State<BookTablePage>
     return Obx(() {
       return bookingViewModel.fetchTablesObserver.value.when(
         init: () => const SizedBox.shrink(),
+        errorData: (e) => const SizedBox.shrink(),
         loading: (msg) => Center(
           child: Column(
             children: [
@@ -480,6 +485,7 @@ class _BookTablePageState extends State<BookTablePage>
             );
           }
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 160,
@@ -559,7 +565,7 @@ class _BookTablePageState extends State<BookTablePage>
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildSectionHeader("Select Seat", Icons.event_seat_rounded),
+          buildSectionHeader("Select Seats", Icons.event_seat_rounded),
           const SizedBox(height: 16),
           GridView.builder(
             shrinkWrap: true,
@@ -576,7 +582,7 @@ class _BookTablePageState extends State<BookTablePage>
               return Obx(() => SeatItemWidget(
                 seat: seat,
                 isSelected:
-                bookingViewModel.selectedSeat.value?.id == seat?.id,
+                bookingViewModel.selectedSeats.any((s) => s.id == seat?.id),
                 isBooked: seat?.available == false,
                 onTap: () => bookingViewModel.selectSeat(seat),
               ));
@@ -693,6 +699,40 @@ class _BookTablePageState extends State<BookTablePage>
                   ],
                 );
               }
+            },
+            errorData: (error){
+              return Column(
+                children: [
+                  if(error?.data?.seats != null) _buildSeatSection(error?.data?.seats),
+                  const SizedBox(height: 24),
+                  CustomGradientButton(
+              title: "Check Availability",
+              onTap: () {
+              if(authViewModel.userAuthenticated.value == false){
+              showModalBottomSheet(
+              context: context,
+              isScrollControlled: true, // allows full height scroll
+              shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+              builder: (context) {
+              return  EmptyDataViewWithButton(onClick: (){
+              Get.offAll(() => const SignInPage());
+              });
+              },
+              );
+              }
+              else{
+              bookingViewModel.checkAvailability(
+              widget.outletModel!.id!, null);
+              }
+              }
+              ,
+              height: 56,
+              fontSize: 18,
+              )
+                ],
+              );
             },
             orElse: () {
               final hasAllSelections =

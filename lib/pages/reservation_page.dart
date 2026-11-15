@@ -136,6 +136,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
                     return observer.value.data.value.when(
                         init: () => const SizedBox.shrink(),
+                        errorData: (e) => const SizedBox.shrink(),
                         loading: (msg) => list.isEmpty
                             ? const ReservationListShimmer()
                             : _buildList(list, observer.value),

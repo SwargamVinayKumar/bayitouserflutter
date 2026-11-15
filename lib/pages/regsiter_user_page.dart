@@ -110,7 +110,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
             const SizedBox(height: 10),
             Obx(() {
               if (authViewModel.fetchDesignationsObserver.value.maybeWhen(loading: (_) => true, orElse: () => false)) {
-                return const Center(child: CircularProgressIndicator());
+                return  const Center(child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    Text("Loading...",style: TextStyle(fontSize: 15,color: CustomColors.secondary,fontWeight: FontWeight.w600),)
+                  ],
+                ));
               }
               return Wrap(
                 spacing: 8,

@@ -57,6 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Obx(() =>
                       ProfileHeaderComponent(profileData:userModel,loading: logOuting.value,onLogout: (){
+
                         showModalBottomSheet(
                           context:
                           context,
@@ -78,6 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Get.back();
                                 },
                                 btn2Txt: "Yes",
+                                authViewModel: authViewModel,
                                 btn2Click: () async {
                                   Get.back();
                                   logOuting.value = true;

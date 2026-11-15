@@ -70,10 +70,20 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
           child: Obx(() {
             return bookingViewModel.fetchBookingDetailsObserver.value.when(
               init: () => const SizedBox.shrink(),
+              errorData: (e) => const SizedBox.shrink(),
               loading: (msg) => const Center(child: CircularProgressIndicator(color: CustomColors.secondary)),
               success: (data) {
                 final booking = (data as BookingDetailsResponse).data;
                 bookingViewModel.selectedTable.value = booking?.tableId;
+                final seatIdsSet = (booking?.seatIds ?? []).toSet();
+                bookingViewModel.selectedSeats.clear();
+                // if (booking?.tableId?.seats != null) {
+                //   for (final seat in booking!.tableId!.seats!) {
+                //     if (seatIdsSet.contains(seat.id)) {
+                //       bookingViewModel.selectedSeats.add(seat);
+                //     }
+                //   }
+                // }
                 if (booking == null) return const Center(child: Text("No details found"));
                 return Stack(
                   children: [
@@ -103,7 +113,7 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
                             infoRow(Icons.vpn_key, "Booking OTP", booking.bookingOTP?.toString() ?? "N/A"),
                           ]),
                           const SizedBox(height: 24),
-                          _buildSeatSection(booking.outletId,booking.seatId ?? "",booking,bookingViewModel),
+                          _buildSeatSection(booking.outletId,booking.seatIds,booking,bookingViewModel),
                           const SizedBox(height: 32),
                           _buildBookingActions(booking.outletId,booking,bookingViewModel),
                           const SizedBox(height: 30),
@@ -124,7 +134,7 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
     );
   }
 
-  Widget _buildSeatSection(OutletModel? outlet,String? seatId,BookingModel? booking,BookingViewModel bookingViewModel) {
+  Widget _buildSeatSection(OutletModel? outlet,List<String>? seatIds,BookingModel? booking,BookingViewModel bookingViewModel) {
     return Obx(() {
       final table = bookingViewModel.selectedTable.value;
       if (table == null || table.seats == null || table.seats!.isEmpty) {
@@ -146,7 +156,7 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
             },
           ),
           const SizedBox(height: 16),
-          buildSectionHeader("Select Seat", Icons.event_seat_rounded),
+          buildSectionHeader("Select Seats", Icons.event_seat_rounded),
           const SizedBox(height: 16),
           GridView.builder(
             shrinkWrap: true,
@@ -160,10 +170,11 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
             ),
             itemBuilder: (context, index) {
               final seat = table.seats![index];
+              final existingSeatIds = (seatIds ?? []).toSet();
               return Obx(() => SeatItemWidget(
                 seat: seat,
-                isSelected: bookingViewModel.selectedSeat.value?.id == seat.id,
-                isBooked: (seat.available == false) || (seat.id == (seatId ?? "")),
+                isSelected: bookingViewModel.selectedSeats.any((s) => s.id == seat.id),
+                isBooked: (seat.available == false) || existingSeatIds.contains(seat.id),
                 onTap: () {
                   bookingViewModel.selectSeat(seat);
                   bookingViewModel.checkAvailability(outlet?.id ?? "",booking);

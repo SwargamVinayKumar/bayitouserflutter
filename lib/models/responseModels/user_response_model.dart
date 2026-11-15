@@ -39,6 +39,7 @@ abstract class UserModel with _$UserModel {
 abstract class DesignationModel with _$DesignationModel {
   const factory DesignationModel({
     @JsonKey(name: "_id") String? id,
+    String? imageUrl,
     String? name,
     String? description,
     String? createdAt,

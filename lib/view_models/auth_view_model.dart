@@ -21,12 +21,14 @@ import '../models/requestModels/sign_up_request_model.dart';
 import '../models/responseModels/auth_response_model.dart';
 import '../models/responseModels/file_upload_response_model.dart';
 import '../models/responseModels/open_hour_model.dart';
+import '../models/responseModels/user_response_model.dart';
 import '../pages/main_page.dart';
 import '../pages/update_version_screen.dart';
 import '../pages/user_blocked.dart';
 import '../utils/auth_utils.dart';
 import '../utils/geo_util.dart';
 import '../utils/preference_manager.dart';
+import '../utils/firebase_notification.dart';
 
 
 import '../utils/snack_bar_extension.dart';
@@ -43,6 +45,8 @@ class AuthViewModel extends GetxController {
   final fetchDesignationsObserver = ApiResult<DesignationResponseModel>.init().obs;
   final registerUserObserver = ApiResult<SignInResponseModel>.init().obs;
   final changePasswordObserver = ApiResult<PrimaryResponseModel>.init().obs;
+
+  final notifyMeObserver = ApiResult<PrimaryResponseModel>.init().obs;
 
 
   // Observers
@@ -234,7 +238,7 @@ class AuthViewModel extends GetxController {
       final response =
       await apiProvider.post(EndPoints.validateVersion, request.toJson());
       final body = response.body;
-      print("Body :$body");
+
       if (response.statusCode == 401) {
         await preferenceManager.clearAll();
         Get.offAll(() => const SignInPage());
@@ -331,9 +335,11 @@ class AuthViewModel extends GetxController {
           Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
         }
       } else {
+        Get.showCustomSnackBar(title: 'Failed', message: "ERROR");
         signInObserver.value = ApiResult.error("Something went wrong");
       }
     } catch (e) {
+      Get.showCustomSnackBar(title: 'Failed', message: e.toString());
       signInObserver.value = ApiResult.error(e.toString());
     }
   }
@@ -472,6 +478,28 @@ class AuthViewModel extends GetxController {
   }
 
 
+  Future<void> notifyMe(List<String>? designations) async {
+    try {
+
+      notifyMeObserver.value = ApiResult.loading("loading");
+      final response = await apiProvider.post(EndPoints.notifyMe, {"designations":designations});
+      final body = response.body;
+      if (response.isOk && body != null) {
+        final data = PrimaryResponseModel.fromJson(body);
+        if (data.status == 1) {
+          notifyMeObserver.value = ApiResult.success(data);
+          fetchProfileDetails();
+          return;
+        }
+        throw data.message ?? "Something went wrong";
+      }
+      throw "Something went wrong";
+    } catch (e) {
+      Get.showCustomSnackBar(title: 'Failed', message: e.toString());
+      notifyMeObserver.value = ApiResult.error(e.toString());
+    }
+  }
+
 
 
   Future<void> fetchProfileDetails() async {
@@ -485,6 +513,10 @@ class AuthViewModel extends GetxController {
         if (data.status == 1) {
           userAuthenticated.value = true;
           fetchProfileDetailObserver.value = ApiResult.success(data);
+          if (data.data?.id != null) {
+            FireBaseNotification.subscribeToUserTopic(data.data?.id ?? "");
+            FireBaseNotification.subscribeToUserTopic("user");
+          }
         } else {
           Get.showCustomSnackBar(title: 'Failed', message: data.message ?? '');
           fetchProfileDetailObserver.value = ApiResult.error(data.message ?? "");
@@ -494,6 +526,7 @@ class AuthViewModel extends GetxController {
       }
     } catch (e) {
       userAuthenticated.value = false;
+      Get.showCustomSnackBar(title: 'Failed', message: e.toString() ?? '');
       fetchProfileDetailObserver.value = ApiResult.error(e.toString());
     }
   }
@@ -506,6 +539,7 @@ class AuthViewModel extends GetxController {
       if (response.isOk && body != null) {
         final data = DesignationResponseModel.fromJson(body);
         if (data.status == 1) {
+          designationsList.clear();
           designationsList.assignAll(data.data ?? []);
           fetchDesignationsObserver.value = ApiResult.success(data);
         } else {
@@ -541,8 +575,8 @@ class AuthViewModel extends GetxController {
     
     // designations
     selectedDesignations.clear();
-    if (user.tables != null) {
-      selectedDesignations.addAll(user.tables!.map((e) => e.id ?? "").where((id) => id.isNotEmpty));
+    if (user.designations != null) {
+      selectedDesignations.assignAll(user.designations?.map((e) => DesignationModel.fromJson(e).id ?? "").where((id) => id.isNotEmpty) ?? []);
     }
   }
 

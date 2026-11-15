@@ -24,7 +24,6 @@ class TabItem extends StatelessWidget {
           milliseconds: 250,
         ),
         height: 42,
-        width: 110,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
@@ -32,13 +31,16 @@ class TabItem extends StatelessWidget {
               ? CustomColors.secondary
               : CustomColors.white.withOpacity(0.06),
         ),
-        child: Text(title,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight:  isSelected
-                ? FontWeight.w700
-                : FontWeight.w500,
-            color:  isSelected ? CustomColors.white : CustomColors.secondary,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(title,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight:  isSelected
+                  ? FontWeight.w700
+                  : FontWeight.w500,
+              color:  isSelected ? CustomColors.white : CustomColors.secondary,
+            ),
           ),
         ),
       ),

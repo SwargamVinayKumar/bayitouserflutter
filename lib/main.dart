@@ -11,26 +11,18 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   // Initialize notifications
-  // final notificationService = FireBaseNotification();
+  final notificationService = FireBaseNotification();
+  await notificationService.initNotifications();
 
-  // Parallelize initializations to speed up startup
-  await Future.wait([
-    // Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // ),
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]),
-    // notificationService.initAwesomeNotification(),
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
   ]);
-
-  // notificationService.initPushNotification();
-  // notificationService.setListeners();
-  //
-  // // Request permissions in the background (non-blocking)
-  // notificationService.requestPermissions();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: CustomColors.secondary,
@@ -56,4 +48,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

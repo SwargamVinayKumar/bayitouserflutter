@@ -121,9 +121,14 @@ class TableItemWidgetPrime extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  if(table?.vip == true) Padding(
+                  Padding(
                     padding: const EdgeInsets.all(15),
-                    child: Image.asset("assets/images/VIP.png",width: 100,height: 50,),
+                    child: Row(
+                      children: [
+                        if(table?.vip == true)  Image.asset("assets/images/VIP.png",width: 100,height: 50,),
+                        if(table?.party99 == true)  Image.asset("assets/images/part99_tag.png",width: 100,height: 50,),
+                      ],
+                    ),
                   )
                 ],
               )
@@ -428,9 +433,15 @@ class TableItemWidget extends StatelessWidget {
                        fit: BoxFit.cover,
                      ),
                    ),
-                   if(table?.vip == true) Padding(
+                   Padding(
                      padding: const EdgeInsets.all(8),
-                     child: Image.asset("assets/images/VIP.png",width: 30,height: 10,),
+                     child:
+                       Row(
+                         children: [
+                           if(table.vip == true)  Image.asset("assets/images/VIP.png",width: 30,height: 10,),
+                           if(table.party99 == true)  Image.asset("assets/images/part99_tag.png",width: 30,height: 10,),
+                         ],
+                       )
                    )
                  ],
                )

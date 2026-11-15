@@ -1,3 +1,4 @@
+import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,9 @@ class HelperBottomSheet extends StatelessWidget {
   final String? btn2Txt;
   final VoidCallback btn1Click;
   final VoidCallback? btn2Click;
-  const HelperBottomSheet({super.key, this.assetImage, this.title, this.message, this.btn1Txt, this.btn2Txt, required this.btn1Click, this.btn2Click});
+  final bool? forNotifyMe;
+  final AuthViewModel authViewModel;
+  const HelperBottomSheet({super.key, this.assetImage, this.title, this.message, this.btn1Txt, this.btn2Txt, required this.btn1Click, this.btn2Click,this.forNotifyMe = false,required this.authViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +36,59 @@ class HelperBottomSheet extends StatelessWidget {
               const SizedBox(height: 20),
               SizedBox(height: 150,width: 150,child: Image.asset(assetImage ?? "assets/images/no_data_founded.png")),
               const SizedBox(height: 10),
-              Text(title ?? "",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w800,fontSize: 18,color: CustomColors.primary),),
+              Text(title ?? "",textAlign: TextAlign.center,style: const TextStyle(fontWeight: FontWeight.w800,fontSize: 18,color: CustomColors.primary),),
               const SizedBox(height: 10),
-              Text(message ?? "",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: CustomColors.darkGray),),
-              const SizedBox(height: 20),
+              Text(message ?? "",textAlign: TextAlign.center,style: const TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: CustomColors.darkGray),),
+              if(forNotifyMe == true) Obx(() {
+                if (authViewModel.fetchDesignationsObserver.value.maybeWhen(loading: (_) => true, orElse: () => false)) {
+                  return  const Center(child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      Text("Loading...",style: TextStyle(fontSize: 15,color: CustomColors.secondary,fontWeight: FontWeight.w600),)
+                    ],
+                  ));
+                }
+                return SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.30,
+                  child: SingleChildScrollView(
+                    child: Wrap(
+                      spacing: 8,
+                      children: authViewModel.designationsList.map((designation) {
+                        return Obx(() {
+                          final isSelected = authViewModel.selectedDesignations.contains(designation.id);
+                          return FilterChip(
+                            label: Text(designation.name ?? ""),
+                            selected: isSelected,
+                            onSelected: (selected) {
+                              if (selected) {
+                                authViewModel.selectedDesignations.add(designation.id!);
+                              } else {
+                                authViewModel.selectedDesignations.remove(designation.id);
+                              }
+                            },
+                            selectedColor: CustomColors.secondary.withOpacity(0.2),
+                            checkmarkColor: CustomColors.secondary,
+                          );
+                        });
+                      }).toList(),
+                    ),
+                  ),
+                );
+              }),
+              if(forNotifyMe == true) Obx(() {
+                if (authViewModel.notifyMeObserver.value.maybeWhen(loading: (_) => true, orElse: () => false)) {
+                  return  const Center(child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      Text("Please Wait...",style: TextStyle(fontSize: 15,color: CustomColors.secondary,fontWeight: FontWeight.w600),)
+                    ],
+                  ));
+                }
+                return const SizedBox();
+              }),
+              const SizedBox(height: 35),
               SizedBox(
                 height: 50,
                 child: Row(

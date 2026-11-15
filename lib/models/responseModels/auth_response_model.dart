@@ -1,3 +1,4 @@
+import 'package:bayitouser/models/responseModels/user_response_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_response_model.freezed.dart';
@@ -70,7 +71,9 @@ abstract class ProfileData with _$ProfileData {
     String? password,
     ChargesModel? charges,
     LocationModel? location,
-    List<DesignationModel>? tables,
+    List<dynamic>? designations,
+    dynamic notifyMe,
+    String? notifyMeText,
     String? createdAt,
     String? updatedAt,
     dynamic reservationCount,
@@ -80,6 +83,18 @@ abstract class ProfileData with _$ProfileData {
 
   factory ProfileData.fromJson(Map<String, dynamic> json) =>
       _$ProfileDataFromJson(json);
+}
+
+@freezed
+abstract class NotifyMeModel with _$NotifyMeModel {
+  const factory NotifyMeModel({
+    @JsonKey(name: '_id') String? id,
+    String? userId,
+    List<DesignationModel>? designations
+  }) = _NotifyMeModel;
+
+  factory NotifyMeModel.fromJson(Map<String, dynamic> json) =>
+      _$NotifyMeModelFromJson(json);
 }
 
 @freezed
@@ -128,17 +143,6 @@ abstract class ValidateDataModel with _$ValidateDataModel{
   factory ValidateDataModel.fromJson(Map<String, dynamic> json) => _$ValidateDataModelFromJson(json);
 }
 
-@Freezed()
-abstract class DesignationModel with _$DesignationModel{
-  const factory DesignationModel({
-    @JsonKey(name: '_id') String? id,
-    String? imageUrl,
-    String? name,
-    String? description
-  }) = _DesignationModel;
-
-  factory DesignationModel.fromJson(Map<String, dynamic> json) => _$DesignationModelFromJson(json);
-}
 
 @Freezed()
 abstract class DesignationResponseModel with _$DesignationResponseModel{

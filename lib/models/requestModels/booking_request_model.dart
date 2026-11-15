@@ -10,7 +10,7 @@ abstract class BookingRequestModel with _$BookingRequestModel {
     String? bookingId,
     String? outletId,
     String? tableId,
-    String? seatId,
+    List<String>? seatIds,
     String? checkIn,
     String? checkOut,
     String? paymentType,

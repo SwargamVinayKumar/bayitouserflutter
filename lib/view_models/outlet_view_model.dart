@@ -451,6 +451,7 @@ class OutletViewModel extends GetxController {
             ),
             builder: (context) {
               return HelperBottomSheet(assetImage: "assets/images/congratulations.png",title:"Thank You For Feedback",
+                  authViewModel: authViewModel,
                   message: "Your Rating Submitted Successfully"
                   ,btn1Txt: "Done", btn1Click: () {
                     Get.back();

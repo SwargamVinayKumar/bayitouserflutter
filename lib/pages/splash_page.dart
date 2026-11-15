@@ -24,6 +24,7 @@ class _SplashPageState extends State<SplashPage> {
     return StatefulWrapper(
       onInit: ()  async {
        final location = await authViewModel.fetchCurrentLocation();
+       authViewModel.fetchDesignations();
        if(location == null ){
          Get.showCustomSnackBar(title: 'Error', message: "Location is required.Please enable location and continue");
          return;

@@ -587,6 +587,7 @@ DesignationModel _$DesignationModelFromJson(Map<String, dynamic> json) {
 mixin _$DesignationModel {
   @JsonKey(name: "_id")
   String? get id => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
@@ -606,6 +607,7 @@ abstract class $DesignationModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: "_id") String? id,
+      String? imageUrl,
       String? name,
       String? description,
       String? createdAt,
@@ -626,6 +628,7 @@ class _$DesignationModelCopyWithImpl<$Res, $Val extends DesignationModel>
   @override
   $Res call({
     Object? id = freezed,
+    Object? imageUrl = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? createdAt = freezed,
@@ -635,6 +638,10 @@ class _$DesignationModelCopyWithImpl<$Res, $Val extends DesignationModel>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -666,6 +673,7 @@ abstract class _$$DesignationModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: "_id") String? id,
+      String? imageUrl,
       String? name,
       String? description,
       String? createdAt,
@@ -684,6 +692,7 @@ class __$$DesignationModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? imageUrl = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? createdAt = freezed,
@@ -693,6 +702,10 @@ class __$$DesignationModelImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -719,6 +732,7 @@ class __$$DesignationModelImplCopyWithImpl<$Res>
 class _$DesignationModelImpl implements _DesignationModel {
   const _$DesignationModelImpl(
       {@JsonKey(name: "_id") this.id,
+      this.imageUrl,
       this.name,
       this.description,
       this.createdAt,
@@ -731,6 +745,8 @@ class _$DesignationModelImpl implements _DesignationModel {
   @JsonKey(name: "_id")
   final String? id;
   @override
+  final String? imageUrl;
+  @override
   final String? name;
   @override
   final String? description;
@@ -741,7 +757,7 @@ class _$DesignationModelImpl implements _DesignationModel {
 
   @override
   String toString() {
-    return 'DesignationModel(id: $id, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'DesignationModel(id: $id, imageUrl: $imageUrl, name: $name, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -750,6 +766,8 @@ class _$DesignationModelImpl implements _DesignationModel {
         (other.runtimeType == runtimeType &&
             other is _$DesignationModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -761,8 +779,8 @@ class _$DesignationModelImpl implements _DesignationModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, description, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, imageUrl, name, description, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -782,6 +800,7 @@ class _$DesignationModelImpl implements _DesignationModel {
 abstract class _DesignationModel implements DesignationModel {
   const factory _DesignationModel(
       {@JsonKey(name: "_id") final String? id,
+      final String? imageUrl,
       final String? name,
       final String? description,
       final String? createdAt,
@@ -793,6 +812,8 @@ abstract class _DesignationModel implements DesignationModel {
   @override
   @JsonKey(name: "_id")
   String? get id;
+  @override
+  String? get imageUrl;
   @override
   String? get name;
   @override

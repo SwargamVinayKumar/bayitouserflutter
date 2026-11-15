@@ -63,6 +63,7 @@ _$DesignationModelImpl _$$DesignationModelImplFromJson(
         Map<String, dynamic> json) =>
     _$DesignationModelImpl(
       id: json['_id'] as String?,
+      imageUrl: json['imageUrl'] as String?,
       name: json['name'] as String?,
       description: json['description'] as String?,
       createdAt: json['createdAt'] as String?,
@@ -73,6 +74,7 @@ Map<String, dynamic> _$$DesignationModelImplToJson(
         _$DesignationModelImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
+      'imageUrl': instance.imageUrl,
       'name': instance.name,
       'description': instance.description,
       'createdAt': instance.createdAt,

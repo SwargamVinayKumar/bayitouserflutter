@@ -1192,7 +1192,7 @@ mixin _$ConfirmBookingData {
   dynamic get userId => throw _privateConstructorUsedError;
   String? get outletId => throw _privateConstructorUsedError;
   String? get tableId => throw _privateConstructorUsedError;
-  String? get seatId => throw _privateConstructorUsedError;
+  List<String>? get seatIds => throw _privateConstructorUsedError;
   int? get bookingOTP => throw _privateConstructorUsedError;
   String? get checkIn => throw _privateConstructorUsedError;
   String? get checkOut => throw _privateConstructorUsedError;
@@ -1225,7 +1225,7 @@ abstract class $ConfirmBookingDataCopyWith<$Res> {
       dynamic userId,
       String? outletId,
       String? tableId,
-      String? seatId,
+      List<String>? seatIds,
       int? bookingOTP,
       String? checkIn,
       String? checkOut,
@@ -1259,7 +1259,7 @@ class _$ConfirmBookingDataCopyWithImpl<$Res, $Val extends ConfirmBookingData>
     Object? userId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
-    Object? seatId = freezed,
+    Object? seatIds = freezed,
     Object? bookingOTP = freezed,
     Object? checkIn = freezed,
     Object? checkOut = freezed,
@@ -1292,10 +1292,10 @@ class _$ConfirmBookingDataCopyWithImpl<$Res, $Val extends ConfirmBookingData>
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as String?,
-      seatId: freezed == seatId
-          ? _value.seatId
-          : seatId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      seatIds: freezed == seatIds
+          ? _value.seatIds
+          : seatIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       bookingOTP: freezed == bookingOTP
           ? _value.bookingOTP
           : bookingOTP // ignore: cast_nullable_to_non_nullable
@@ -1369,7 +1369,7 @@ abstract class _$$ConfirmBookingDataImplCopyWith<$Res>
       dynamic userId,
       String? outletId,
       String? tableId,
-      String? seatId,
+      List<String>? seatIds,
       int? bookingOTP,
       String? checkIn,
       String? checkOut,
@@ -1401,7 +1401,7 @@ class __$$ConfirmBookingDataImplCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
-    Object? seatId = freezed,
+    Object? seatIds = freezed,
     Object? bookingOTP = freezed,
     Object? checkIn = freezed,
     Object? checkOut = freezed,
@@ -1434,10 +1434,10 @@ class __$$ConfirmBookingDataImplCopyWithImpl<$Res>
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as String?,
-      seatId: freezed == seatId
-          ? _value.seatId
-          : seatId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      seatIds: freezed == seatIds
+          ? _value._seatIds
+          : seatIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       bookingOTP: freezed == bookingOTP
           ? _value.bookingOTP
           : bookingOTP // ignore: cast_nullable_to_non_nullable
@@ -1506,7 +1506,7 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
       this.userId,
       this.outletId,
       this.tableId,
-      this.seatId,
+      final List<String>? seatIds,
       this.bookingOTP,
       this.checkIn,
       this.checkOut,
@@ -1520,7 +1520,8 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
       this.paymentLink,
       this.razorPayId,
       this.orderId,
-      this.paymentId});
+      this.paymentId})
+      : _seatIds = seatIds;
 
   factory _$ConfirmBookingDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConfirmBookingDataImplFromJson(json);
@@ -1534,8 +1535,16 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
   final String? outletId;
   @override
   final String? tableId;
+  final List<String>? _seatIds;
   @override
-  final String? seatId;
+  List<String>? get seatIds {
+    final value = _seatIds;
+    if (value == null) return null;
+    if (_seatIds is EqualUnmodifiableListView) return _seatIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final int? bookingOTP;
   @override
@@ -1567,7 +1576,7 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
 
   @override
   String toString() {
-    return 'ConfirmBookingData(bookingId: $bookingId, userId: $userId, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingOTP: $bookingOTP, checkIn: $checkIn, checkOut: $checkOut, duration: $duration, subTotal: $subTotal, discount: $discount, amount: $amount, bookingType: $bookingType, paymentType: $paymentType, status: $status, paymentLink: $paymentLink, razorPayId: $razorPayId, orderId: $orderId, paymentId: $paymentId)';
+    return 'ConfirmBookingData(bookingId: $bookingId, userId: $userId, outletId: $outletId, tableId: $tableId, seatIds: $seatIds, bookingOTP: $bookingOTP, checkIn: $checkIn, checkOut: $checkOut, duration: $duration, subTotal: $subTotal, discount: $discount, amount: $amount, bookingType: $bookingType, paymentType: $paymentType, status: $status, paymentLink: $paymentLink, razorPayId: $razorPayId, orderId: $orderId, paymentId: $paymentId)';
   }
 
   @override
@@ -1581,7 +1590,7 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.tableId, tableId) || other.tableId == tableId) &&
-            (identical(other.seatId, seatId) || other.seatId == seatId) &&
+            const DeepCollectionEquality().equals(other._seatIds, _seatIds) &&
             (identical(other.bookingOTP, bookingOTP) ||
                 other.bookingOTP == bookingOTP) &&
             (identical(other.checkIn, checkIn) || other.checkIn == checkIn) &&
@@ -1616,7 +1625,7 @@ class _$ConfirmBookingDataImpl implements _ConfirmBookingData {
         const DeepCollectionEquality().hash(userId),
         outletId,
         tableId,
-        seatId,
+        const DeepCollectionEquality().hash(_seatIds),
         bookingOTP,
         checkIn,
         checkOut,
@@ -1654,7 +1663,7 @@ abstract class _ConfirmBookingData implements ConfirmBookingData {
       final dynamic userId,
       final String? outletId,
       final String? tableId,
-      final String? seatId,
+      final List<String>? seatIds,
       final int? bookingOTP,
       final String? checkIn,
       final String? checkOut,
@@ -1683,7 +1692,7 @@ abstract class _ConfirmBookingData implements ConfirmBookingData {
   @override
   String? get tableId;
   @override
-  String? get seatId;
+  List<String>? get seatIds;
   @override
   int? get bookingOTP;
   @override
@@ -1730,7 +1739,7 @@ mixin _$BookingModel {
   UserModel? get userId => throw _privateConstructorUsedError;
   OutletModel? get outletId => throw _privateConstructorUsedError;
   TableModel? get tableId => throw _privateConstructorUsedError;
-  String? get seatId => throw _privateConstructorUsedError;
+  List<String>? get seatIds => throw _privateConstructorUsedError;
   String? get bookingType => throw _privateConstructorUsedError;
   int? get bookingOTP => throw _privateConstructorUsedError;
   String? get paymentType => throw _privateConstructorUsedError;
@@ -1775,7 +1784,7 @@ abstract class $BookingModelCopyWith<$Res> {
       UserModel? userId,
       OutletModel? outletId,
       TableModel? tableId,
-      String? seatId,
+      List<String>? seatIds,
       String? bookingType,
       int? bookingOTP,
       String? paymentType,
@@ -1826,7 +1835,7 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
     Object? userId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
-    Object? seatId = freezed,
+    Object? seatIds = freezed,
     Object? bookingType = freezed,
     Object? bookingOTP = freezed,
     Object? paymentType = freezed,
@@ -1874,10 +1883,10 @@ class _$BookingModelCopyWithImpl<$Res, $Val extends BookingModel>
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as TableModel?,
-      seatId: freezed == seatId
-          ? _value.seatId
-          : seatId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      seatIds: freezed == seatIds
+          ? _value.seatIds
+          : seatIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       bookingType: freezed == bookingType
           ? _value.bookingType
           : bookingType // ignore: cast_nullable_to_non_nullable
@@ -2044,7 +2053,7 @@ abstract class _$$BookingModelImplCopyWith<$Res>
       UserModel? userId,
       OutletModel? outletId,
       TableModel? tableId,
-      String? seatId,
+      List<String>? seatIds,
       String? bookingType,
       int? bookingOTP,
       String? paymentType,
@@ -2097,7 +2106,7 @@ class __$$BookingModelImplCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
-    Object? seatId = freezed,
+    Object? seatIds = freezed,
     Object? bookingType = freezed,
     Object? bookingOTP = freezed,
     Object? paymentType = freezed,
@@ -2145,10 +2154,10 @@ class __$$BookingModelImplCopyWithImpl<$Res>
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as TableModel?,
-      seatId: freezed == seatId
-          ? _value.seatId
-          : seatId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      seatIds: freezed == seatIds
+          ? _value._seatIds
+          : seatIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       bookingType: freezed == bookingType
           ? _value.bookingType
           : bookingType // ignore: cast_nullable_to_non_nullable
@@ -2262,7 +2271,7 @@ class _$BookingModelImpl implements _BookingModel {
       this.userId,
       this.outletId,
       this.tableId,
-      this.seatId,
+      final List<String>? seatIds,
       this.bookingType,
       this.bookingOTP,
       this.paymentType,
@@ -2288,7 +2297,8 @@ class _$BookingModelImpl implements _BookingModel {
       this.updatedAt,
       this.bookingMappedTo,
       final List<BookingModel>? userBookings})
-      : _logs = logs,
+      : _seatIds = seatIds,
+        _logs = logs,
         _paymentLogs = paymentLogs,
         _userBookings = userBookings;
 
@@ -2306,8 +2316,16 @@ class _$BookingModelImpl implements _BookingModel {
   final OutletModel? outletId;
   @override
   final TableModel? tableId;
+  final List<String>? _seatIds;
   @override
-  final String? seatId;
+  List<String>? get seatIds {
+    final value = _seatIds;
+    if (value == null) return null;
+    if (_seatIds is EqualUnmodifiableListView) return _seatIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? bookingType;
   @override
@@ -2384,7 +2402,7 @@ class _$BookingModelImpl implements _BookingModel {
 
   @override
   String toString() {
-    return 'BookingModel(id: $id, status: $status, userId: $userId, outletId: $outletId, tableId: $tableId, seatId: $seatId, bookingType: $bookingType, bookingOTP: $bookingOTP, paymentType: $paymentType, orderId: $orderId, paymentId: $paymentId, checkIn: $checkIn, checkOut: $checkOut, bookingHours: $bookingHours, baseCharges: $baseCharges, professionalCharges: $professionalCharges, amount: $amount, discount: $discount, charges: $charges, subTotal: $subTotal, refundedAmount: $refundedAmount, logs: $logs, couponId: $couponId, paymentLogs: $paymentLogs, guestDetailsList: $guestDetailsList, userVisited: $userVisited, cancellationDetails: $cancellationDetails, createdAt: $createdAt, updatedAt: $updatedAt, bookingMappedTo: $bookingMappedTo, userBookings: $userBookings)';
+    return 'BookingModel(id: $id, status: $status, userId: $userId, outletId: $outletId, tableId: $tableId, seatIds: $seatIds, bookingType: $bookingType, bookingOTP: $bookingOTP, paymentType: $paymentType, orderId: $orderId, paymentId: $paymentId, checkIn: $checkIn, checkOut: $checkOut, bookingHours: $bookingHours, baseCharges: $baseCharges, professionalCharges: $professionalCharges, amount: $amount, discount: $discount, charges: $charges, subTotal: $subTotal, refundedAmount: $refundedAmount, logs: $logs, couponId: $couponId, paymentLogs: $paymentLogs, guestDetailsList: $guestDetailsList, userVisited: $userVisited, cancellationDetails: $cancellationDetails, createdAt: $createdAt, updatedAt: $updatedAt, bookingMappedTo: $bookingMappedTo, userBookings: $userBookings)';
   }
 
   @override
@@ -2398,7 +2416,7 @@ class _$BookingModelImpl implements _BookingModel {
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.tableId, tableId) || other.tableId == tableId) &&
-            (identical(other.seatId, seatId) || other.seatId == seatId) &&
+            const DeepCollectionEquality().equals(other._seatIds, _seatIds) &&
             (identical(other.bookingType, bookingType) ||
                 other.bookingType == bookingType) &&
             (identical(other.bookingOTP, bookingOTP) ||
@@ -2453,7 +2471,7 @@ class _$BookingModelImpl implements _BookingModel {
         userId,
         outletId,
         tableId,
-        seatId,
+        const DeepCollectionEquality().hash(_seatIds),
         bookingType,
         bookingOTP,
         paymentType,
@@ -2502,7 +2520,7 @@ abstract class _BookingModel implements BookingModel {
       final UserModel? userId,
       final OutletModel? outletId,
       final TableModel? tableId,
-      final String? seatId,
+      final List<String>? seatIds,
       final String? bookingType,
       final int? bookingOTP,
       final String? paymentType,
@@ -2544,7 +2562,7 @@ abstract class _BookingModel implements BookingModel {
   @override
   TableModel? get tableId;
   @override
-  String? get seatId;
+  List<String>? get seatIds;
   @override
   String? get bookingType;
   @override

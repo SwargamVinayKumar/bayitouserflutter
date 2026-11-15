@@ -121,7 +121,8 @@ _$ConfirmBookingDataImpl _$$ConfirmBookingDataImplFromJson(
       userId: json['userId'],
       outletId: json['outletId'] as String?,
       tableId: json['tableId'] as String?,
-      seatId: json['seatId'] as String?,
+      seatIds:
+          (json['seatIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
       bookingOTP: json['bookingOTP'] as int?,
       checkIn: json['checkIn'] as String?,
       checkOut: json['checkOut'] as String?,
@@ -145,7 +146,7 @@ Map<String, dynamic> _$$ConfirmBookingDataImplToJson(
       'userId': instance.userId,
       'outletId': instance.outletId,
       'tableId': instance.tableId,
-      'seatId': instance.seatId,
+      'seatIds': instance.seatIds,
       'bookingOTP': instance.bookingOTP,
       'checkIn': instance.checkIn,
       'checkOut': instance.checkOut,
@@ -175,7 +176,8 @@ _$BookingModelImpl _$$BookingModelImplFromJson(Map<String, dynamic> json) =>
       tableId: json['tableId'] == null
           ? null
           : TableModel.fromJson(json['tableId'] as Map<String, dynamic>),
-      seatId: json['seatId'] as String?,
+      seatIds:
+          (json['seatIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
       bookingType: json['bookingType'] as String?,
       bookingOTP: json['bookingOTP'] as int?,
       paymentType: json['paymentType'] as String?,
@@ -221,7 +223,7 @@ Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
       'userId': instance.userId,
       'outletId': instance.outletId,
       'tableId': instance.tableId,
-      'seatId': instance.seatId,
+      'seatIds': instance.seatIds,
       'bookingType': instance.bookingType,
       'bookingOTP': instance.bookingOTP,
       'paymentType': instance.paymentType,

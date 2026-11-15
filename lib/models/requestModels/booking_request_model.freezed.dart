@@ -24,7 +24,7 @@ mixin _$BookingRequestModel {
   String? get bookingId => throw _privateConstructorUsedError;
   String? get outletId => throw _privateConstructorUsedError;
   String? get tableId => throw _privateConstructorUsedError;
-  String? get seatId => throw _privateConstructorUsedError;
+  List<String>? get seatIds => throw _privateConstructorUsedError;
   String? get checkIn => throw _privateConstructorUsedError;
   String? get checkOut => throw _privateConstructorUsedError;
   String? get paymentType => throw _privateConstructorUsedError;
@@ -54,7 +54,7 @@ abstract class $BookingRequestModelCopyWith<$Res> {
       String? bookingId,
       String? outletId,
       String? tableId,
-      String? seatId,
+      List<String>? seatIds,
       String? checkIn,
       String? checkOut,
       String? paymentType,
@@ -83,7 +83,7 @@ class _$BookingRequestModelCopyWithImpl<$Res, $Val extends BookingRequestModel>
     Object? bookingId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
-    Object? seatId = freezed,
+    Object? seatIds = freezed,
     Object? checkIn = freezed,
     Object? checkOut = freezed,
     Object? paymentType = freezed,
@@ -111,10 +111,10 @@ class _$BookingRequestModelCopyWithImpl<$Res, $Val extends BookingRequestModel>
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as String?,
-      seatId: freezed == seatId
-          ? _value.seatId
-          : seatId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      seatIds: freezed == seatIds
+          ? _value.seatIds
+          : seatIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       checkIn: freezed == checkIn
           ? _value.checkIn
           : checkIn // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ abstract class _$$BookingRequestModelImplCopyWith<$Res>
       String? bookingId,
       String? outletId,
       String? tableId,
-      String? seatId,
+      List<String>? seatIds,
       String? checkIn,
       String? checkOut,
       String? paymentType,
@@ -195,7 +195,7 @@ class __$$BookingRequestModelImplCopyWithImpl<$Res>
     Object? bookingId = freezed,
     Object? outletId = freezed,
     Object? tableId = freezed,
-    Object? seatId = freezed,
+    Object? seatIds = freezed,
     Object? checkIn = freezed,
     Object? checkOut = freezed,
     Object? paymentType = freezed,
@@ -223,10 +223,10 @@ class __$$BookingRequestModelImplCopyWithImpl<$Res>
           ? _value.tableId
           : tableId // ignore: cast_nullable_to_non_nullable
               as String?,
-      seatId: freezed == seatId
-          ? _value.seatId
-          : seatId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      seatIds: freezed == seatIds
+          ? _value._seatIds
+          : seatIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       checkIn: freezed == checkIn
           ? _value.checkIn
           : checkIn // ignore: cast_nullable_to_non_nullable
@@ -275,7 +275,7 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
       this.bookingId,
       this.outletId,
       this.tableId,
-      this.seatId,
+      final List<String>? seatIds,
       this.checkIn,
       this.checkOut,
       this.paymentType,
@@ -285,7 +285,8 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
       final Map<String, dynamic>? paymentDetails,
       this.orderId,
       this.paymentId})
-      : _guestDetailsList = guestDetailsList,
+      : _seatIds = seatIds,
+        _guestDetailsList = guestDetailsList,
         _paymentDetails = paymentDetails;
 
   factory _$BookingRequestModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -299,8 +300,16 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
   final String? outletId;
   @override
   final String? tableId;
+  final List<String>? _seatIds;
   @override
-  final String? seatId;
+  List<String>? get seatIds {
+    final value = _seatIds;
+    if (value == null) return null;
+    if (_seatIds is EqualUnmodifiableListView) return _seatIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? checkIn;
   @override
@@ -339,7 +348,7 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
 
   @override
   String toString() {
-    return 'BookingRequestModel(excludingBookingId: $excludingBookingId, bookingId: $bookingId, outletId: $outletId, tableId: $tableId, seatId: $seatId, checkIn: $checkIn, checkOut: $checkOut, paymentType: $paymentType, bookingType: $bookingType, guestDetailsList: $guestDetailsList, couponId: $couponId, paymentDetails: $paymentDetails, orderId: $orderId, paymentId: $paymentId)';
+    return 'BookingRequestModel(excludingBookingId: $excludingBookingId, bookingId: $bookingId, outletId: $outletId, tableId: $tableId, seatIds: $seatIds, checkIn: $checkIn, checkOut: $checkOut, paymentType: $paymentType, bookingType: $bookingType, guestDetailsList: $guestDetailsList, couponId: $couponId, paymentDetails: $paymentDetails, orderId: $orderId, paymentId: $paymentId)';
   }
 
   @override
@@ -354,7 +363,7 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
             (identical(other.outletId, outletId) ||
                 other.outletId == outletId) &&
             (identical(other.tableId, tableId) || other.tableId == tableId) &&
-            (identical(other.seatId, seatId) || other.seatId == seatId) &&
+            const DeepCollectionEquality().equals(other._seatIds, _seatIds) &&
             (identical(other.checkIn, checkIn) || other.checkIn == checkIn) &&
             (identical(other.checkOut, checkOut) ||
                 other.checkOut == checkOut) &&
@@ -381,7 +390,7 @@ class _$BookingRequestModelImpl implements _BookingRequestModel {
       bookingId,
       outletId,
       tableId,
-      seatId,
+      const DeepCollectionEquality().hash(_seatIds),
       checkIn,
       checkOut,
       paymentType,
@@ -413,7 +422,7 @@ abstract class _BookingRequestModel implements BookingRequestModel {
       final String? bookingId,
       final String? outletId,
       final String? tableId,
-      final String? seatId,
+      final List<String>? seatIds,
       final String? checkIn,
       final String? checkOut,
       final String? paymentType,
@@ -436,7 +445,7 @@ abstract class _BookingRequestModel implements BookingRequestModel {
   @override
   String? get tableId;
   @override
-  String? get seatId;
+  List<String>? get seatIds;
   @override
   String? get checkIn;
   @override

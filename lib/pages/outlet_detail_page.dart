@@ -50,6 +50,7 @@ class OutletDetailsPage extends StatelessWidget {
         body: Obx(() {
           return outletViewModel.fetchOutletDetailsObserver.value.when(
             loading: (_) => const OutletDetailShimmer(),
+            errorData: (e) => const SizedBox.shrink(),
             error: (error) => Center(
               child: Text(error),
             ),
@@ -291,6 +292,7 @@ class OutletDetailsPage extends StatelessWidget {
     return Obx(() {
       return bookingViewModel.fetchTablesObserver.value.when(
         init: () => const SizedBox.shrink(),
+        errorData: (e) => const SizedBox.shrink(),
         loading: (msg) => Center(
           child: Column(
             children: [

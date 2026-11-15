@@ -27,7 +27,7 @@ class ResponsiveSliverGrid extends StatelessWidget {
           ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 4, // Restored to 6 items
+          itemCount: 6, // Restored to 6 items
           itemBuilder: (context, index) {
             return _buildMenuCard(index);
           },
@@ -76,16 +76,21 @@ class ResponsiveSliverGrid extends StatelessWidget {
       },
       {
         'imagePath': 'assets/images/MeetPeople.png',
-        'page': const MeetPeoplePage(),
+        'page': const MeetPeoplePage(designations: [],),
       },
       {
         'imagePath': 'assets/images/Reservations.png',
         'page': const ReservationPage(showBackArrow: true),
       },
       {
-        'imagePath': 'assets/images/VIPTEMPLETE.jpeg',
-        'page': const OutletPage(type: 'all'),
-      }
+        'imagePath': 'assets/images/vip2.png',
+        'page': const OutletPage(type: 'vip'),
+      },
+      {
+        'imagePath': 'assets/images/PARTY99.PNG',
+        'page': const OutletPage(type: 'party99'),
+      },
+
     ];
 
     final item = menuItems[index];

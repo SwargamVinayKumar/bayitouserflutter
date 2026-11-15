@@ -33,7 +33,7 @@ class BookingViewModel extends GetxController {
   final fetchBookingDetailsObserver = ApiResult<BookingDetailsResponse>.init().obs;
 
   final selectedTable = Rxn<TableModel>();
-  final selectedSeat = Rxn<SeatModel>();
+  final selectedSeats = <SeatModel>[].obs;
   final selectedDate = DateTime.now().obs;
   final selectedTimeIndex = (0).obs;
   final durationHours = 1.obs;
@@ -47,11 +47,16 @@ class BookingViewModel extends GetxController {
 
   void selectTable(TableModel table) {
     selectedTable.value = table;
-    selectedSeat.value = null;
+    selectedSeats.clear();
   }
 
   void selectSeat(SeatModel? seat) {
-    selectedSeat.value = seat;
+    if (seat == null || seat.available == false) return;
+    if (selectedSeats.any((s) => s.id == seat.id)) {
+      selectedSeats.removeWhere((s) => s.id == seat.id);
+    } else {
+      selectedSeats.add(seat);
+    }
   }
 
   Future<void> getTables(String outletId) async {
@@ -75,8 +80,11 @@ class BookingViewModel extends GetxController {
   }
 
   Future<void> checkAvailability(String outletId,BookingModel? bookingModel) async {
-    if (selectedTable.value == null || selectedTimeIndex.value == -1) {
-      Get.showCustomSnackBar(title: "Error", message: "Please select table, seat and time slot");
+    print(selectedTable.value);
+    print(selectedSeats.toList());
+    print(selectedTimeIndex.value);
+    if (selectedTable.value == null ||  selectedTimeIndex.value == -1) {
+      Get.showCustomSnackBar(title: "Error", message: "Please select table, seat(s) and time slot");
       return;
     }
 
@@ -86,17 +94,19 @@ class BookingViewModel extends GetxController {
       final checkIn = _getDateTimeFromSlot(selectedDate.value, timeSlots[selectedTimeIndex.value]);
       final checkOut = checkIn.add(Duration(hours: durationHours.value));
 
+      final seatIdsList = selectedSeats.map((s) => s.id).whereType<String>().toList();
+
       final request = bookingModel == null ? BookingRequestModel(
         outletId: outletId,
         tableId: selectedTable.value?.id,
-        seatId: selectedSeat.value?.id,
+        seatIds: seatIdsList.isNotEmpty ? seatIdsList : null,
         checkIn: checkIn.toIso8601String(),
         checkOut: checkOut.toIso8601String(),
       ) : BookingRequestModel(
         outletId: outletId,
         excludingBookingId: bookingModel.id,
         tableId: selectedTable.value?.id,
-        seatId: selectedSeat.value?.id,
+        seatIds: seatIdsList.isNotEmpty ? seatIdsList : null,
         checkIn: bookingModel.checkIn,
         checkOut: bookingModel.checkOut,
         );
@@ -109,7 +119,8 @@ class BookingViewModel extends GetxController {
           await Future.delayed(const Duration(milliseconds: 500));
           checkAvailabilityObserver.value = ApiResult.success(data);
         } else {
-          checkAvailabilityObserver.value = ApiResult.error(data.message ?? "Not available");
+          selectedSeats.clear();
+          checkAvailabilityObserver.value = ApiResult.errorData(data);
           Get.showCustomSnackBar(title: "Unavailable", message: data.message ?? "Seat is not available for selected time");
         }
       } else {
@@ -135,11 +146,13 @@ class BookingViewModel extends GetxController {
       final checkIn = _getDateTimeFromSlot(selectedDate.value, timeSlots[selectedTimeIndex.value]);
       final checkOut = checkIn.add(Duration(hours: durationHours.value));
 
+      final seatIdsList = selectedSeats.map((s) => s.id).whereType<String>().toList();
+
       final request = BookingRequestModel(
         bookingId:bookingId,
         outletId: outletId,
         tableId: selectedTable.value!.id,
-        seatId: selectedSeat.value!.id,
+        seatIds: seatIdsList.isNotEmpty ? seatIdsList : null,
         checkIn: checkIn.toIso8601String(),
         checkOut: checkOut.toIso8601String(),
         paymentType: "razorpay",

@@ -47,6 +47,7 @@ abstract class TableModel with _$TableModel {
     List<CategoryRating>? categoryRating,
     RatingAndReviewModel? topRated,
     bool? vip,
+    bool? party99,
     List<AmenitiesModel>? amenities,
   }) = _TableModel;
 

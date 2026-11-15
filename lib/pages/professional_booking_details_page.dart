@@ -59,6 +59,7 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
         child: Obx(() {
           return bookingViewModel.fetchBookingDetailsObserver.value.when(
             init: () => const SizedBox.shrink(),
+            errorData: (e) => const SizedBox.shrink(),
             loading: (msg) => const BookingDetailsShimmer(),
             success: (data) {
               final booking = (data as BookingDetailsResponse).data;
@@ -109,13 +110,21 @@ class _ProfessionalBookingDetailsPageState extends State<ProfessionalBookingDeta
                       },
                     ),
                     const SizedBox(height: 16),
-                    _buildSectionHeader("Reserved Seat", Icons.event_seat_rounded),
+                    _buildSectionHeader("Reserved Seats", Icons.event_seat_rounded),
                     const SizedBox(height: 16),
-                    SeatItemWidget(
-                      seat: booking.tableId?.seats?.firstWhere((seatData) => seatData.id == (booking.seatId ?? "")),
-                      isBooked: false,
-                      isSelected: true, onTap: () {  },
-                    ),
+                    ...((booking.seatIds ?? []).map((seatId) {
+                      final seat = booking.tableId?.seats?.firstWhereOrNull((seatData) => seatData.id == seatId);
+                      if (seat == null) return const SizedBox.shrink();
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: SeatItemWidget(
+                          seat: seat,
+                          isBooked: false,
+                          isSelected: true,
+                          onTap: () {},
+                        ),
+                      );
+                    }).toList() ?? []),
                     const SizedBox(height: 24),
                     _buildSectionTitle("Payment Information"),
                     const SizedBox(height: 16),

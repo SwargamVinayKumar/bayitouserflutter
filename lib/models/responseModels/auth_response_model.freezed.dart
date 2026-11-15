@@ -862,7 +862,9 @@ mixin _$ProfileData {
   String? get password => throw _privateConstructorUsedError;
   ChargesModel? get charges => throw _privateConstructorUsedError;
   LocationModel? get location => throw _privateConstructorUsedError;
-  List<DesignationModel>? get tables => throw _privateConstructorUsedError;
+  List<dynamic>? get designations => throw _privateConstructorUsedError;
+  dynamic get notifyMe => throw _privateConstructorUsedError;
+  String? get notifyMeText => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
   dynamic get reservationCount => throw _privateConstructorUsedError;
@@ -895,7 +897,9 @@ abstract class $ProfileDataCopyWith<$Res> {
       String? password,
       ChargesModel? charges,
       LocationModel? location,
-      List<DesignationModel>? tables,
+      List<dynamic>? designations,
+      dynamic notifyMe,
+      String? notifyMeText,
       String? createdAt,
       String? updatedAt,
       dynamic reservationCount,
@@ -932,7 +936,9 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
     Object? password = freezed,
     Object? charges = freezed,
     Object? location = freezed,
-    Object? tables = freezed,
+    Object? designations = freezed,
+    Object? notifyMe = freezed,
+    Object? notifyMeText = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? reservationCount = freezed,
@@ -992,10 +998,18 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as LocationModel?,
-      tables: freezed == tables
-          ? _value.tables
-          : tables // ignore: cast_nullable_to_non_nullable
-              as List<DesignationModel>?,
+      designations: freezed == designations
+          ? _value.designations
+          : designations // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      notifyMe: freezed == notifyMe
+          ? _value.notifyMe
+          : notifyMe // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      notifyMeText: freezed == notifyMeText
+          ? _value.notifyMeText
+          : notifyMeText // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1066,7 +1080,9 @@ abstract class _$$ProfileDataImplCopyWith<$Res>
       String? password,
       ChargesModel? charges,
       LocationModel? location,
-      List<DesignationModel>? tables,
+      List<dynamic>? designations,
+      dynamic notifyMe,
+      String? notifyMeText,
       String? createdAt,
       String? updatedAt,
       dynamic reservationCount,
@@ -1103,7 +1119,9 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
     Object? password = freezed,
     Object? charges = freezed,
     Object? location = freezed,
-    Object? tables = freezed,
+    Object? designations = freezed,
+    Object? notifyMe = freezed,
+    Object? notifyMeText = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? reservationCount = freezed,
@@ -1163,10 +1181,18 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as LocationModel?,
-      tables: freezed == tables
-          ? _value._tables
-          : tables // ignore: cast_nullable_to_non_nullable
-              as List<DesignationModel>?,
+      designations: freezed == designations
+          ? _value._designations
+          : designations // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      notifyMe: freezed == notifyMe
+          ? _value.notifyMe
+          : notifyMe // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      notifyMeText: freezed == notifyMeText
+          ? _value.notifyMeText
+          : notifyMeText // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1208,13 +1234,15 @@ class _$ProfileDataImpl implements _ProfileData {
       this.password,
       this.charges,
       this.location,
-      final List<DesignationModel>? tables,
+      final List<dynamic>? designations,
+      this.notifyMe,
+      this.notifyMeText,
       this.createdAt,
       this.updatedAt,
       this.reservationCount,
       this.connectionsCount,
       this.favouritesCount})
-      : _tables = tables;
+      : _designations = designations;
 
   factory _$ProfileDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileDataImplFromJson(json);
@@ -1246,16 +1274,20 @@ class _$ProfileDataImpl implements _ProfileData {
   final ChargesModel? charges;
   @override
   final LocationModel? location;
-  final List<DesignationModel>? _tables;
+  final List<dynamic>? _designations;
   @override
-  List<DesignationModel>? get tables {
-    final value = _tables;
+  List<dynamic>? get designations {
+    final value = _designations;
     if (value == null) return null;
-    if (_tables is EqualUnmodifiableListView) return _tables;
+    if (_designations is EqualUnmodifiableListView) return _designations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
+  @override
+  final dynamic notifyMe;
+  @override
+  final String? notifyMeText;
   @override
   final String? createdAt;
   @override
@@ -1269,7 +1301,7 @@ class _$ProfileDataImpl implements _ProfileData {
 
   @override
   String toString() {
-    return 'ProfileData(id: $id, profilePic: $profilePic, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, dob: $dob, gender: $gender, password: $password, charges: $charges, location: $location, tables: $tables, createdAt: $createdAt, updatedAt: $updatedAt, reservationCount: $reservationCount, connectionsCount: $connectionsCount, favouritesCount: $favouritesCount)';
+    return 'ProfileData(id: $id, profilePic: $profilePic, outletType: $outletType, approvalStatus: $approvalStatus, reason: $reason, mobile: $mobile, name: $name, email: $email, dob: $dob, gender: $gender, password: $password, charges: $charges, location: $location, designations: $designations, notifyMe: $notifyMe, notifyMeText: $notifyMeText, createdAt: $createdAt, updatedAt: $updatedAt, reservationCount: $reservationCount, connectionsCount: $connectionsCount, favouritesCount: $favouritesCount)';
   }
 
   @override
@@ -1295,7 +1327,11 @@ class _$ProfileDataImpl implements _ProfileData {
             (identical(other.charges, charges) || other.charges == charges) &&
             (identical(other.location, location) ||
                 other.location == location) &&
-            const DeepCollectionEquality().equals(other._tables, _tables) &&
+            const DeepCollectionEquality()
+                .equals(other._designations, _designations) &&
+            const DeepCollectionEquality().equals(other.notifyMe, notifyMe) &&
+            (identical(other.notifyMeText, notifyMeText) ||
+                other.notifyMeText == notifyMeText) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -1325,7 +1361,9 @@ class _$ProfileDataImpl implements _ProfileData {
         password,
         charges,
         location,
-        const DeepCollectionEquality().hash(_tables),
+        const DeepCollectionEquality().hash(_designations),
+        const DeepCollectionEquality().hash(notifyMe),
+        notifyMeText,
         createdAt,
         updatedAt,
         const DeepCollectionEquality().hash(reservationCount),
@@ -1362,7 +1400,9 @@ abstract class _ProfileData implements ProfileData {
       final String? password,
       final ChargesModel? charges,
       final LocationModel? location,
-      final List<DesignationModel>? tables,
+      final List<dynamic>? designations,
+      final dynamic notifyMe,
+      final String? notifyMeText,
       final String? createdAt,
       final String? updatedAt,
       final dynamic reservationCount,
@@ -1400,7 +1440,11 @@ abstract class _ProfileData implements ProfileData {
   @override
   LocationModel? get location;
   @override
-  List<DesignationModel>? get tables;
+  List<dynamic>? get designations;
+  @override
+  dynamic get notifyMe;
+  @override
+  String? get notifyMeText;
   @override
   String? get createdAt;
   @override
@@ -1414,6 +1458,200 @@ abstract class _ProfileData implements ProfileData {
   @override
   @JsonKey(ignore: true)
   _$$ProfileDataImplCopyWith<_$ProfileDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+NotifyMeModel _$NotifyMeModelFromJson(Map<String, dynamic> json) {
+  return _NotifyMeModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$NotifyMeModel {
+  @JsonKey(name: '_id')
+  String? get id => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  List<DesignationModel>? get designations =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $NotifyMeModelCopyWith<NotifyMeModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NotifyMeModelCopyWith<$Res> {
+  factory $NotifyMeModelCopyWith(
+          NotifyMeModel value, $Res Function(NotifyMeModel) then) =
+      _$NotifyMeModelCopyWithImpl<$Res, NotifyMeModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String? userId,
+      List<DesignationModel>? designations});
+}
+
+/// @nodoc
+class _$NotifyMeModelCopyWithImpl<$Res, $Val extends NotifyMeModel>
+    implements $NotifyMeModelCopyWith<$Res> {
+  _$NotifyMeModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? userId = freezed,
+    Object? designations = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      designations: freezed == designations
+          ? _value.designations
+          : designations // ignore: cast_nullable_to_non_nullable
+              as List<DesignationModel>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NotifyMeModelImplCopyWith<$Res>
+    implements $NotifyMeModelCopyWith<$Res> {
+  factory _$$NotifyMeModelImplCopyWith(
+          _$NotifyMeModelImpl value, $Res Function(_$NotifyMeModelImpl) then) =
+      __$$NotifyMeModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String? userId,
+      List<DesignationModel>? designations});
+}
+
+/// @nodoc
+class __$$NotifyMeModelImplCopyWithImpl<$Res>
+    extends _$NotifyMeModelCopyWithImpl<$Res, _$NotifyMeModelImpl>
+    implements _$$NotifyMeModelImplCopyWith<$Res> {
+  __$$NotifyMeModelImplCopyWithImpl(
+      _$NotifyMeModelImpl _value, $Res Function(_$NotifyMeModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? userId = freezed,
+    Object? designations = freezed,
+  }) {
+    return _then(_$NotifyMeModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      designations: freezed == designations
+          ? _value._designations
+          : designations // ignore: cast_nullable_to_non_nullable
+              as List<DesignationModel>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$NotifyMeModelImpl implements _NotifyMeModel {
+  const _$NotifyMeModelImpl(
+      {@JsonKey(name: '_id') this.id,
+      this.userId,
+      final List<DesignationModel>? designations})
+      : _designations = designations;
+
+  factory _$NotifyMeModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotifyMeModelImplFromJson(json);
+
+  @override
+  @JsonKey(name: '_id')
+  final String? id;
+  @override
+  final String? userId;
+  final List<DesignationModel>? _designations;
+  @override
+  List<DesignationModel>? get designations {
+    final value = _designations;
+    if (value == null) return null;
+    if (_designations is EqualUnmodifiableListView) return _designations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'NotifyMeModel(id: $id, userId: $userId, designations: $designations)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NotifyMeModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            const DeepCollectionEquality()
+                .equals(other._designations, _designations));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, userId,
+      const DeepCollectionEquality().hash(_designations));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NotifyMeModelImplCopyWith<_$NotifyMeModelImpl> get copyWith =>
+      __$$NotifyMeModelImplCopyWithImpl<_$NotifyMeModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NotifyMeModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _NotifyMeModel implements NotifyMeModel {
+  const factory _NotifyMeModel(
+      {@JsonKey(name: '_id') final String? id,
+      final String? userId,
+      final List<DesignationModel>? designations}) = _$NotifyMeModelImpl;
+
+  factory _NotifyMeModel.fromJson(Map<String, dynamic> json) =
+      _$NotifyMeModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: '_id')
+  String? get id;
+  @override
+  String? get userId;
+  @override
+  List<DesignationModel>? get designations;
+  @override
+  @JsonKey(ignore: true)
+  _$$NotifyMeModelImplCopyWith<_$NotifyMeModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2295,212 +2533,6 @@ abstract class _ValidateDataModel implements ValidateDataModel {
   @override
   @JsonKey(ignore: true)
   _$$ValidateDataModelImplCopyWith<_$ValidateDataModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-DesignationModel _$DesignationModelFromJson(Map<String, dynamic> json) {
-  return _DesignationModel.fromJson(json);
-}
-
-/// @nodoc
-mixin _$DesignationModel {
-  @JsonKey(name: '_id')
-  String? get id => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $DesignationModelCopyWith<DesignationModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DesignationModelCopyWith<$Res> {
-  factory $DesignationModelCopyWith(
-          DesignationModel value, $Res Function(DesignationModel) then) =
-      _$DesignationModelCopyWithImpl<$Res, DesignationModel>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: '_id') String? id,
-      String? imageUrl,
-      String? name,
-      String? description});
-}
-
-/// @nodoc
-class _$DesignationModelCopyWithImpl<$Res, $Val extends DesignationModel>
-    implements $DesignationModelCopyWith<$Res> {
-  _$DesignationModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? imageUrl = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$DesignationModelImplCopyWith<$Res>
-    implements $DesignationModelCopyWith<$Res> {
-  factory _$$DesignationModelImplCopyWith(_$DesignationModelImpl value,
-          $Res Function(_$DesignationModelImpl) then) =
-      __$$DesignationModelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: '_id') String? id,
-      String? imageUrl,
-      String? name,
-      String? description});
-}
-
-/// @nodoc
-class __$$DesignationModelImplCopyWithImpl<$Res>
-    extends _$DesignationModelCopyWithImpl<$Res, _$DesignationModelImpl>
-    implements _$$DesignationModelImplCopyWith<$Res> {
-  __$$DesignationModelImplCopyWithImpl(_$DesignationModelImpl _value,
-      $Res Function(_$DesignationModelImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? imageUrl = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-  }) {
-    return _then(_$DesignationModelImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$DesignationModelImpl implements _DesignationModel {
-  const _$DesignationModelImpl(
-      {@JsonKey(name: '_id') this.id,
-      this.imageUrl,
-      this.name,
-      this.description});
-
-  factory _$DesignationModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DesignationModelImplFromJson(json);
-
-  @override
-  @JsonKey(name: '_id')
-  final String? id;
-  @override
-  final String? imageUrl;
-  @override
-  final String? name;
-  @override
-  final String? description;
-
-  @override
-  String toString() {
-    return 'DesignationModel(id: $id, imageUrl: $imageUrl, name: $name, description: $description)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DesignationModelImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, imageUrl, name, description);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DesignationModelImplCopyWith<_$DesignationModelImpl> get copyWith =>
-      __$$DesignationModelImplCopyWithImpl<_$DesignationModelImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$DesignationModelImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _DesignationModel implements DesignationModel {
-  const factory _DesignationModel(
-      {@JsonKey(name: '_id') final String? id,
-      final String? imageUrl,
-      final String? name,
-      final String? description}) = _$DesignationModelImpl;
-
-  factory _DesignationModel.fromJson(Map<String, dynamic> json) =
-      _$DesignationModelImpl.fromJson;
-
-  @override
-  @JsonKey(name: '_id')
-  String? get id;
-  @override
-  String? get imageUrl;
-  @override
-  String? get name;
-  @override
-  String? get description;
-  @override
-  @JsonKey(ignore: true)
-  _$$DesignationModelImplCopyWith<_$DesignationModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

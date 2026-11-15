@@ -4,6 +4,7 @@ import 'package:bayitouser/models/responseModels/user_response_model.dart';
 import 'package:bayitouser/pages/professional_book_table_page.dart';
 import 'package:bayitouser/shimmer/meet_people_shimmer.dart';
 import 'package:bayitouser/utils/statefullwrapper.dart';
+import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +19,8 @@ import '../utils/custom_color.dart';
 import '../view_models/user_view_model.dart';
 
 class MeetPeoplePage extends StatefulWidget {
-  const MeetPeoplePage({super.key});
+  final List<DesignationModel>? designations;
+  const MeetPeoplePage({super.key, required this.designations});
 
   @override
   State<MeetPeoplePage> createState() => _MeetPeoplePageState();
@@ -29,18 +31,24 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
   final ScrollController _scrollController = ScrollController();
   final ValueNotifier<int> selectedIndex = ValueNotifier(0);
   final UserViewModel userViewModel = Get.put(UserViewModel());
+  final AuthViewModel authViewModel = Get.put(AuthViewModel());
 
-  final List<String> tabs = [
+  RxList<String> tabs = [
     "All",
-    "Professional",
-    "Business",
-    "Study",
-    "Family",
-  ];
+  ].obs;
 
   @override
   void initState() {
     super.initState();
+    if(widget.designations?.isEmpty == true){
+      tabs.clear();
+      tabs.add("All");
+      tabs.addAll(authViewModel.designationsList.map((designation) => designation.name.toString()));
+    }
+    else{
+      tabs.clear();
+      tabs.assignAll(widget.designations?.map((designation) => designation.name.toString()) ?? []);
+    }
     _scrollController.addListener(_onScroll);
   }
 
@@ -129,6 +137,7 @@ class _MeetPeoplePageState extends State<MeetPeoplePage> {
 
                     return state.when(
                       init: () => const SizedBox(),
+                      errorData: (e) => const SizedBox.shrink(),
                       loading: (_) => paginationModel.page == 1 
                           ? const MeetPeopleShimmer() 
                           : _buildList(paginationModel),

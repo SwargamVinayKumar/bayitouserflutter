@@ -94,6 +94,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
                       return state.when(
                         init: () => const SizedBox(),
+                        errorData: (e) => const SizedBox.shrink(),
                         loading: (_) => paginationModel.page == 1
                             ? const OutletListShimmer()
                             : _buildList(paginationModel),

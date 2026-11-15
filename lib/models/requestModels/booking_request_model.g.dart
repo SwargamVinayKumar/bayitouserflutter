@@ -13,7 +13,8 @@ _$BookingRequestModelImpl _$$BookingRequestModelImplFromJson(
       bookingId: json['bookingId'] as String?,
       outletId: json['outletId'] as String?,
       tableId: json['tableId'] as String?,
-      seatId: json['seatId'] as String?,
+      seatIds:
+          (json['seatIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
       checkIn: json['checkIn'] as String?,
       checkOut: json['checkOut'] as String?,
       paymentType: json['paymentType'] as String?,
@@ -34,7 +35,7 @@ Map<String, dynamic> _$$BookingRequestModelImplToJson(
       'bookingId': instance.bookingId,
       'outletId': instance.outletId,
       'tableId': instance.tableId,
-      'seatId': instance.seatId,
+      'seatIds': instance.seatIds,
       'checkIn': instance.checkIn,
       'checkOut': instance.checkOut,
       'paymentType': instance.paymentType,

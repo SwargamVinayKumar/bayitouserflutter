@@ -103,9 +103,9 @@ _$ProfileDataImpl _$$ProfileDataImplFromJson(Map<String, dynamic> json) =>
       location: json['location'] == null
           ? null
           : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
-      tables: (json['tables'] as List<dynamic>?)
-          ?.map((e) => DesignationModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      designations: json['designations'] as List<dynamic>?,
+      notifyMe: json['notifyMe'],
+      notifyMeText: json['notifyMeText'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
       reservationCount: json['reservationCount'],
@@ -128,12 +128,30 @@ Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
       'password': instance.password,
       'charges': instance.charges,
       'location': instance.location,
-      'tables': instance.tables,
+      'designations': instance.designations,
+      'notifyMe': instance.notifyMe,
+      'notifyMeText': instance.notifyMeText,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
       'reservationCount': instance.reservationCount,
       'connectionsCount': instance.connectionsCount,
       'favouritesCount': instance.favouritesCount,
+    };
+
+_$NotifyMeModelImpl _$$NotifyMeModelImplFromJson(Map<String, dynamic> json) =>
+    _$NotifyMeModelImpl(
+      id: json['_id'] as String?,
+      userId: json['userId'] as String?,
+      designations: (json['designations'] as List<dynamic>?)
+          ?.map((e) => DesignationModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$NotifyMeModelImplToJson(_$NotifyMeModelImpl instance) =>
+    <String, dynamic>{
+      '_id': instance.id,
+      'userId': instance.userId,
+      'designations': instance.designations,
     };
 
 _$LocationModelImpl _$$LocationModelImplFromJson(Map<String, dynamic> json) =>
@@ -211,24 +229,6 @@ Map<String, dynamic> _$$ValidateDataModelImplToJson(
       'userData': instance.userData,
       'banners': instance.banners,
       'outletTypes': instance.outletTypes,
-    };
-
-_$DesignationModelImpl _$$DesignationModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$DesignationModelImpl(
-      id: json['_id'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      name: json['name'] as String?,
-      description: json['description'] as String?,
-    );
-
-Map<String, dynamic> _$$DesignationModelImplToJson(
-        _$DesignationModelImpl instance) =>
-    <String, dynamic>{
-      '_id': instance.id,
-      'imageUrl': instance.imageUrl,
-      'name': instance.name,
-      'description': instance.description,
     };
 
 _$DesignationResponseModelImpl _$$DesignationResponseModelImplFromJson(

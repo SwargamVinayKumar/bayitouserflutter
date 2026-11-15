@@ -14,6 +14,8 @@ class EndPoints {
   static const fetchDesignations = "fetchDesignations";
   static const registerUser = "registerUser";
 
+  static const notifyMe = "notifyMe";
+
   static const getTables = "getTables";
   static const getTableById = "getTableById";
 

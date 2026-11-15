@@ -1,3 +1,4 @@
+import 'package:bayitouser/api/api_result.dart';
 import 'package:bayitouser/pages/outlets_map_view.dart';
 import 'package:bayitouser/shimmer/single_item_shimmer.dart';
 import 'package:bayitouser/shimmer/outlet_list_shimmer.dart';
@@ -148,6 +149,7 @@ class _OutletPageState extends State<OutletPage> {
 
                     return paginationModel.data.value.when(
                       init: () => const SizedBox(),
+                        errorData: (e) => const SizedBox(),
                       loading: (_) => paginationModel.page == 1 
                           ? const OutletListShimmer() 
                           : _buildOutletList(paginationModel),
