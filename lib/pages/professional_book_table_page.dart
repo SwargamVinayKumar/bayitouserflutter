@@ -76,14 +76,14 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
                 final booking = (data as BookingDetailsResponse).data;
                 bookingViewModel.selectedTable.value = booking?.tableId;
                 final seatIdsSet = (booking?.seatIds ?? []).toSet();
-                bookingViewModel.selectedSeats.clear();
+                // bookingViewModel.selectedSeats.clear();
                 // if (booking?.tableId?.seats != null) {
                 //   for (final seat in booking!.tableId!.seats!) {
                 //     if (seatIdsSet.contains(seat.id)) {
                 //       bookingViewModel.selectedSeats.add(seat);
                 //     }
                 //   }
-                // }
+                //}
                 if (booking == null) return const Center(child: Text("No details found"));
                 return Stack(
                   children: [
@@ -176,6 +176,8 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
                 isSelected: bookingViewModel.selectedSeats.any((s) => s.id == seat.id),
                 isBooked: (seat.available == false) || existingSeatIds.contains(seat.id),
                 onTap: () {
+                  print("selected ${bookingViewModel.selectedSeats.length}");
+                  print(seat);
                   bookingViewModel.selectSeat(seat);
                   bookingViewModel.checkAvailability(outlet?.id ?? "",booking);
                 } ,
@@ -214,7 +216,7 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
               ),
             ),
             success: (data) {
-              if (data.data?.available == true) {
+              if (data.data?.available == true && data.data?.bookingDetails != null) {
                 return Column(
                   children: [
                     buildPriceSummary(data.data!.bookingDetails!),
@@ -246,7 +248,7 @@ class _ProfessionalBookTablePageState extends State<ProfessionalBookTablePage> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              data.data?.message ?? "Selected combination is not available",
+                              "Selected combination is not available",
                               style: TextStyle(
                                 color: Colors.orange.shade700,
                                 fontSize: 14,

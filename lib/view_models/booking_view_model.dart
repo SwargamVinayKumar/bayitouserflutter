@@ -156,7 +156,7 @@ class BookingViewModel extends GetxController {
         checkIn: checkIn.toIso8601String(),
         checkOut: checkOut.toIso8601String(),
         paymentType: "razorpay",
-        bookingType: "classic",
+        bookingType: bookingId != null ? "professional" : "classic",
       );
 
       final response = await apiProvider.post(bookingId != null ? EndPoints.confirmProfessionalBooking  : EndPoints.confirmBooking, request.toJson());

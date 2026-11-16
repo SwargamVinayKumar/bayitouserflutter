@@ -182,7 +182,7 @@ class HomePage extends StatelessWidget {
                                     children: [
                                       const Text("Notify Me Allowed",style: TextStyle(fontSize: 12,color: CustomColors.secondary,fontWeight: FontWeight.w900),),
                                       SizedBox(height: 5,),
-                                      const Text("You will be notified once the below users booked a table..",style: TextStyle(fontSize: 9,color: CustomColors.secondary,fontWeight: FontWeight.w500),),
+                                      const Text("You will be notified once the selected users booked a table..",style: TextStyle(fontSize: 9,color: CustomColors.secondary,fontWeight: FontWeight.w500),),
                                       SizedBox(height: 5,),
                                       // Text((notifyMeModelData.designations?.map((designation) => designation.name) ?? []).join(", "),style: TextStyle(fontSize: 9,fontWeight: FontWeight.w700,color: CustomColors.orange),),
                                       SizedBox(height: 5,),

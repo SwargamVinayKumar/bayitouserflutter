@@ -393,26 +393,34 @@ class _BookTablePageState extends State<BookTablePage>
   }
 
   Widget _buildDurationPicker() {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Row(
-        children: [1, 2, 3, 4, 5].map((hours) {
-          return Expanded(
-            child: Obx(() {
-              bool isSelected = bookingViewModel.durationHours.value == hours;
-              return GestureDetector(
+    return Obx(() {
+      int maxHours = 24 - bookingViewModel.selectedTimeIndex.value;
+      int allowedMax = maxHours < 1 ? 1 : (maxHours > 5 ? 5 : maxHours);
+
+      if (bookingViewModel.durationHours.value > allowedMax) {
+        bookingViewModel.durationHours.value = allowedMax;
+      }
+
+      List<int> durations = List.generate(allowedMax, (i) => i + 1);
+
+      return Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        child: Row(
+          children: durations.map((hours) {
+            return Expanded(
+              child: GestureDetector(
                 onTap: () => bookingViewModel.durationHours.value = hours,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   curve: Curves.easeInOut,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
-                    gradient: isSelected
+                    gradient: bookingViewModel.durationHours.value == hours
                         ? LinearGradient(
                       colors: [
                         CustomColors.secondary,
@@ -420,9 +428,9 @@ class _BookTablePageState extends State<BookTablePage>
                       ],
                     )
                         : null,
-                    color: isSelected ? null : Colors.transparent,
+                    color: bookingViewModel.durationHours.value == hours ? null : Colors.transparent,
                     borderRadius: BorderRadius.circular(13),
-                    boxShadow: isSelected
+                    boxShadow: bookingViewModel.durationHours.value == hours
                         ? [
                       BoxShadow(
                         color: CustomColors.secondary.withOpacity(0.2),
@@ -438,17 +446,17 @@ class _BookTablePageState extends State<BookTablePage>
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                       color:
-                      isSelected ? Colors.white : CustomColors.secondary,
+                      bookingViewModel.durationHours.value == hours ? Colors.white : CustomColors.secondary,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
-              );
-            }),
-          );
-        }).toList(),
-      ),
-    );
+              ),
+            );
+          }).toList(),
+        ),
+      );
+    });
   }
 
   Widget _buildTableSelection() {

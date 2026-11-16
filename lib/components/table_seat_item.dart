@@ -490,6 +490,10 @@ class SeatItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print(seat);
+    print(isSelected);
+    print(isBooked);
     Color getBgColor() {
       if (isBooked) return Colors.grey.withOpacity(0.2);
       if (isSelected) return CustomColors.secondary;
@@ -591,7 +595,7 @@ Widget buildSectionHeader(String title, IconData icon) {
 }
 
 
-Widget buildPriceSummary(AvailabilityBookingDetails details) {
+Widget buildPriceSummary(AvailabilityBookingDetails? details) {
   return Container(
     padding: const EdgeInsets.all(20),
     decoration: BoxDecoration(
@@ -639,25 +643,25 @@ Widget buildPriceSummary(AvailabilityBookingDetails details) {
         const SizedBox(height: 16),
         buildPriceRow(
           "Base Charge",
-          "₹${details.perHourCharge}/hr",
+          "₹${details?.perHourCharge}/hr",
           Icons.currency_rupee_rounded,
         ),
         const SizedBox(height: 10),
         buildPriceRow(
           "Professional Charges",
-          "₹${details.professionalCharge}/hr",
+          "₹${details?.professionalCharge}/hr",
           Icons.currency_rupee_rounded,
         ),
         const SizedBox(height: 10),
         buildPriceRow(
           "Duration",
-          "${details.duration} Hours",
+          "${details?.duration} Hours",
           Icons.timer_rounded,
         ),
         const Divider(height: 24, color: CustomColors.secondary),
         buildPriceRow(
           "Total Amount",
-          "₹${details.totalAmount}",
+          "₹${details?.totalAmount}",
           Icons.payments_rounded,
           isTotal: true,
         ),
@@ -669,6 +673,7 @@ Widget buildPriceSummary(AvailabilityBookingDetails details) {
 
 Widget buildUserDetails(BookingModel? booking){
   return Container(
+    margin: EdgeInsets.only(top: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: CustomColors.secondary.withOpacity(0.05),

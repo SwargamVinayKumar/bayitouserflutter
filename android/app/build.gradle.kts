@@ -35,7 +35,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("/Users/admin/Downloads/bayitouserflutter/android/my-release-key.jks")
+            storeFile = file("/Users/admin/Bayito/bayitouserflutter/my-release-key.jks")
             storePassword = "Bayito@123"
             keyAlias = "bayitoBayito@123"
             keyPassword = "Bayito@123"
