@@ -12,6 +12,7 @@ import 'package:bayitouser/utils/statefullwrapper.dart';
 import 'package:bayitouser/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../api/api_result.dart';
 import '../components/helper_bottom_sheet.dart';
 import '../components/section_title_item.dart';
 import '../models/requestModels/page_request_model.dart';
@@ -21,6 +22,7 @@ import '../models/responseModels/user_response_model.dart';
 import '../utils/custom_color.dart';
 import 'package:get/get.dart';
 
+import '../utils/firebase_notification.dart';
 import '../utils/snack_bar_extension.dart';
 import '../view_models/outlet_view_model.dart';
 
@@ -66,12 +68,32 @@ class HomePage extends StatelessWidget {
               btn2Txt: "Save",
               authViewModel: authViewModel,
               btn2Click: () async {
-                if(authViewModel.selectedDesignations.isEmpty){
-                  Get.showCustomSnackBar(title: 'Error', message:"Select atleast one designation to be notified");
+                if (authViewModel.selectedDesignations.isEmpty) {
+                  Get.showCustomSnackBar(title: 'Error', message: "Select atleast one designation to be notified");
                   return;
                 }
-                await authViewModel.notifyMe(authViewModel.selectedDesignations);
-                Get.close(1);
+                try {
+                  authViewModel.notifyMeObserver.value = ApiResult.loading("loading");
+
+                  for (final oldDesignation in selectedDesignations) {
+                    final id = oldDesignation.id;
+                    if (id != null && id.isNotEmpty) {
+                      await FireBaseNotification.unsubscribeFromUserTopic(id);
+                    }
+                  }
+
+                  for (final newDesignationId in authViewModel.selectedDesignations) {
+                    if (newDesignationId.isNotEmpty) {
+                      await FireBaseNotification.subscribeToUserTopic(newDesignationId);
+                    }
+                  }
+
+                  await authViewModel.notifyMe(authViewModel.selectedDesignations);
+                  Get.back();
+                } catch (e) {
+                  Get.showCustomSnackBar(title: 'Error', message: e.toString());
+                  authViewModel.notifyMeObserver.value = ApiResult.error(e.toString());
+                }
               });
         },
       );
@@ -180,15 +202,15 @@ class HomePage extends StatelessWidget {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const Text("Notify Me Allowed",style: TextStyle(fontSize: 12,color: CustomColors.secondary,fontWeight: FontWeight.w900),),
-                                      SizedBox(height: 5,),
-                                      const Text("You will be notified once the selected users booked a table..",style: TextStyle(fontSize: 9,color: CustomColors.secondary,fontWeight: FontWeight.w500),),
-                                      SizedBox(height: 5,),
-                                      // Text((notifyMeModelData.designations?.map((designation) => designation.name) ?? []).join(", "),style: TextStyle(fontSize: 9,fontWeight: FontWeight.w700,color: CustomColors.orange),),
-                                      SizedBox(height: 5,),
-                                      Text(profileData?.notifyMeText ?? "",style: TextStyle(fontSize: 12,color: CustomColors.red,fontWeight: FontWeight.w700),),
-                                    ],
+                                      const Text("Notify me activated",style: TextStyle(fontSize: 12,color: CustomColors.secondary,fontWeight: FontWeight.w900),),
+                                      const SizedBox(height: 5,),
 
+                                      const Text("You will be notified once the selected users booked a table..",style: TextStyle(fontSize: 9,color: CustomColors.secondary,fontWeight: FontWeight.w500),),
+                                      const SizedBox(height: 5,),
+                                      // Text((notifyMeModelData.designations?.map((designation) => designation.name) ?? []).join(", "),style: TextStyle(fontSize: 9,fontWeight: FontWeight.w700,color: CustomColors.orange),),
+                                      const SizedBox(height: 5,),
+                                      Text(profileData?.notifyMeText ?? "",style: const TextStyle(fontSize: 12,color: CustomColors.red,fontWeight: FontWeight.w700),),
+                                    ],
                                   ),
                                 ),
                                 GestureDetector(onTap: (){
@@ -205,6 +227,7 @@ class HomePage extends StatelessWidget {
                       ]
                   );
                 }, orElse: () => const SizedBox())),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,

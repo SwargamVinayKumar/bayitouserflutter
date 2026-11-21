@@ -120,7 +120,7 @@ class _UpdateVersionScreenState extends State<UpdateVersionScreen> {
   }
 
   final String playStoreUrl = "https://play.google.com/store/apps/details?id=com.bayito.user.bayitouser";
-  final String appStoreUrl = "https://apps.apple.com/us/search?term=bayitouser";
+  final String appStoreUrl = "https://apps.apple.com/in/app/bayito/id6818997897";
 
   Future<void> _launchURL() async {
     final Uri url = Uri.parse(

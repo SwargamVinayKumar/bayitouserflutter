@@ -2,19 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location to provide location-based features and improve your experience.</string>
-
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We use your location to provide location-based features when needed.</string>
-
-	<key>NSCameraUsageDescription</key>
-	<string>We use your camera to let you capture photos and use camera-based features in the app.</string>
-
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We use your photo library to let you select and upload photos in the app.</string>
-
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -39,6 +26,54 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to let you capture photos and use camera-based features in the app.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We use your location to provide location-based features when needed.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use your location to provide location-based features and improve your experience.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We use your photo library to let you select and upload photos in the app.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>NSUserNotificationUsageDescription</key>
+	<string>We use notifications to send you alerts, updates, and important messages.</string>
+	<key>LSApplicationQueriesSchemes</key>
+     <array>
+         <string>tez</string>
+         <string>phonepe</string>
+         <string>paytmmp</string>
+         <string>credpay</string>
+         <string>mobikwik</string>
+         <string>in.fampay.app</string>
+         <string>bhim</string>
+         <string>amazonpay</string>
+         <string>navi</string>
+         <string>kiwi</string>
+         <string>payzapp</string>
+         <string>jupiter</string>
+         <string>omnicard</string>
+         <string>icici</string>
+         <string>popclubapp</string>
+         <string>sbiyono</string>
+         <string>myjio</string>
+         <string>slice-upi</string>
+         <string>bobupi</string>
+         <string>shriramone</string>
+         <string>indusmobile</string>
+         <string>kotakbank</string>
+         <string>snapmint</string>
+         <string>freecharge</string>
+         <string>navipay</string>
+         <string>whatsapp-consumer</string>
+         <string>postpe</string>
+         <string>super</string>
+         <string>lxme</string>
+         <string>scapia</string>
+         <string>curieapp</string>
+     </array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

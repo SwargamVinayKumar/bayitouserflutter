@@ -1,4 +1,5 @@
 {
+  "originHash" : "37bf7d549c943e4f2c683e5ee734b9bca1173ba11237f167da0b91f946e7b7f6",
   "pins" : [
     {
       "identity" : "dkcamera",
@@ -32,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/razorpay/razorpay-pod.git",
       "state" : {
-        "revision" : "a7ee6d9db75d629376a2ea0d5c19cfedf8bed95d",
-        "version" : "1.5.8"
+        "revision" : "5f7eb7e716309ad31fdd485138d46be7bdf5b919",
+        "version" : "1.5.9"
       }
     },
     {
@@ -64,5 +65,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

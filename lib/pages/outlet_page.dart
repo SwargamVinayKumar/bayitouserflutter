@@ -141,10 +141,10 @@ class _OutletPageState extends State<OutletPage> {
                       paginationModel = outletViewModel.fetchSearchedOutletsObserver.value;
                     } else if (widget.type == "nearby") {
                       paginationModel = outletViewModel.fetchNearbyOutletsObserver.value;
-                    } else if (widget.type == "all") {
-                      paginationModel = outletViewModel.fetchOutletObserver.value;
-                    } else {
+                    } else if (widget.type == "trending") {
                       paginationModel = outletViewModel.fetchTrendingOutletsObserver.value;
+                    } else {
+                      paginationModel = outletViewModel.fetchOutletObserver.value;
                     }
 
                     return paginationModel.data.value.when(
